@@ -18,7 +18,7 @@ This will allow you to execute the various sample operations. The authorization 
 
 ## Using the Sample Client
 
-In the [MyCrmSampleClient](./MyCrmSampleClient) folder edit the [appsettings.json](./MyCrmSampleClient/appsettings.json) file to populate the following values:
+Go to the [MyCrmSampleClient](./MyCrmSampleClient) folder and edit the [appsettings.json](./MyCrmSampleClient/appsettings.json) file to populate the following values:
 
 ```json
 {
