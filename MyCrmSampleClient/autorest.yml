@@ -1,0 +1,16 @@
+csharp: true
+output-folder: MyCrmApi
+clear-output-folder: true
+namespace: MyCrmSampleClient.MyCrmApi
+add-credentials: true
+public-clients: true
+include-csproj: disable
+skip-csproj: true
+skip-csproj-packagereference: true
+input-file: swagger.json
+directive:
+  - from: openapi-document
+    where: $.paths.*.get.parameters[?(@.name === "page" && @.style === "deepObject")]
+    transform: |
+      $.style = "form";
+    reason: deepObject is not supported by autorest yet for parameters

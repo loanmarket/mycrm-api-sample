@@ -1,0 +1,497 @@
+{
+	"info": {
+		"_postman_id": "14908a9f-8925-4daa-825c-d290ca7b3050",
+		"name": "MyCRM API Sample",
+		"description": "To use this sample it is necessary to populate the `Variables` section with the values supplied to you by Loan Market Group. This will enable the various samples to interact with your broker account in MyCRM. \n\n**NOTE:** If you are looking to replicate the behaviour of these samples, be sure to check the `Pre-request Script` section where the authorization flow is handled.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Contact Groups",
+			"item": [
+				{
+					"name": "Get Contact Groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/contact-groups?sort=-id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"contact-groups"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "-id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Contact Group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contact-groups\",\n    \"attributes\": {\n      \"name\": \"The Flintstones\"\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/contact-groups",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"contact-groups"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contacts",
+			"item": [
+				{
+					"name": "Get Contacts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/contacts?sort=-id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"contacts"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "-id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Contact",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\",\n    \"attributes\": {\n      \"title\": \"Mr\",\n      \"firstName\": \"Fred\",\n      \"lastName\": \"Flintstone\",\n      \"preferredName\": \"Freddy\",\n      \"mobile\": \"0412345679\",\n      \"email\": \"freddy.flintstone@outlook.com\"\n    },\n    \"relationships\": {\n        \"contactGroup\": {\n            \"data\": {\n                \"type\": \"contact-groups\",\n                \"id\": \"<set to contact group Id>\"\n            }\n        }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/contacts",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Deals",
+			"item": [
+				{
+					"name": "Get Deals",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/deals?sort=-id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"deals"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "-id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Deal",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"deals\",\n    \"attributes\": {\n      \"dealTypeId\": 1,\n      \"name\": \"Home Loan 1 for the Flintstones\"\n    },\n    \"relationships\": {\n      \"contacts\": {\n          \"data\": [\n              { \"type\": \"contacts\", \"id\": \"<set to contact Id>\" },\n              { \"type\": \"contacts\", \"id\": \"<set to contact Id>\" }\n          ]\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/deals",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"deals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Deal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/deals/12345?include=contacts",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"deals",
+								"12345"
+							],
+							"query": [
+								{
+									"key": "include",
+									"value": "contacts"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Integrations",
+			"item": [
+				{
+					"name": "Get Integrations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/integrations",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"integrations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Integration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"integrations\",\n    \"attributes\": {\n      \"name\": \"Dynamics - UAT\",\n      \"description\": \"Testing Clarendon Dynamics Integration in UAT\"\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/integrations",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"integrations"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Deal External Refs",
+			"item": [
+				{
+					"name": "Get Deal External Refs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/deal-external-references?sort=-id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"deal-external-references"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "-id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Deal External Ref",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"deal-external-references\",\n    \"attributes\": {\n      \"externalReference\": \"freddyloan123abc\"\n    },\n    \"relationships\": {\n      \"deal\": {\n          \"data\": {\n              \"type\": \"deals\",\n              \"id\": \"<set to deal Id>\"\n          }\n      },\n      \"integration\": {\n          \"data\": {\n              \"type\": \"integrations\",\n              \"id\": \"<set to integration Id>\"\n          }\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/deal-external-references",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"deal-external-references"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Deal External Ref",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/deal-external-references/1",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"deal-external-references",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contact External Refs",
+			"item": [
+				{
+					"name": "Get Contact External Refs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/contact-external-references?sort=-id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"contact-external-references"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "-id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Contact External Ref",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contact-external-references\",\n    \"attributes\": {\n      \"externalReference\": \"freddy123\"\n    },\n    \"relationships\": {\n      \"contact\": {\n        \"data\" : { \n          \"type\": \"contacts\", \n          \"id\": \"<set to contact Id>\"\n        }\n      },\n      \"integration\": {\n        \"data\": {\n          \"type\": \"integrations\",\n          \"id\": \"<set to integration Id>\"\n        }\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/contact-external-references",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"contact-external-references"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Contact External Ref",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/contact-external-references/1",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"contact-external-references",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{OAuth_Token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Refresh the OAuth token if necessary",
+					"var tokenDate = new Date(2010,1,1);",
+					"var tokenTimestamp = pm.variables.get(\"OAuth_Timestamp\");",
+					"if(tokenTimestamp){",
+					"  tokenDate = Date.parse(tokenTimestamp);",
+					"}",
+					"var expiresInTime = pm.variables.get(\"ExpiresInTime\");",
+					"if(!expiresInTime){",
+					"    expiresInTime = 300000; // Set default expiration time to 5 minutes",
+					"}if((new Date() - tokenDate) >= expiresInTime) ",
+					"{",
+					"   pm.sendRequest({",
+					"      url:  pm.variables.get(\"Auth_Url\"), ",
+					"      method: 'POST',",
+					"      header: {",
+					"        'Accept': 'application/json',",
+					"        'Content-Type': 'application/x-www-form-urlencoded',",
+					"        'Authorization': 'Basic ' + btoa(pm.variables.get(\"ClientID\") + ':' + pm.variables.get(\"ClientSecret\"))",
+					"      },",
+					"      body: {",
+					"          mode: 'urlencoded',",
+					"          urlencoded: [",
+					"              { key: \"grant_type\", value: \"client_credentials\" },",
+					"              { key: \"scope\", value: pm.variables.get(\"Scopes\") }",
+					"          ]",
+					"      }",
+					"  }, function (err, res) {",
+					"",
+					"        pm.collectionVariables.set(\"OAuth_Token\", res.json().access_token);",
+					"        pm.collectionVariables.set(\"OAuth_Timestamp\", new Date());",
+					"        ",
+					"        // Set the ExpiresInTime variable to the time given in the response if it exists",
+					"        if(res.json().expires_in){",
+					"            expiresInTime = res.json().expires_in * 1000;",
+					"        }",
+					"        pm.collectionVariables.set(\"ExpiresInTime\", expiresInTime);",
+					"  });",
+					"}",
+					"",
+					"pm.request.headers.add({key: 'accept', value: 'application/vnd.api+json' })",
+					"pm.request.headers.add({key: 'Content-Type', value: 'application/vnd.api+json' })",
+					"pm.request.headers.add({key: 'UserId', value: pm.variables.get(\"AdviserContactId\") })"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Auth_Url",
+			"value": ""
+		},
+		{
+			"key": "ClientID",
+			"value": ""
+		},
+		{
+			"key": "ClientSecret",
+			"value": ""
+		},
+		{
+			"key": "Scopes",
+			"value": "api"
+		},
+		{
+			"key": "AdviserContactId",
+			"value": ""
+		},
+		{
+			"key": "PublicAPI_Url",
+			"value": ""
+		},
+		{
+			"key": "OAuth_Timestamp",
+			"value": ""
+		},
+		{
+			"key": "ExpiresInTime",
+			"value": ""
+		},
+		{
+			"key": "OAuth_Token",
+			"value": ""
+		}
+	]
+}

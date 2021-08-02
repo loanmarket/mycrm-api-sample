@@ -3,6 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+**/.idea
+
 # User-specific files
 *.rsuser
 *.suo
@@ -30,6 +32,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+[Pp]ackages/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -348,3 +351,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+Thumbs.db
+Desktop.ini
+.DS_Store
