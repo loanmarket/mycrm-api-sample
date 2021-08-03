@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "14908a9f-8925-4daa-825c-d290ca7b3050",
+		"_postman_id": "eddd59ca-faec-4efd-a8aa-bd2126eabc0b",
 		"name": "MyCRM API Sample",
 		"description": "To use this sample it is necessary to populate the `Variables` section with the values supplied to you by Loan Market Group. This will enable the various samples to interact with your broker account in MyCRM. \n\n**NOTE:** If you are looking to replicate the behaviour of these samples, be sure to check the `Pre-request Script` section where the authorization flow is handled.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -10,7 +10,267 @@
 			"name": "Contact Groups",
 			"item": [
 				{
+					"name": "Relationships",
+					"item": [
+						{
+							"name": "Get Contact Groups Contacts",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get Contact Groups\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.be.json;",
+											"    pm.response.to.not.have.jsonBody('errors');",
+											"    if (pm.response.json().data && pm.response.json().data.length) {",
+											"        pm.collectionVariables.set('lastContactGroupId', pm.response.json().data[0].id);",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/contact-groups?sort=-id&include=contacts",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"contact-groups"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "-id"
+										},
+										{
+											"key": "include",
+											"value": "contacts"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Last Contact Group Contacts",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get Contact Groups\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.be.json;",
+											"    pm.response.to.not.have.jsonBody('errors');",
+											"    if (pm.response.json().data && pm.response.json().data.length) {",
+											"        pm.collectionVariables.set('lastContactId', pm.response.json().data[0].id);",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/contact-groups/:id/contacts",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"contact-groups",
+										":id",
+										"contacts"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{lastContactGroupId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Field selection",
+					"item": [
+						{
+							"name": "Get Contact Groups Fields",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get Contact Groups\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.be.json;",
+											"    pm.response.to.not.have.jsonBody('errors');",
+											"    if (pm.response.json().data && pm.response.json().data.length) {",
+											"        pm.collectionVariables.set('lastContactGroupId', pm.response.json().data[0].id);",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/contact-groups?sort=-id&fields[contact-groups]=utmCampaign,updated",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"contact-groups"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "-id"
+										},
+										{
+											"key": "fields[contact-groups]",
+											"value": "utmCampaign,updated"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Last Contact Group Contact Email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get Contact Groups\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.be.json;",
+											"    pm.response.to.not.have.jsonBody('errors');",
+											"    if (pm.response.json().data && pm.response.json().data.length) {",
+											"        pm.collectionVariables.set('lastContactId', pm.response.json().data[0].id);",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/contact-groups/:id/contacts?fields[contacts]=email",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"contact-groups",
+										":id",
+										"contacts"
+									],
+									"query": [
+										{
+											"key": "fields[contacts]",
+											"value": "email"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{lastContactGroupId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Filtering",
+					"item": [
+						{
+							"name": "Get Contact Groups Recent Update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get Contact Groups\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.be.json;",
+											"    pm.response.to.not.have.jsonBody('errors');",
+											"    if (pm.response.json().data && pm.response.json().data.length) {",
+											"        pm.collectionVariables.set('lastContactGroupId', pm.response.json().data[0].id);",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/contact-groups?sort=-id&filter=and(greaterOrEqual(updated,'2021-08-01'),not(equals(utmCampaign,null)))",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"contact-groups"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "-id"
+										},
+										{
+											"key": "filter",
+											"value": "and(greaterOrEqual(updated,'2021-08-01'),not(equals(utmCampaign,null)))"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Get Contact Groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get Contact Groups\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    if (pm.response.json().data && pm.response.json().data.length) {",
+									"        pm.collectionVariables.set('lastContactGroupId', pm.response.json().data[0].id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -34,12 +294,28 @@
 				},
 				{
 					"name": "Add Contact Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Add Contact Group\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    pm.collectionVariables.set('lastContactGroupId', pm.response.json().data.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"contact-groups\",\n    \"attributes\": {\n      \"name\": \"The Flintstones\"\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contact-groups\",\n    \"attributes\": {\n        \"name\": \"The Family Stone\",\n        \"utmSource\": \"facebook\",\n        \"utmMedium\": \"social\",\n        \"utmTerm\": \"investment\",\n        \"utmContent\": \"lm\",\n        \"utmCampaign\": \"mycrm-fb\"\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -53,6 +329,112 @@
 							],
 							"path": [
 								"contact-groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Last Contact Group",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/contact-groups/:id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"contact-groups",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastContactGroupId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contact Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Save Last Contact Group\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    pm.collectionVariables.set('lastContactGroupId', pm.response.json().data.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contact-groups\",\n    \"id\": {{lastContactGroupId}},\n    \"attributes\": {\n        \"name\": \"Stone Patch\",\n        \"utmSource\": \"facebook\",\n        \"utmMedium\": \"social\",\n        \"utmTerm\": \"investment\",\n        \"utmContent\": \"lm\",\n        \"utmCampaign\": \"mycrm-fb\",\n        \"referrerId\": null,\n        \"referrerOrgId\": null,\n        \"referrerOrgName\": null,\n        \"referrerName\": null\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/contact-groups/:id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"contact-groups",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastContactGroupId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Contact Group",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/contact-groups/:id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"contact-groups",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastContactGroupId}}"
+								}
 							]
 						}
 					},
