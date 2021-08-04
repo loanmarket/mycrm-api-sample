@@ -446,12 +446,173 @@
 			"name": "Contacts",
 			"item": [
 				{
+					"name": "Relationships",
+					"item": [
+						{
+							"name": "Get Last Contact include Addresses",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/contacts/:id?include=contactAddress.addressDetails.address",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"contacts",
+										":id"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "contactAddress.addressDetails.address"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{lastContactId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Filtering",
+					"item": [
+						{
+							"name": "Get Recent Contacts w marketing consent",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get Contact Groups\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.be.json;",
+											"    pm.response.to.not.have.jsonBody('errors');",
+											"    if (pm.response.json().data && pm.response.json().data.length) {",
+											"        pm.collectionVariables.set('lastContactId', pm.response.json().data[0].id);",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/contacts?page[size]=20&sort=-id&filter=and(equals(hasMarketingConsent,'true'),greaterThan(updated,'2021-07-01'))",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"contacts"
+									],
+									"query": [
+										{
+											"key": "page[size]",
+											"value": "20"
+										},
+										{
+											"key": "sort",
+											"value": "-id"
+										},
+										{
+											"key": "filter",
+											"value": "and(equals(hasMarketingConsent,'true'),greaterThan(updated,'2021-07-01'))"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Field Selection",
+					"item": [
+						{
+							"name": "Get Contacts Email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get Contact Groups\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.be.json;",
+											"    pm.response.to.not.have.jsonBody('errors');",
+											"    if (pm.response.json().data && pm.response.json().data.length) {",
+											"        pm.collectionVariables.set('lastContactId', pm.response.json().data[0].id);",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/contacts?page[size]=100&sort=-id&fields[contacts]=email,hasMarketingConsent,updated",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"contacts"
+									],
+									"query": [
+										{
+											"key": "page[size]",
+											"value": "100"
+										},
+										{
+											"key": "sort",
+											"value": "-id"
+										},
+										{
+											"key": "fields[contacts]",
+											"value": "email,hasMarketingConsent,updated"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Get Contacts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get Contact Groups\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    if (pm.response.json().data && pm.response.json().data.length) {",
+									"        pm.collectionVariables.set('lastContactId', pm.response.json().data[0].id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/contacts?sort=-id",
+							"raw": "{{PublicAPI_Url}}/contacts?page[size]=100&sort=-id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
@@ -459,6 +620,10 @@
 								"contacts"
 							],
 							"query": [
+								{
+									"key": "page[size]",
+									"value": "100"
+								},
 								{
 									"key": "sort",
 									"value": "-id"
@@ -469,13 +634,53 @@
 					"response": []
 				},
 				{
+					"name": "Get Last Contact",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/contacts/:id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"contacts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastContactId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Add Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Save Last Contact\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    pm.collectionVariables.set('lastContactId', pm.response.json().data.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\",\n    \"attributes\": {\n      \"title\": \"Mr\",\n      \"firstName\": \"Fred\",\n      \"lastName\": \"Flintstone\",\n      \"preferredName\": \"Freddy\",\n      \"mobile\": \"0412345679\",\n      \"email\": \"freddy.flintstone@outlook.com\"\n    },\n    \"relationships\": {\n        \"contactGroup\": {\n            \"data\": {\n                \"type\": \"contact-groups\",\n                \"id\": \"<set to contact group Id>\"\n            }\n        }\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\",\n    \"attributes\": {\n      \"title\": \"Mr\",\n      \"firstName\": \"Fred{{lastContactGroupId}}\",\n      \"lastName\": \"Flintstone\",\n      \"preferredName\": \"Wilma{{lastContactGroupId}}\",\n      \"mobile\": \"041{{lastContactGroupId}}\",\n      \"email\": \"wilma.flintstone-{{lastContactGroupId}}@email.com\"\n    },\n    \"relationships\": {\n        \"contactGroup\": {\n            \"data\": {\n                \"type\": \"contact-groups\",\n                \"id\": \"{{lastContactGroupId}}\"\n            }\n        }\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -489,6 +694,57 @@
 							],
 							"path": [
 								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contact",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\",\n    \"id\": {{lastContactId}},\n    \"attributes\": {\n      \"middleName\": \"Howard\",\n      \"mobile\": \"040{{lastContactGroupId}}\",\n      \"email\": \"patched-{{lastContactGroupId}}@email.com\",\n      \"marketingConsent\": true\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/contacts/{{lastContactId}}",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"contacts",
+								"{{lastContactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Contact",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/contacts/:id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"contacts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastContactId}}"
+								}
 							]
 						}
 					},
