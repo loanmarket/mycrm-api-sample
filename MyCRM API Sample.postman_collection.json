@@ -756,7 +756,155 @@
 			"name": "Deals",
 			"item": [
 				{
+					"name": "Relationships",
+					"item": [
+						{
+							"name": "Get Deal Participants",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/deals/:dealId/participants",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"deals",
+										":dealId",
+										"participants"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "contacts",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "dealId",
+											"value": "{{lastDealId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Field Selection",
+					"item": [
+						{
+							"name": "Get Deals Custom Status Name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/deals?sort=-id&fields[deals]=updated,customStatusName",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"deals"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "-id"
+										},
+										{
+											"key": "fields[deals]",
+											"value": "updated,customStatusName"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Filtering",
+					"item": [
+						{
+							"name": "Get Deals w recent updates",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get Deals\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.be.json;",
+											"    pm.response.to.not.have.jsonBody('errors');",
+											"    if (pm.response.json().data && pm.response.json().data.length) {",
+											"        pm.collectionVariables.set('lastDealId', pm.response.json().data[0].id);",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/deals?sort=-id&filter=greaterOrEqual(updated,'2021-08-01')",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"deals"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "-id"
+										},
+										{
+											"key": "filter",
+											"value": "greaterOrEqual(updated,'2021-08-01')"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Get Deals",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get Deals\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    if (pm.response.json().data && pm.response.json().data.length) {",
+									"        pm.collectionVariables.set('lastDealId', pm.response.json().data[0].id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -780,12 +928,28 @@
 				},
 				{
 					"name": "Add Deal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Add Deal\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    pm.collectionVariables.set('lastDealId', pm.response.json().data.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"deals\",\n    \"attributes\": {\n      \"dealTypeId\": 1,\n      \"name\": \"Home Loan 1 for the Flintstones\"\n    },\n    \"relationships\": {\n      \"contacts\": {\n          \"data\": [\n              { \"type\": \"contacts\", \"id\": \"<set to contact Id>\" },\n              { \"type\": \"contacts\", \"id\": \"<set to contact Id>\" }\n          ]\n      }\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"deals\",\n    \"attributes\": {\n      \"dealTypeId\": 1,\n      \"name\": \"Home Loan 1 for the Stones\"\n    },\n    \"relationships\": {\n      \"contacts\": {\n          \"data\": [\n              { \"type\": \"contacts\", \"id\": \"{{lastContactId}}\" }\n          ]\n      }\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -805,23 +969,51 @@
 					"response": []
 				},
 				{
-					"name": "Get Deal",
+					"name": "Get Last Deal",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/deals/12345?include=contacts",
+							"raw": "{{PublicAPI_Url}}/deals/:id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
 								"deals",
-								"12345"
+								":id"
 							],
-							"query": [
+							"variable": [
 								{
-									"key": "include",
-									"value": "contacts"
+									"key": "id",
+									"value": "{{lastDealId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Deal",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"deals\",\n    \"id\": {{lastDealId}},\n    \"attributes\": {\n      \"name\": \"Home loan re 2 Stone {{lastContactId}}\"\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/deals/:id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"deals",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastDealId}}"
 								}
 							]
 						}
