@@ -789,6 +789,36 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get Deal High Level Summary",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/deals/:id?include=dealScenario.highLevelSummary",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"deals",
+										":id"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "dealScenario.highLevelSummary"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{lastDealId}}"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
