@@ -10,13 +10,23 @@ using System;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The DealImportantDateAttributes. </summary>
-    internal partial class DealImportantDateAttributes
+    public partial class DealImportantDateAttributes
     {
         /// <summary> Initializes a new instance of DealImportantDateAttributes. </summary>
-        internal DealImportantDateAttributes()
+        public DealImportantDateAttributes()
         {
         }
 
-        public DateTimeOffset? Date { get; }
+        /// <summary> Initializes a new instance of DealImportantDateAttributes. </summary>
+        /// <param name="date"></param>
+        /// <param name="dateTypeDesc"></param>
+        internal DealImportantDateAttributes(DateTimeOffset? date, string dateTypeDesc)
+        {
+            Date = date;
+            DateTypeDesc = dateTypeDesc;
+        }
+
+        public DateTimeOffset? Date { get; set; }
+        public string DateTypeDesc { get; }
     }
 }

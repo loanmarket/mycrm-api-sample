@@ -12,28 +12,40 @@ using Azure.Core;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The DealImportantDate. </summary>
-    internal partial class DealImportantDate
+    public partial class DealImportantDate : IncludedResource
     {
         /// <summary> Initializes a new instance of DealImportantDate. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal DealImportantDate(DealImportantDatesType type, string id)
+        public DealImportantDate(string id) : base(id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            Type = type;
-            Id = id;
             Meta = new ChangeTrackingDictionary<string, object>();
+            Type = "deal-important-dates";
         }
 
-        public DealImportantDatesType Type { get; }
-        public string Id { get; }
-        public DealImportantDateAttributes Attributes { get; }
-        public DealImportantDateRelationships Relationships { get; }
+        /// <summary> Initializes a new instance of DealImportantDate. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"></param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        internal DealImportantDate(string type, string id, DealImportantDateAttributes attributes, DealImportantDateRelationships relationships, DealImportantDateLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
+        {
+            Attributes = attributes;
+            Relationships = relationships;
+            Links = links;
+            Meta = meta;
+            Type = type ?? "deal-important-dates";
+        }
+
+        public DealImportantDateAttributes Attributes { get; set; }
+        public DealImportantDateRelationships Relationships { get; set; }
         public DealImportantDateLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }

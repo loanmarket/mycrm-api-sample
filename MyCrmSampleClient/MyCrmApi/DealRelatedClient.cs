@@ -38,15 +38,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The DealRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Paths1O6M71BJsonapiDealsIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema>> GetAsync(int id, DealRelationship relationshipName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DealScenariosDocument>> GetDealScenariosAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealScenarios");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(id, relationshipName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetDealScenariosAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -56,15 +55,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The DealRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Paths1O6M71BJsonapiDealsIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema> Get(int id, DealRelationship relationshipName, CancellationToken cancellationToken = default)
+        public virtual Response<DealScenariosDocument> GetDealScenarios(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealScenarios");
             scope.Start();
             try
             {
-                return RestClient.Get(id, relationshipName, cancellationToken);
+                return RestClient.GetDealScenarios(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -74,15 +72,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> HeadAsync(int id, string relationshipName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DealNotesDocument>> GetDealNotesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.Head");
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealNotes");
             scope.Start();
             try
             {
-                return await RestClient.HeadAsync(id, relationshipName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetDealNotesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -92,15 +89,184 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Head(int id, string relationshipName, CancellationToken cancellationToken = default)
+        public virtual Response<DealNotesDocument> GetDealNotes(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.Head");
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealNotes");
             scope.Start();
             try
             {
-                return RestClient.Head(id, relationshipName, cancellationToken);
+                return RestClient.GetDealNotes(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DealParticipantsDocument>> GetDealParticipantsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealParticipants");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetDealParticipantsAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DealParticipantsDocument> GetDealParticipants(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealParticipants");
+            scope.Start();
+            try
+            {
+                return RestClient.GetDealParticipants(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DealExternalReferencesDocument>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealExternalReferences");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetDealExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DealExternalReferencesDocument> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealExternalReferences");
+            scope.Start();
+            try
+            {
+                return RestClient.GetDealExternalReferences(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetContacts");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetContactsAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetContacts");
+            scope.Start();
+            try
+            {
+                return RestClient.GetContacts(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DealImportantDatesDocument>> GetDealImportantDatesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealImportantDates");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetDealImportantDatesAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DealImportantDatesDocument> GetDealImportantDates(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealImportantDates");
+            scope.Start();
+            try
+            {
+                return RestClient.GetDealImportantDates(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DealStructuresDocument>> GetDealStructuresAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealStructures");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetDealStructuresAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DealStructuresDocument> GetDealStructures(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealStructures");
+            scope.Start();
+            try
+            {
+                return RestClient.GetDealStructures(id, cancellationToken);
             }
             catch (Exception e)
             {

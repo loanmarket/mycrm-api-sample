@@ -33,7 +33,7 @@ namespace MyCrmSampleClient.MyCrmApi
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetRequest(int id, ContactExternalReferenceRelationship relationshipName)
+        internal HttpMessage CreateGetContactsRequest(int id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -42,116 +42,110 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(endpoint);
             uri.AppendPath("/jsonapi/contact-external-references/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(relationshipName.ToString(), true);
+            uri.AppendPath("/contact", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             return message;
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactExternalReferenceRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Paths1B1C1DiJsonapiContactExternalReferencesIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema>> GetAsync(int id, ContactExternalReferenceRelationship relationshipName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRequest(id, relationshipName);
+            using var message = CreateGetContactsRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        Paths1B1C1DiJsonapiContactExternalReferencesIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema value = default;
+                        ContactsDocument value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Paths1B1C1DiJsonapiContactExternalReferencesIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema.DeserializePaths1B1C1DiJsonapiContactExternalReferencesIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema(document.RootElement);
+                        value = ContactsDocument.DeserializeContactsDocument(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((Paths1B1C1DiJsonapiContactExternalReferencesIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema)null, message.Response);
+                    return Response.FromValue((ContactsDocument)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactExternalReferenceRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Paths1B1C1DiJsonapiContactExternalReferencesIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema> Get(int id, ContactExternalReferenceRelationship relationshipName, CancellationToken cancellationToken = default)
+        public Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRequest(id, relationshipName);
+            using var message = CreateGetContactsRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        Paths1B1C1DiJsonapiContactExternalReferencesIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema value = default;
+                        ContactsDocument value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Paths1B1C1DiJsonapiContactExternalReferencesIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema.DeserializePaths1B1C1DiJsonapiContactExternalReferencesIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema(document.RootElement);
+                        value = ContactsDocument.DeserializeContactsDocument(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((Paths1B1C1DiJsonapiContactExternalReferencesIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema)null, message.Response);
+                    return Response.FromValue((ContactsDocument)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateHeadRequest(int id, string relationshipName)
+        internal HttpMessage CreateGetIntegrationsRequest(int id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Head;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/jsonapi/contact-external-references/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(relationshipName, true);
+            uri.AppendPath("/integration", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             return message;
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
-        public async Task<Response> HeadAsync(int id, string relationshipName, CancellationToken cancellationToken = default)
+        public async Task<Response<IntegrationsDocument>> GetIntegrationsAsync(int id, CancellationToken cancellationToken = default)
         {
-            if (relationshipName == null)
-            {
-                throw new ArgumentNullException(nameof(relationshipName));
-            }
-
-            using var message = CreateHeadRequest(id, relationshipName);
+            using var message = CreateGetIntegrationsRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
+                    {
+                        IntegrationsDocument value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = IntegrationsDocument.DeserializeIntegrationsDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 case 401:
-                    return message.Response;
+                    return Response.FromValue((IntegrationsDocument)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
-        public Response Head(int id, string relationshipName, CancellationToken cancellationToken = default)
+        public Response<IntegrationsDocument> GetIntegrations(int id, CancellationToken cancellationToken = default)
         {
-            if (relationshipName == null)
-            {
-                throw new ArgumentNullException(nameof(relationshipName));
-            }
-
-            using var message = CreateHeadRequest(id, relationshipName);
+            using var message = CreateGetIntegrationsRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
+                    {
+                        IntegrationsDocument value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = IntegrationsDocument.DeserializeIntegrationsDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 case 401:
-                    return message.Response;
+                    return Response.FromValue((IntegrationsDocument)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

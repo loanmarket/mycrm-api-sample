@@ -112,48 +112,5 @@ namespace MyCrmSampleClient.MyCrmApi
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
-
-        internal HttpMessage CreateHeadRequest()
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jsonapi/deal-external-references", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> HeadAsync(CancellationToken cancellationToken = default)
-        {
-            using var message = CreateHeadRequest();
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 401:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Head(CancellationToken cancellationToken = default)
-        {
-            using var message = CreateHeadRequest();
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 401:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
     }
 }

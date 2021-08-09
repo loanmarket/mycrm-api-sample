@@ -12,22 +12,20 @@ using Azure.Core;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The DealExternalReference. </summary>
-    public partial class DealExternalReference
+    public partial class DealExternalReference : IncludedResource
     {
         /// <summary> Initializes a new instance of DealExternalReference. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public DealExternalReference(DealExternalReferencesType type, string id)
+        public DealExternalReference(string id) : base(id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            Type = type;
-            Id = id;
             Meta = new ChangeTrackingDictionary<string, object>();
+            Type = "deal-external-references";
         }
 
         /// <summary> Initializes a new instance of DealExternalReference. </summary>
@@ -37,18 +35,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="relationships"></param>
         /// <param name="links"></param>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        internal DealExternalReference(DealExternalReferencesType type, string id, DealExternalReferenceAttributes attributes, DealExternalReferenceRelationships relationships, DealExternalReferenceLinks links, IReadOnlyDictionary<string, object> meta)
+        internal DealExternalReference(string type, string id, DealExternalReferenceAttributes attributes, DealExternalReferenceRelationships relationships, DealExternalReferenceLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
         {
-            Type = type;
-            Id = id;
             Attributes = attributes;
             Relationships = relationships;
             Links = links;
             Meta = meta;
+            Type = type ?? "deal-external-references";
         }
 
-        public DealExternalReferencesType Type { get; set; }
-        public string Id { get; }
         public DealExternalReferenceAttributes Attributes { get; set; }
         public DealExternalReferenceRelationships Relationships { get; set; }
         public DealExternalReferenceLinks Links { get; }

@@ -38,15 +38,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelationshipsMultipleDocument>> GetAsync(int id, IntegrationRelationship relationshipName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContactExternalReferencesDocument>> GetContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.GetContactExternalReferences");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(id, relationshipName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetContactExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -56,15 +55,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelationshipsMultipleDocument> Get(int id, IntegrationRelationship relationshipName, CancellationToken cancellationToken = default)
+        public virtual Response<ContactExternalReferencesDocument> GetContactExternalReferences(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.GetContactExternalReferences");
             scope.Start();
             try
             {
-                return RestClient.Get(id, relationshipName, cancellationToken);
+                return RestClient.GetContactExternalReferences(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -74,15 +72,15 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
+        /// <param name="body"> The ContactExternalReferencesDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetHeadAsync(int id, string relationshipName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PostContactExternalReferencesAsync(int id, ContactExternalReferencesDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.GetHead");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PostContactExternalReferences");
             scope.Start();
             try
             {
-                return await RestClient.GetHeadAsync(id, relationshipName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.PostContactExternalReferencesAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -92,15 +90,15 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
+        /// <param name="body"> The ContactExternalReferencesDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetHead(int id, string relationshipName, CancellationToken cancellationToken = default)
+        public virtual Response PostContactExternalReferences(int id, ContactExternalReferencesDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.GetHead");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PostContactExternalReferences");
             scope.Start();
             try
             {
-                return RestClient.GetHead(id, relationshipName, cancellationToken);
+                return RestClient.PostContactExternalReferences(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -110,16 +108,15 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="body"> The ContactExternalReferencesDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostAsync(int id, IntegrationRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PatchContactExternalReferencesAsync(int id, ContactExternalReferencesDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.Post");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PatchContactExternalReferences");
             scope.Start();
             try
             {
-                return await RestClient.PostAsync(id, relationshipName, body, cancellationToken).ConfigureAwait(false);
+                return await RestClient.PatchContactExternalReferencesAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -129,16 +126,15 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="body"> The ContactExternalReferencesDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Post(int id, IntegrationRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public virtual Response PatchContactExternalReferences(int id, ContactExternalReferencesDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.Post");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PatchContactExternalReferences");
             scope.Start();
             try
             {
-                return RestClient.Post(id, relationshipName, body, cancellationToken);
+                return RestClient.PatchContactExternalReferences(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -148,16 +144,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PatchAsync(int id, IntegrationRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.Patch");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.DeleteContactExternalReferences");
             scope.Start();
             try
             {
-                return await RestClient.PatchAsync(id, relationshipName, body, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteContactExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -167,16 +161,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Patch(int id, IntegrationRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public virtual Response DeleteContactExternalReferences(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.Patch");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.DeleteContactExternalReferences");
             scope.Start();
             try
             {
-                return RestClient.Patch(id, relationshipName, body, cancellationToken);
+                return RestClient.DeleteContactExternalReferences(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -186,15 +178,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(int id, IntegrationRelationship relationshipName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DealExternalReferencesDocument>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.GetDealExternalReferences");
             scope.Start();
             try
             {
-                return await RestClient.DeleteAsync(id, relationshipName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetDealExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -204,15 +195,120 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(int id, IntegrationRelationship relationshipName, CancellationToken cancellationToken = default)
+        public virtual Response<DealExternalReferencesDocument> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.GetDealExternalReferences");
             scope.Start();
             try
             {
-                return RestClient.Delete(id, relationshipName, cancellationToken);
+                return RestClient.GetDealExternalReferences(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The DealExternalReferencesDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostDealExternalReferencesAsync(int id, DealExternalReferencesDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PostDealExternalReferences");
+            scope.Start();
+            try
+            {
+                return await RestClient.PostDealExternalReferencesAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The DealExternalReferencesDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostDealExternalReferences(int id, DealExternalReferencesDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PostDealExternalReferences");
+            scope.Start();
+            try
+            {
+                return RestClient.PostDealExternalReferences(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The DealExternalReferencesDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchDealExternalReferencesAsync(int id, DealExternalReferencesDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PatchDealExternalReferences");
+            scope.Start();
+            try
+            {
+                return await RestClient.PatchDealExternalReferencesAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The DealExternalReferencesDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchDealExternalReferences(int id, DealExternalReferencesDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PatchDealExternalReferences");
+            scope.Start();
+            try
+            {
+                return RestClient.PatchDealExternalReferences(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.DeleteDealExternalReferences");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteDealExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteDealExternalReferences(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.DeleteDealExternalReferences");
+            scope.Start();
+            try
+            {
+                return RestClient.DeleteDealExternalReferences(id, cancellationToken);
             }
             catch (Exception e)
             {

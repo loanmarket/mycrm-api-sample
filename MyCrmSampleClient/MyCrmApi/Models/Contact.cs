@@ -12,22 +12,20 @@ using Azure.Core;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The Contact. </summary>
-    public partial class Contact
+    public partial class Contact : IncludedResource
     {
         /// <summary> Initializes a new instance of Contact. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Contact(ContactsType type, string id)
+        public Contact(string id) : base(id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            Type = type;
-            Id = id;
             Meta = new ChangeTrackingDictionary<string, object>();
+            Type = "contacts";
         }
 
         /// <summary> Initializes a new instance of Contact. </summary>
@@ -37,18 +35,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="relationships"></param>
         /// <param name="links"></param>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        internal Contact(ContactsType type, string id, ContactAttributes attributes, ContactRelationships relationships, ContactLinks links, IReadOnlyDictionary<string, object> meta)
+        internal Contact(string type, string id, ContactAttributes attributes, ContactRelationships relationships, ContactLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
         {
-            Type = type;
-            Id = id;
             Attributes = attributes;
             Relationships = relationships;
             Links = links;
             Meta = meta;
+            Type = type ?? "contacts";
         }
 
-        public ContactsType Type { get; set; }
-        public string Id { get; }
         public ContactAttributes Attributes { get; set; }
         public ContactRelationships Relationships { get; set; }
         public ContactLinks Links { get; }

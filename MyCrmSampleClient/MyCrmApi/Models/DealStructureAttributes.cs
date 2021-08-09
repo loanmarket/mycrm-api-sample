@@ -10,11 +10,20 @@ using System;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The DealStructureAttributes. </summary>
-    internal partial class DealStructureAttributes
+    public partial class DealStructureAttributes
     {
         /// <summary> Initializes a new instance of DealStructureAttributes. </summary>
-        internal DealStructureAttributes()
+        public DealStructureAttributes()
         {
+        }
+
+        /// <summary> Initializes a new instance of DealStructureAttributes. </summary>
+        /// <param name="fixedRateBeginDate"></param>
+        /// <param name="fixedRateExpiryDate"></param>
+        internal DealStructureAttributes(DateTimeOffset? fixedRateBeginDate, DateTimeOffset? fixedRateExpiryDate)
+        {
+            FixedRateBeginDate = fixedRateBeginDate;
+            FixedRateExpiryDate = fixedRateExpiryDate;
         }
 
         public DateTimeOffset? FixedRateBeginDate { get; }

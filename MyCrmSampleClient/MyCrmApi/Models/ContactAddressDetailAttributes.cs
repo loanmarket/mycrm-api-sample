@@ -10,11 +10,20 @@ using System;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The ContactAddressDetailAttributes. </summary>
-    internal partial class ContactAddressDetailAttributes
+    public partial class ContactAddressDetailAttributes
     {
         /// <summary> Initializes a new instance of ContactAddressDetailAttributes. </summary>
-        internal ContactAddressDetailAttributes()
+        public ContactAddressDetailAttributes()
         {
+        }
+
+        /// <summary> Initializes a new instance of ContactAddressDetailAttributes. </summary>
+        /// <param name="created"></param>
+        /// <param name="updated"></param>
+        internal ContactAddressDetailAttributes(DateTimeOffset? created, DateTimeOffset? updated)
+        {
+            Created = created;
+            Updated = updated;
         }
 
         public DateTimeOffset? Created { get; }

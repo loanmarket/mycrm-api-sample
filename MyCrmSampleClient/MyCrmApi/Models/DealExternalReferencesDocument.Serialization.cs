@@ -11,14 +11,28 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    public partial class DealExternalReferencesDocument
+    public partial class DealExternalReferencesDocument : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("data");
+            writer.WriteStartArray();
+            foreach (var item in Data)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
+        }
+
         internal static DealExternalReferencesDocument DeserializeDealExternalReferencesDocument(JsonElement element)
         {
             Optional<IReadOnlyDictionary<string, object>> meta = default;
             Optional<IReadOnlyDictionary<string, object>> jsonApi = default;
             Optional<DealExternalReferencesDocumentLinks> links = default;
-            IReadOnlyList<DealExternalReference> data = default;
+            IList<DealExternalReference> data = default;
+            Optional<IReadOnlyList<IncludedResource>> included = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meta"))
@@ -71,8 +85,23 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     data = array;
                     continue;
                 }
+                if (property.NameEquals("included"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        included = null;
+                        continue;
+                    }
+                    List<IncludedResource> array = new List<IncludedResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(IncludedResource.DeserializeIncludedResource(item));
+                    }
+                    included = array;
+                    continue;
+                }
             }
-            return new DealExternalReferencesDocument(Optional.ToDictionary(meta), Optional.ToDictionary(jsonApi), links.Value, data);
+            return new DealExternalReferencesDocument(Optional.ToDictionary(meta), Optional.ToDictionary(jsonApi), links.Value, data, Optional.ToList(included));
         }
     }
 }

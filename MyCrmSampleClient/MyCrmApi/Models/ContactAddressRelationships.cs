@@ -8,14 +8,23 @@
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The ContactAddressRelationships. </summary>
-    internal partial class ContactAddressRelationships
+    public partial class ContactAddressRelationships
     {
         /// <summary> Initializes a new instance of ContactAddressRelationships. </summary>
-        internal ContactAddressRelationships()
+        public ContactAddressRelationships()
         {
         }
 
-        public RelationshipsSingleDocument AddressDetails { get; }
-        public RelationshipsSingleDocument Contact { get; }
+        /// <summary> Initializes a new instance of ContactAddressRelationships. </summary>
+        /// <param name="addressDetails"></param>
+        /// <param name="contact"></param>
+        internal ContactAddressRelationships(RelationshipsSingleDocument addressDetails, RelationshipsSingleDocument contact)
+        {
+            AddressDetails = addressDetails;
+            Contact = contact;
+        }
+
+        public RelationshipsSingleDocument AddressDetails { get; set; }
+        public RelationshipsSingleDocument Contact { get; set; }
     }
 }

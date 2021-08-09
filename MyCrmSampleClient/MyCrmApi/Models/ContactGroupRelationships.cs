@@ -17,11 +17,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Initializes a new instance of ContactGroupRelationships. </summary>
         /// <param name="contacts"></param>
-        internal ContactGroupRelationships(RelationshipsMultipleDocument contacts)
+        /// <param name="adviser"></param>
+        internal ContactGroupRelationships(RelationshipsMultipleDocument contacts, RelationshipsSingleDocument adviser)
         {
             Contacts = contacts;
+            Adviser = adviser;
         }
 
         public RelationshipsMultipleDocument Contacts { get; set; }
+        public RelationshipsSingleDocument Adviser { get; set; }
     }
 }

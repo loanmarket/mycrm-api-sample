@@ -27,6 +27,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<IReadOnlyDictionary<string, object>> jsonApi = default;
             Optional<ContactGroupDocumentLinks> links = default;
             ContactGroup data = default;
+            Optional<IReadOnlyList<IncludedResource>> included = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meta"))
@@ -74,8 +75,23 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     data = ContactGroup.DeserializeContactGroup(property.Value);
                     continue;
                 }
+                if (property.NameEquals("included"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        included = null;
+                        continue;
+                    }
+                    List<IncludedResource> array = new List<IncludedResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(IncludedResource.DeserializeIncludedResource(item));
+                    }
+                    included = array;
+                    continue;
+                }
             }
-            return new ContactGroupDocument(Optional.ToDictionary(meta), Optional.ToDictionary(jsonApi), links.Value, data);
+            return new ContactGroupDocument(Optional.ToDictionary(meta), Optional.ToDictionary(jsonApi), links.Value, data, Optional.ToList(included));
         }
     }
 }

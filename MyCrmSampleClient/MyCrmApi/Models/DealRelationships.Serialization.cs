@@ -15,6 +15,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(DealScenario))
+            {
+                writer.WritePropertyName("dealScenario");
+                writer.WriteObjectValue(DealScenario);
+            }
             if (Optional.IsDefined(DealNotes))
             {
                 writer.WritePropertyName("dealNotes");
@@ -55,6 +60,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static DealRelationships DeserializeDealRelationships(JsonElement element)
         {
+            Optional<RelationshipsSingleDocument> dealScenario = default;
             Optional<RelationshipsMultipleDocument> dealNotes = default;
             Optional<RelationshipsMultipleDocument> participants = default;
             Optional<RelationshipsMultipleDocument> externalReferences = default;
@@ -64,6 +70,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<RelationshipsMultipleDocument> importantDates = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("dealScenario"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dealScenario = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("dealNotes"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -135,7 +151,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new DealRelationships(dealNotes.Value, participants.Value, externalReferences.Value, dealStructures.Value, dealStatus.Value, contacts.Value, importantDates.Value);
+            return new DealRelationships(dealScenario.Value, dealNotes.Value, participants.Value, externalReferences.Value, dealStructures.Value, dealStatus.Value, contacts.Value, importantDates.Value);
         }
     }
 }

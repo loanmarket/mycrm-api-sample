@@ -16,8 +16,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(Attributes))
             {
                 writer.WritePropertyName("attributes");
@@ -28,29 +26,23 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("relationships");
                 writer.WriteObjectValue(Relationships);
             }
+            writer.WritePropertyName("type");
+            writer.WriteStringValue(Type);
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static ContactGroup DeserializeContactGroup(JsonElement element)
         {
-            ContactGroupsType type = default;
-            string id = default;
             Optional<ContactGroupAttributes> attributes = default;
             Optional<ContactGroupRelationships> relationships = default;
             Optional<ContactGroupLinks> links = default;
             Optional<IReadOnlyDictionary<string, object>> meta = default;
+            string type = default;
+            string id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
-                {
-                    type = new ContactGroupsType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("attributes"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -94,6 +86,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         dictionary.Add(property0.Name, property0.Value.GetObject());
                     }
                     meta = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
             }

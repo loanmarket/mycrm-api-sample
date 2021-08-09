@@ -16,6 +16,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of DealRelationships. </summary>
+        /// <param name="dealScenario"></param>
         /// <param name="dealNotes"></param>
         /// <param name="participants"></param>
         /// <param name="externalReferences"></param>
@@ -23,8 +24,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="dealStatus"></param>
         /// <param name="contacts"></param>
         /// <param name="importantDates"></param>
-        internal DealRelationships(RelationshipsMultipleDocument dealNotes, RelationshipsMultipleDocument participants, RelationshipsMultipleDocument externalReferences, RelationshipsMultipleDocument dealStructures, RelationshipsSingleDocument dealStatus, DealRelationshipsContacts contacts, RelationshipsMultipleDocument importantDates)
+        internal DealRelationships(RelationshipsSingleDocument dealScenario, RelationshipsMultipleDocument dealNotes, RelationshipsMultipleDocument participants, RelationshipsMultipleDocument externalReferences, RelationshipsMultipleDocument dealStructures, RelationshipsSingleDocument dealStatus, DealRelationshipsContacts contacts, RelationshipsMultipleDocument importantDates)
         {
+            DealScenario = dealScenario;
             DealNotes = dealNotes;
             Participants = participants;
             ExternalReferences = externalReferences;
@@ -34,6 +36,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             ImportantDates = importantDates;
         }
 
+        public RelationshipsSingleDocument DealScenario { get; set; }
         public RelationshipsMultipleDocument DealNotes { get; set; }
         public RelationshipsMultipleDocument Participants { get; set; }
         public RelationshipsMultipleDocument ExternalReferences { get; set; }

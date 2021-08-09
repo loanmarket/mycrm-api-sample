@@ -77,37 +77,5 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> HeadAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DealParticipantsClient.Head");
-            scope.Start();
-            try
-            {
-                return await RestClient.HeadAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Head(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DealParticipantsClient.Head");
-            scope.Start();
-            try
-            {
-                return RestClient.Head(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
     }
 }

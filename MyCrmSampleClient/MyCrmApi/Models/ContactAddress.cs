@@ -12,29 +12,41 @@ using Azure.Core;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The ContactAddress. </summary>
-    internal partial class ContactAddress
+    public partial class ContactAddress : IncludedResource
     {
         /// <summary> Initializes a new instance of ContactAddress. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal ContactAddress(ContactAddressesType type, string id)
+        public ContactAddress(string id) : base(id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            Type = type;
-            Id = id;
             Meta = new ChangeTrackingDictionary<string, object>();
+            Type = "contact-address";
         }
 
-        public ContactAddressesType Type { get; }
-        public string Id { get; }
+        /// <summary> Initializes a new instance of ContactAddress. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"> Any object. </param>
+        /// <param name="relationships"></param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        internal ContactAddress(string type, string id, object attributes, ContactAddressRelationships relationships, ContactAddressLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
+        {
+            Attributes = attributes;
+            Relationships = relationships;
+            Links = links;
+            Meta = meta;
+            Type = type ?? "contact-address";
+        }
+
         /// <summary> Any object. </summary>
-        public object Attributes { get; }
-        public ContactAddressRelationships Relationships { get; }
+        public object Attributes { get; set; }
+        public ContactAddressRelationships Relationships { get; set; }
         public ContactAddressLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }

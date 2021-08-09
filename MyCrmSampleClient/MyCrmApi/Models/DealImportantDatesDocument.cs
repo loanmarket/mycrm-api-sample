@@ -13,12 +13,12 @@ using Azure.Core;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The DealImportantDatesDocument. </summary>
-    internal partial class DealImportantDatesDocument
+    public partial class DealImportantDatesDocument
     {
         /// <summary> Initializes a new instance of DealImportantDatesDocument. </summary>
         /// <param name="data"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        internal DealImportantDatesDocument(IEnumerable<DealImportantDate> data)
+        public DealImportantDatesDocument(IEnumerable<DealImportantDate> data)
         {
             if (data == null)
             {
@@ -28,6 +28,22 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Meta = new ChangeTrackingDictionary<string, object>();
             JsonApi = new ChangeTrackingDictionary<string, object>();
             Data = data.ToList();
+            Included = new ChangeTrackingList<IncludedResource>();
+        }
+
+        /// <summary> Initializes a new instance of DealImportantDatesDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        internal DealImportantDatesDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, DealImportantDatesDocumentLinks links, IList<DealImportantDate> data, IReadOnlyList<IncludedResource> included)
+        {
+            Meta = meta;
+            JsonApi = jsonApi;
+            Links = links;
+            Data = data;
+            Included = included;
         }
 
         /// <summary> Dictionary of &lt;any&gt;. </summary>
@@ -35,6 +51,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> JsonApi { get; }
         public DealImportantDatesDocumentLinks Links { get; }
-        public IReadOnlyList<DealImportantDate> Data { get; }
+        public IList<DealImportantDate> Data { get; }
+        public IReadOnlyList<IncludedResource> Included { get; }
     }
 }

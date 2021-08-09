@@ -92,7 +92,7 @@ namespace MyCrmSampleClient
             
                 var addGroupResp = await mycrmClient.ContactGroup.PostAsync(
                     new ContactGroupDocument(
-                        new ContactGroup(ContactGroupsType.ContactGroups, null,
+                        new ContactGroup(ContactGroupsType.ContactGroups.ToString(), null,
                             contactGroup,null, null, null)
                     ));
 
@@ -130,7 +130,7 @@ namespace MyCrmSampleClient
             {
                 var addContactResp = await mycrmClient.Contact.PostAsync(
                     new ContactDocument(
-                        new Contact(ContactsType.Contacts, null,
+                        new Contact(ContactsType.Contacts.ToString(), null,
                             contact,
                             new ContactRelationships
                             {

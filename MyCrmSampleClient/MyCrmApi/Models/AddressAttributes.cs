@@ -8,17 +8,32 @@
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The AddressAttributes. </summary>
-    internal partial class AddressAttributes
+    public partial class AddressAttributes
     {
         /// <summary> Initializes a new instance of AddressAttributes. </summary>
-        internal AddressAttributes()
+        public AddressAttributes()
         {
         }
 
-        public string StreetAddress { get; }
-        public string Country { get; }
-        public string Suburb { get; }
-        public string PostCode { get; }
-        public string State { get; }
+        /// <summary> Initializes a new instance of AddressAttributes. </summary>
+        /// <param name="streetAddress"></param>
+        /// <param name="country"></param>
+        /// <param name="suburb"></param>
+        /// <param name="postCode"></param>
+        /// <param name="state"></param>
+        internal AddressAttributes(string streetAddress, string country, string suburb, string postCode, string state)
+        {
+            StreetAddress = streetAddress;
+            Country = country;
+            Suburb = suburb;
+            PostCode = postCode;
+            State = state;
+        }
+
+        public string StreetAddress { get; set; }
+        public string Country { get; set; }
+        public string Suburb { get; set; }
+        public string PostCode { get; set; }
+        public string State { get; set; }
     }
 }
