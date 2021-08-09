@@ -99,6 +99,36 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get Contact Group Adviser",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/contact-groups/:id?include=adviser.adviserDetails",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"contact-groups",
+										":id"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "adviser.adviserDetails"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{lastContactGroupId}}"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
