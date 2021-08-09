@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -51,7 +50,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<IReadOnlyList<ResourceIdentifier>>> GetContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<RelationshipsMultipleDocument>> GetContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetContactExternalReferencesRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -59,18 +58,13 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        IReadOnlyList<ResourceIdentifier> value = default;
+                        RelationshipsMultipleDocument value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(ResourceIdentifier.DeserializeResourceIdentifier(item));
-                        }
-                        value = array;
+                        value = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((IReadOnlyList<ResourceIdentifier>)null, message.Response);
+                    return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -78,7 +72,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IReadOnlyList<ResourceIdentifier>> GetContactExternalReferences(int id, CancellationToken cancellationToken = default)
+        public Response<RelationshipsMultipleDocument> GetContactExternalReferences(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetContactExternalReferencesRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -86,24 +80,19 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        IReadOnlyList<ResourceIdentifier> value = default;
+                        RelationshipsMultipleDocument value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(ResourceIdentifier.DeserializeResourceIdentifier(item));
-                        }
-                        value = array;
+                        value = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((IReadOnlyList<ResourceIdentifier>)null, message.Response);
+                    return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreatePostContactExternalReferencesRequest(int id, IEnumerable<ResourceIdentifier> body)
+        internal HttpMessage CreatePostContactExternalReferencesRequest(int id, RelationshipsMultipleDocument body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -119,21 +108,16 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 request.Headers.Add("Content-Type", "application/vnd.api+json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteStartArray();
-                foreach (var item in body)
-                {
-                    content.JsonWriter.WriteObjectValue(item);
-                }
-                content.JsonWriter.WriteEndArray();
+                content.JsonWriter.WriteObjectValue(body);
                 request.Content = content;
             }
             return message;
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ArrayOfResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PostContactExternalReferencesAsync(int id, IEnumerable<ResourceIdentifier> body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PostContactExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePostContactExternalReferencesRequest(id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -149,9 +133,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ArrayOfResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PostContactExternalReferences(int id, IEnumerable<ResourceIdentifier> body = null, CancellationToken cancellationToken = default)
+        public Response PostContactExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePostContactExternalReferencesRequest(id, body);
             _pipeline.Send(message, cancellationToken);
@@ -166,7 +150,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreatePatchContactExternalReferencesRequest(int id, IEnumerable<ResourceIdentifier> body)
+        internal HttpMessage CreatePatchContactExternalReferencesRequest(int id, RelationshipsMultipleDocument body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -182,21 +166,16 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 request.Headers.Add("Content-Type", "application/vnd.api+json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteStartArray();
-                foreach (var item in body)
-                {
-                    content.JsonWriter.WriteObjectValue(item);
-                }
-                content.JsonWriter.WriteEndArray();
+                content.JsonWriter.WriteObjectValue(body);
                 request.Content = content;
             }
             return message;
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ArrayOfResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PatchContactExternalReferencesAsync(int id, IEnumerable<ResourceIdentifier> body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PatchContactExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePatchContactExternalReferencesRequest(id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -212,9 +191,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ArrayOfResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PatchContactExternalReferences(int id, IEnumerable<ResourceIdentifier> body = null, CancellationToken cancellationToken = default)
+        public Response PatchContactExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePatchContactExternalReferencesRequest(id, body);
             _pipeline.Send(message, cancellationToken);
@@ -293,7 +272,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<IReadOnlyList<ResourceIdentifier>>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<RelationshipsMultipleDocument>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealExternalReferencesRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -301,18 +280,13 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        IReadOnlyList<ResourceIdentifier> value = default;
+                        RelationshipsMultipleDocument value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(ResourceIdentifier.DeserializeResourceIdentifier(item));
-                        }
-                        value = array;
+                        value = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((IReadOnlyList<ResourceIdentifier>)null, message.Response);
+                    return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -320,7 +294,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IReadOnlyList<ResourceIdentifier>> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
+        public Response<RelationshipsMultipleDocument> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealExternalReferencesRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -328,24 +302,19 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        IReadOnlyList<ResourceIdentifier> value = default;
+                        RelationshipsMultipleDocument value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(ResourceIdentifier.DeserializeResourceIdentifier(item));
-                        }
-                        value = array;
+                        value = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((IReadOnlyList<ResourceIdentifier>)null, message.Response);
+                    return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreatePostDealExternalReferencesRequest(int id, IEnumerable<ResourceIdentifier> body)
+        internal HttpMessage CreatePostDealExternalReferencesRequest(int id, RelationshipsMultipleDocument body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -361,21 +330,16 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 request.Headers.Add("Content-Type", "application/vnd.api+json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteStartArray();
-                foreach (var item in body)
-                {
-                    content.JsonWriter.WriteObjectValue(item);
-                }
-                content.JsonWriter.WriteEndArray();
+                content.JsonWriter.WriteObjectValue(body);
                 request.Content = content;
             }
             return message;
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ArrayOfResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PostDealExternalReferencesAsync(int id, IEnumerable<ResourceIdentifier> body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PostDealExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePostDealExternalReferencesRequest(id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -391,9 +355,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ArrayOfResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PostDealExternalReferences(int id, IEnumerable<ResourceIdentifier> body = null, CancellationToken cancellationToken = default)
+        public Response PostDealExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePostDealExternalReferencesRequest(id, body);
             _pipeline.Send(message, cancellationToken);
@@ -408,7 +372,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreatePatchDealExternalReferencesRequest(int id, IEnumerable<ResourceIdentifier> body)
+        internal HttpMessage CreatePatchDealExternalReferencesRequest(int id, RelationshipsMultipleDocument body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -424,21 +388,16 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 request.Headers.Add("Content-Type", "application/vnd.api+json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteStartArray();
-                foreach (var item in body)
-                {
-                    content.JsonWriter.WriteObjectValue(item);
-                }
-                content.JsonWriter.WriteEndArray();
+                content.JsonWriter.WriteObjectValue(body);
                 request.Content = content;
             }
             return message;
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ArrayOfResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PatchDealExternalReferencesAsync(int id, IEnumerable<ResourceIdentifier> body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PatchDealExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePatchDealExternalReferencesRequest(id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -454,9 +413,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ArrayOfResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PatchDealExternalReferences(int id, IEnumerable<ResourceIdentifier> body = null, CancellationToken cancellationToken = default)
+        public Response PatchDealExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePatchDealExternalReferencesRequest(id, body);
             _pipeline.Send(message, cancellationToken);

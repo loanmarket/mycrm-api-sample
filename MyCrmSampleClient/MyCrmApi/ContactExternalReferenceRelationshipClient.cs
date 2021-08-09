@@ -39,7 +39,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResourceIdentifier>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RelationshipsSingleDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelationshipClient.GetContacts");
             scope.Start();
@@ -56,7 +56,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourceIdentifier> GetContacts(int id, CancellationToken cancellationToken = default)
+        public virtual Response<RelationshipsSingleDocument> GetContacts(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelationshipClient.GetContacts");
             scope.Start();
@@ -72,9 +72,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostContactsAsync(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PostContactsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelationshipClient.PostContacts");
             scope.Start();
@@ -90,9 +90,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostContacts(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
+        public virtual Response PostContacts(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelationshipClient.PostContacts");
             scope.Start();
@@ -108,9 +108,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PatchContactsAsync(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PatchContactsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelationshipClient.PatchContacts");
             scope.Start();
@@ -126,9 +126,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PatchContacts(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
+        public virtual Response PatchContacts(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelationshipClient.PatchContacts");
             scope.Start();
@@ -179,7 +179,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResourceIdentifier>> GetIntegrationsAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RelationshipsSingleDocument>> GetIntegrationsAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelationshipClient.GetIntegrations");
             scope.Start();
@@ -196,7 +196,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourceIdentifier> GetIntegrations(int id, CancellationToken cancellationToken = default)
+        public virtual Response<RelationshipsSingleDocument> GetIntegrations(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelationshipClient.GetIntegrations");
             scope.Start();
@@ -212,9 +212,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostIntegrationsAsync(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PostIntegrationsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelationshipClient.PostIntegrations");
             scope.Start();
@@ -230,9 +230,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostIntegrations(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
+        public virtual Response PostIntegrations(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelationshipClient.PostIntegrations");
             scope.Start();
@@ -248,9 +248,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PatchIntegrationsAsync(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PatchIntegrationsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelationshipClient.PatchIntegrations");
             scope.Start();
@@ -266,9 +266,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ResourceIdentifier to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PatchIntegrations(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
+        public virtual Response PatchIntegrations(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelationshipClient.PatchIntegrations");
             scope.Start();
