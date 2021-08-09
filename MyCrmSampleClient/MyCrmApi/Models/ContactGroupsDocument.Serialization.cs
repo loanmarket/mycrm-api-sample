@@ -11,27 +11,14 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    public partial class ContactGroupsDocument : IUtf8JsonSerializable
+    public partial class ContactGroupsDocument
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("data");
-            writer.WriteStartArray();
-            foreach (var item in Data)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
-
         internal static ContactGroupsDocument DeserializeContactGroupsDocument(JsonElement element)
         {
             Optional<IReadOnlyDictionary<string, object>> meta = default;
             Optional<IReadOnlyDictionary<string, object>> jsonApi = default;
             Optional<ContactGroupsDocumentLinks> links = default;
-            IList<ContactGroup> data = default;
+            IReadOnlyList<ContactGroup> data = default;
             Optional<IReadOnlyList<IncludedResource>> included = default;
             foreach (var property in element.EnumerateObject())
             {

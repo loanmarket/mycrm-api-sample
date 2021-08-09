@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,7 +51,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ContactExternalReferencesDocument>> GetContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<ContactExternalReferencesDocument>>> GetContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetContactExternalReferencesRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -58,13 +59,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        ContactExternalReferencesDocument value = default;
+                        IReadOnlyList<ContactExternalReferencesDocument> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ContactExternalReferencesDocument.DeserializeContactExternalReferencesDocument(document.RootElement);
+                        List<ContactExternalReferencesDocument> array = new List<ContactExternalReferencesDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(ContactExternalReferencesDocument.DeserializeContactExternalReferencesDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((ContactExternalReferencesDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<ContactExternalReferencesDocument>)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -72,7 +78,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ContactExternalReferencesDocument> GetContactExternalReferences(int id, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ContactExternalReferencesDocument>> GetContactExternalReferences(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetContactExternalReferencesRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -80,13 +86,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        ContactExternalReferencesDocument value = default;
+                        IReadOnlyList<ContactExternalReferencesDocument> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ContactExternalReferencesDocument.DeserializeContactExternalReferencesDocument(document.RootElement);
+                        List<ContactExternalReferencesDocument> array = new List<ContactExternalReferencesDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(ContactExternalReferencesDocument.DeserializeContactExternalReferencesDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((ContactExternalReferencesDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<ContactExternalReferencesDocument>)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -109,7 +120,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DealExternalReferencesDocument>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<DealExternalReferencesDocument>>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealExternalReferencesRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,13 +128,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        DealExternalReferencesDocument value = default;
+                        IReadOnlyList<DealExternalReferencesDocument> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DealExternalReferencesDocument.DeserializeDealExternalReferencesDocument(document.RootElement);
+                        List<DealExternalReferencesDocument> array = new List<DealExternalReferencesDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(DealExternalReferencesDocument.DeserializeDealExternalReferencesDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((DealExternalReferencesDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<DealExternalReferencesDocument>)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -131,7 +147,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DealExternalReferencesDocument> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<DealExternalReferencesDocument>> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealExternalReferencesRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -139,13 +155,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        DealExternalReferencesDocument value = default;
+                        IReadOnlyList<DealExternalReferencesDocument> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DealExternalReferencesDocument.DeserializeDealExternalReferencesDocument(document.RootElement);
+                        List<DealExternalReferencesDocument> array = new List<DealExternalReferencesDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(DealExternalReferencesDocument.DeserializeDealExternalReferencesDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((DealExternalReferencesDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<DealExternalReferencesDocument>)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

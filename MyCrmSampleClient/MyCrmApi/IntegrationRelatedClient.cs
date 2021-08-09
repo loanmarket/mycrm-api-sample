@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -39,7 +40,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContactExternalReferencesDocument>> GetContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<ContactExternalReferencesDocument>>> GetContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("IntegrationRelatedClient.GetContactExternalReferences");
             scope.Start();
@@ -56,7 +57,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContactExternalReferencesDocument> GetContactExternalReferences(int id, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<ContactExternalReferencesDocument>> GetContactExternalReferences(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("IntegrationRelatedClient.GetContactExternalReferences");
             scope.Start();
@@ -73,7 +74,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DealExternalReferencesDocument>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<DealExternalReferencesDocument>>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("IntegrationRelatedClient.GetDealExternalReferences");
             scope.Start();
@@ -90,7 +91,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DealExternalReferencesDocument> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DealExternalReferencesDocument>> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("IntegrationRelatedClient.GetDealExternalReferences");
             scope.Start();

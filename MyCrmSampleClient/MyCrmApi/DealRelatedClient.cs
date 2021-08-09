@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -73,7 +74,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DealNotesDocument>> GetDealNotesAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<DealNotesDocument>>> GetDealNotesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealNotes");
             scope.Start();
@@ -90,7 +91,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DealNotesDocument> GetDealNotes(int id, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DealNotesDocument>> GetDealNotes(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealNotes");
             scope.Start();
@@ -107,7 +108,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DealParticipantsDocument>> GetDealParticipantsAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<DealParticipantsDocument>>> GetDealParticipantsAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealParticipants");
             scope.Start();
@@ -124,7 +125,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DealParticipantsDocument> GetDealParticipants(int id, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DealParticipantsDocument>> GetDealParticipants(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealParticipants");
             scope.Start();
@@ -141,7 +142,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DealExternalReferencesDocument>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<DealExternalReferencesDocument>>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealExternalReferences");
             scope.Start();
@@ -158,7 +159,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DealExternalReferencesDocument> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DealExternalReferencesDocument>> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealExternalReferences");
             scope.Start();
@@ -175,7 +176,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<ContactsDocument>>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetContacts");
             scope.Start();
@@ -192,7 +193,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<ContactsDocument>> GetContacts(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetContacts");
             scope.Start();
@@ -209,7 +210,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DealImportantDatesDocument>> GetDealImportantDatesAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<DealImportantDatesDocument>>> GetDealImportantDatesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealImportantDates");
             scope.Start();
@@ -226,7 +227,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DealImportantDatesDocument> GetDealImportantDates(int id, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DealImportantDatesDocument>> GetDealImportantDates(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealImportantDates");
             scope.Start();
@@ -243,7 +244,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DealStructuresDocument>> GetDealStructuresAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<DealStructuresDocument>>> GetDealStructuresAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealStructures");
             scope.Start();
@@ -260,7 +261,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DealStructuresDocument> GetDealStructures(int id, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DealStructuresDocument>> GetDealStructures(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealStructures");
             scope.Start();

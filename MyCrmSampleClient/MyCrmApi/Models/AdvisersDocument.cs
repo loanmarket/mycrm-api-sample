@@ -18,7 +18,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of AdvisersDocument. </summary>
         /// <param name="data"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public AdvisersDocument(IEnumerable<Adviser> data)
+        internal AdvisersDocument(IEnumerable<Adviser> data)
         {
             if (data == null)
             {
@@ -37,7 +37,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="links"></param>
         /// <param name="data"></param>
         /// <param name="included"></param>
-        internal AdvisersDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, AdvisersDocumentLinks links, IList<Adviser> data, IReadOnlyList<IncludedResource> included)
+        internal AdvisersDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, AdvisersDocumentLinks links, IReadOnlyList<Adviser> data, IReadOnlyList<IncludedResource> included)
         {
             Meta = meta;
             JsonApi = jsonApi;
@@ -51,7 +51,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> JsonApi { get; }
         public AdvisersDocumentLinks Links { get; }
-        public IList<Adviser> Data { get; }
+        public IReadOnlyList<Adviser> Data { get; }
         public IReadOnlyList<IncludedResource> Included { get; }
     }
 }

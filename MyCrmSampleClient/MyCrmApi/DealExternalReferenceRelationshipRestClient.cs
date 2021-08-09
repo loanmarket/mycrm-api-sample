@@ -50,7 +50,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DealsDocument>> GetDealsAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceIdentifier>> GetDealsAsync(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealsRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -58,13 +58,13 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        DealsDocument value = default;
+                        ResourceIdentifier value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DealsDocument.DeserializeDealsDocument(document.RootElement);
+                        value = ResourceIdentifier.DeserializeResourceIdentifier(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((DealsDocument)null, message.Response);
+                    return Response.FromValue((ResourceIdentifier)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -72,7 +72,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DealsDocument> GetDeals(int id, CancellationToken cancellationToken = default)
+        public Response<ResourceIdentifier> GetDeals(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealsRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -80,19 +80,19 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        DealsDocument value = default;
+                        ResourceIdentifier value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DealsDocument.DeserializeDealsDocument(document.RootElement);
+                        value = ResourceIdentifier.DeserializeResourceIdentifier(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((DealsDocument)null, message.Response);
+                    return Response.FromValue((ResourceIdentifier)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreatePostDealsRequest(int id, DealsDocument body)
+        internal HttpMessage CreatePostDealsRequest(int id, ResourceIdentifier body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -115,9 +115,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The DealsDocument to use. </param>
+        /// <param name="body"> The ResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PostDealsAsync(int id, DealsDocument body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PostDealsAsync(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePostDealsRequest(id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -133,9 +133,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The DealsDocument to use. </param>
+        /// <param name="body"> The ResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PostDeals(int id, DealsDocument body = null, CancellationToken cancellationToken = default)
+        public Response PostDeals(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePostDealsRequest(id, body);
             _pipeline.Send(message, cancellationToken);
@@ -150,7 +150,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreatePatchDealsRequest(int id, DealsDocument body)
+        internal HttpMessage CreatePatchDealsRequest(int id, ResourceIdentifier body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -173,9 +173,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The DealsDocument to use. </param>
+        /// <param name="body"> The ResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PatchDealsAsync(int id, DealsDocument body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PatchDealsAsync(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePatchDealsRequest(id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -191,9 +191,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The DealsDocument to use. </param>
+        /// <param name="body"> The ResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PatchDeals(int id, DealsDocument body = null, CancellationToken cancellationToken = default)
+        public Response PatchDeals(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePatchDealsRequest(id, body);
             _pipeline.Send(message, cancellationToken);
@@ -272,7 +272,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<IntegrationsDocument>> GetIntegrationsAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceIdentifier>> GetIntegrationsAsync(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetIntegrationsRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -280,13 +280,13 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        IntegrationsDocument value = default;
+                        ResourceIdentifier value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IntegrationsDocument.DeserializeIntegrationsDocument(document.RootElement);
+                        value = ResourceIdentifier.DeserializeResourceIdentifier(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((IntegrationsDocument)null, message.Response);
+                    return Response.FromValue((ResourceIdentifier)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -294,7 +294,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IntegrationsDocument> GetIntegrations(int id, CancellationToken cancellationToken = default)
+        public Response<ResourceIdentifier> GetIntegrations(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetIntegrationsRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -302,19 +302,19 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        IntegrationsDocument value = default;
+                        ResourceIdentifier value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IntegrationsDocument.DeserializeIntegrationsDocument(document.RootElement);
+                        value = ResourceIdentifier.DeserializeResourceIdentifier(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((IntegrationsDocument)null, message.Response);
+                    return Response.FromValue((ResourceIdentifier)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreatePostIntegrationsRequest(int id, IntegrationsDocument body)
+        internal HttpMessage CreatePostIntegrationsRequest(int id, ResourceIdentifier body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -337,9 +337,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The IntegrationsDocument to use. </param>
+        /// <param name="body"> The ResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PostIntegrationsAsync(int id, IntegrationsDocument body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PostIntegrationsAsync(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePostIntegrationsRequest(id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -355,9 +355,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The IntegrationsDocument to use. </param>
+        /// <param name="body"> The ResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PostIntegrations(int id, IntegrationsDocument body = null, CancellationToken cancellationToken = default)
+        public Response PostIntegrations(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePostIntegrationsRequest(id, body);
             _pipeline.Send(message, cancellationToken);
@@ -372,7 +372,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreatePatchIntegrationsRequest(int id, IntegrationsDocument body)
+        internal HttpMessage CreatePatchIntegrationsRequest(int id, ResourceIdentifier body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -395,9 +395,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The IntegrationsDocument to use. </param>
+        /// <param name="body"> The ResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PatchIntegrationsAsync(int id, IntegrationsDocument body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PatchIntegrationsAsync(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePatchIntegrationsRequest(id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -413,9 +413,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The IntegrationsDocument to use. </param>
+        /// <param name="body"> The ResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PatchIntegrations(int id, IntegrationsDocument body = null, CancellationToken cancellationToken = default)
+        public Response PatchIntegrations(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePatchIntegrationsRequest(id, body);
             _pipeline.Send(message, cancellationToken);

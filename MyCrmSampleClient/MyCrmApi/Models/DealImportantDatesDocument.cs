@@ -18,7 +18,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of DealImportantDatesDocument. </summary>
         /// <param name="data"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public DealImportantDatesDocument(IEnumerable<DealImportantDate> data)
+        internal DealImportantDatesDocument(IEnumerable<DealImportantDate> data)
         {
             if (data == null)
             {
@@ -37,7 +37,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="links"></param>
         /// <param name="data"></param>
         /// <param name="included"></param>
-        internal DealImportantDatesDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, DealImportantDatesDocumentLinks links, IList<DealImportantDate> data, IReadOnlyList<IncludedResource> included)
+        internal DealImportantDatesDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, DealImportantDatesDocumentLinks links, IReadOnlyList<DealImportantDate> data, IReadOnlyList<IncludedResource> included)
         {
             Meta = meta;
             JsonApi = jsonApi;
@@ -51,7 +51,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> JsonApi { get; }
         public DealImportantDatesDocumentLinks Links { get; }
-        public IList<DealImportantDate> Data { get; }
+        public IReadOnlyList<DealImportantDate> Data { get; }
         public IReadOnlyList<IncludedResource> Included { get; }
     }
 }

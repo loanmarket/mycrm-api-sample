@@ -348,7 +348,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactsDocument"
+                  "$ref": "#/components/schemas/ResourceIdentifier"
                 }
               }
             }
@@ -423,7 +423,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactsDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -470,7 +470,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactsDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -556,7 +556,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactsDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactsDocument"
+                  }
                 }
               }
             }
@@ -955,7 +958,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactsDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResourceIdentifier"
+                  }
                 }
               }
             }
@@ -1030,7 +1036,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactsDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -1077,7 +1086,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactsDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -1562,7 +1574,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactGroupsDocument"
+                  "$ref": "#/components/schemas/ResourceIdentifier"
                 }
               }
             }
@@ -1637,7 +1649,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactGroupsDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -1684,7 +1696,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactGroupsDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -2169,7 +2181,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealsDocument"
+                  "$ref": "#/components/schemas/ResourceIdentifier"
                 }
               }
             }
@@ -2244,7 +2256,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealsDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -2291,7 +2303,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealsDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -2776,7 +2788,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactsDocument"
+                  "$ref": "#/components/schemas/ResourceIdentifier"
                 }
               }
             }
@@ -2851,7 +2863,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactsDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -2898,7 +2910,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactsDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -3383,7 +3395,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealScenariosDocument"
+                  "$ref": "#/components/schemas/ResourceIdentifier"
                 }
               }
             }
@@ -3458,7 +3470,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealScenariosDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -3505,7 +3517,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealScenariosDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -3591,7 +3603,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactExternalReferencesDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactExternalReferencesDocument"
+                  }
                 }
               }
             }
@@ -3990,7 +4005,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactExternalReferencesDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResourceIdentifier"
+                  }
                 }
               }
             }
@@ -4065,7 +4083,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactExternalReferencesDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -4112,7 +4133,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactExternalReferencesDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -4356,7 +4380,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/IntegrationsDocument"
+                  "$ref": "#/components/schemas/ResourceIdentifier"
                 }
               }
             }
@@ -4431,7 +4455,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/IntegrationsDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -4478,7 +4502,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/IntegrationsDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -4643,7 +4667,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AdvisersDocument"
+                  "$ref": "#/components/schemas/ResourceIdentifier"
                 }
               }
             }
@@ -4718,7 +4742,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/AdvisersDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -4765,7 +4789,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/AdvisersDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -4851,7 +4875,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactAddressesDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactAddressesDocument"
+                  }
                 }
               }
             }
@@ -4930,7 +4957,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactExternalReferencesDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactExternalReferencesDocument"
+                  }
                 }
               }
             }
@@ -5009,7 +5039,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealParticipantsDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DealParticipantsDocument"
+                  }
                 }
               }
             }
@@ -5088,7 +5121,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactAddressesDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResourceIdentifier"
+                  }
                 }
               }
             }
@@ -5163,7 +5199,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactAddressesDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -5210,7 +5249,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactAddressesDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -5296,7 +5338,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactExternalReferencesDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResourceIdentifier"
+                  }
                 }
               }
             }
@@ -5371,7 +5416,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactExternalReferencesDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -5418,7 +5466,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactExternalReferencesDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -5504,7 +5555,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealParticipantsDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResourceIdentifier"
+                  }
                 }
               }
             }
@@ -5579,7 +5633,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealParticipantsDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -5626,7 +5683,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealParticipantsDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -5791,7 +5851,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/IntegrationsDocument"
+                  "$ref": "#/components/schemas/ResourceIdentifier"
                 }
               }
             }
@@ -5866,7 +5926,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/IntegrationsDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -5913,7 +5973,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/IntegrationsDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -6078,7 +6138,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealsDocument"
+                  "$ref": "#/components/schemas/ResourceIdentifier"
                 }
               }
             }
@@ -6153,7 +6213,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealsDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -6200,7 +6260,7 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealsDocument"
+                "$ref": "#/components/schemas/ResourceIdentifier"
               }
             }
           }
@@ -6286,7 +6346,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealNotesDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DealNotesDocument"
+                  }
                 }
               }
             }
@@ -6365,7 +6428,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealParticipantsDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DealParticipantsDocument"
+                  }
                 }
               }
             }
@@ -6444,7 +6510,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealExternalReferencesDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DealExternalReferencesDocument"
+                  }
                 }
               }
             }
@@ -6523,7 +6592,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactsDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactsDocument"
+                  }
                 }
               }
             }
@@ -6602,7 +6674,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealImportantDatesDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DealImportantDatesDocument"
+                  }
                 }
               }
             }
@@ -6681,7 +6756,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealStructuresDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DealStructuresDocument"
+                  }
                 }
               }
             }
@@ -6760,7 +6838,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealNotesDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResourceIdentifier"
+                  }
                 }
               }
             }
@@ -6835,7 +6916,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealNotesDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -6882,7 +6966,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealNotesDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -6968,7 +7055,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealParticipantsDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResourceIdentifier"
+                  }
                 }
               }
             }
@@ -7043,7 +7133,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealParticipantsDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -7090,7 +7183,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealParticipantsDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -7176,7 +7272,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealExternalReferencesDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResourceIdentifier"
+                  }
                 }
               }
             }
@@ -7251,7 +7350,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealExternalReferencesDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -7298,7 +7400,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealExternalReferencesDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -7384,7 +7489,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactsDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResourceIdentifier"
+                  }
                 }
               }
             }
@@ -7459,7 +7567,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactsDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -7506,7 +7617,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactsDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -7592,7 +7706,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealImportantDatesDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResourceIdentifier"
+                  }
                 }
               }
             }
@@ -7667,7 +7784,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealImportantDatesDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -7714,7 +7834,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealImportantDatesDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -7800,7 +7923,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealStructuresDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResourceIdentifier"
+                  }
                 }
               }
             }
@@ -7875,7 +8001,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealStructuresDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -7922,7 +8051,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealStructuresDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -8008,7 +8140,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealExternalReferencesDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DealExternalReferencesDocument"
+                  }
                 }
               }
             }
@@ -8087,7 +8222,10 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealExternalReferencesDocument"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResourceIdentifier"
+                  }
                 }
               }
             }
@@ -8162,7 +8300,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealExternalReferencesDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }
@@ -8209,7 +8350,10 @@
           "content": {
             "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/DealExternalReferencesDocument"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifier"
+                }
               }
             }
           }

@@ -18,7 +18,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of ContactsDocument. </summary>
         /// <param name="data"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public ContactsDocument(IEnumerable<Contact> data)
+        internal ContactsDocument(IEnumerable<Contact> data)
         {
             if (data == null)
             {
@@ -37,7 +37,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="links"></param>
         /// <param name="data"></param>
         /// <param name="included"></param>
-        internal ContactsDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, ContactsDocumentLinks links, IList<Contact> data, IReadOnlyList<IncludedResource> included)
+        internal ContactsDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, ContactsDocumentLinks links, IReadOnlyList<Contact> data, IReadOnlyList<IncludedResource> included)
         {
             Meta = meta;
             JsonApi = jsonApi;
@@ -51,7 +51,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> JsonApi { get; }
         public ContactsDocumentLinks Links { get; }
-        public IList<Contact> Data { get; }
+        public IReadOnlyList<Contact> Data { get; }
         public IReadOnlyList<IncludedResource> Included { get; }
     }
 }

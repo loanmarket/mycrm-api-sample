@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -109,7 +110,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DealNotesDocument>> GetDealNotesAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<DealNotesDocument>>> GetDealNotesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealNotesRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,13 +118,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        DealNotesDocument value = default;
+                        IReadOnlyList<DealNotesDocument> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DealNotesDocument.DeserializeDealNotesDocument(document.RootElement);
+                        List<DealNotesDocument> array = new List<DealNotesDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(DealNotesDocument.DeserializeDealNotesDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((DealNotesDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<DealNotesDocument>)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -131,7 +137,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DealNotesDocument> GetDealNotes(int id, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<DealNotesDocument>> GetDealNotes(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealNotesRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -139,13 +145,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        DealNotesDocument value = default;
+                        IReadOnlyList<DealNotesDocument> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DealNotesDocument.DeserializeDealNotesDocument(document.RootElement);
+                        List<DealNotesDocument> array = new List<DealNotesDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(DealNotesDocument.DeserializeDealNotesDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((DealNotesDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<DealNotesDocument>)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -168,7 +179,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DealParticipantsDocument>> GetDealParticipantsAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<DealParticipantsDocument>>> GetDealParticipantsAsync(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealParticipantsRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -176,13 +187,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        DealParticipantsDocument value = default;
+                        IReadOnlyList<DealParticipantsDocument> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DealParticipantsDocument.DeserializeDealParticipantsDocument(document.RootElement);
+                        List<DealParticipantsDocument> array = new List<DealParticipantsDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(DealParticipantsDocument.DeserializeDealParticipantsDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((DealParticipantsDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<DealParticipantsDocument>)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -190,7 +206,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DealParticipantsDocument> GetDealParticipants(int id, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<DealParticipantsDocument>> GetDealParticipants(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealParticipantsRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -198,13 +214,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        DealParticipantsDocument value = default;
+                        IReadOnlyList<DealParticipantsDocument> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DealParticipantsDocument.DeserializeDealParticipantsDocument(document.RootElement);
+                        List<DealParticipantsDocument> array = new List<DealParticipantsDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(DealParticipantsDocument.DeserializeDealParticipantsDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((DealParticipantsDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<DealParticipantsDocument>)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -227,7 +248,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DealExternalReferencesDocument>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<DealExternalReferencesDocument>>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealExternalReferencesRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -235,13 +256,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        DealExternalReferencesDocument value = default;
+                        IReadOnlyList<DealExternalReferencesDocument> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DealExternalReferencesDocument.DeserializeDealExternalReferencesDocument(document.RootElement);
+                        List<DealExternalReferencesDocument> array = new List<DealExternalReferencesDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(DealExternalReferencesDocument.DeserializeDealExternalReferencesDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((DealExternalReferencesDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<DealExternalReferencesDocument>)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -249,7 +275,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DealExternalReferencesDocument> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<DealExternalReferencesDocument>> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealExternalReferencesRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -257,13 +283,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        DealExternalReferencesDocument value = default;
+                        IReadOnlyList<DealExternalReferencesDocument> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DealExternalReferencesDocument.DeserializeDealExternalReferencesDocument(document.RootElement);
+                        List<DealExternalReferencesDocument> array = new List<DealExternalReferencesDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(DealExternalReferencesDocument.DeserializeDealExternalReferencesDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((DealExternalReferencesDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<DealExternalReferencesDocument>)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -286,7 +317,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<ContactsDocument>>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetContactsRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -294,13 +325,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        ContactsDocument value = default;
+                        IReadOnlyList<ContactsDocument> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ContactsDocument.DeserializeContactsDocument(document.RootElement);
+                        List<ContactsDocument> array = new List<ContactsDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(ContactsDocument.DeserializeContactsDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((ContactsDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<ContactsDocument>)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -308,7 +344,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ContactsDocument>> GetContacts(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetContactsRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -316,13 +352,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        ContactsDocument value = default;
+                        IReadOnlyList<ContactsDocument> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ContactsDocument.DeserializeContactsDocument(document.RootElement);
+                        List<ContactsDocument> array = new List<ContactsDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(ContactsDocument.DeserializeContactsDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((ContactsDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<ContactsDocument>)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -345,7 +386,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DealImportantDatesDocument>> GetDealImportantDatesAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<DealImportantDatesDocument>>> GetDealImportantDatesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealImportantDatesRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -353,13 +394,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        DealImportantDatesDocument value = default;
+                        IReadOnlyList<DealImportantDatesDocument> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DealImportantDatesDocument.DeserializeDealImportantDatesDocument(document.RootElement);
+                        List<DealImportantDatesDocument> array = new List<DealImportantDatesDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(DealImportantDatesDocument.DeserializeDealImportantDatesDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((DealImportantDatesDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<DealImportantDatesDocument>)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -367,7 +413,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DealImportantDatesDocument> GetDealImportantDates(int id, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<DealImportantDatesDocument>> GetDealImportantDates(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealImportantDatesRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -375,13 +421,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        DealImportantDatesDocument value = default;
+                        IReadOnlyList<DealImportantDatesDocument> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DealImportantDatesDocument.DeserializeDealImportantDatesDocument(document.RootElement);
+                        List<DealImportantDatesDocument> array = new List<DealImportantDatesDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(DealImportantDatesDocument.DeserializeDealImportantDatesDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((DealImportantDatesDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<DealImportantDatesDocument>)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -404,7 +455,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DealStructuresDocument>> GetDealStructuresAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<DealStructuresDocument>>> GetDealStructuresAsync(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealStructuresRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -412,13 +463,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        DealStructuresDocument value = default;
+                        IReadOnlyList<DealStructuresDocument> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DealStructuresDocument.DeserializeDealStructuresDocument(document.RootElement);
+                        List<DealStructuresDocument> array = new List<DealStructuresDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(DealStructuresDocument.DeserializeDealStructuresDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((DealStructuresDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<DealStructuresDocument>)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -426,7 +482,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DealStructuresDocument> GetDealStructures(int id, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<DealStructuresDocument>> GetDealStructures(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDealStructuresRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -434,13 +490,18 @@ namespace MyCrmSampleClient.MyCrmApi
             {
                 case 200:
                     {
-                        DealStructuresDocument value = default;
+                        IReadOnlyList<DealStructuresDocument> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DealStructuresDocument.DeserializeDealStructuresDocument(document.RootElement);
+                        List<DealStructuresDocument> array = new List<DealStructuresDocument>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(DealStructuresDocument.DeserializeDealStructuresDocument(item));
+                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((DealStructuresDocument)null, message.Response);
+                    return Response.FromValue((IReadOnlyList<DealStructuresDocument>)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

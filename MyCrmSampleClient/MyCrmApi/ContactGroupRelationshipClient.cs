@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -39,7 +40,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<ResourceIdentifier>>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetContacts");
             scope.Start();
@@ -56,7 +57,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<ResourceIdentifier>> GetContacts(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetContacts");
             scope.Start();
@@ -72,9 +73,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ContactsDocument to use. </param>
+        /// <param name="body"> The ArrayOfResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostContactsAsync(int id, ContactsDocument body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PostContactsAsync(int id, IEnumerable<ResourceIdentifier> body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostContacts");
             scope.Start();
@@ -90,9 +91,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ContactsDocument to use. </param>
+        /// <param name="body"> The ArrayOfResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostContacts(int id, ContactsDocument body = null, CancellationToken cancellationToken = default)
+        public virtual Response PostContacts(int id, IEnumerable<ResourceIdentifier> body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostContacts");
             scope.Start();
@@ -108,9 +109,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ContactsDocument to use. </param>
+        /// <param name="body"> The ArrayOfResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PatchContactsAsync(int id, ContactsDocument body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PatchContactsAsync(int id, IEnumerable<ResourceIdentifier> body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchContacts");
             scope.Start();
@@ -126,9 +127,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The ContactsDocument to use. </param>
+        /// <param name="body"> The ArrayOfResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PatchContacts(int id, ContactsDocument body = null, CancellationToken cancellationToken = default)
+        public virtual Response PatchContacts(int id, IEnumerable<ResourceIdentifier> body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchContacts");
             scope.Start();
@@ -179,7 +180,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AdvisersDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceIdentifier>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetAdvisers");
             scope.Start();
@@ -196,7 +197,7 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AdvisersDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceIdentifier> GetAdvisers(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetAdvisers");
             scope.Start();
@@ -212,9 +213,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The AdvisersDocument to use. </param>
+        /// <param name="body"> The ResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostAdvisersAsync(int id, AdvisersDocument body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PostAdvisersAsync(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostAdvisers");
             scope.Start();
@@ -230,9 +231,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The AdvisersDocument to use. </param>
+        /// <param name="body"> The ResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostAdvisers(int id, AdvisersDocument body = null, CancellationToken cancellationToken = default)
+        public virtual Response PostAdvisers(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostAdvisers");
             scope.Start();
@@ -248,9 +249,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The AdvisersDocument to use. </param>
+        /// <param name="body"> The ResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PatchAdvisersAsync(int id, AdvisersDocument body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PatchAdvisersAsync(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchAdvisers");
             scope.Start();
@@ -266,9 +267,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The AdvisersDocument to use. </param>
+        /// <param name="body"> The ResourceIdentifier to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PatchAdvisers(int id, AdvisersDocument body = null, CancellationToken cancellationToken = default)
+        public virtual Response PatchAdvisers(int id, ResourceIdentifier body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchAdvisers");
             scope.Start();
