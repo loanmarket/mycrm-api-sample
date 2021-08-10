@@ -20,12 +20,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("contacts");
                 writer.WriteObjectValue(Contacts);
             }
+            if (Optional.IsDefined(Adviser))
+            {
+                writer.WritePropertyName("adviser");
+                writer.WriteObjectValue(Adviser);
+            }
             writer.WriteEndObject();
         }
 
         internal static ContactGroupRelationships DeserializeContactGroupRelationships(JsonElement element)
         {
             Optional<RelationshipsMultipleDocument> contacts = default;
+            Optional<RelationshipsSingleDocument> adviser = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contacts"))
@@ -38,8 +44,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     contacts = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
                     continue;
                 }
+                if (property.NameEquals("adviser"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    adviser = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    continue;
+                }
             }
-            return new ContactGroupRelationships(contacts.Value);
+            return new ContactGroupRelationships(contacts.Value, adviser.Value);
         }
     }
 }

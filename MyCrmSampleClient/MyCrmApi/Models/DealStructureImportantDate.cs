@@ -12,28 +12,40 @@ using Azure.Core;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The DealStructureImportantDate. </summary>
-    internal partial class DealStructureImportantDate
+    public partial class DealStructureImportantDate : IncludedResource
     {
         /// <summary> Initializes a new instance of DealStructureImportantDate. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal DealStructureImportantDate(DealStructureImportantDatesType type, string id)
+        public DealStructureImportantDate(string id) : base(id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            Type = type;
-            Id = id;
             Meta = new ChangeTrackingDictionary<string, object>();
+            Type = "deal-structure-important-dates";
         }
 
-        public DealStructureImportantDatesType Type { get; }
-        public string Id { get; }
-        public DealStructureImportantDateAttributes Attributes { get; }
-        public DealStructureImportantDateRelationships Relationships { get; }
+        /// <summary> Initializes a new instance of DealStructureImportantDate. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"></param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        internal DealStructureImportantDate(string type, string id, DealStructureImportantDateAttributes attributes, DealStructureImportantDateRelationships relationships, DealStructureImportantDateLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
+        {
+            Attributes = attributes;
+            Relationships = relationships;
+            Links = links;
+            Meta = meta;
+            Type = type ?? "deal-structure-important-dates";
+        }
+
+        public DealStructureImportantDateAttributes Attributes { get; set; }
+        public DealStructureImportantDateRelationships Relationships { get; set; }
         public DealStructureImportantDateLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }

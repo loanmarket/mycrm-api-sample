@@ -38,15 +38,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactGroupRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PathsPk0AwdJsonapiContactGroupsIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema>> GetAsync(int id, ContactGroupRelationship relationshipName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetContacts");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(id, relationshipName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetContactsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -56,15 +55,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactGroupRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PathsPk0AwdJsonapiContactGroupsIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema> Get(int id, ContactGroupRelationship relationshipName, CancellationToken cancellationToken = default)
+        public virtual Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetContacts");
             scope.Start();
             try
             {
-                return RestClient.Get(id, relationshipName, cancellationToken);
+                return RestClient.GetContacts(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -74,15 +72,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> HeadAsync(int id, string relationshipName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdvisersDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.Head");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetAdvisers");
             scope.Start();
             try
             {
-                return await RestClient.HeadAsync(id, relationshipName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetAdvisersAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -92,15 +89,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Head(int id, string relationshipName, CancellationToken cancellationToken = default)
+        public virtual Response<AdvisersDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.Head");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetAdvisers");
             scope.Start();
             try
             {
-                return RestClient.Head(id, relationshipName, cancellationToken);
+                return RestClient.GetAdvisers(id, cancellationToken);
             }
             catch (Exception e)
             {

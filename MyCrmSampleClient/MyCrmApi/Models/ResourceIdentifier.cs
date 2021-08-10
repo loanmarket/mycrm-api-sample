@@ -13,25 +13,28 @@ namespace MyCrmSampleClient.MyCrmApi.Models
     public partial class ResourceIdentifier
     {
         /// <summary> Initializes a new instance of ResourceIdentifier. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="id"/> is null. </exception>
-        public ResourceIdentifier(string type, string id)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public ResourceIdentifier(string id)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
+            Id = id;
+        }
+
+        /// <summary> Initializes a new instance of ResourceIdentifier. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        internal ResourceIdentifier(string type, string id)
+        {
             Type = type;
             Id = id;
         }
 
-        public string Type { get; set; }
+        internal string Type { get; set; }
         public string Id { get; set; }
     }
 }

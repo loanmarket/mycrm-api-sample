@@ -33,7 +33,7 @@ namespace MyCrmSampleClient.MyCrmApi
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetRequest(int id, IntegrationRelationship relationshipName)
+        internal HttpMessage CreateGetContactExternalReferencesRequest(int id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -42,19 +42,17 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(endpoint);
             uri.AppendPath("/jsonapi/integrations/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/", false);
-            uri.AppendPath(relationshipName.ToString(), true);
+            uri.AppendPath("/relationships/contactExternalReferences", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             return message;
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RelationshipsMultipleDocument>> GetAsync(int id, IntegrationRelationship relationshipName, CancellationToken cancellationToken = default)
+        public async Task<Response<RelationshipsMultipleDocument>> GetContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRequest(id, relationshipName);
+            using var message = CreateGetContactExternalReferencesRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -73,11 +71,10 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RelationshipsMultipleDocument> Get(int id, IntegrationRelationship relationshipName, CancellationToken cancellationToken = default)
+        public Response<RelationshipsMultipleDocument> GetContactExternalReferences(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRequest(id, relationshipName);
+            using var message = CreateGetContactExternalReferencesRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -95,69 +92,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreateGetHeadRequest(int id, string relationshipName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jsonapi/integrations/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/", false);
-            uri.AppendPath(relationshipName, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
-        public async Task<Response> GetHeadAsync(int id, string relationshipName, CancellationToken cancellationToken = default)
-        {
-            if (relationshipName == null)
-            {
-                throw new ArgumentNullException(nameof(relationshipName));
-            }
-
-            using var message = CreateGetHeadRequest(id, relationshipName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 401:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
-        public Response GetHead(int id, string relationshipName, CancellationToken cancellationToken = default)
-        {
-            if (relationshipName == null)
-            {
-                throw new ArgumentNullException(nameof(relationshipName));
-            }
-
-            using var message = CreateGetHeadRequest(id, relationshipName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 401:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreatePostRequest(int id, IntegrationRelationship relationshipName, RelationshipsMultipleDocument body)
+        internal HttpMessage CreatePostContactExternalReferencesRequest(int id, RelationshipsMultipleDocument body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -166,8 +101,7 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(endpoint);
             uri.AppendPath("/jsonapi/integrations/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/", false);
-            uri.AppendPath(relationshipName.ToString(), true);
+            uri.AppendPath("/relationships/contactExternalReferences", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             if (body != null)
@@ -181,12 +115,11 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PostAsync(int id, IntegrationRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PostContactExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePostRequest(id, relationshipName, body);
+            using var message = CreatePostContactExternalReferencesRequest(id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -200,12 +133,11 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Post(int id, IntegrationRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public Response PostContactExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePostRequest(id, relationshipName, body);
+            using var message = CreatePostContactExternalReferencesRequest(id, body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -218,7 +150,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreatePatchRequest(int id, IntegrationRelationship relationshipName, RelationshipsMultipleDocument body)
+        internal HttpMessage CreatePatchContactExternalReferencesRequest(int id, RelationshipsMultipleDocument body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -227,8 +159,7 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(endpoint);
             uri.AppendPath("/jsonapi/integrations/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/", false);
-            uri.AppendPath(relationshipName.ToString(), true);
+            uri.AppendPath("/relationships/contactExternalReferences", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             if (body != null)
@@ -242,12 +173,11 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PatchAsync(int id, IntegrationRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PatchContactExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePatchRequest(id, relationshipName, body);
+            using var message = CreatePatchContactExternalReferencesRequest(id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -261,12 +191,11 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Patch(int id, IntegrationRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public Response PatchContactExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePatchRequest(id, relationshipName, body);
+            using var message = CreatePatchContactExternalReferencesRequest(id, body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -279,7 +208,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(int id, IntegrationRelationship relationshipName)
+        internal HttpMessage CreateDeleteContactExternalReferencesRequest(int id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -288,19 +217,17 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(endpoint);
             uri.AppendPath("/jsonapi/integrations/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/", false);
-            uri.AppendPath(relationshipName.ToString(), true);
+            uri.AppendPath("/relationships/contactExternalReferences", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             return message;
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteAsync(int id, IntegrationRelationship relationshipName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(id, relationshipName);
+            using var message = CreateDeleteContactExternalReferencesRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -313,11 +240,232 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The IntegrationRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(int id, IntegrationRelationship relationshipName, CancellationToken cancellationToken = default)
+        public Response DeleteContactExternalReferences(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(id, relationshipName);
+            using var message = CreateDeleteContactExternalReferencesRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetDealExternalReferencesRequest(int id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/jsonapi/integrations/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/dealExternalReferences", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<RelationshipsMultipleDocument>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetDealExternalReferencesRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RelationshipsMultipleDocument value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<RelationshipsMultipleDocument> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetDealExternalReferencesRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RelationshipsMultipleDocument value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePostDealExternalReferencesRequest(int id, RelationshipsMultipleDocument body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/jsonapi/integrations/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/dealExternalReferences", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            if (body != null)
+            {
+                request.Headers.Add("Content-Type", "application/vnd.api+json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> PostDealExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePostDealExternalReferencesRequest(id, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response PostDealExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePostDealExternalReferencesRequest(id, body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePatchDealExternalReferencesRequest(int id, RelationshipsMultipleDocument body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/jsonapi/integrations/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/dealExternalReferences", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            if (body != null)
+            {
+                request.Headers.Add("Content-Type", "application/vnd.api+json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> PatchDealExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePatchDealExternalReferencesRequest(id, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response PatchDealExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePatchDealExternalReferencesRequest(id, body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteDealExternalReferencesRequest(int id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/jsonapi/integrations/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/dealExternalReferences", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> DeleteDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteDealExternalReferencesRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response DeleteDealExternalReferences(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteDealExternalReferencesRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

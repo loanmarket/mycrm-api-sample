@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "eddd59ca-faec-4efd-a8aa-bd2126eabc0b",
+		"_postman_id": "99fe3a59-4bcb-471f-830d-7a6c51e451e6",
 		"name": "MyCRM API Sample",
 		"description": "To use this sample it is necessary to populate the `Variables` section with the values supplied to you by Loan Market Group. This will enable the various samples to interact with your broker account in MyCRM. \n\n**NOTE:** If you are looking to replicate the behaviour of these samples, be sure to check the `Pre-request Script` section where the authorization flow is handled.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -36,11 +36,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/contact-groups?sort=-id&include=contacts",
+									"raw": "{{PublicAPI_Url}}/jsonapi/contact-groups?sort=-id&include=contacts",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
 									"path": [
+										"jsonapi",
 										"contact-groups"
 									],
 									"query": [
@@ -81,11 +82,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/contact-groups/:id/contacts",
+									"raw": "{{PublicAPI_Url}}/jsonapi/contact-groups/:id/contacts",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
 									"path": [
+										"jsonapi",
 										"contact-groups",
 										":id",
 										"contacts"
@@ -159,11 +161,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/contact-groups?sort=-id&fields[contact-groups]=utmCampaign,updated",
+									"raw": "{{PublicAPI_Url}}/jsonapi/contact-groups?sort=-id&fields[contact-groups]=utmCampaign,updated",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
 									"path": [
+										"jsonapi",
 										"contact-groups"
 									],
 									"query": [
@@ -204,11 +207,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/contact-groups/:id/contacts?fields[contacts]=email",
+									"raw": "{{PublicAPI_Url}}/jsonapi/contact-groups/:id/contacts?fields[contacts]=email",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
 									"path": [
+										"jsonapi",
 										"contact-groups",
 										":id",
 										"contacts"
@@ -258,11 +262,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/contact-groups?sort=-id&filter=and(greaterOrEqual(updated,'2021-08-01'),not(equals(utmCampaign,null)))",
+									"raw": "{{PublicAPI_Url}}/jsonapi/contact-groups?sort=-id&filter=and(greaterOrEqual(updated,'2021-08-01'),not(equals(utmCampaign,null)))",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
 									"path": [
+										"jsonapi",
 										"contact-groups"
 									],
 									"query": [
@@ -305,11 +310,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/contact-groups?sort=-id",
+							"raw": "{{PublicAPI_Url}}/jsonapi/contact-groups?sort=-id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"contact-groups"
 							],
 							"query": [
@@ -353,11 +359,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{PublicAPI_Url}}/contact-groups",
+							"raw": "{{PublicAPI_Url}}/jsonapi/contact-groups",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"contact-groups"
 							]
 						}
@@ -370,11 +377,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/contact-groups/:id",
+							"raw": "{{PublicAPI_Url}}/jsonapi/contact-groups/:id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"contact-groups",
 								":id"
 							],
@@ -419,11 +427,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{PublicAPI_Url}}/contact-groups/:id",
+							"raw": "{{PublicAPI_Url}}/jsonapi/contact-groups/:id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"contact-groups",
 								":id"
 							],
@@ -452,11 +461,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{PublicAPI_Url}}/contact-groups/:id",
+							"raw": "{{PublicAPI_Url}}/jsonapi/contact-groups/:id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"contact-groups",
 								":id"
 							],
@@ -484,11 +494,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/contacts/:id?include=contactAddress.addressDetails.address",
+									"raw": "{{PublicAPI_Url}}/jsonapi/contacts/:id?include=contactAddress.addressDetails.address",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
 									"path": [
+										"jsonapi",
 										"contacts",
 										":id"
 									],
@@ -537,11 +548,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/contacts?page[size]=20&sort=-id&filter=and(equals(hasMarketingConsent,'true'),greaterThan(updated,'2021-07-01'))",
+									"raw": "{{PublicAPI_Url}}/jsonapi/contacts?page[size]=20&sort=-id&filter=and(equals(hasMarketingConsent,'true'),greaterThan(updated,'2021-07-01'))",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
 									"path": [
+										"jsonapi",
 										"contacts"
 									],
 									"query": [
@@ -591,11 +603,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/contacts?page[size]=100&sort=-id&fields[contacts]=email,hasMarketingConsent,updated",
+									"raw": "{{PublicAPI_Url}}/jsonapi/contacts?page[size]=100&sort=-id&fields[contacts]=email,hasMarketingConsent,updated",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
 									"path": [
+										"jsonapi",
 										"contacts"
 									],
 									"query": [
@@ -642,11 +655,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/contacts?page[size]=100&sort=-id",
+							"raw": "{{PublicAPI_Url}}/jsonapi/contacts?page[size]=100&sort=-id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"contacts"
 							],
 							"query": [
@@ -669,11 +683,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/contacts/:id",
+							"raw": "{{PublicAPI_Url}}/jsonapi/contacts/:id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"contacts",
 								":id"
 							],
@@ -718,11 +733,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{PublicAPI_Url}}/contacts",
+							"raw": "{{PublicAPI_Url}}/jsonapi/contacts",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"contacts"
 							]
 						}
@@ -744,11 +760,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{PublicAPI_Url}}/contacts/{{lastContactId}}",
+							"raw": "{{PublicAPI_Url}}/jsonapi/contacts/{{lastContactId}}",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"contacts",
 								"{{lastContactId}}"
 							]
@@ -762,11 +779,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/contacts/:id",
+							"raw": "{{PublicAPI_Url}}/jsonapi/contacts/:id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"contacts",
 								":id"
 							],
@@ -794,11 +812,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/deals/:dealId/participants",
+									"raw": "{{PublicAPI_Url}}/jsonapi/deals/:dealId/participants",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
 									"path": [
+										"jsonapi",
 										"deals",
 										":dealId",
 										"participants"
@@ -826,11 +845,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/deals/:id?include=dealScenario.highLevelSummary",
+									"raw": "{{PublicAPI_Url}}/jsonapi/deals/:id?include=dealScenario.highLevelSummary",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
 									"path": [
+										"jsonapi",
 										"deals",
 										":id"
 									],
@@ -872,11 +892,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/deals?sort=-id&fields[deals]=updated,customStatusName",
+									"raw": "{{PublicAPI_Url}}/jsonapi/deals?sort=-id&fields[deals]=updated,customStatusName",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
 									"path": [
+										"jsonapi",
 										"deals"
 									],
 									"query": [
@@ -922,11 +943,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/deals?sort=-id&filter=greaterOrEqual(updated,'2021-08-01')",
+									"raw": "{{PublicAPI_Url}}/jsonapi/deals?sort=-id&filter=greaterOrEqual(updated,'2021-08-01')",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
 									"path": [
+										"jsonapi",
 										"deals"
 									],
 									"query": [
@@ -969,11 +991,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/deals?sort=-id",
+							"raw": "{{PublicAPI_Url}}/jsonapi/deals?sort=-id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"deals"
 							],
 							"query": [
@@ -1017,11 +1040,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{PublicAPI_Url}}/deals",
+							"raw": "{{PublicAPI_Url}}/jsonapi/deals",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"deals"
 							]
 						}
@@ -1034,11 +1058,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/deals/:id",
+							"raw": "{{PublicAPI_Url}}/jsonapi/deals/:id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"deals",
 								":id"
 							],
@@ -1062,11 +1087,12 @@
 							"raw": "{\n  \"data\": {\n    \"type\": \"deals\",\n    \"id\": {{lastDealId}},\n    \"attributes\": {\n      \"name\": \"Home loan re 2 Stone {{lastContactId}}\"\n    }\n  }\n}"
 						},
 						"url": {
-							"raw": "{{PublicAPI_Url}}/deals/:id",
+							"raw": "{{PublicAPI_Url}}/jsonapi/deals/:id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"deals",
 								":id"
 							],
@@ -1091,11 +1117,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/integrations",
+							"raw": "{{PublicAPI_Url}}/jsonapi/integrations",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"integrations"
 							]
 						}
@@ -1117,11 +1144,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{PublicAPI_Url}}/integrations",
+							"raw": "{{PublicAPI_Url}}/jsonapi/integrations",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"integrations"
 							]
 						}
@@ -1139,11 +1167,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/deal-external-references?sort=-id",
+							"raw": "{{PublicAPI_Url}}/jsonapi/deal-external-references?sort=-id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"deal-external-references"
 							],
 							"query": [
@@ -1171,11 +1200,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{PublicAPI_Url}}/deal-external-references",
+							"raw": "{{PublicAPI_Url}}/jsonapi/deal-external-references",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"deal-external-references"
 							]
 						}
@@ -1188,11 +1218,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/deal-external-references/1",
+							"raw": "{{PublicAPI_Url}}/jsonapi/deal-external-references/1",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"deal-external-references",
 								"1"
 							]
@@ -1211,11 +1242,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/contact-external-references?sort=-id",
+							"raw": "{{PublicAPI_Url}}/jsonapi/contact-external-references?sort=-id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"contact-external-references"
 							],
 							"query": [
@@ -1243,11 +1275,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{PublicAPI_Url}}/contact-external-references",
+							"raw": "{{PublicAPI_Url}}/jsonapi/contact-external-references",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"contact-external-references"
 							]
 						}
@@ -1260,11 +1293,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/contact-external-references/1",
+							"raw": "{{PublicAPI_Url}}/jsonapi/contact-external-references/1",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"contact-external-references",
 								"1"
 							]
@@ -1293,14 +1327,18 @@
 				"exec": [
 					"// Refresh the OAuth token if necessary",
 					"var tokenDate = new Date(2010,1,1);",
+					"",
 					"var tokenTimestamp = pm.variables.get(\"OAuth_Timestamp\");",
 					"if(tokenTimestamp){",
 					"  tokenDate = Date.parse(tokenTimestamp);",
 					"}",
+					"",
 					"var expiresInTime = pm.variables.get(\"ExpiresInTime\");",
 					"if(!expiresInTime){",
 					"    expiresInTime = 300000; // Set default expiration time to 5 minutes",
-					"}if((new Date() - tokenDate) >= expiresInTime) ",
+					"}",
+					"",
+					"if((new Date() - tokenDate) >= expiresInTime) ",
 					"{",
 					"   pm.sendRequest({",
 					"      url:  pm.variables.get(\"Auth_Url\"), ",
@@ -1369,18 +1407,6 @@
 		},
 		{
 			"key": "PublicAPI_Url",
-			"value": ""
-		},
-		{
-			"key": "OAuth_Timestamp",
-			"value": ""
-		},
-		{
-			"key": "ExpiresInTime",
-			"value": ""
-		},
-		{
-			"key": "OAuth_Token",
 			"value": ""
 		}
 	]

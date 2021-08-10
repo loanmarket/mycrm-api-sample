@@ -12,22 +12,20 @@ using Azure.Core;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The Deal. </summary>
-    public partial class Deal
+    public partial class Deal : IncludedResource
     {
         /// <summary> Initializes a new instance of Deal. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Deal(DealsType type, string id)
+        public Deal(string id) : base(id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            Type = type;
-            Id = id;
             Meta = new ChangeTrackingDictionary<string, object>();
+            Type = "deals";
         }
 
         /// <summary> Initializes a new instance of Deal. </summary>
@@ -37,18 +35,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="relationships"></param>
         /// <param name="links"></param>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        internal Deal(DealsType type, string id, DealAttributes attributes, DealRelationships relationships, DealLinks links, IReadOnlyDictionary<string, object> meta)
+        internal Deal(string type, string id, DealAttributes attributes, DealRelationships relationships, DealLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
         {
-            Type = type;
-            Id = id;
             Attributes = attributes;
             Relationships = relationships;
             Links = links;
             Meta = meta;
+            Type = type ?? "deals";
         }
 
-        public DealsType Type { get; set; }
-        public string Id { get; }
         public DealAttributes Attributes { get; set; }
         public DealRelationships Relationships { get; set; }
         public DealLinks Links { get; }

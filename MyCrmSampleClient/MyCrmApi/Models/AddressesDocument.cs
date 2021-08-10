@@ -28,6 +28,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Meta = new ChangeTrackingDictionary<string, object>();
             JsonApi = new ChangeTrackingDictionary<string, object>();
             Data = data.ToList();
+            Included = new ChangeTrackingList<IncludedResource>();
         }
 
         /// <summary> Dictionary of &lt;any&gt;. </summary>
@@ -36,5 +37,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public IReadOnlyDictionary<string, object> JsonApi { get; }
         public AddressesDocumentLinks Links { get; }
         public IReadOnlyList<Address> Data { get; }
+        public IReadOnlyList<IncludedResource> Included { get; }
     }
 }

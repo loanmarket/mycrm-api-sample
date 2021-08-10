@@ -27,6 +27,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Meta = new ChangeTrackingDictionary<string, object>();
             JsonApi = new ChangeTrackingDictionary<string, object>();
             Data = data;
+            Included = new ChangeTrackingList<IncludedResource>();
         }
 
         /// <summary> Initializes a new instance of ContactGroupDocument. </summary>
@@ -34,12 +35,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
         /// <param name="links"></param>
         /// <param name="data"></param>
-        internal ContactGroupDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, ContactGroupDocumentLinks links, ContactGroup data)
+        /// <param name="included"></param>
+        internal ContactGroupDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, ContactGroupDocumentLinks links, ContactGroup data, IReadOnlyList<IncludedResource> included)
         {
             Meta = meta;
             JsonApi = jsonApi;
             Links = links;
             Data = data;
+            Included = included;
         }
 
         /// <summary> Dictionary of &lt;any&gt;. </summary>
@@ -48,5 +51,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public IReadOnlyDictionary<string, object> JsonApi { get; }
         public ContactGroupDocumentLinks Links { get; }
         public ContactGroup Data { get; set; }
+        public IReadOnlyList<IncludedResource> Included { get; }
     }
 }

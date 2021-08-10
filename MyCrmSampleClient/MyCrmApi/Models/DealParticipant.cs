@@ -12,22 +12,20 @@ using Azure.Core;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The DealParticipant. </summary>
-    public partial class DealParticipant
+    public partial class DealParticipant : IncludedResource
     {
         /// <summary> Initializes a new instance of DealParticipant. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public DealParticipant(DealParticipantsType type, string id)
+        public DealParticipant(string id) : base(id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            Type = type;
-            Id = id;
             Meta = new ChangeTrackingDictionary<string, object>();
+            Type = "deal-participants";
         }
 
         /// <summary> Initializes a new instance of DealParticipant. </summary>
@@ -37,18 +35,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="relationships"></param>
         /// <param name="links"></param>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        internal DealParticipant(DealParticipantsType type, string id, DealParticipantAttributes attributes, DealParticipantRelationships relationships, DealParticipantLinks links, IReadOnlyDictionary<string, object> meta)
+        internal DealParticipant(string type, string id, DealParticipantAttributes attributes, DealParticipantRelationships relationships, DealParticipantLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
         {
-            Type = type;
-            Id = id;
             Attributes = attributes;
             Relationships = relationships;
             Links = links;
             Meta = meta;
+            Type = type ?? "deal-participants";
         }
 
-        public DealParticipantsType Type { get; set; }
-        public string Id { get; }
         public DealParticipantAttributes Attributes { get; set; }
         public DealParticipantRelationships Relationships { get; set; }
         public DealParticipantLinks Links { get; }

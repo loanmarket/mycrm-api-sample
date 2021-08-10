@@ -28,6 +28,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("name");
                 }
             }
+            if (Optional.IsDefined(Notes))
+            {
+                if (Notes != null)
+                {
+                    writer.WritePropertyName("notes");
+                    writer.WriteStringValue(Notes);
+                }
+                else
+                {
+                    writer.WriteNull("notes");
+                }
+            }
             if (Optional.IsDefined(UtmSource))
             {
                 if (UtmSource != null)
@@ -96,6 +108,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> name = default;
             Optional<DateTimeOffset?> created = default;
             Optional<DateTimeOffset?> updated = default;
+            Optional<string> notes = default;
             Optional<string> utmSource = default;
             Optional<string> utmMedium = default;
             Optional<string> utmTerm = default;
@@ -131,6 +144,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     updated = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("notes"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        notes = null;
+                        continue;
+                    }
+                    notes = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("utmSource"))
@@ -184,7 +207,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ContactGroupAttributes(name.Value, Optional.ToNullable(created), Optional.ToNullable(updated), utmSource.Value, utmMedium.Value, utmTerm.Value, utmContent.Value, utmCampaign.Value);
+            return new ContactGroupAttributes(name.Value, Optional.ToNullable(created), Optional.ToNullable(updated), notes.Value, utmSource.Value, utmMedium.Value, utmTerm.Value, utmContent.Value, utmCampaign.Value);
         }
     }
 }

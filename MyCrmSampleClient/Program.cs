@@ -53,16 +53,15 @@ namespace MyCrmSampleClient
                 if (string.IsNullOrEmpty(groupId)) return;
 
                 var contactId = await FindOrCreateContact(mycrmClient, groupId, contact);
-                
-                    
-                var getContactsResp = await mycrmClient.Contacts.GetAsync(sort: new[] {"-id"});
-                if (getContactsResp.Value == null)
-                {
-                    Log.Fatal("Get contacts failed {Status}", getContactsResp.GetRawResponse().Status);
-                    return;
-                }
 
-                Log.Information("Get contacts returned {Count} contacts", getContactsResp.Value.Data.Count);
+                var groupRefForContact = await mycrmClient.ContactRelationship.GetContactGroupsAsync(int.Parse(contactId));
+                Log.Information("Contact Group Reference for Contact {ContactId} returned {@Details}", contactId, groupRefForContact.Value.Data?.Id);
+                
+                var contactRefsForGroup = await mycrmClient.ContactGroupRelationship.GetContactsAsync(int.Parse(groupId));
+                Log.Information("Contact References for Contact Group {GroupId} returned {@Details}", contactId, contactRefsForGroup.Value.Data?.Select(x => x.Id));
+
+                var contactsByGroup = mycrmClient.ContactGroupRelated.GetContacts(int.Parse(groupId));
+                Log.Information("Contacts for Contact Group {GroupId} returned {@Details}", contactId, contactsByGroup.Value.Data?.Select(x => x.Attributes));
             }
             catch (Exception ex)
             {
@@ -92,7 +91,7 @@ namespace MyCrmSampleClient
             
                 var addGroupResp = await mycrmClient.ContactGroup.PostAsync(
                     new ContactGroupDocument(
-                        new ContactGroup(ContactGroupsType.ContactGroups, null,
+                        new ContactGroup(ContactGroupsType.ContactGroups.ToString(), null,
                             contactGroup,null, null, null)
                     ));
 
@@ -130,7 +129,7 @@ namespace MyCrmSampleClient
             {
                 var addContactResp = await mycrmClient.Contact.PostAsync(
                     new ContactDocument(
-                        new Contact(ContactsType.Contacts, null,
+                        new Contact(ContactsType.Contacts.ToString(), null,
                             contact,
                             new ContactRelationships
                             {

@@ -10,6 +10,11 @@ skip-csproj-packagereference: true
 input-file: swagger.json
 directive:
   - from: openapi-document
+    where: $.paths.*.head
+    transform: |
+      $ = undefined;
+    reason: HEAD verb isn't commonly required
+  - from: openapi-document
     where: $.paths.*.get.parameters[?(@.name === "page" && @.style === "deepObject")]
     transform: |
       $.style = "form";

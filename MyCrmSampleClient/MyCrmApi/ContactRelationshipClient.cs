@@ -38,15 +38,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelationshipsMultipleDocument>> GetAsync(int id, ContactRelationship relationshipName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RelationshipsSingleDocument>> GetContactGroupsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetContactGroups");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(id, relationshipName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetContactGroupsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -56,15 +55,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelationshipsMultipleDocument> Get(int id, ContactRelationship relationshipName, CancellationToken cancellationToken = default)
+        public virtual Response<RelationshipsSingleDocument> GetContactGroups(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetContactGroups");
             scope.Start();
             try
             {
-                return RestClient.Get(id, relationshipName, cancellationToken);
+                return RestClient.GetContactGroups(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -74,15 +72,15 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetHeadAsync(int id, string relationshipName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PostContactGroupsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetHead");
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostContactGroups");
             scope.Start();
             try
             {
-                return await RestClient.GetHeadAsync(id, relationshipName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.PostContactGroupsAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -92,15 +90,15 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetHead(int id, string relationshipName, CancellationToken cancellationToken = default)
+        public virtual Response PostContactGroups(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetHead");
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostContactGroups");
             scope.Start();
             try
             {
-                return RestClient.GetHead(id, relationshipName, cancellationToken);
+                return RestClient.PostContactGroups(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -110,16 +108,119 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactRelationship to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchContactGroupsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactGroups");
+            scope.Start();
+            try
+            {
+                return await RestClient.PatchContactGroupsAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchContactGroups(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactGroups");
+            scope.Start();
+            try
+            {
+                return RestClient.PatchContactGroups(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteContactGroupsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactGroups");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteContactGroupsAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteContactGroups(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactGroups");
+            scope.Start();
+            try
+            {
+                return RestClient.DeleteContactGroups(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetContactAddressesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetContactAddresses");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetContactAddressesAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetContactAddresses(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetContactAddresses");
+            scope.Start();
+            try
+            {
+                return RestClient.GetContactAddresses(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostAsync(int id, ContactRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PostContactAddressesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.Post");
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostContactAddresses");
             scope.Start();
             try
             {
-                return await RestClient.PostAsync(id, relationshipName, body, cancellationToken).ConfigureAwait(false);
+                return await RestClient.PostContactAddressesAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -129,16 +230,15 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactRelationship to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Post(int id, ContactRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public virtual Response PostContactAddresses(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.Post");
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostContactAddresses");
             scope.Start();
             try
             {
-                return RestClient.Post(id, relationshipName, body, cancellationToken);
+                return RestClient.PostContactAddresses(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -148,16 +248,15 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactRelationship to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PatchAsync(int id, ContactRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PatchContactAddressesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.Patch");
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactAddresses");
             scope.Start();
             try
             {
-                return await RestClient.PatchAsync(id, relationshipName, body, cancellationToken).ConfigureAwait(false);
+                return await RestClient.PatchContactAddressesAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -167,16 +266,15 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactRelationship to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Patch(int id, ContactRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public virtual Response PatchContactAddresses(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.Patch");
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactAddresses");
             scope.Start();
             try
             {
-                return RestClient.Patch(id, relationshipName, body, cancellationToken);
+                return RestClient.PatchContactAddresses(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -186,15 +284,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(int id, ContactRelationship relationshipName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteContactAddressesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactAddresses");
             scope.Start();
             try
             {
-                return await RestClient.DeleteAsync(id, relationshipName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteContactAddressesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -204,15 +301,294 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(int id, ContactRelationship relationshipName, CancellationToken cancellationToken = default)
+        public virtual Response DeleteContactAddresses(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactAddresses");
             scope.Start();
             try
             {
-                return RestClient.Delete(id, relationshipName, cancellationToken);
+                return RestClient.DeleteContactAddresses(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetContactExternalReferences");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetContactExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetContactExternalReferences(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetContactExternalReferences");
+            scope.Start();
+            try
+            {
+                return RestClient.GetContactExternalReferences(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostContactExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostContactExternalReferences");
+            scope.Start();
+            try
+            {
+                return await RestClient.PostContactExternalReferencesAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostContactExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostContactExternalReferences");
+            scope.Start();
+            try
+            {
+                return RestClient.PostContactExternalReferences(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchContactExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactExternalReferences");
+            scope.Start();
+            try
+            {
+                return await RestClient.PatchContactExternalReferencesAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchContactExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactExternalReferences");
+            scope.Start();
+            try
+            {
+                return RestClient.PatchContactExternalReferences(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactExternalReferences");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteContactExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteContactExternalReferences(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactExternalReferences");
+            scope.Start();
+            try
+            {
+                return RestClient.DeleteContactExternalReferences(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetDealParticipantsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetDealParticipants");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetDealParticipantsAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetDealParticipants(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetDealParticipants");
+            scope.Start();
+            try
+            {
+                return RestClient.GetDealParticipants(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostDealParticipantsAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostDealParticipants");
+            scope.Start();
+            try
+            {
+                return await RestClient.PostDealParticipantsAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostDealParticipants(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostDealParticipants");
+            scope.Start();
+            try
+            {
+                return RestClient.PostDealParticipants(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchDealParticipantsAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchDealParticipants");
+            scope.Start();
+            try
+            {
+                return await RestClient.PatchDealParticipantsAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchDealParticipants(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchDealParticipants");
+            scope.Start();
+            try
+            {
+                return RestClient.PatchDealParticipants(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteDealParticipantsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteDealParticipants");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteDealParticipantsAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteDealParticipants(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteDealParticipants");
+            scope.Start();
+            try
+            {
+                return RestClient.DeleteDealParticipants(id, cancellationToken);
             }
             catch (Exception e)
             {

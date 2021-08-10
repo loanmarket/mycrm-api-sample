@@ -10,11 +10,20 @@ using System;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The DealNoteAttributes. </summary>
-    internal partial class DealNoteAttributes
+    public partial class DealNoteAttributes
     {
         /// <summary> Initializes a new instance of DealNoteAttributes. </summary>
-        internal DealNoteAttributes()
+        public DealNoteAttributes()
         {
+        }
+
+        /// <summary> Initializes a new instance of DealNoteAttributes. </summary>
+        /// <param name="created"></param>
+        /// <param name="updated"></param>
+        internal DealNoteAttributes(DateTimeOffset? created, DateTimeOffset? updated)
+        {
+            Created = created;
+            Updated = updated;
         }
 
         public DateTimeOffset? Created { get; }

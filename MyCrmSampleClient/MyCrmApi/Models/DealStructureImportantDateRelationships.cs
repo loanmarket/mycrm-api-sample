@@ -8,14 +8,23 @@
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The DealStructureImportantDateRelationships. </summary>
-    internal partial class DealStructureImportantDateRelationships
+    public partial class DealStructureImportantDateRelationships
     {
         /// <summary> Initializes a new instance of DealStructureImportantDateRelationships. </summary>
-        internal DealStructureImportantDateRelationships()
+        public DealStructureImportantDateRelationships()
         {
         }
 
-        public RelationshipsSingleDocument DealStructure { get; }
-        public RelationshipsSingleDocument DateType { get; }
+        /// <summary> Initializes a new instance of DealStructureImportantDateRelationships. </summary>
+        /// <param name="dealStructure"></param>
+        /// <param name="dateType"></param>
+        internal DealStructureImportantDateRelationships(RelationshipsSingleDocument dealStructure, RelationshipsSingleDocument dateType)
+        {
+            DealStructure = dealStructure;
+            DateType = dateType;
+        }
+
+        public RelationshipsSingleDocument DealStructure { get; set; }
+        public RelationshipsSingleDocument DateType { get; set; }
     }
 }

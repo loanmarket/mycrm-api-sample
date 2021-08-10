@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The DealStructureImportantDatesType. </summary>
-    internal readonly partial struct DealStructureImportantDatesType : IEquatable<DealStructureImportantDatesType>
+    public readonly partial struct DealStructureImportantDatesType : IEquatable<DealStructureImportantDatesType>
     {
         private readonly string _value;
 

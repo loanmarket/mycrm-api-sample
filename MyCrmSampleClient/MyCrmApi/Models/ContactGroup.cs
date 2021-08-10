@@ -12,22 +12,20 @@ using Azure.Core;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The ContactGroup. </summary>
-    public partial class ContactGroup
+    public partial class ContactGroup : IncludedResource
     {
         /// <summary> Initializes a new instance of ContactGroup. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ContactGroup(ContactGroupsType type, string id)
+        public ContactGroup(string id) : base(id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            Type = type;
-            Id = id;
             Meta = new ChangeTrackingDictionary<string, object>();
+            Type = "contact-groups";
         }
 
         /// <summary> Initializes a new instance of ContactGroup. </summary>
@@ -37,18 +35,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="relationships"></param>
         /// <param name="links"></param>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        internal ContactGroup(ContactGroupsType type, string id, ContactGroupAttributes attributes, ContactGroupRelationships relationships, ContactGroupLinks links, IReadOnlyDictionary<string, object> meta)
+        internal ContactGroup(string type, string id, ContactGroupAttributes attributes, ContactGroupRelationships relationships, ContactGroupLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
         {
-            Type = type;
-            Id = id;
             Attributes = attributes;
             Relationships = relationships;
             Links = links;
             Meta = meta;
+            Type = type ?? "contact-groups";
         }
 
-        public ContactGroupsType Type { get; set; }
-        public string Id { get; }
         public ContactGroupAttributes Attributes { get; set; }
         public ContactGroupRelationships Relationships { get; set; }
         public ContactGroupLinks Links { get; }

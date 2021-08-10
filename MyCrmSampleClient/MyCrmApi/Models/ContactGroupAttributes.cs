@@ -21,16 +21,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="name"></param>
         /// <param name="created"></param>
         /// <param name="updated"></param>
+        /// <param name="notes"></param>
         /// <param name="utmSource"></param>
         /// <param name="utmMedium"></param>
         /// <param name="utmTerm"></param>
         /// <param name="utmContent"></param>
         /// <param name="utmCampaign"></param>
-        internal ContactGroupAttributes(string name, DateTimeOffset? created, DateTimeOffset? updated, string utmSource, string utmMedium, string utmTerm, string utmContent, string utmCampaign)
+        internal ContactGroupAttributes(string name, DateTimeOffset? created, DateTimeOffset? updated, string notes, string utmSource, string utmMedium, string utmTerm, string utmContent, string utmCampaign)
         {
             Name = name;
             Created = created;
             Updated = updated;
+            Notes = notes;
             UtmSource = utmSource;
             UtmMedium = utmMedium;
             UtmTerm = utmTerm;
@@ -41,6 +43,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string Name { get; set; }
         public DateTimeOffset? Created { get; }
         public DateTimeOffset? Updated { get; }
+        public string Notes { get; set; }
         public string UtmSource { get; set; }
         public string UtmMedium { get; set; }
         public string UtmTerm { get; set; }

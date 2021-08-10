@@ -12,22 +12,20 @@ using Azure.Core;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The Integration. </summary>
-    public partial class Integration
+    public partial class Integration : IncludedResource
     {
         /// <summary> Initializes a new instance of Integration. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Integration(IntegrationsType type, string id)
+        public Integration(string id) : base(id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            Type = type;
-            Id = id;
             Meta = new ChangeTrackingDictionary<string, object>();
+            Type = "integrations";
         }
 
         /// <summary> Initializes a new instance of Integration. </summary>
@@ -37,18 +35,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="relationships"></param>
         /// <param name="links"></param>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        internal Integration(IntegrationsType type, string id, IntegrationAttributes attributes, IntegrationRelationships relationships, IntegrationLinks links, IReadOnlyDictionary<string, object> meta)
+        internal Integration(string type, string id, IntegrationAttributes attributes, IntegrationRelationships relationships, IntegrationLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
         {
-            Type = type;
-            Id = id;
             Attributes = attributes;
             Relationships = relationships;
             Links = links;
             Meta = meta;
+            Type = type ?? "integrations";
         }
 
-        public IntegrationsType Type { get; set; }
-        public string Id { get; }
         public IntegrationAttributes Attributes { get; set; }
         public IntegrationRelationships Relationships { get; set; }
         public IntegrationLinks Links { get; }

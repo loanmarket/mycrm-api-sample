@@ -33,7 +33,7 @@ namespace MyCrmSampleClient.MyCrmApi
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetRequest(int id, ContactGroupRelationship relationshipName)
+        internal HttpMessage CreateGetContactsRequest(int id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -42,19 +42,17 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/", false);
-            uri.AppendPath(relationshipName.ToString(), true);
+            uri.AppendPath("/relationships/contacts", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             return message;
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactGroupRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RelationshipsMultipleDocument>> GetAsync(int id, ContactGroupRelationship relationshipName, CancellationToken cancellationToken = default)
+        public async Task<Response<RelationshipsMultipleDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRequest(id, relationshipName);
+            using var message = CreateGetContactsRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -73,11 +71,10 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactGroupRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RelationshipsMultipleDocument> Get(int id, ContactGroupRelationship relationshipName, CancellationToken cancellationToken = default)
+        public Response<RelationshipsMultipleDocument> GetContacts(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRequest(id, relationshipName);
+            using var message = CreateGetContactsRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -95,69 +92,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreateGetHeadRequest(int id, string relationshipName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/", false);
-            uri.AppendPath(relationshipName, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
-        public async Task<Response> GetHeadAsync(int id, string relationshipName, CancellationToken cancellationToken = default)
-        {
-            if (relationshipName == null)
-            {
-                throw new ArgumentNullException(nameof(relationshipName));
-            }
-
-            using var message = CreateGetHeadRequest(id, relationshipName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 401:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
-        public Response GetHead(int id, string relationshipName, CancellationToken cancellationToken = default)
-        {
-            if (relationshipName == null)
-            {
-                throw new ArgumentNullException(nameof(relationshipName));
-            }
-
-            using var message = CreateGetHeadRequest(id, relationshipName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 401:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreatePostRequest(int id, ContactGroupRelationship relationshipName, RelationshipsMultipleDocument body)
+        internal HttpMessage CreatePostContactsRequest(int id, RelationshipsMultipleDocument body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -166,8 +101,7 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/", false);
-            uri.AppendPath(relationshipName.ToString(), true);
+            uri.AppendPath("/relationships/contacts", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             if (body != null)
@@ -181,12 +115,11 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactGroupRelationship to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PostAsync(int id, ContactGroupRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PostContactsAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePostRequest(id, relationshipName, body);
+            using var message = CreatePostContactsRequest(id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -200,12 +133,11 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactGroupRelationship to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Post(int id, ContactGroupRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public Response PostContacts(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePostRequest(id, relationshipName, body);
+            using var message = CreatePostContactsRequest(id, body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -218,7 +150,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreatePatchRequest(int id, ContactGroupRelationship relationshipName, RelationshipsMultipleDocument body)
+        internal HttpMessage CreatePatchContactsRequest(int id, RelationshipsMultipleDocument body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -227,8 +159,7 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/", false);
-            uri.AppendPath(relationshipName.ToString(), true);
+            uri.AppendPath("/relationships/contacts", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             if (body != null)
@@ -242,12 +173,11 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactGroupRelationship to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PatchAsync(int id, ContactGroupRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PatchContactsAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePatchRequest(id, relationshipName, body);
+            using var message = CreatePatchContactsRequest(id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -261,12 +191,11 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactGroupRelationship to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Patch(int id, ContactGroupRelationship relationshipName, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        public Response PatchContacts(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePatchRequest(id, relationshipName, body);
+            using var message = CreatePatchContactsRequest(id, body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -279,7 +208,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(int id, ContactGroupRelationship relationshipName)
+        internal HttpMessage CreateDeleteContactsRequest(int id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -288,19 +217,17 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/", false);
-            uri.AppendPath(relationshipName.ToString(), true);
+            uri.AppendPath("/relationships/contacts", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             return message;
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactGroupRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteAsync(int id, ContactGroupRelationship relationshipName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteContactsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(id, relationshipName);
+            using var message = CreateDeleteContactsRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -313,11 +240,232 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The ContactGroupRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(int id, ContactGroupRelationship relationshipName, CancellationToken cancellationToken = default)
+        public Response DeleteContacts(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(id, relationshipName);
+            using var message = CreateDeleteContactsRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetAdvisersRequest(int id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/jsonapi/contact-groups/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/adviser", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<RelationshipsSingleDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAdvisersRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RelationshipsSingleDocument value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<RelationshipsSingleDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAdvisersRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RelationshipsSingleDocument value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePostAdvisersRequest(int id, RelationshipsSingleDocument body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/jsonapi/contact-groups/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/adviser", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            if (body != null)
+            {
+                request.Headers.Add("Content-Type", "application/vnd.api+json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> PostAdvisersAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePostAdvisersRequest(id, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response PostAdvisers(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePostAdvisersRequest(id, body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePatchAdvisersRequest(int id, RelationshipsSingleDocument body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/jsonapi/contact-groups/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/adviser", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            if (body != null)
+            {
+                request.Headers.Add("Content-Type", "application/vnd.api+json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> PatchAdvisersAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePatchAdvisersRequest(id, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response PatchAdvisers(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePatchAdvisersRequest(id, body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteAdvisersRequest(int id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/jsonapi/contact-groups/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/adviser", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> DeleteAdvisersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteAdvisersRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response DeleteAdvisers(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteAdvisersRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

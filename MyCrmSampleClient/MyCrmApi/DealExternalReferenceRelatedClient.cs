@@ -38,15 +38,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The DealExternalReferenceRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Paths1Ugotj3JsonapiDealExternalReferencesIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema>> GetAsync(int id, DealExternalReferenceRelationship relationshipName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DealsDocument>> GetDealsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DealExternalReferenceRelatedClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("DealExternalReferenceRelatedClient.GetDeals");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(id, relationshipName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetDealsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -56,15 +55,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The DealExternalReferenceRelationship to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Paths1Ugotj3JsonapiDealExternalReferencesIdRelationshipnameGetResponses200ContentApplicationVndApiJsonSchema> Get(int id, DealExternalReferenceRelationship relationshipName, CancellationToken cancellationToken = default)
+        public virtual Response<DealsDocument> GetDeals(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DealExternalReferenceRelatedClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("DealExternalReferenceRelatedClient.GetDeals");
             scope.Start();
             try
             {
-                return RestClient.Get(id, relationshipName, cancellationToken);
+                return RestClient.GetDeals(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -74,15 +72,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> HeadAsync(int id, string relationshipName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IntegrationsDocument>> GetIntegrationsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DealExternalReferenceRelatedClient.Head");
+            using var scope = _clientDiagnostics.CreateScope("DealExternalReferenceRelatedClient.GetIntegrations");
             scope.Start();
             try
             {
-                return await RestClient.HeadAsync(id, relationshipName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetIntegrationsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -92,15 +89,14 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="relationshipName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Head(int id, string relationshipName, CancellationToken cancellationToken = default)
+        public virtual Response<IntegrationsDocument> GetIntegrations(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DealExternalReferenceRelatedClient.Head");
+            using var scope = _clientDiagnostics.CreateScope("DealExternalReferenceRelatedClient.GetIntegrations");
             scope.Start();
             try
             {
-                return RestClient.Head(id, relationshipName, cancellationToken);
+                return RestClient.GetIntegrations(id, cancellationToken);
             }
             catch (Exception e)
             {

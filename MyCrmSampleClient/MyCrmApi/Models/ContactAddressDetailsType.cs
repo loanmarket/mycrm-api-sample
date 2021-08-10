@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The ContactAddressDetailsType. </summary>
-    internal readonly partial struct ContactAddressDetailsType : IEquatable<ContactAddressDetailsType>
+    public readonly partial struct ContactAddressDetailsType : IEquatable<ContactAddressDetailsType>
     {
         private readonly string _value;
 
