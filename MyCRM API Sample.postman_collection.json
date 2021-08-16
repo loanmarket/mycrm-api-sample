@@ -1358,6 +1358,99 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Leads",
+			"item": [
+				{
+					"name": "Add Lead",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Add Contact Group\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    pm.collectionVariables.set('lastLeadId', pm.response.json().data.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"leads\",\n        \"attributes\": {\n             \"title\": \"Mr\",\n            \"firstName\": \"Fred\",\n            \"preferredName\": null,\n            \"lastName\": \"Flintstone\",\n            \"email\": \"fred@bedrock.com\",\n            \"mobile\": \"0412345678\",\n            \"dateOfBirth\": \"2000-07-29\",\n            \"gender\": \"Male\",\n            \"hasMarketingConsent\": true,\n            \"isGuarantor\": false,\n            \"isDependant\": false,\n            \"isPrimary\": true,\n\n            \"streetAddress\": \"111 Eagle St\",\n            \"suburb\": \"Brisbane\",\n            \"state\": \"Queensland\",\n            \"postCode\": \"4000\",\n            \"country\": \"Australia\",\n            \"addressType\": \"Current\",\n\n            \"noteTitle\": \"About the lead\",\n            \"noteDetails\": \"This is why it happened\",\n\n            \"utmSource\": \"facebook\",\n            \"utmMedium\": \"social\",\n            \"utmCampaign\": \"mycrm-fb\",\n            \"utmTerm\": \"investment\",\n            \"utmContent\": \"lm\",\n            \n            \"sourceSystemUrl\": \"https://www.loanmarket.com.au/brokers/direct/our-team/michael-atherton\"\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/leads",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"leads"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Lead",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Add Contact Group\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    pm.collectionVariables.set('lastContactGroupId', pm.response.json().data.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/leads/{{lastLeadId}}",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"leads",
+								"{{lastLeadId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
