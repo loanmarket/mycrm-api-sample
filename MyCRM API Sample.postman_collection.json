@@ -13,6 +13,34 @@
 					"name": "Relationships",
 					"item": [
 						{
+							"name": "Get Contact Group Referrers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/jsonapi/contact-groups?sort=-id&include=referrer,referrerOrganization",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"jsonapi",
+										"contact-groups"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "-id"
+										},
+										{
+											"key": "include",
+											"value": "referrer,referrerOrganization"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Get Contact Groups Contacts",
 							"event": [
 								{
@@ -1301,6 +1329,29 @@
 								"jsonapi",
 								"contact-external-references",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Referrers",
+			"item": [
+				{
+					"name": "Get Referrers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/referrers",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"referrers"
 							]
 						}
 					},
