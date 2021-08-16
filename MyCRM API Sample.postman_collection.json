@@ -1393,11 +1393,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{PublicAPI_Url}}/leads",
+							"raw": "{{PublicAPI_Url}}/jsonapi/leads",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"leads"
 							]
 						}
@@ -1438,11 +1439,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{PublicAPI_Url}}/leads/{{lastLeadId}}",
+							"raw": "{{PublicAPI_Url}}/jsonapi/leads/{{lastLeadId}}",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
+								"jsonapi",
 								"leads",
 								"{{lastLeadId}}"
 							]
