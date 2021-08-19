@@ -379,7 +379,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"contact-groups\",\n    \"attributes\": {\n        \"name\": \"The Family Stone\",\n        \"utmSource\": \"facebook\",\n        \"utmMedium\": \"social\",\n        \"utmTerm\": \"investment\",\n        \"utmContent\": \"lm\",\n        \"utmCampaign\": \"mycrm-fb\"\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contact-groups\",\n    \"attributes\": {\n        \"utmSource\": \"facebook\",\n        \"utmMedium\": \"social\",\n        \"utmTerm\": \"investment\",\n        \"utmContent\": \"lm\",\n        \"utmCampaign\": \"mycrm-fb\"\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
