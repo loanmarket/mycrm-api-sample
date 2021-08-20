@@ -897,6 +897,79 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get Deal Adviser Details",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/jsonapi/deals/:dealId/adviser?include=adviserDetails",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"jsonapi",
+										"deals",
+										":dealId",
+										"adviser"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "contacts",
+											"disabled": true
+										},
+										{
+											"key": "include",
+											"value": "adviserDetails"
+										}
+									],
+									"variable": [
+										{
+											"key": "dealId",
+											"value": "{{lastDealId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Deal Include Adviser Details",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/jsonapi/deals/:dealId?include=adviser.adviserDetails",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"jsonapi",
+										"deals",
+										":dealId"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "contacts",
+											"disabled": true
+										},
+										{
+											"key": "include",
+											"value": "adviser.adviserDetails"
+										}
+									],
+									"variable": [
+										{
+											"key": "dealId",
+											"value": "{{lastDealId}}"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
