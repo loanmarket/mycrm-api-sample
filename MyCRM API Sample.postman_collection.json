@@ -753,7 +753,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\",\n    \"attributes\": {\n      \"title\": \"Mr\",\n      \"firstName\": \"Fred{{lastContactGroupId}}\",\n      \"lastName\": \"Flintstone\",\n      \"preferredName\": \"Wilma{{lastContactGroupId}}\",\n      \"mobile\": \"041{{lastContactGroupId}}\",\n      \"email\": \"wilma.flintstone-{{lastContactGroupId}}@email.com\"\n    },\n    \"relationships\": {\n        \"contactGroup\": {\n            \"data\": {\n                \"type\": \"contact-groups\",\n                \"id\": \"{{lastContactGroupId}}\"\n            }\n        }\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\",\n    \"attributes\": {\n      \"title\": \"Mr\",\n      \"firstName\": \"Fred{{lastContactGroupId}}\",\n      \"lastName\": \"Flintstone\",\n      \"preferredName\": \"Wilma{{lastContactGroupId}}\",\n      \"mobile\": \"041{{lastContactGroupId}}\",\n      \"email\": \"wilma.flintstone-{{lastContactGroupId}}@email.com\",\n      \"dateOfBirthDay\": 29,\n      \"dateOfBirthMonth\": 2,\n      \"dateOfBirthYear\": 1944\n    },\n    \"relationships\": {\n        \"contactGroup\": {\n            \"data\": {\n                \"type\": \"contact-groups\",\n                \"id\": \"{{lastContactGroupId}}\"\n            }\n        }\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -780,7 +780,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\",\n    \"id\": {{lastContactId}},\n    \"attributes\": {\n      \"middleName\": \"Howard\",\n      \"mobile\": \"040{{lastContactGroupId}}\",\n      \"email\": \"patched-{{lastContactGroupId}}@email.com\",\n      \"marketingConsent\": true\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\",\n    \"id\": {{lastContactId}},\n    \"attributes\": {\n      \"middleName\": \"Howard\",\n      \"mobile\": \"040{{lastContactGroupId}}\",\n      \"email\": \"patched-{{lastContactGroupId}}@email.com\",\n      \"dateOfBirthYear\": 1943,\n      \"dateOfBirthMonth\": 5,\n      \"dateOfBirthDay\": 14,\n      \"hasMarketingConsent\": true\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
