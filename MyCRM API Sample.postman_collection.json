@@ -802,6 +802,77 @@
 					"response": []
 				},
 				{
+					"name": "Update Contact Marketing",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contact-marketing\",\n    \"id\": {{lastContactId}},\n    \"attributes\": {\n      \"hasMarketingConsent\": false\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/contact-marketing/:id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"contact-marketing",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastContactId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contact Marketing",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/contact-marketing/:id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"contact-marketing",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastContactId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Delete Contact",
 					"request": {
 						"method": "DELETE",
