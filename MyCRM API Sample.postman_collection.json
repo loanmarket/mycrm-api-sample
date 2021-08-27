@@ -780,7 +780,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\",\n    \"id\": {{lastContactId}},\n    \"attributes\": {\n      \"middleName\": \"Howard\",\n      \"mobile\": \"040{{lastContactGroupId}}\",\n      \"email\": \"patched-{{lastContactGroupId}}@email.com\",\n      \"marketingConsent\": true\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\",\n    \"id\": {{lastContactId}},\n    \"attributes\": {\n      \"middleName\": \"Howard\",\n      \"mobile\": \"040{{lastContactGroupId}}\",\n      \"email\": \"patched-{{lastContactGroupId}}@email.com\",\n      \"dateOfBirth\": \"1943-05-13\",\n      \"marketingConsent\": true\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
