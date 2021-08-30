@@ -28,8 +28,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                if (Id != null)
+                {
+                    writer.WritePropertyName("id");
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNull("id");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -40,7 +50,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<DealLinks> links = default;
             Optional<IReadOnlyDictionary<string, object>> meta = default;
             string type = default;
-            string id = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("attributes"))
@@ -95,11 +105,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 }
                 if (property.NameEquals("id"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        id = null;
+                        continue;
+                    }
                     id = property.Value.GetString();
                     continue;
                 }
             }
-            return new Deal(type, id, attributes.Value, relationships.Value, links.Value, Optional.ToDictionary(meta));
+            return new Deal(type, id.Value, attributes.Value, relationships.Value, links.Value, Optional.ToDictionary(meta));
         }
     }
 }

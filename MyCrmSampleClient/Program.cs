@@ -27,10 +27,7 @@ namespace MyCrmSampleClient
                 var authConfig = config.GetSection("Auth").Get<AuthConfig>();
                 var mycrmConfig = config.GetSection("MyCRM").Get<MyCrmConfig>();
 
-                var contactGroup = new ContactGroupAttributes
-                {
-                    Name = "The Flinstones"
-                };
+                var contactGroup = new ContactGroupAttributes();
                 
                 var contact = new ContactAttributes
                 {
@@ -48,67 +45,21 @@ namespace MyCrmSampleClient
 
                 var mycrmClient = new MyCrmApiClient(new MyCrmApiClientCredential(token), new MyCrmApiClientOptions(mycrmConfig.AdviserContactId, mycrmConfig.Url));
                 
-                var groupId = await FindOrCreateContactGroup(mycrmClient, contactGroup);
-                
-                if (string.IsNullOrEmpty(groupId)) return;
+                var (groupId, contactId) = await FindOrCreateContact(mycrmClient, contact);
 
-                var contactId = await FindOrCreateContact(mycrmClient, groupId, contact);
-
-                var groupRefForContact = await mycrmClient.ContactRelationship.GetContactGroupsAsync(int.Parse(contactId));
-                Log.Information("Contact Group Reference for Contact {ContactId} returned {@Details}", contactId, groupRefForContact.Value.Data?.Id);
-                
                 var contactRefsForGroup = await mycrmClient.ContactGroupRelationship.GetContactsAsync(int.Parse(groupId));
-                Log.Information("Contact References for Contact Group {GroupId} returned {@Details}", contactId, contactRefsForGroup.Value.Data?.Select(x => x.Id));
+                Log.Information("Contact References for Contact Group {GroupId} returned {@Details}", groupId, contactRefsForGroup.Value.Data?.Select(x => x.Id));
 
                 var contactsByGroup = mycrmClient.ContactGroupRelated.GetContacts(int.Parse(groupId));
-                Log.Information("Contacts for Contact Group {GroupId} returned {@Details}", contactId, contactsByGroup.Value.Data?.Select(x => x.Attributes));
+                Log.Information("Contacts for Contact Group {GroupId} returned {@Details}", groupId, contactsByGroup.Value.Data?.Select(x => x.Attributes));
             }
             catch (Exception ex)
             {
                 Log.Fatal(ex, "Unexpected error");
             }
         }
-
-        private static async Task<string> FindOrCreateContactGroup(MyCrmApiClient mycrmClient, ContactGroupAttributes contactGroup)
-        {
-            var getGroupsResp = await mycrmClient.ContactGroups.GetAsync(filter: 
-                new[] { $"equals({nameof(ContactGroupAttributes.Name).ToCamelCase()},'{contactGroup.Name}')" });
-            
-            if (getGroupsResp.Value == null)
-            {
-                Log.Fatal("Get contact groups failed {Status}", getGroupsResp.GetRawResponse().Status);
-                return null;
-            }
-
-            string contactGroupId;
-            if (getGroupsResp.Value.Data.Count != 0)
-            {
-                contactGroupId = getGroupsResp.Value.Data.First().Id;
-                Log.Information("Found existing contact group {ContactGroupId}", contactGroupId);
-            }
-            else
-            {
-            
-                var addGroupResp = await mycrmClient.ContactGroup.PostAsync(
-                    new ContactGroupDocument(
-                        new ContactGroup(ContactGroupsType.ContactGroups.ToString(), null,
-                            contactGroup,null, null, null)
-                    ));
-
-                if (addGroupResp.Value == null)
-                {
-                    Log.Fatal("Add contact group failed {Status}", addGroupResp.GetRawResponse().Status);
-                    return null;
-                }
-            
-                contactGroupId = addGroupResp.Value.Data.Id;
-                Log.Information("Created contact group {ContactGroupId}", contactGroupId);
-            }
-
-            return contactGroupId;
-        }
         
-        private static async Task<string> FindOrCreateContact(MyCrmApiClient mycrmClient, string groupId, ContactAttributes contact)
+        private static async Task<(string contactGroupId, string contactId)> FindOrCreateContact(MyCrmApiClient mycrmClient, ContactAttributes contact)
         {
             var getContactsResp = await mycrmClient.Contacts.GetAsync(filter: 
                 new[] {$"equals({nameof(ContactAttributes.Email).ToCamelCase()},'{contact.Email}')"});
@@ -116,39 +67,69 @@ namespace MyCrmSampleClient
             if (getContactsResp.Value == null)
             {
                 Log.Fatal("Get contacts failed {Status}", getContactsResp.GetRawResponse().Status);
-                return null;
+                return (null, null);
             }
 
-            string contactId;
+            string contactId, contactGroupId;
             if (getContactsResp.Value.Data.Count != 0)
             {
                 contactId = getContactsResp.Value.Data.First().Id;
                 Log.Information("Found existing contact {ContactId}", contactId);
+
+                var getContactGroupsResp =
+                    await mycrmClient.ContactRelationship.GetContactGroupsAsync(int.Parse(contactId));
+
+                if (getContactGroupsResp.Value == null)
+                {
+                    Log.Fatal("Get contacts associated group failed {Status}", getContactGroupsResp.GetRawResponse().Status);
+                    return (null, null);
+                }
+                
+                contactGroupId = getContactGroupsResp.Value.Data.Id;
             }
             else
             {
+                var addGroupResp = await mycrmClient.ContactGroup.PostAsync(
+                    new ContactGroupDocument(
+                        new ContactGroup
+                        {
+                            Attributes = new ContactGroupAttributes()
+                        }
+                    ));
+
+                if (addGroupResp.Value == null)
+                {
+                    Log.Fatal("Add contact group failed {Status}", addGroupResp.GetRawResponse().Status);
+                    return (null, null);
+                }
+            
+                contactGroupId = addGroupResp.Value.Data.Id;
+                Log.Information("Created contact group {ContactGroupId}", contactGroupId);
+                
                 var addContactResp = await mycrmClient.Contact.PostAsync(
                     new ContactDocument(
-                        new Contact(ContactsType.Contacts.ToString(), null,
-                            contact,
-                            new ContactRelationships
+                        new Contact
+                        {
+                            Attributes = contact,
+                            Relationships = new ContactRelationships
                             {
                                 ContactGroup = new RelationshipsSingleDocument(
-                                    new ResourceIdentifier(ContactGroupsType.ContactGroups.ToString(), groupId))
-                            }, null, null)
+                                    new ResourceIdentifier("contact-groups", contactGroupId))
+                            }
+                        }
                     ));
 
                 if (addContactResp.Value == null)
                 {
                     Log.Fatal("Add contact failed {Status}", addContactResp.GetRawResponse().Status);
-                    return null;
+                    return (null, null);
                 }
 
                 contactId = addContactResp.Value.Data.Id;
                 Log.Information("Created contact {ContactId}", contactId);
             }
 
-            return contactId;
+            return (contactGroupId, contactId);
         }
     }
 }

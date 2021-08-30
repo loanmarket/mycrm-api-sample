@@ -40,11 +40,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("dealStructures");
                 writer.WriteObjectValue(DealStructures);
             }
-            if (Optional.IsDefined(DealStatus))
-            {
-                writer.WritePropertyName("dealStatus");
-                writer.WriteObjectValue(DealStatus);
-            }
             if (Optional.IsDefined(Contacts))
             {
                 writer.WritePropertyName("contacts");
@@ -54,6 +49,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             {
                 writer.WritePropertyName("importantDates");
                 writer.WriteObjectValue(ImportantDates);
+            }
+            if (Optional.IsDefined(Adviser))
+            {
+                writer.WritePropertyName("adviser");
+                writer.WriteObjectValue(Adviser);
             }
             writer.WriteEndObject();
         }
@@ -65,9 +65,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<RelationshipsMultipleDocument> participants = default;
             Optional<RelationshipsMultipleDocument> externalReferences = default;
             Optional<RelationshipsMultipleDocument> dealStructures = default;
-            Optional<RelationshipsSingleDocument> dealStatus = default;
             Optional<DealRelationshipsContacts> contacts = default;
             Optional<RelationshipsMultipleDocument> importantDates = default;
+            Optional<RelationshipsSingleDocument> adviser = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dealScenario"))
@@ -120,16 +120,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     dealStructures = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dealStatus"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    dealStatus = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("contacts"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -150,8 +140,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     importantDates = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
                     continue;
                 }
+                if (property.NameEquals("adviser"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    adviser = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    continue;
+                }
             }
-            return new DealRelationships(dealScenario.Value, dealNotes.Value, participants.Value, externalReferences.Value, dealStructures.Value, dealStatus.Value, contacts.Value, importantDates.Value);
+            return new DealRelationships(dealScenario.Value, dealNotes.Value, participants.Value, externalReferences.Value, dealStructures.Value, contacts.Value, importantDates.Value, adviser.Value);
         }
     }
 }

@@ -15,35 +15,25 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AddressDetails))
-            {
-                writer.WritePropertyName("addressDetails");
-                writer.WriteObjectValue(AddressDetails);
-            }
             if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact");
                 writer.WriteObjectValue(Contact);
+            }
+            if (Optional.IsDefined(AddressDetails))
+            {
+                writer.WritePropertyName("addressDetails");
+                writer.WriteObjectValue(AddressDetails);
             }
             writer.WriteEndObject();
         }
 
         internal static ContactAddressRelationships DeserializeContactAddressRelationships(JsonElement element)
         {
-            Optional<RelationshipsSingleDocument> addressDetails = default;
             Optional<RelationshipsSingleDocument> contact = default;
+            Optional<RelationshipsSingleDocument> addressDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("addressDetails"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    addressDetails = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("contact"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -54,8 +44,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     contact = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
                     continue;
                 }
+                if (property.NameEquals("addressDetails"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    addressDetails = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    continue;
+                }
             }
-            return new ContactAddressRelationships(addressDetails.Value, contact.Value);
+            return new ContactAddressRelationships(contact.Value, addressDetails.Value);
         }
     }
 }

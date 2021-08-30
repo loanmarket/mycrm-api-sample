@@ -16,6 +16,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Mobile))
+            {
+                if (Mobile != null)
+                {
+                    writer.WritePropertyName("mobile");
+                    writer.WriteStringValue(Mobile);
+                }
+                else
+                {
+                    writer.WriteNull("mobile");
+                }
+            }
             if (Optional.IsDefined(Title))
             {
                 if (Title != null)
@@ -76,18 +88,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("preferredName");
                 }
             }
-            if (Optional.IsDefined(Mobile))
-            {
-                if (Mobile != null)
-                {
-                    writer.WritePropertyName("mobile");
-                    writer.WriteStringValue(Mobile);
-                }
-                else
-                {
-                    writer.WriteNull("mobile");
-                }
-            }
             if (Optional.IsDefined(Email))
             {
                 if (Email != null)
@@ -98,18 +98,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 else
                 {
                     writer.WriteNull("email");
-                }
-            }
-            if (Optional.IsDefined(DateOfBirth))
-            {
-                if (DateOfBirth != null)
-                {
-                    writer.WritePropertyName("dateOfBirth");
-                    writer.WriteStringValue(DateOfBirth.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("dateOfBirth");
                 }
             }
             if (Optional.IsDefined(HasMarketingConsent))
@@ -124,24 +112,56 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("hasMarketingConsent");
                 }
             }
+            if (Optional.IsDefined(DateOfBirth))
+            {
+                if (DateOfBirth != null)
+                {
+                    writer.WritePropertyName("dateOfBirth");
+                    writer.WriteStringValue(DateOfBirth.Value, "D");
+                }
+                else
+                {
+                    writer.WriteNull("dateOfBirth");
+                }
+            }
             writer.WriteEndObject();
         }
 
         internal static ContactAttributes DeserializeContactAttributes(JsonElement element)
         {
+            Optional<DateTimeOffset?> created = default;
+            Optional<string> mobile = default;
             Optional<string> title = default;
             Optional<string> firstName = default;
             Optional<string> middleName = default;
             Optional<string> lastName = default;
             Optional<string> preferredName = default;
-            Optional<string> mobile = default;
             Optional<string> email = default;
-            Optional<DateTimeOffset?> created = default;
-            Optional<DateTimeOffset?> dateOfBirth = default;
-            Optional<bool?> hasMarketingConsent = default;
             Optional<DateTimeOffset?> updated = default;
+            Optional<bool?> hasMarketingConsent = default;
+            Optional<DateTimeOffset?> dateOfBirth = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("created"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        created = null;
+                        continue;
+                    }
+                    created = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("mobile"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        mobile = null;
+                        continue;
+                    }
+                    mobile = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("title"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -192,16 +212,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     preferredName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mobile"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        mobile = null;
-                        continue;
-                    }
-                    mobile = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("email"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -210,36 +220,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     email = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("created"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        created = null;
-                        continue;
-                    }
-                    created = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("dateOfBirth"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        dateOfBirth = null;
-                        continue;
-                    }
-                    dateOfBirth = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("hasMarketingConsent"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        hasMarketingConsent = null;
-                        continue;
-                    }
-                    hasMarketingConsent = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("updated"))
@@ -252,8 +232,28 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     updated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("hasMarketingConsent"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        hasMarketingConsent = null;
+                        continue;
+                    }
+                    hasMarketingConsent = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("dateOfBirth"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dateOfBirth = null;
+                        continue;
+                    }
+                    dateOfBirth = property.Value.GetDateTimeOffset("D");
+                    continue;
+                }
             }
-            return new ContactAttributes(title.Value, firstName.Value, middleName.Value, lastName.Value, preferredName.Value, mobile.Value, email.Value, Optional.ToNullable(created), Optional.ToNullable(dateOfBirth), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(updated));
+            return new ContactAttributes(Optional.ToNullable(created), mobile.Value, title.Value, firstName.Value, middleName.Value, lastName.Value, preferredName.Value, email.Value, Optional.ToNullable(updated), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(dateOfBirth));
         }
     }
 }

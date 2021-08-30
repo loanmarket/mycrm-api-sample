@@ -316,5 +316,285 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsSingleDocument>> GetReferrerOrganizationsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrerOrganizations");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetReferrerOrganizationsAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsSingleDocument> GetReferrerOrganizations(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrerOrganizations");
+            scope.Start();
+            try
+            {
+                return RestClient.GetReferrerOrganizations(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostReferrerOrganizationsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrerOrganizations");
+            scope.Start();
+            try
+            {
+                return await RestClient.PostReferrerOrganizationsAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostReferrerOrganizations(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrerOrganizations");
+            scope.Start();
+            try
+            {
+                return RestClient.PostReferrerOrganizations(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchReferrerOrganizationsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrerOrganizations");
+            scope.Start();
+            try
+            {
+                return await RestClient.PatchReferrerOrganizationsAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchReferrerOrganizations(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrerOrganizations");
+            scope.Start();
+            try
+            {
+                return RestClient.PatchReferrerOrganizations(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteReferrerOrganizationsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrerOrganizations");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteReferrerOrganizationsAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteReferrerOrganizations(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrerOrganizations");
+            scope.Start();
+            try
+            {
+                return RestClient.DeleteReferrerOrganizations(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsSingleDocument>> GetReferrersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrers");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetReferrersAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsSingleDocument> GetReferrers(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrers");
+            scope.Start();
+            try
+            {
+                return RestClient.GetReferrers(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostReferrersAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrers");
+            scope.Start();
+            try
+            {
+                return await RestClient.PostReferrersAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostReferrers(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrers");
+            scope.Start();
+            try
+            {
+                return RestClient.PostReferrers(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchReferrersAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrers");
+            scope.Start();
+            try
+            {
+                return await RestClient.PatchReferrersAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchReferrers(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrers");
+            scope.Start();
+            try
+            {
+                return RestClient.PatchReferrers(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteReferrersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrers");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteReferrersAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteReferrers(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrers");
+            scope.Start();
+            try
+            {
+                return RestClient.DeleteReferrers(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

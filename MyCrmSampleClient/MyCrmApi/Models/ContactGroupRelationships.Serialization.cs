@@ -25,6 +25,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("adviser");
                 writer.WriteObjectValue(Adviser);
             }
+            if (Optional.IsDefined(ReferrerOrganization))
+            {
+                writer.WritePropertyName("referrerOrganization");
+                writer.WriteObjectValue(ReferrerOrganization);
+            }
+            if (Optional.IsDefined(Referrer))
+            {
+                writer.WritePropertyName("referrer");
+                writer.WriteObjectValue(Referrer);
+            }
             writer.WriteEndObject();
         }
 
@@ -32,6 +42,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<RelationshipsMultipleDocument> contacts = default;
             Optional<RelationshipsSingleDocument> adviser = default;
+            Optional<RelationshipsSingleDocument> referrerOrganization = default;
+            Optional<RelationshipsSingleDocument> referrer = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contacts"))
@@ -54,8 +66,28 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     adviser = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
                     continue;
                 }
+                if (property.NameEquals("referrerOrganization"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    referrerOrganization = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("referrer"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    referrer = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    continue;
+                }
             }
-            return new ContactGroupRelationships(contacts.Value, adviser.Value);
+            return new ContactGroupRelationships(contacts.Value, adviser.Value, referrerOrganization.Value, referrer.Value);
         }
     }
 }

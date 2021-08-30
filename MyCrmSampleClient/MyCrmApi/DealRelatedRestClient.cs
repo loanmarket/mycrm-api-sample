@@ -445,5 +445,64 @@ namespace MyCrmSampleClient.MyCrmApi
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateGetAdvisersRequest(int id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/jsonapi/deals/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/adviser", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<AdvisersDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAdvisersRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AdvisersDocument value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AdvisersDocument.DeserializeAdvisersDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((AdvisersDocument)null, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<AdvisersDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAdvisersRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AdvisersDocument value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AdvisersDocument.DeserializeAdvisersDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((AdvisersDocument)null, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
     }
 }

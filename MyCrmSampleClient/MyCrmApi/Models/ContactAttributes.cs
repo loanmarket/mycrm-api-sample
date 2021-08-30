@@ -18,42 +18,42 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of ContactAttributes. </summary>
+        /// <param name="created"></param>
+        /// <param name="mobile"></param>
         /// <param name="title"></param>
         /// <param name="firstName"></param>
         /// <param name="middleName"></param>
         /// <param name="lastName"></param>
         /// <param name="preferredName"></param>
-        /// <param name="mobile"></param>
         /// <param name="email"></param>
-        /// <param name="created"></param>
-        /// <param name="dateOfBirth"></param>
-        /// <param name="hasMarketingConsent"></param>
         /// <param name="updated"></param>
-        internal ContactAttributes(string title, string firstName, string middleName, string lastName, string preferredName, string mobile, string email, DateTimeOffset? created, DateTimeOffset? dateOfBirth, bool? hasMarketingConsent, DateTimeOffset? updated)
+        /// <param name="hasMarketingConsent"></param>
+        /// <param name="dateOfBirth"></param>
+        internal ContactAttributes(DateTimeOffset? created, string mobile, string title, string firstName, string middleName, string lastName, string preferredName, string email, DateTimeOffset? updated, bool? hasMarketingConsent, DateTimeOffset? dateOfBirth)
         {
+            Created = created;
+            Mobile = mobile;
             Title = title;
             FirstName = firstName;
             MiddleName = middleName;
             LastName = lastName;
             PreferredName = preferredName;
-            Mobile = mobile;
             Email = email;
-            Created = created;
-            DateOfBirth = dateOfBirth;
-            HasMarketingConsent = hasMarketingConsent;
             Updated = updated;
+            HasMarketingConsent = hasMarketingConsent;
+            DateOfBirth = dateOfBirth;
         }
 
+        public DateTimeOffset? Created { get; }
+        public string Mobile { get; set; }
         public string Title { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string PreferredName { get; set; }
-        public string Mobile { get; set; }
         public string Email { get; set; }
-        public DateTimeOffset? Created { get; }
-        public DateTimeOffset? DateOfBirth { get; set; }
-        public bool? HasMarketingConsent { get; set; }
         public DateTimeOffset? Updated { get; }
+        public bool? HasMarketingConsent { get; set; }
+        public DateTimeOffset? DateOfBirth { get; set; }
     }
 }

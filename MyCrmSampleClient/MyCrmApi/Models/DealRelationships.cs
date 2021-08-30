@@ -21,19 +21,19 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="participants"></param>
         /// <param name="externalReferences"></param>
         /// <param name="dealStructures"></param>
-        /// <param name="dealStatus"></param>
         /// <param name="contacts"></param>
         /// <param name="importantDates"></param>
-        internal DealRelationships(RelationshipsSingleDocument dealScenario, RelationshipsMultipleDocument dealNotes, RelationshipsMultipleDocument participants, RelationshipsMultipleDocument externalReferences, RelationshipsMultipleDocument dealStructures, RelationshipsSingleDocument dealStatus, DealRelationshipsContacts contacts, RelationshipsMultipleDocument importantDates)
+        /// <param name="adviser"></param>
+        internal DealRelationships(RelationshipsSingleDocument dealScenario, RelationshipsMultipleDocument dealNotes, RelationshipsMultipleDocument participants, RelationshipsMultipleDocument externalReferences, RelationshipsMultipleDocument dealStructures, DealRelationshipsContacts contacts, RelationshipsMultipleDocument importantDates, RelationshipsSingleDocument adviser)
         {
             DealScenario = dealScenario;
             DealNotes = dealNotes;
             Participants = participants;
             ExternalReferences = externalReferences;
             DealStructures = dealStructures;
-            DealStatus = dealStatus;
             Contacts = contacts;
             ImportantDates = importantDates;
+            Adviser = adviser;
         }
 
         public RelationshipsSingleDocument DealScenario { get; set; }
@@ -41,8 +41,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public RelationshipsMultipleDocument Participants { get; set; }
         public RelationshipsMultipleDocument ExternalReferences { get; set; }
         public RelationshipsMultipleDocument DealStructures { get; set; }
-        public RelationshipsSingleDocument DealStatus { get; set; }
         public DealRelationshipsContacts Contacts { get; set; }
         public RelationshipsMultipleDocument ImportantDates { get; set; }
+        public RelationshipsSingleDocument Adviser { get; set; }
     }
 }

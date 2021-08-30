@@ -18,15 +18,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of DealNoteAttributes. </summary>
-        /// <param name="created"></param>
         /// <param name="updated"></param>
-        internal DealNoteAttributes(DateTimeOffset? created, DateTimeOffset? updated)
+        /// <param name="created"></param>
+        internal DealNoteAttributes(DateTimeOffset? updated, DateTimeOffset? created)
         {
-            Created = created;
             Updated = updated;
+            Created = created;
         }
 
-        public DateTimeOffset? Created { get; }
         public DateTimeOffset? Updated { get; }
+        public DateTimeOffset? Created { get; }
     }
 }

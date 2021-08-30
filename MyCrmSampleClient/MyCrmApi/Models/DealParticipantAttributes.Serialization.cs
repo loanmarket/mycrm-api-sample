@@ -16,18 +16,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsGuarantor))
-            {
-                if (IsGuarantor != null)
-                {
-                    writer.WritePropertyName("isGuarantor");
-                    writer.WriteNumberValue(IsGuarantor.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isGuarantor");
-                }
-            }
             if (Optional.IsDefined(IsAccountant))
             {
                 if (IsAccountant != null)
@@ -105,26 +93,26 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static DealParticipantAttributes DeserializeDealParticipantAttributes(JsonElement element)
         {
-            Optional<int?> isGuarantor = default;
+            Optional<string> detail = default;
             Optional<DateTimeOffset?> created = default;
             Optional<bool?> isAccountant = default;
             Optional<bool?> isSolicitor = default;
             Optional<bool?> isApplicant = default;
-            Optional<string> detail = default;
-            Optional<DateTimeOffset?> updated = default;
+            Optional<bool?> isGuarantor = default;
             Optional<bool?> isDependent = default;
             Optional<bool?> isAssetSupplier = default;
             Optional<bool?> isClientSoleTrader = default;
+            Optional<DateTimeOffset?> updated = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isGuarantor"))
+                if (property.NameEquals("detail"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        isGuarantor = null;
+                        detail = null;
                         continue;
                     }
-                    isGuarantor = property.Value.GetInt32();
+                    detail = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("created"))
@@ -167,24 +155,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     isApplicant = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("detail"))
+                if (property.NameEquals("isGuarantor"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        detail = null;
+                        isGuarantor = null;
                         continue;
                     }
-                    detail = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("updated"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        updated = null;
-                        continue;
-                    }
-                    updated = property.Value.GetDateTimeOffset("O");
+                    isGuarantor = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("isDependent"))
@@ -217,8 +195,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     isClientSoleTrader = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("updated"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        updated = null;
+                        continue;
+                    }
+                    updated = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new DealParticipantAttributes(Optional.ToNullable(isGuarantor), Optional.ToNullable(created), Optional.ToNullable(isAccountant), Optional.ToNullable(isSolicitor), Optional.ToNullable(isApplicant), detail.Value, Optional.ToNullable(updated), Optional.ToNullable(isDependent), Optional.ToNullable(isAssetSupplier), Optional.ToNullable(isClientSoleTrader));
+            return new DealParticipantAttributes(detail.Value, Optional.ToNullable(created), Optional.ToNullable(isAccountant), Optional.ToNullable(isSolicitor), Optional.ToNullable(isApplicant), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependent), Optional.ToNullable(isAssetSupplier), Optional.ToNullable(isClientSoleTrader), Optional.ToNullable(updated));
         }
     }
 }

@@ -21,20 +21,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static DealStructureAttributes DeserializeDealStructureAttributes(JsonElement element)
         {
-            Optional<DateTimeOffset?> fixedRateBeginDate = default;
             Optional<DateTimeOffset?> fixedRateExpiryDate = default;
+            Optional<DateTimeOffset?> fixedRateBeginDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fixedRateBeginDate"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        fixedRateBeginDate = null;
-                        continue;
-                    }
-                    fixedRateBeginDate = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (property.NameEquals("fixedRateExpiryDate"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -42,11 +32,21 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         fixedRateExpiryDate = null;
                         continue;
                     }
-                    fixedRateExpiryDate = property.Value.GetDateTimeOffset("O");
+                    fixedRateExpiryDate = property.Value.GetDateTimeOffset("D");
+                    continue;
+                }
+                if (property.NameEquals("fixedRateBeginDate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        fixedRateBeginDate = null;
+                        continue;
+                    }
+                    fixedRateBeginDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
             }
-            return new DealStructureAttributes(Optional.ToNullable(fixedRateBeginDate), Optional.ToNullable(fixedRateExpiryDate));
+            return new DealStructureAttributes(Optional.ToNullable(fixedRateExpiryDate), Optional.ToNullable(fixedRateBeginDate));
         }
     }
 }

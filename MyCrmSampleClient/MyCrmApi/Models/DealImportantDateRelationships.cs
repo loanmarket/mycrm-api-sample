@@ -17,14 +17,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Initializes a new instance of DealImportantDateRelationships. </summary>
         /// <param name="deal"></param>
-        /// <param name="dateType"></param>
-        internal DealImportantDateRelationships(RelationshipsSingleDocument deal, RelationshipsSingleDocument dateType)
+        internal DealImportantDateRelationships(RelationshipsSingleDocument deal)
         {
             Deal = deal;
-            DateType = dateType;
         }
 
         public RelationshipsSingleDocument Deal { get; set; }
-        public RelationshipsSingleDocument DateType { get; set; }
     }
 }

@@ -16,24 +16,24 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of AddressAttributes. </summary>
+        /// <param name="postCode"></param>
+        /// <param name="suburb"></param>
         /// <param name="streetAddress"></param>
         /// <param name="country"></param>
-        /// <param name="suburb"></param>
-        /// <param name="postCode"></param>
         /// <param name="state"></param>
-        internal AddressAttributes(string streetAddress, string country, string suburb, string postCode, string state)
+        internal AddressAttributes(string postCode, string suburb, string streetAddress, string country, string state)
         {
+            PostCode = postCode;
+            Suburb = suburb;
             StreetAddress = streetAddress;
             Country = country;
-            Suburb = suburb;
-            PostCode = postCode;
             State = state;
         }
 
+        public string PostCode { get; set; }
+        public string Suburb { get; set; }
         public string StreetAddress { get; set; }
         public string Country { get; set; }
-        public string Suburb { get; set; }
-        public string PostCode { get; set; }
         public string State { get; set; }
     }
 }

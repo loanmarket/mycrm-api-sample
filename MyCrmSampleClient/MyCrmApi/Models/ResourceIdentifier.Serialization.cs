@@ -17,15 +17,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WriteEndObject();
         }
 
         internal static ResourceIdentifier DeserializeResourceIdentifier(JsonElement element)
         {
             string type = default;
-            string id = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -39,7 +42,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ResourceIdentifier(type, id);
+            return new ResourceIdentifier(type, id.Value);
         }
     }
 }

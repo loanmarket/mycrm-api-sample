@@ -18,21 +18,21 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationAttributes. </summary>
+        /// <param name="updated"></param>
+        /// <param name="created"></param>
         /// <param name="name"></param>
         /// <param name="description"></param>
-        /// <param name="created"></param>
-        /// <param name="updated"></param>
-        internal IntegrationAttributes(string name, string description, DateTimeOffset? created, DateTimeOffset? updated)
+        internal IntegrationAttributes(DateTimeOffset? updated, DateTimeOffset? created, string name, string description)
         {
+            Updated = updated;
+            Created = created;
             Name = name;
             Description = description;
-            Created = created;
-            Updated = updated;
         }
 
+        public DateTimeOffset? Updated { get; }
+        public DateTimeOffset? Created { get; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTimeOffset? Created { get; }
-        public DateTimeOffset? Updated { get; }
     }
 }

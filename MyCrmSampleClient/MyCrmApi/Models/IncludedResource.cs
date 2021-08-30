@@ -5,24 +5,14 @@
 
 #nullable disable
 
-using System;
-
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The IncludedResource. </summary>
     public partial class IncludedResource
     {
         /// <summary> Initializes a new instance of IncludedResource. </summary>
-        /// <param name="id"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public IncludedResource(string id)
+        public IncludedResource()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            Id = id;
         }
 
         /// <summary> Initializes a new instance of IncludedResource. </summary>

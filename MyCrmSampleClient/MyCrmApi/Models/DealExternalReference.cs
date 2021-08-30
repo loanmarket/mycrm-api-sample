@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -15,15 +14,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
     public partial class DealExternalReference : IncludedResource
     {
         /// <summary> Initializes a new instance of DealExternalReference. </summary>
-        /// <param name="id"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public DealExternalReference(string id) : base(id)
+        public DealExternalReference()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
             Meta = new ChangeTrackingDictionary<string, object>();
             Type = "deal-external-references";
         }

@@ -5,24 +5,14 @@
 
 #nullable disable
 
-using System;
-
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The ResourceIdentifier. </summary>
     public partial class ResourceIdentifier
     {
         /// <summary> Initializes a new instance of ResourceIdentifier. </summary>
-        /// <param name="id"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ResourceIdentifier(string id)
+        public ResourceIdentifier()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            Id = id;
         }
 
         /// <summary> Initializes a new instance of ResourceIdentifier. </summary>

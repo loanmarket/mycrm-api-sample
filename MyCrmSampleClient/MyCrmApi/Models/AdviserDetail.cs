@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
@@ -15,31 +13,28 @@ namespace MyCrmSampleClient.MyCrmApi.Models
     internal partial class AdviserDetail
     {
         /// <summary> Initializes a new instance of AdviserDetail. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="id"/> is null. </exception>
-        internal AdviserDetail(string type, string id)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        internal AdviserDetail(string id)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            Type = type;
             Id = id;
-            Meta = new ChangeTrackingDictionary<string, object>();
         }
 
-        public string Type { get; }
         public string Id { get; }
-        public AdviserDetailAttributes Attributes { get; }
-        public AdviserDetailRelationships Relationships { get; }
-        public AdviserDetailLinks Links { get; }
-        /// <summary> Dictionary of &lt;any&gt;. </summary>
-        public IReadOnlyDictionary<string, object> Meta { get; }
+        public DateTimeOffset? Created { get; }
+        public string Mobile { get; }
+        public string Title { get; }
+        public string FirstName { get; }
+        public string MiddleName { get; }
+        public string LastName { get; }
+        public string PreferredName { get; }
+        public string Email { get; }
+        public Adviser Adviser { get; }
+        public DateTimeOffset? Updated { get; }
     }
 }

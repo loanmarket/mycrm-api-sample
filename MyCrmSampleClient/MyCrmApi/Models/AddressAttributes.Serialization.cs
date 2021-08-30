@@ -15,6 +15,30 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(PostCode))
+            {
+                if (PostCode != null)
+                {
+                    writer.WritePropertyName("postCode");
+                    writer.WriteStringValue(PostCode);
+                }
+                else
+                {
+                    writer.WriteNull("postCode");
+                }
+            }
+            if (Optional.IsDefined(Suburb))
+            {
+                if (Suburb != null)
+                {
+                    writer.WritePropertyName("suburb");
+                    writer.WriteStringValue(Suburb);
+                }
+                else
+                {
+                    writer.WriteNull("suburb");
+                }
+            }
             if (Optional.IsDefined(StreetAddress))
             {
                 if (StreetAddress != null)
@@ -39,30 +63,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("country");
                 }
             }
-            if (Optional.IsDefined(Suburb))
-            {
-                if (Suburb != null)
-                {
-                    writer.WritePropertyName("suburb");
-                    writer.WriteStringValue(Suburb);
-                }
-                else
-                {
-                    writer.WriteNull("suburb");
-                }
-            }
-            if (Optional.IsDefined(PostCode))
-            {
-                if (PostCode != null)
-                {
-                    writer.WritePropertyName("postCode");
-                    writer.WriteStringValue(PostCode);
-                }
-                else
-                {
-                    writer.WriteNull("postCode");
-                }
-            }
             if (Optional.IsDefined(State))
             {
                 if (State != null)
@@ -80,13 +80,33 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static AddressAttributes DeserializeAddressAttributes(JsonElement element)
         {
+            Optional<string> postCode = default;
+            Optional<string> suburb = default;
             Optional<string> streetAddress = default;
             Optional<string> country = default;
-            Optional<string> suburb = default;
-            Optional<string> postCode = default;
             Optional<string> state = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("postCode"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        postCode = null;
+                        continue;
+                    }
+                    postCode = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("suburb"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        suburb = null;
+                        continue;
+                    }
+                    suburb = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("streetAddress"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -107,26 +127,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     country = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("suburb"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        suburb = null;
-                        continue;
-                    }
-                    suburb = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("postCode"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        postCode = null;
-                        continue;
-                    }
-                    postCode = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("state"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -138,7 +138,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new AddressAttributes(streetAddress.Value, country.Value, suburb.Value, postCode.Value, state.Value);
+            return new AddressAttributes(postCode.Value, suburb.Value, streetAddress.Value, country.Value, state.Value);
         }
     }
 }

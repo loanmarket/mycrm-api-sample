@@ -17,8 +17,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                if (Id != null)
+                {
+                    writer.WritePropertyName("id");
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNull("id");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -32,7 +42,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     case "advisers": return Adviser.DeserializeAdviser(element);
                     case "contact-address": return ContactAddress.DeserializeContactAddress(element);
                     case "contact-address-details": return ContactAddressDetail.DeserializeContactAddressDetail(element);
+                    case "contact-group-referrers": return ContactGroupReferrer.DeserializeContactGroupReferrer(element);
                     case "contact-groups": return ContactGroup.DeserializeContactGroup(element);
+                    case "contact-marketing": return ContactMarketing.DeserializeContactMarketing(element);
                     case "contacts": return Contact.DeserializeContact(element);
                     case "deal-external-references": return DealExternalReference.DeserializeDealExternalReference(element);
                     case "deal-important-dates": return DealImportantDate.DeserializeDealImportantDate(element);
@@ -44,11 +56,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     case "deals": return Deal.DeserializeDeal(element);
                     case "high-level-summary": return HighLevelSummary.DeserializeHighLevelSummary(element);
                     case "integrations": return Integration.DeserializeIntegration(element);
+                    case "leads": return Lead.DeserializeLead(element);
+                    case "referrer": return Referrer.DeserializeReferrer(element);
+                    case "referrer-organization": return ReferrerOrganization.DeserializeReferrerOrganization(element);
                     case "contact-external-references": return ContactExternalReference.DeserializeContactExternalReference(element);
                 }
             }
             string type = default;
-            string id = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -58,11 +73,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 }
                 if (property.NameEquals("id"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        id = null;
+                        continue;
+                    }
                     id = property.Value.GetString();
                     continue;
                 }
             }
-            return new IncludedResource(type, id);
+            return new IncludedResource(type, id.Value);
         }
     }
 }

@@ -18,15 +18,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of ContactAddressDetailAttributes. </summary>
-        /// <param name="created"></param>
         /// <param name="updated"></param>
-        internal ContactAddressDetailAttributes(DateTimeOffset? created, DateTimeOffset? updated)
+        /// <param name="created"></param>
+        internal ContactAddressDetailAttributes(DateTimeOffset? updated, DateTimeOffset? created)
         {
-            Created = created;
             Updated = updated;
+            Created = created;
         }
 
-        public DateTimeOffset? Created { get; }
         public DateTimeOffset? Updated { get; }
+        public DateTimeOffset? Created { get; }
     }
 }

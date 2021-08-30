@@ -1016,5 +1016,145 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsSingleDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetAdvisers");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetAdvisersAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsSingleDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetAdvisers");
+            scope.Start();
+            try
+            {
+                return RestClient.GetAdvisers(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostAdvisersAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.PostAdvisers");
+            scope.Start();
+            try
+            {
+                return await RestClient.PostAdvisersAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostAdvisers(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.PostAdvisers");
+            scope.Start();
+            try
+            {
+                return RestClient.PostAdvisers(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchAdvisersAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.PatchAdvisers");
+            scope.Start();
+            try
+            {
+                return await RestClient.PatchAdvisersAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchAdvisers(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.PatchAdvisers");
+            scope.Start();
+            try
+            {
+                return RestClient.PatchAdvisers(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteAdvisersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.DeleteAdvisers");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteAdvisersAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteAdvisers(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.DeleteAdvisers");
+            scope.Start();
+            try
+            {
+                return RestClient.DeleteAdvisers(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

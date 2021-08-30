@@ -21,20 +21,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static ContactAddressDetailAttributes DeserializeContactAddressDetailAttributes(JsonElement element)
         {
-            Optional<DateTimeOffset?> created = default;
             Optional<DateTimeOffset?> updated = default;
+            Optional<DateTimeOffset?> created = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("created"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        created = null;
-                        continue;
-                    }
-                    created = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (property.NameEquals("updated"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -45,8 +35,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     updated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("created"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        created = null;
+                        continue;
+                    }
+                    created = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new ContactAddressDetailAttributes(Optional.ToNullable(created), Optional.ToNullable(updated));
+            return new ContactAddressDetailAttributes(Optional.ToNullable(updated), Optional.ToNullable(created));
         }
     }
 }

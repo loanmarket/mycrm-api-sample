@@ -1219,6 +1219,76 @@
         }
       }
     },
+    "/jsonapi/contact-marketing/{id}": {
+      "patch": {
+        "tags": [
+          "ContactMarketingConsent"
+        ],
+        "operationId": "ContactMarketingConsent_Patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactMarketing"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactMarketing"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactMarketing"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactMarketing"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "ContactMarketingConsent"
+        ],
+        "operationId": "ContactMarketingConsent_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/jsonapi/contacts": {
       "post": {
         "tags": [
@@ -4175,6 +4245,714 @@
         }
       }
     },
+    "/jsonapi/leads": {
+      "post": {
+        "tags": [
+          "Leads"
+        ],
+        "operationId": "Leads_Post",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Lead"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Lead"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Lead"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Lead"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/jsonapi/leads/{id}": {
+      "get": {
+        "tags": [
+          "Leads"
+        ],
+        "operationId": "Leads_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/jsonapi/referrers": {
+      "get": {
+        "tags": [
+          "Referrers"
+        ],
+        "operationId": "ContactGroupReferrers_Get",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "style": "form",
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "style": "form",
+            "explode": false,
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pagination"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactGroupReferrersDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Referrers"
+        ],
+        "operationId": "ContactGroupReferrers_Head",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Referrers"
+        ],
+        "operationId": "ContactGroupReferrer_Post",
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactGroupReferrerDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "headers": {
+              "Location": {
+                "description": "Location of newly created resource",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactGroupReferrerDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/referrers/{id}": {
+      "get": {
+        "tags": [
+          "Referrers"
+        ],
+        "operationId": "ContactGroupReferrer_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactGroupReferrerDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Referrers"
+        ],
+        "operationId": "ContactGroupReferrer_Head",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Referrers"
+        ],
+        "operationId": "ContactGroupReferrer_Patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactGroupReferrerDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactGroupReferrerDocument"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Referrers"
+        ],
+        "operationId": "ContactGroupReferrer_Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/referrers/{id}/{relationshipName}": {
+      "get": {
+        "tags": [
+          "Referrers"
+        ],
+        "operationId": "ContactGroupReferrerRelated_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "relationshipName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": { }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Referrers"
+        ],
+        "operationId": "ContactGroupReferrerRelated_Head",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "relationshipName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/referrers/{id}/relationships/{relationshipName}": {
+      "get": {
+        "tags": [
+          "Referrers"
+        ],
+        "operationId": "ContactGroupReferrerRelationship_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "relationshipName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": { }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Referrers"
+        ],
+        "operationId": "ContactGroupReferrerRelationship_Get_Head",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "relationshipName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Referrers"
+        ],
+        "operationId": "ContactGroupReferrerRelationship_Post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "relationshipName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": { }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Referrers"
+        ],
+        "operationId": "ContactGroupReferrerRelationship_Patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "relationshipName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": { }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Referrers"
+        ],
+        "operationId": "ContactGroupReferrerRelationship_Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "relationshipName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/contact-external-references/{id}/contact": {
       "get": {
         "tags": [
@@ -4620,6 +5398,164 @@
         }
       }
     },
+    "/jsonapi/contact-groups/{id}/referrerOrganization": {
+      "get": {
+        "tags": [
+          "ContactGroups"
+        ],
+        "operationId": "ContactGroupRelated_Get_ReferrerOrganizations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReferrerOrganizationsDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "ContactGroups"
+        ],
+        "operationId": "ContactGroupRelated_Head_ReferrerOrganizations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/contact-groups/{id}/referrer": {
+      "get": {
+        "tags": [
+          "ContactGroups"
+        ],
+        "operationId": "ContactGroupRelated_Get_Referrers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReferrersDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "ContactGroups"
+        ],
+        "operationId": "ContactGroupRelated_Head_Referrers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/contact-groups/{id}/relationships/adviser": {
       "get": {
         "tags": [
@@ -4797,6 +5733,422 @@
           "ContactGroups"
         ],
         "operationId": "ContactGroupRelationship_Delete_Advisers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/contact-groups/{id}/relationships/referrerOrganization": {
+      "get": {
+        "tags": [
+          "ContactGroups"
+        ],
+        "operationId": "ContactGroupRelationship_Get_ReferrerOrganizations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "ContactGroups"
+        ],
+        "operationId": "ContactGroupRelationship_Get_Head_ReferrerOrganizations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ContactGroups"
+        ],
+        "operationId": "ContactGroupRelationship_Post_ReferrerOrganizations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipsSingleDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "ContactGroups"
+        ],
+        "operationId": "ContactGroupRelationship_Patch_ReferrerOrganizations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipsSingleDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ContactGroups"
+        ],
+        "operationId": "ContactGroupRelationship_Delete_ReferrerOrganizations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/contact-groups/{id}/relationships/referrer": {
+      "get": {
+        "tags": [
+          "ContactGroups"
+        ],
+        "operationId": "ContactGroupRelationship_Get_Referrers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "ContactGroups"
+        ],
+        "operationId": "ContactGroupRelationship_Get_Head_Referrers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ContactGroups"
+        ],
+        "operationId": "ContactGroupRelationship_Post_Referrers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipsSingleDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "ContactGroups"
+        ],
+        "operationId": "ContactGroupRelationship_Patch_Referrers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipsSingleDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ContactGroups"
+        ],
+        "operationId": "ContactGroupRelationship_Delete_Referrers",
         "parameters": [
           {
             "name": "id",
@@ -6737,6 +8089,85 @@
         }
       }
     },
+    "/jsonapi/deals/{id}/adviser": {
+      "get": {
+        "tags": [
+          "Deals"
+        ],
+        "operationId": "DealRelated_Get_Advisers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdvisersDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Deals"
+        ],
+        "operationId": "DealRelated_Head_Advisers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/deals/{id}/relationships/dealNotes": {
       "get": {
         "tags": [
@@ -7985,6 +9416,214 @@
         }
       }
     },
+    "/jsonapi/deals/{id}/relationships/adviser": {
+      "get": {
+        "tags": [
+          "Deals"
+        ],
+        "operationId": "DealRelationship_Get_Advisers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Deals"
+        ],
+        "operationId": "DealRelationship_Get_Head_Advisers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Deals"
+        ],
+        "operationId": "DealRelationship_Post_Advisers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipsSingleDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Deals"
+        ],
+        "operationId": "DealRelationship_Patch_Advisers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipsSingleDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Deals"
+        ],
+        "operationId": "DealRelationship_Delete_Advisers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/integrations/{id}/dealExternalReferences": {
       "get": {
         "tags": [
@@ -8288,14 +9927,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "address"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "AddressesType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/AddressEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -8327,13 +9959,7 @@
       "AddressAttributes": {
         "type": "object",
         "properties": {
-          "streetAddress": {
-            "maxLength": 500,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "country": {
+          "postCode": {
             "maxLength": 500,
             "minLength": 0,
             "type": "string",
@@ -8345,7 +9971,13 @@
             "type": "string",
             "nullable": true
           },
-          "postCode": {
+          "streetAddress": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
             "maxLength": 500,
             "minLength": 0,
             "type": "string",
@@ -8395,6 +10027,12 @@
             "readOnly": true
           }
         }
+      },
+      "AddressEntityType": {
+        "enum": [
+          "address"
+        ],
+        "type": "string"
       },
       "AddressesDocument": {
         "required": [
@@ -8457,14 +10095,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "advisers"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "AdvisersType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/AdvisersEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -8503,39 +10134,23 @@
         ],
         "type": "object",
         "properties": {
-          "type": {
-            "type": "string"
-          },
           "id": {
             "pattern": "^[1-9]\\d*$",
             "type": "string",
             "readOnly": true
           },
-          "attributes": {
-            "$ref": "#/components/schemas/AdviserDetailAttributes"
-          },
-          "relationships": {
-            "$ref": "#/components/schemas/AdviserDetailRelationships"
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ResourceLinks"
-              }
-            ],
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
             "readOnly": true
           },
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AdviserDetailAttributes": {
-        "type": "object",
-        "properties": {
+          "mobile": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "title": {
             "maxLength": 100,
             "minLength": 0,
@@ -8566,23 +10181,14 @@
             "type": "string",
             "nullable": true
           },
-          "mobile": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
           "email": {
             "maxLength": 100,
             "minLength": 0,
             "type": "string",
             "nullable": true
           },
-          "created": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true,
-            "readOnly": true
+          "adviser": {
+            "$ref": "#/components/schemas/Adviser"
           },
           "updated": {
             "type": "string",
@@ -8590,92 +10196,8 @@
             "nullable": true,
             "readOnly": true
           }
-        }
-      },
-      "AdviserDetailDocument": {
-        "required": [
-          "data"
-        ],
-        "type": "object",
-        "properties": {
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "jsonApi": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TopLevelLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "data": {
-            "$ref": "#/components/schemas/AdviserDetail"
-          },
-          "included": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncludedResource"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
-        }
-      },
-      "AdviserDetailRelationships": {
-        "type": "object",
-        "properties": {
-          "adviser": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
-          }
-        }
-      },
-      "AdviserDetailsDocument": {
-        "required": [
-          "data"
-        ],
-        "type": "object",
-        "properties": {
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "jsonApi": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TopLevelLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AdviserDetail"
-            }
-          },
-          "included": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncludedResource"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
-        }
+        },
+        "additionalProperties": false
       },
       "AdviserDocument": {
         "required": [
@@ -8717,11 +10239,11 @@
       "AdviserRelationships": {
         "type": "object",
         "properties": {
-          "contactGroups": {
-            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-          },
           "adviserDetails": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          },
+          "contactGroups": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           }
         }
       },
@@ -8765,6 +10287,12 @@
           }
         }
       },
+      "AdvisersEntityType": {
+        "enum": [
+          "advisers"
+        ],
+        "type": "string"
+      },
       "ApiAdviserProfile": {
         "required": [
           "type",
@@ -8772,42 +10300,10 @@
         ],
         "type": "object",
         "properties": {
-          "type": {
-            "type": "string"
-          },
           "id": {
             "pattern": "^[1-9]\\d*$",
             "type": "string",
             "readOnly": true
-          },
-          "attributes": {
-            "$ref": "#/components/schemas/ApiAdviserProfileAttributes"
-          },
-          "relationships": {
-            "$ref": "#/components/schemas/ApiAdviserProfileRelationships"
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ResourceLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiAdviserProfileAttributes": {
-        "type": "object",
-        "properties": {
-          "bio": {
-            "type": "string",
-            "nullable": true
           },
           "jobTitle": {
             "maxLength": 255,
@@ -8815,87 +10311,161 @@
             "type": "string",
             "nullable": true,
             "readOnly": true
+          },
+          "bio": {
+            "type": "string",
+            "nullable": true
           }
-        }
+        },
+        "additionalProperties": false
       },
-      "ApiAdviserProfileDocument": {
+      "ApiAggregator": {
         "required": [
-          "data"
+          "type",
+          "id"
         ],
         "type": "object",
         "properties": {
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "jsonApi": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TopLevelLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "data": {
-            "$ref": "#/components/schemas/ApiAdviserProfile"
-          },
-          "included": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncludedResource"
-            },
-            "nullable": true,
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
             "readOnly": true
           }
-        }
+        },
+        "additionalProperties": false
       },
-      "ApiAdviserProfileRelationships": {
-        "type": "object"
-      },
-      "ApiAdviserProfilesDocument": {
+      "ApiCtrlBusinessUnit": {
         "required": [
-          "data"
+          "type",
+          "id"
         ],
         "type": "object",
         "properties": {
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "jsonApi": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TopLevelLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ApiAdviserProfile"
-            }
-          },
-          "included": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncludedResource"
-            },
-            "nullable": true,
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
             "readOnly": true
           }
+        },
+        "additionalProperties": false
+      },
+      "ApiCtrlPipelineCategory": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiCtrlPipeLineStatus": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiCtrlPipelineStatusGroup": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiCtrlPipeLineSubStatus": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiCtrlPipelineType": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiOrgPipelineStatus": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiPipelineCards": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientAddressType": {
+        "enum": [
+          "Current",
+          "Postal",
+          "PostSettlement",
+          "Previous",
+          "Other"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ClientAddressType",
+          "modelAsString": true
         }
       },
       "Contact": {
@@ -8911,14 +10481,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "contacts"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "ContactsType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/ContactsEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -8960,14 +10523,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "contact-address"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "ContactAddressesType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/ContactAddressEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -9012,14 +10568,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "contact-address-details"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "ContactAddressDetailsType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/ContactAddressDetailsEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -9051,13 +10600,13 @@
       "ContactAddressDetailAttributes": {
         "type": "object",
         "properties": {
-          "created": {
+          "updated": {
             "type": "string",
             "format": "date-time",
             "nullable": true,
             "readOnly": true
           },
-          "updated": {
+          "created": {
             "type": "string",
             "format": "date-time",
             "nullable": true,
@@ -9153,6 +10702,12 @@
           }
         }
       },
+      "ContactAddressDetailsEntityType": {
+        "enum": [
+          "contact-address-details"
+        ],
+        "type": "string"
+      },
       "ContactAddressDocument": {
         "required": [
           "data"
@@ -9189,6 +10744,12 @@
             "readOnly": true
           }
         }
+      },
+      "ContactAddressEntityType": {
+        "enum": [
+          "contact-address"
+        ],
+        "type": "string"
       },
       "ContactAddressesDocument": {
         "required": [
@@ -9233,10 +10794,10 @@
       "ContactAddressRelationships": {
         "type": "object",
         "properties": {
-          "addressDetails": {
+          "contact": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
-          "contact": {
+          "addressDetails": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
         }
@@ -9244,6 +10805,18 @@
       "ContactAttributes": {
         "type": "object",
         "properties": {
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "mobile": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "title": {
             "maxLength": 100,
             "minLength": 0,
@@ -9274,31 +10847,10 @@
             "type": "string",
             "nullable": true
           },
-          "mobile": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
           "email": {
             "maxLength": 100,
             "minLength": 0,
             "type": "string",
-            "nullable": true
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true,
-            "readOnly": true
-          },
-          "dateOfBirth": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "hasMarketingConsent": {
-            "type": "boolean",
             "nullable": true
           },
           "updated": {
@@ -9306,6 +10858,15 @@
             "format": "date-time",
             "nullable": true,
             "readOnly": true
+          },
+          "hasMarketingConsent": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
           }
         }
       },
@@ -9359,14 +10920,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "contact-external-references"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "ContactExternalReferencesType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/ContactExternalReferencesEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -9445,10 +10999,10 @@
       "ContactExternalReferenceRelationships": {
         "type": "object",
         "properties": {
-          "contact": {
+          "integration": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
-          "integration": {
+          "contact": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
         }
@@ -9493,6 +11047,12 @@
           }
         }
       },
+      "ContactExternalReferencesEntityType": {
+        "enum": [
+          "contact-external-references"
+        ],
+        "type": "string"
+      },
       "ContactGroup": {
         "required": [
           "type",
@@ -9506,14 +11066,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "contact-groups"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "ContactGroupsType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/ContactGroupsEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -9545,27 +11098,17 @@
       "ContactGroupAttributes": {
         "type": "object",
         "properties": {
-          "name": {
-            "maxLength": 500,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true,
-            "readOnly": true
-          },
           "updated": {
             "type": "string",
             "format": "date-time",
             "nullable": true,
             "readOnly": true
           },
-          "notes": {
+          "created": {
             "type": "string",
-            "nullable": true
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
           },
           "utmSource": {
             "maxLength": 100,
@@ -9594,6 +11137,10 @@
           "utmCampaign": {
             "maxLength": 1000,
             "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "notes": {
             "type": "string",
             "nullable": true
           }
@@ -9636,6 +11183,149 @@
           }
         }
       },
+      "ContactGroupReferrer": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ContactGroupReferrersEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/ContactGroupReferrerAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/ContactGroupReferrerRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContactGroupReferrerAttributes": {
+        "type": "object",
+        "properties": {
+          "referrerOrganizationName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "referrerName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "ContactGroupReferrerDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/ContactGroupReferrer"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "ContactGroupReferrerRelationships": {
+        "type": "object"
+      },
+      "ContactGroupReferrersDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactGroupReferrer"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "ContactGroupReferrersEntityType": {
+        "enum": [
+          "contact-group-referrers"
+        ],
+        "type": "string"
+      },
       "ContactGroupRelationships": {
         "type": "object",
         "properties": {
@@ -9643,6 +11333,12 @@
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           },
           "adviser": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          },
+          "referrerOrganization": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          },
+          "referrer": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
         }
@@ -9675,6 +11371,155 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ContactGroup"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "ContactGroupsEntityType": {
+        "enum": [
+          "contact-groups"
+        ],
+        "type": "string"
+      },
+      "ContactMarketing": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ContactMarketingEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/ContactMarketingAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/ContactMarketingRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContactMarketingAttributes": {
+        "type": "object",
+        "properties": {
+          "updated": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "hasMarketingConsent": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "ContactMarketingDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/ContactMarketing"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "ContactMarketingEntityType": {
+        "enum": [
+          "contact-marketing"
+        ],
+        "type": "string"
+      },
+      "ContactMarketingRelationships": {
+        "type": "object"
+      },
+      "ContactMarketingsDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactMarketing"
             }
           },
           "included": {
@@ -9744,6 +11589,27 @@
           }
         }
       },
+      "ContactsEntityType": {
+        "enum": [
+          "contacts"
+        ],
+        "type": "string"
+      },
+      "CtrlLoanStatus": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Deal": {
         "required": [
           "type",
@@ -9757,14 +11623,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "deals"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "DealsType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/DealsEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -9796,28 +11655,20 @@
       "DealAttributes": {
         "type": "object",
         "properties": {
-          "created": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true,
-            "readOnly": true
-          },
-          "adviserContactGroupId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true,
-            "readOnly": true
-          },
           "updated": {
             "type": "string",
             "format": "date-time",
             "nullable": true,
             "readOnly": true
           },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
           "dealTypeId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "$ref": "#/components/schemas/LoanAppLendingCategory"
           },
           "customStatusName": {
             "type": "string",
@@ -9827,6 +11678,13 @@
           "name": {
             "type": "string",
             "nullable": true
+          },
+          "dealStatus": {
+            "$ref": "#/components/schemas/SystemStatus"
+          },
+          "opportunity": {
+            "nullable": true,
+            "readOnly": true
           }
         }
       },
@@ -9880,14 +11738,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "deal-external-references"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "DealExternalReferencesType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/DealExternalReferencesEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -9966,10 +11817,10 @@
       "DealExternalReferenceRelationships": {
         "type": "object",
         "properties": {
-          "deal": {
+          "integration": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
-          "integration": {
+          "deal": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
         }
@@ -10014,6 +11865,12 @@
           }
         }
       },
+      "DealExternalReferencesEntityType": {
+        "enum": [
+          "deal-external-references"
+        ],
+        "type": "string"
+      },
       "DealImportantDate": {
         "required": [
           "type",
@@ -10027,14 +11884,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "deal-important-dates"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "DealImportantDatesType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/DealImportantDatesEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -10068,13 +11918,12 @@
         "properties": {
           "date": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "dateTypeDesc": {
-            "type": "string",
+            "format": "date",
             "nullable": true,
             "readOnly": true
+          },
+          "dateType": {
+            "$ref": "#/components/schemas/ImportantDate"
           }
         }
       },
@@ -10120,9 +11969,6 @@
         "properties": {
           "deal": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
-          },
-          "dateType": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
         }
       },
@@ -10166,6 +12012,12 @@
           }
         }
       },
+      "DealImportantDatesEntityType": {
+        "enum": [
+          "deal-important-dates"
+        ],
+        "type": "string"
+      },
       "DealNote": {
         "required": [
           "type",
@@ -10179,14 +12031,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "deal-notes"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "DealNotesType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/DealNotesEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -10218,13 +12063,13 @@
       "DealNoteAttributes": {
         "type": "object",
         "properties": {
-          "created": {
+          "updated": {
             "type": "string",
             "format": "date-time",
             "nullable": true,
             "readOnly": true
           },
-          "updated": {
+          "created": {
             "type": "string",
             "format": "date-time",
             "nullable": true,
@@ -10320,6 +12165,12 @@
           }
         }
       },
+      "DealNotesEntityType": {
+        "enum": [
+          "deal-notes"
+        ],
+        "type": "string"
+      },
       "DealParticipant": {
         "required": [
           "type",
@@ -10333,14 +12184,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "deal-participants"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "DealParticipantsType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/DealParticipantsEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -10372,10 +12216,10 @@
       "DealParticipantAttributes": {
         "type": "object",
         "properties": {
-          "isGuarantor": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
+          "detail": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
           },
           "created": {
             "type": "string",
@@ -10395,14 +12239,8 @@
             "type": "boolean",
             "nullable": true
           },
-          "detail": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time",
+          "isGuarantor": {
+            "type": "boolean",
             "nullable": true,
             "readOnly": true
           },
@@ -10417,6 +12255,12 @@
           "isClientSoleTrader": {
             "type": "boolean",
             "nullable": true
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
           }
         }
       },
@@ -10508,6 +12352,12 @@
           }
         }
       },
+      "DealParticipantsEntityType": {
+        "enum": [
+          "deal-participants"
+        ],
+        "type": "string"
+      },
       "DealRelationships": {
         "type": "object",
         "properties": {
@@ -10526,9 +12376,6 @@
           "dealStructures": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           },
-          "dealStatus": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
-          },
           "contacts": {
             "allOf": [
               {
@@ -10539,6 +12386,9 @@
           },
           "importantDates": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
+          "adviser": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
         }
       },
@@ -10555,14 +12405,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "deal-scenario"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "DealScenariosType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/DealScenarioEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -10630,6 +12473,12 @@
             "readOnly": true
           }
         }
+      },
+      "DealScenarioEntityType": {
+        "enum": [
+          "deal-scenario"
+        ],
+        "type": "string"
       },
       "DealScenarioRelationships": {
         "type": "object",
@@ -10719,6 +12568,12 @@
           }
         }
       },
+      "DealsEntityType": {
+        "enum": [
+          "deals"
+        ],
+        "type": "string"
+      },
       "DealStructure": {
         "required": [
           "type",
@@ -10732,14 +12587,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "deal-structures"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "DealStructuresType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/DealStructuresEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -10771,15 +12619,15 @@
       "DealStructureAttributes": {
         "type": "object",
         "properties": {
-          "fixedRateBeginDate": {
+          "fixedRateExpiryDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true,
             "readOnly": true
           },
-          "fixedRateExpiryDate": {
+          "fixedRateBeginDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true,
             "readOnly": true
           }
@@ -10835,14 +12683,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "deal-structure-important-dates"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "DealStructureImportantDatesType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/DealStructureImportantDatesEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -10874,15 +12715,20 @@
       "DealStructureImportantDateAttributes": {
         "type": "object",
         "properties": {
-          "startDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "finishDate": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "format": "date",
+            "nullable": true,
+            "readOnly": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "readOnly": true
+          },
+          "dateType": {
+            "$ref": "#/components/schemas/LoanStructureImportantDateTypes"
           }
         }
       },
@@ -10928,9 +12774,6 @@
         "properties": {
           "dealStructure": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
-          },
-          "dateType": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
         }
       },
@@ -10973,6 +12816,12 @@
             "readOnly": true
           }
         }
+      },
+      "DealStructureImportantDatesEntityType": {
+        "enum": [
+          "deal-structure-important-dates"
+        ],
+        "type": "string"
       },
       "DealStructureRelationships": {
         "type": "object",
@@ -11024,6 +12873,12 @@
             "readOnly": true
           }
         }
+      },
+      "DealStructuresEntityType": {
+        "enum": [
+          "deal-structures"
+        ],
+        "type": "string"
       },
       "Error": {
         "type": "object",
@@ -11110,6 +12965,36 @@
         },
         "additionalProperties": false
       },
+      "FamilyAssociatedEntity": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyBrokerBranding": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FamilyCommunication": {
         "required": [
           "type",
@@ -11117,122 +13002,46 @@
         ],
         "type": "object",
         "properties": {
-          "type": {
-            "type": "string"
-          },
           "id": {
             "pattern": "^[1-9]\\d*$",
             "type": "string",
             "readOnly": true
           },
-          "attributes": {
-            "$ref": "#/components/schemas/FamilyCommunicationAttributes"
-          },
-          "relationships": {
-            "$ref": "#/components/schemas/FamilyCommunicationRelationships"
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ResourceLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
+          "dealNotes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DealNote"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyLogin": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
             "readOnly": true
           }
         },
         "additionalProperties": false
       },
-      "FamilyCommunicationAttributes": {
-        "type": "object"
-      },
-      "FamilyCommunicationDocument": {
-        "required": [
-          "data"
+      "Gender": {
+        "enum": [
+          "Male",
+          "Female",
+          "Undisclosed"
         ],
-        "type": "object",
-        "properties": {
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "jsonApi": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TopLevelLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "data": {
-            "$ref": "#/components/schemas/FamilyCommunication"
-          },
-          "included": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncludedResource"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
-        }
-      },
-      "FamilyCommunicationRelationships": {
-        "type": "object",
-        "properties": {
-          "dealNotes": {
-            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-          }
-        }
-      },
-      "FamilyCommunicationsDocument": {
-        "required": [
-          "data"
-        ],
-        "type": "object",
-        "properties": {
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "jsonApi": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TopLevelLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FamilyCommunication"
-            }
-          },
-          "included": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncludedResource"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
+        "type": "string",
+        "x-ms-enum": {
+          "name": "Gender",
+          "modelAsString": true
         }
       },
       "HighLevelSummariesDocument": {
@@ -11288,14 +13097,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "high-level-summary"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "HighLevelSummariesType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/HighLevelSummaryEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -11382,6 +13184,12 @@
           }
         }
       },
+      "HighLevelSummaryEntityType": {
+        "enum": [
+          "high-level-summary"
+        ],
+        "type": "string"
+      },
       "HighLevelSummaryRelationships": {
         "type": "object",
         "properties": {
@@ -11390,9 +13198,19 @@
           }
         }
       },
+      "ImportantDate": {
+        "enum": [
+          "SettlementDate",
+          "LodgedDate"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ImportantDate",
+          "modelAsString": true
+        }
+      },
       "IncludedResource": {
         "required": [
-          "id",
           "type"
         ],
         "type": "object",
@@ -11401,7 +13219,8 @@
             "type": "string"
           },
           "id": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false,
@@ -11418,13 +13237,18 @@
             "deal-important-dates": "#/components/schemas/DealImportantDate",
             "deal-structure-important-dates": "#/components/schemas/DealStructureImportantDate",
             "deal-structures": "#/components/schemas/DealStructure",
+            "advisers": "#/components/schemas/Adviser",
             "deals": "#/components/schemas/Deal",
             "deal-external-references": "#/components/schemas/DealExternalReference",
             "integrations": "#/components/schemas/Integration",
-            "advisers": "#/components/schemas/Adviser",
+            "referrer-organization": "#/components/schemas/ReferrerOrganization",
+            "referrer": "#/components/schemas/Referrer",
             "contact-groups": "#/components/schemas/ContactGroup",
             "contacts": "#/components/schemas/Contact",
-            "contact-external-references": "#/components/schemas/ContactExternalReference"
+            "contact-external-references": "#/components/schemas/ContactExternalReference",
+            "contact-marketing": "#/components/schemas/ContactMarketing",
+            "leads": "#/components/schemas/Lead",
+            "contact-group-referrers": "#/components/schemas/ContactGroupReferrer"
           }
         }
       },
@@ -11441,14 +13265,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "integrations"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-              "name": "IntegrationsType",
-              "modelAsString": true
-            }
+            "$ref": "#/components/schemas/IntegrationsEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -11480,6 +13297,16 @@
       "IntegrationAttributes": {
         "type": "object",
         "properties": {
+          "updated": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
           "name": {
             "maxLength": 100,
             "minLength": 0,
@@ -11490,16 +13317,6 @@
             "minLength": 0,
             "type": "string",
             "nullable": true
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
           }
         }
       },
@@ -11591,6 +13408,280 @@
           }
         }
       },
+      "IntegrationsEntityType": {
+        "enum": [
+          "integrations"
+        ],
+        "type": "string"
+      },
+      "Lead": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/LeadsEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/LeadAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/LeadRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LeadAttributes": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "$ref": "#/components/schemas/Title"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "preferredName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "mobile": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "gender": {
+            "$ref": "#/components/schemas/Gender"
+          },
+          "hasMarketingConsent": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isGuarantor": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isDependant": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isPrimary": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "streetAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "suburb": {
+            "type": "string",
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "nullable": true
+          },
+          "postCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "addressType": {
+            "$ref": "#/components/schemas/ClientAddressType"
+          },
+          "noteTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "noteDetails": {
+            "type": "string",
+            "nullable": true
+          },
+          "utmSource": {
+            "type": "string",
+            "nullable": true
+          },
+          "utmMedium": {
+            "type": "string",
+            "nullable": true
+          },
+          "utmCampaign": {
+            "type": "string",
+            "nullable": true
+          },
+          "utmTerm": {
+            "type": "string",
+            "nullable": true
+          },
+          "utmContent": {
+            "type": "string",
+            "nullable": true
+          },
+          "sourceSystemUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "customStatusName": {
+            "type": "string",
+            "nullable": true
+          },
+          "dealStatus": {
+            "$ref": "#/components/schemas/SystemStatus"
+          }
+        }
+      },
+      "LeadDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/Lead"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "LeadRelationships": {
+        "type": "object"
+      },
+      "LeadsDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Lead"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "LeadsEntityType": {
+        "enum": [
+          "leads"
+        ],
+        "type": "string"
+      },
+      "LoanAppLendingCategory": {
+        "enum": [
+          "Residential",
+          "Commercial",
+          "SmallBusiness",
+          "AssetFinance",
+          "PersonalLoan",
+          "DepositBond"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "LoanAppLendingCategory",
+          "modelAsString": true
+        }
+      },
+      "LoanStructureImportantDateTypes": {
+        "enum": [
+          "InterestOnly",
+          "RepaymentHoliday"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "LoanStructureImportantDateTypes",
+          "modelAsString": true
+        }
+      },
       "Pagination": {
         "type": "object",
         "properties": {
@@ -11604,6 +13695,294 @@
           }
         },
         "additionalProperties": false
+      },
+      "Referrer": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ReferrerEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/ReferrerAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/ReferrerRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReferrerAttributes": {
+        "type": "object",
+        "properties": {
+          "referrerName": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ReferrerDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/Referrer"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "ReferrerEntityType": {
+        "enum": [
+          "referrer"
+        ],
+        "type": "string"
+      },
+      "ReferrerOrganization": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ReferrerOrganizationEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/ReferrerOrganizationAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/ReferrerOrganizationRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReferrerOrganizationAttributes": {
+        "type": "object",
+        "properties": {
+          "referrerOrgName": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ReferrerOrganizationDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/ReferrerOrganization"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "ReferrerOrganizationEntityType": {
+        "enum": [
+          "referrer-organization"
+        ],
+        "type": "string"
+      },
+      "ReferrerOrganizationRelationships": {
+        "type": "object",
+        "properties": {
+          "contactGroups": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          }
+        }
+      },
+      "ReferrerOrganizationsDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReferrerOrganization"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "ReferrerRelationships": {
+        "type": "object",
+        "properties": {
+          "contactGroups": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          }
+        }
+      },
+      "ReferrersDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Referrer"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
       },
       "RelationshipLinks": {
         "type": "object",
@@ -11675,8 +14054,7 @@
       },
       "ResourceIdentifier": {
         "required": [
-          "type",
-          "id"
+          "type"
         ],
         "type": "object",
         "properties": {
@@ -11701,6 +14079,43 @@
           }
         },
         "additionalProperties": false
+      },
+      "SystemStatus": {
+        "enum": [
+          "NewLeads",
+          "Researching",
+          "PreApproved",
+          "ConditionallyApproved",
+          "UnconditionallyApproved",
+          "Lodged",
+          "InProgress",
+          "PendingSettlement",
+          "Varied",
+          "Repaid",
+          "Withdrawn",
+          "Cancelled",
+          "Settled"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "SystemStatus",
+          "modelAsString": true
+        }
+      },
+      "Title": {
+        "enum": [
+          "Mr",
+          "Mrs",
+          "Ms",
+          "Miss",
+          "Master",
+          "Dr"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "Title",
+          "modelAsString": true
+        }
       },
       "TopLevelLinks": {
         "type": "object",
