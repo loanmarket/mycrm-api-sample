@@ -522,7 +522,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/jsonapi/contacts/:id?include=contactAddress.addressDetails.address",
+									"raw": "{{PublicAPI_Url}}/jsonapi/contacts/:id?include=contactAddress",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
@@ -534,7 +534,7 @@
 									"query": [
 										{
 											"key": "include",
-											"value": "contactAddress.addressDetails.address"
+											"value": "contactAddress"
 										}
 									],
 									"variable": [
