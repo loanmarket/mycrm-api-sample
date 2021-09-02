@@ -15,35 +15,25 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Deal))
-            {
-                writer.WritePropertyName("deal");
-                writer.WriteObjectValue(Deal);
-            }
             if (Optional.IsDefined(Integration))
             {
                 writer.WritePropertyName("integration");
                 writer.WriteObjectValue(Integration);
+            }
+            if (Optional.IsDefined(Deal))
+            {
+                writer.WritePropertyName("deal");
+                writer.WriteObjectValue(Deal);
             }
             writer.WriteEndObject();
         }
 
         internal static DealExternalReferenceRelationships DeserializeDealExternalReferenceRelationships(JsonElement element)
         {
-            Optional<RelationshipsSingleDocument> deal = default;
             Optional<RelationshipsSingleDocument> integration = default;
+            Optional<RelationshipsSingleDocument> deal = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deal"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    deal = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("integration"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -54,8 +44,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     integration = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
                     continue;
                 }
+                if (property.NameEquals("deal"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    deal = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    continue;
+                }
             }
-            return new DealExternalReferenceRelationships(deal.Value, integration.Value);
+            return new DealExternalReferenceRelationships(integration.Value, deal.Value);
         }
     }
 }

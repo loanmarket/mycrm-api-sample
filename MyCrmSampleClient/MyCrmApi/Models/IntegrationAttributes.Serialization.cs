@@ -38,12 +38,32 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static IntegrationAttributes DeserializeIntegrationAttributes(JsonElement element)
         {
+            Optional<DateTimeOffset> updated = default;
+            Optional<DateTimeOffset> created = default;
             Optional<string> name = default;
             Optional<string> description = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("updated"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    updated = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("created"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    created = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -59,28 +79,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("created"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    created = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("updated"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    updated = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
             }
-            return new IntegrationAttributes(name.Value, description.Value, Optional.ToNullable(created), Optional.ToNullable(updated));
+            return new IntegrationAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), name.Value, description.Value);
         }
     }
 }

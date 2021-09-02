@@ -18,15 +18,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of DealStructureAttributes. </summary>
-        /// <param name="fixedRateBeginDate"></param>
         /// <param name="fixedRateExpiryDate"></param>
-        internal DealStructureAttributes(DateTimeOffset? fixedRateBeginDate, DateTimeOffset? fixedRateExpiryDate)
+        /// <param name="fixedRateBeginDate"></param>
+        internal DealStructureAttributes(DateTimeOffset? fixedRateExpiryDate, DateTimeOffset? fixedRateBeginDate)
         {
-            FixedRateBeginDate = fixedRateBeginDate;
             FixedRateExpiryDate = fixedRateExpiryDate;
+            FixedRateBeginDate = fixedRateBeginDate;
         }
 
-        public DateTimeOffset? FixedRateBeginDate { get; }
         public DateTimeOffset? FixedRateExpiryDate { get; }
+        public DateTimeOffset? FixedRateBeginDate { get; }
     }
 }

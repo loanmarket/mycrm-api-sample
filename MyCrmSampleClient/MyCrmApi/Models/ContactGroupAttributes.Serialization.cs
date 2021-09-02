@@ -16,30 +16,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                if (Name != null)
-                {
-                    writer.WritePropertyName("name");
-                    writer.WriteStringValue(Name);
-                }
-                else
-                {
-                    writer.WriteNull("name");
-                }
-            }
-            if (Optional.IsDefined(Notes))
-            {
-                if (Notes != null)
-                {
-                    writer.WritePropertyName("notes");
-                    writer.WriteStringValue(Notes);
-                }
-                else
-                {
-                    writer.WriteNull("notes");
-                }
-            }
             if (Optional.IsDefined(UtmSource))
             {
                 if (UtmSource != null)
@@ -100,42 +76,33 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("utmCampaign");
                 }
             }
+            if (Optional.IsDefined(Notes))
+            {
+                if (Notes != null)
+                {
+                    writer.WritePropertyName("notes");
+                    writer.WriteStringValue(Notes);
+                }
+                else
+                {
+                    writer.WriteNull("notes");
+                }
+            }
             writer.WriteEndObject();
         }
 
         internal static ContactGroupAttributes DeserializeContactGroupAttributes(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<DateTimeOffset?> created = default;
             Optional<DateTimeOffset?> updated = default;
-            Optional<string> notes = default;
+            Optional<DateTimeOffset?> created = default;
             Optional<string> utmSource = default;
             Optional<string> utmMedium = default;
             Optional<string> utmTerm = default;
             Optional<string> utmContent = default;
             Optional<string> utmCampaign = default;
+            Optional<string> notes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        name = null;
-                        continue;
-                    }
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("created"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        created = null;
-                        continue;
-                    }
-                    created = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (property.NameEquals("updated"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -146,14 +113,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     updated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("notes"))
+                if (property.NameEquals("created"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        notes = null;
+                        created = null;
                         continue;
                     }
-                    notes = property.Value.GetString();
+                    created = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("utmSource"))
@@ -206,8 +173,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     utmCampaign = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("notes"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        notes = null;
+                        continue;
+                    }
+                    notes = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ContactGroupAttributes(name.Value, Optional.ToNullable(created), Optional.ToNullable(updated), notes.Value, utmSource.Value, utmMedium.Value, utmTerm.Value, utmContent.Value, utmCampaign.Value);
+            return new ContactGroupAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), utmSource.Value, utmMedium.Value, utmTerm.Value, utmContent.Value, utmCampaign.Value, notes.Value);
         }
     }
 }

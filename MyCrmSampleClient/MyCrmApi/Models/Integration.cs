@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -15,15 +14,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
     public partial class Integration : IncludedResource
     {
         /// <summary> Initializes a new instance of Integration. </summary>
-        /// <param name="id"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Integration(string id) : base(id)
+        public Integration()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
             Meta = new ChangeTrackingDictionary<string, object>();
             Type = "integrations";
         }

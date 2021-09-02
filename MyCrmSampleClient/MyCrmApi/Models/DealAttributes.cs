@@ -18,27 +18,31 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of DealAttributes. </summary>
-        /// <param name="created"></param>
-        /// <param name="adviserContactGroupId"></param>
         /// <param name="updated"></param>
+        /// <param name="created"></param>
         /// <param name="dealTypeId"></param>
         /// <param name="customStatusName"></param>
         /// <param name="name"></param>
-        internal DealAttributes(DateTimeOffset? created, int? adviserContactGroupId, DateTimeOffset? updated, int? dealTypeId, string customStatusName, string name)
+        /// <param name="dealStatus"></param>
+        /// <param name="opportunity"> Anything. </param>
+        internal DealAttributes(DateTimeOffset? updated, DateTimeOffset? created, LoanAppLendingCategory? dealTypeId, string customStatusName, string name, SystemStatus? dealStatus, object opportunity)
         {
-            Created = created;
-            AdviserContactGroupId = adviserContactGroupId;
             Updated = updated;
+            Created = created;
             DealTypeId = dealTypeId;
             CustomStatusName = customStatusName;
             Name = name;
+            DealStatus = dealStatus;
+            Opportunity = opportunity;
         }
 
-        public DateTimeOffset? Created { get; }
-        public int? AdviserContactGroupId { get; }
         public DateTimeOffset? Updated { get; }
-        public int? DealTypeId { get; set; }
+        public DateTimeOffset? Created { get; }
+        public LoanAppLendingCategory? DealTypeId { get; set; }
         public string CustomStatusName { get; }
         public string Name { get; set; }
+        public SystemStatus? DealStatus { get; set; }
+        /// <summary> Anything. </summary>
+        public object Opportunity { get; }
     }
 }

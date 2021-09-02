@@ -15,32 +15,20 @@ namespace MyCrmSampleClient.MyCrmApi.Models
     internal partial class FamilyCommunication
     {
         /// <summary> Initializes a new instance of FamilyCommunication. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="id"/> is null. </exception>
-        internal FamilyCommunication(string type, string id)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        internal FamilyCommunication(string id)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            Type = type;
             Id = id;
-            Meta = new ChangeTrackingDictionary<string, object>();
+            DealNotes = new ChangeTrackingList<DealNote>();
         }
 
-        public string Type { get; }
         public string Id { get; }
-        /// <summary> Any object. </summary>
-        public object Attributes { get; }
-        public FamilyCommunicationRelationships Relationships { get; }
-        public FamilyCommunicationLinks Links { get; }
-        /// <summary> Dictionary of &lt;any&gt;. </summary>
-        public IReadOnlyDictionary<string, object> Meta { get; }
+        public IReadOnlyList<DealNote> DealNotes { get; }
     }
 }

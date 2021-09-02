@@ -16,49 +16,21 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartDate))
+            if (Optional.IsDefined(DateType))
             {
-                if (StartDate != null)
-                {
-                    writer.WritePropertyName("startDate");
-                    writer.WriteStringValue(StartDate.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("startDate");
-                }
-            }
-            if (Optional.IsDefined(FinishDate))
-            {
-                if (FinishDate != null)
-                {
-                    writer.WritePropertyName("finishDate");
-                    writer.WriteStringValue(FinishDate.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("finishDate");
-                }
+                writer.WritePropertyName("dateType");
+                writer.WriteStringValue(DateType.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static DealStructureImportantDateAttributes DeserializeDealStructureImportantDateAttributes(JsonElement element)
         {
-            Optional<DateTimeOffset?> startDate = default;
             Optional<DateTimeOffset?> finishDate = default;
+            Optional<DateTimeOffset?> startDate = default;
+            Optional<LoanStructureImportantDateTypes> dateType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startDate"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        startDate = null;
-                        continue;
-                    }
-                    startDate = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (property.NameEquals("finishDate"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -66,11 +38,31 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         finishDate = null;
                         continue;
                     }
-                    finishDate = property.Value.GetDateTimeOffset("O");
+                    finishDate = property.Value.GetDateTimeOffset("D");
+                    continue;
+                }
+                if (property.NameEquals("startDate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        startDate = null;
+                        continue;
+                    }
+                    startDate = property.Value.GetDateTimeOffset("D");
+                    continue;
+                }
+                if (property.NameEquals("dateType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dateType = new LoanStructureImportantDateTypes(property.Value.GetString());
                     continue;
                 }
             }
-            return new DealStructureImportantDateAttributes(Optional.ToNullable(startDate), Optional.ToNullable(finishDate));
+            return new DealStructureImportantDateAttributes(Optional.ToNullable(finishDate), Optional.ToNullable(startDate), Optional.ToNullable(dateType));
         }
     }
 }

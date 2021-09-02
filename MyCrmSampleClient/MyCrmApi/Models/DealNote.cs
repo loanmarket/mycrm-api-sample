@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -15,15 +14,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
     public partial class DealNote : IncludedResource
     {
         /// <summary> Initializes a new instance of DealNote. </summary>
-        /// <param name="id"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public DealNote(string id) : base(id)
+        public DealNote()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
             Meta = new ChangeTrackingDictionary<string, object>();
             Type = "deal-notes";
         }

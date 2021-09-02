@@ -16,15 +16,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of DealExternalReferenceRelationships. </summary>
-        /// <param name="deal"></param>
         /// <param name="integration"></param>
-        internal DealExternalReferenceRelationships(RelationshipsSingleDocument deal, RelationshipsSingleDocument integration)
+        /// <param name="deal"></param>
+        internal DealExternalReferenceRelationships(RelationshipsSingleDocument integration, RelationshipsSingleDocument deal)
         {
-            Deal = deal;
             Integration = integration;
+            Deal = deal;
         }
 
-        public RelationshipsSingleDocument Deal { get; set; }
         public RelationshipsSingleDocument Integration { get; set; }
+        public RelationshipsSingleDocument Deal { get; set; }
     }
 }

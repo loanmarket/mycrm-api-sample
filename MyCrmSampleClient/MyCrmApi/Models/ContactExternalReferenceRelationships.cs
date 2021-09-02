@@ -16,15 +16,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of ContactExternalReferenceRelationships. </summary>
-        /// <param name="contact"></param>
         /// <param name="integration"></param>
-        internal ContactExternalReferenceRelationships(RelationshipsSingleDocument contact, RelationshipsSingleDocument integration)
+        /// <param name="contact"></param>
+        internal ContactExternalReferenceRelationships(RelationshipsSingleDocument integration, RelationshipsSingleDocument contact)
         {
-            Contact = contact;
             Integration = integration;
+            Contact = contact;
         }
 
-        public RelationshipsSingleDocument Contact { get; set; }
         public RelationshipsSingleDocument Integration { get; set; }
+        public RelationshipsSingleDocument Contact { get; set; }
     }
 }

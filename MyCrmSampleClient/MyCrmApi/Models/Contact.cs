@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -15,15 +14,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
     public partial class Contact : IncludedResource
     {
         /// <summary> Initializes a new instance of Contact. </summary>
-        /// <param name="id"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Contact(string id) : base(id)
+        public Contact()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
             Meta = new ChangeTrackingDictionary<string, object>();
             Type = "contacts";
         }

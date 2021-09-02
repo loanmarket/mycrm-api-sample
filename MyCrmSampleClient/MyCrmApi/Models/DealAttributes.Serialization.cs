@@ -18,15 +18,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DealTypeId))
             {
-                if (DealTypeId != null)
-                {
-                    writer.WritePropertyName("dealTypeId");
-                    writer.WriteNumberValue(DealTypeId.Value);
-                }
-                else
-                {
-                    writer.WriteNull("dealTypeId");
-                }
+                writer.WritePropertyName("dealTypeId");
+                writer.WriteStringValue(DealTypeId.Value.ToString());
             }
             if (Optional.IsDefined(Name))
             {
@@ -40,39 +33,25 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("name");
                 }
             }
+            if (Optional.IsDefined(DealStatus))
+            {
+                writer.WritePropertyName("dealStatus");
+                writer.WriteStringValue(DealStatus.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
         internal static DealAttributes DeserializeDealAttributes(JsonElement element)
         {
-            Optional<DateTimeOffset?> created = default;
-            Optional<int?> adviserContactGroupId = default;
             Optional<DateTimeOffset?> updated = default;
-            Optional<int?> dealTypeId = default;
+            Optional<DateTimeOffset?> created = default;
+            Optional<LoanAppLendingCategory> dealTypeId = default;
             Optional<string> customStatusName = default;
             Optional<string> name = default;
+            Optional<SystemStatus> dealStatus = default;
+            Optional<object> opportunity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("created"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        created = null;
-                        continue;
-                    }
-                    created = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("adviserContactGroupId"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        adviserContactGroupId = null;
-                        continue;
-                    }
-                    adviserContactGroupId = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("updated"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -83,14 +62,24 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     updated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("created"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        created = null;
+                        continue;
+                    }
+                    created = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (property.NameEquals("dealTypeId"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dealTypeId = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dealTypeId = property.Value.GetInt32();
+                    dealTypeId = new LoanAppLendingCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("customStatusName"))
@@ -113,8 +102,28 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("dealStatus"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dealStatus = new SystemStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("opportunity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        opportunity = null;
+                        continue;
+                    }
+                    opportunity = property.Value.GetObject();
+                    continue;
+                }
             }
-            return new DealAttributes(Optional.ToNullable(created), Optional.ToNullable(adviserContactGroupId), Optional.ToNullable(updated), Optional.ToNullable(dealTypeId), customStatusName.Value, name.Value);
+            return new DealAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), Optional.ToNullable(dealTypeId), customStatusName.Value, name.Value, Optional.ToNullable(dealStatus), opportunity.Value);
         }
     }
 }

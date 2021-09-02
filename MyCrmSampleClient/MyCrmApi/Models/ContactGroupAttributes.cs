@@ -18,36 +18,33 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of ContactGroupAttributes. </summary>
-        /// <param name="name"></param>
-        /// <param name="created"></param>
         /// <param name="updated"></param>
-        /// <param name="notes"></param>
+        /// <param name="created"></param>
         /// <param name="utmSource"></param>
         /// <param name="utmMedium"></param>
         /// <param name="utmTerm"></param>
         /// <param name="utmContent"></param>
         /// <param name="utmCampaign"></param>
-        internal ContactGroupAttributes(string name, DateTimeOffset? created, DateTimeOffset? updated, string notes, string utmSource, string utmMedium, string utmTerm, string utmContent, string utmCampaign)
+        /// <param name="notes"></param>
+        internal ContactGroupAttributes(DateTimeOffset? updated, DateTimeOffset? created, string utmSource, string utmMedium, string utmTerm, string utmContent, string utmCampaign, string notes)
         {
-            Name = name;
-            Created = created;
             Updated = updated;
-            Notes = notes;
+            Created = created;
             UtmSource = utmSource;
             UtmMedium = utmMedium;
             UtmTerm = utmTerm;
             UtmContent = utmContent;
             UtmCampaign = utmCampaign;
+            Notes = notes;
         }
 
-        public string Name { get; set; }
-        public DateTimeOffset? Created { get; }
         public DateTimeOffset? Updated { get; }
-        public string Notes { get; set; }
+        public DateTimeOffset? Created { get; }
         public string UtmSource { get; set; }
         public string UtmMedium { get; set; }
         public string UtmTerm { get; set; }
         public string UtmContent { get; set; }
         public string UtmCampaign { get; set; }
+        public string Notes { get; set; }
     }
 }

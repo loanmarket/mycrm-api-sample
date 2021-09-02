@@ -104,5 +104,73 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ReferrerOrganizationsDocument>> GetReferrerOrganizationsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetReferrerOrganizations");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetReferrerOrganizationsAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ReferrerOrganizationsDocument> GetReferrerOrganizations(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetReferrerOrganizations");
+            scope.Start();
+            try
+            {
+                return RestClient.GetReferrerOrganizations(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ReferrersDocument>> GetReferrersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetReferrers");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetReferrersAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ReferrersDocument> GetReferrers(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetReferrers");
+            scope.Start();
+            try
+            {
+                return RestClient.GetReferrers(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

@@ -20,18 +20,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("deal");
                 writer.WriteObjectValue(Deal);
             }
-            if (Optional.IsDefined(DateType))
-            {
-                writer.WritePropertyName("dateType");
-                writer.WriteObjectValue(DateType);
-            }
             writer.WriteEndObject();
         }
 
         internal static DealImportantDateRelationships DeserializeDealImportantDateRelationships(JsonElement element)
         {
             Optional<RelationshipsSingleDocument> deal = default;
-            Optional<RelationshipsSingleDocument> dateType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deal"))
@@ -44,18 +38,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     deal = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dateType"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    dateType = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
-                    continue;
-                }
             }
-            return new DealImportantDateRelationships(deal.Value, dateType.Value);
+            return new DealImportantDateRelationships(deal.Value);
         }
     }
 }

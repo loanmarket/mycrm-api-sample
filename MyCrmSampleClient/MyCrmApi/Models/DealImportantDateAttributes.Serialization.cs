@@ -16,17 +16,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Date))
+            if (Optional.IsDefined(DateType))
             {
-                if (Date != null)
-                {
-                    writer.WritePropertyName("date");
-                    writer.WriteStringValue(Date.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("date");
-                }
+                writer.WritePropertyName("dateType");
+                writer.WriteStringValue(DateType.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -34,7 +27,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         internal static DealImportantDateAttributes DeserializeDealImportantDateAttributes(JsonElement element)
         {
             Optional<DateTimeOffset?> date = default;
-            Optional<string> dateTypeDesc = default;
+            Optional<ImportantDate> dateType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("date"))
@@ -44,21 +37,21 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         date = null;
                         continue;
                     }
-                    date = property.Value.GetDateTimeOffset("O");
+                    date = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("dateTypeDesc"))
+                if (property.NameEquals("dateType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dateTypeDesc = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dateTypeDesc = property.Value.GetString();
+                    dateType = new ImportantDate(property.Value.GetString());
                     continue;
                 }
             }
-            return new DealImportantDateAttributes(Optional.ToNullable(date), dateTypeDesc.Value);
+            return new DealImportantDateAttributes(Optional.ToNullable(date), Optional.ToNullable(dateType));
         }
     }
 }

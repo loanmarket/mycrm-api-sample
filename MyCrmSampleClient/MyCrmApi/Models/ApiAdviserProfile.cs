@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
@@ -15,32 +13,20 @@ namespace MyCrmSampleClient.MyCrmApi.Models
     internal partial class ApiAdviserProfile
     {
         /// <summary> Initializes a new instance of ApiAdviserProfile. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="id"/> is null. </exception>
-        internal ApiAdviserProfile(string type, string id)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        internal ApiAdviserProfile(string id)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            Type = type;
             Id = id;
-            Meta = new ChangeTrackingDictionary<string, object>();
         }
 
-        public string Type { get; }
         public string Id { get; }
-        public ApiAdviserProfileAttributes Attributes { get; }
-        /// <summary> Any object. </summary>
-        public object Relationships { get; }
-        public ApiAdviserProfileLinks Links { get; }
-        /// <summary> Dictionary of &lt;any&gt;. </summary>
-        public IReadOnlyDictionary<string, object> Meta { get; }
+        public string JobTitle { get; }
+        public string Bio { get; }
     }
 }
