@@ -1609,6 +1609,124 @@
 			]
 		},
 		{
+			"name": "Deal Notes",
+			"item": [
+				{
+					"name": "Add Deal Note",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Add Deal\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    pm.collectionVariables.set('lastDealNoteId', pm.response.json().data.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"deal-notes\",\n        \"attributes\": {\n            \"title\": \"A note on the last deal\",\n            \"detail\": \"These are some deal note details\"\n        },\n        \"relationships\": {\n            \"deal\": {\n                \"data\": {\n                    \"type\": \"deals\",\n                    \"id\": {{lastDealId}}\n                }\n            }\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/deal-notes",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"deal-notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Deal Note",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"deal-notes\",\n        \"id\": {{lastDealNoteId}},\n        \"attributes\": {\n            \"title\": \"Title update for deal note {{lastDealNoteId}}\",\n            \"detail\": \"Body update for deal note {{lastDealNoteId}}\"\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/deal-notes/:id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"deal-notes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastDealNoteId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Last Deal Note",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/deal-notes/:id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"deal-notes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastDealNoteId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Integrations",
 			"item": [
 				{
