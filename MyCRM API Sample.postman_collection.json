@@ -7,6 +7,334 @@
 	},
 	"item": [
 		{
+			"name": "Advisers",
+			"item": [
+				{
+					"name": "Relationships",
+					"item": [
+						{
+							"name": "Get Last Adviser Details",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/jsonapi/advisers/:id/adviserDetails",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"jsonapi",
+										"advisers",
+										":id",
+										"adviserDetails"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{lastAdviserId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Last Adviser Contacts",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/jsonapi/advisers/:id?include=contactGroups.contacts",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"jsonapi",
+										"advisers",
+										":id"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "contactGroups.contacts"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{lastAdviserId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Field Selection",
+					"item": [
+						{
+							"name": "Get Adviser Email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/jsonapi/advisers?page[size]=100&sort=-id&fields[advisers]=email",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"jsonapi",
+										"advisers"
+									],
+									"query": [
+										{
+											"key": "page[size]",
+											"value": "100"
+										},
+										{
+											"key": "sort",
+											"value": "-id"
+										},
+										{
+											"key": "fields[advisers]",
+											"value": "email"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get Advisers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get Contact Groups\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    if (pm.response.json().data && pm.response.json().data.length) {",
+									"        pm.collectionVariables.set('lastAdviserId', pm.response.json().data[0].id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/advisers?page[size]=100&sort=-id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"advisers"
+							],
+							"query": [
+								{
+									"key": "page[size]",
+									"value": "100"
+								},
+								{
+									"key": "sort",
+									"value": "-id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Last Adviser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/advisers/:id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"advisers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastContactId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Adviser Details",
+			"item": [
+				{
+					"name": "Field Selection",
+					"item": [
+						{
+							"name": "Get Adviser Details Email Only",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get Contact Groups\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.be.json;",
+											"    pm.response.to.not.have.jsonBody('errors');",
+											"    if (pm.response.json().data && pm.response.json().data.length) {",
+											"        pm.collectionVariables.set('lastContactId', pm.response.json().data[0].id);",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/jsonapi/adviser-details?page[size]=100&sort=-id&fields[adviser-details]=email",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"jsonapi",
+										"adviser-details"
+									],
+									"query": [
+										{
+											"key": "page[size]",
+											"value": "100"
+										},
+										{
+											"key": "sort",
+											"value": "-id"
+										},
+										{
+											"key": "fields[adviser-details]",
+											"value": "email"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get Adviser Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get Contact Groups\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    if (pm.response.json().data && pm.response.json().data.length) {",
+									"        pm.collectionVariables.set('lastAdviserDetailsId', pm.response.json().data[0].id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/adviser-details?page[size]=100&sort=-id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"adviser-details"
+							],
+							"query": [
+								{
+									"key": "page[size]",
+									"value": "100"
+								},
+								{
+									"key": "sort",
+									"value": "-id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Last Adviser Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/adviser-details/:id",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"adviser-details",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastAdviserDetailsId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Contact Groups",
 			"item": [
 				{
