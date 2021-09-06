@@ -1579,7 +1579,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"deals\",\n    \"attributes\": {\n      \"dealTypeId\": 1,\n      \"name\": \"Home Loan 1 for the Stones\"\n    },\n    \"relationships\": {\n      \"contacts\": {\n          \"data\": [\n              { \"type\": \"contacts\", \"id\": \"{{lastContactId}}\" }\n          ]\n      }\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"deals\",\n    \"attributes\": {\n      \"dealType\": \"Residential\",\n      \"name\": \"Home Loan 1 for the Stones\"\n    },\n    \"relationships\": {\n      \"contacts\": {\n          \"data\": [\n              { \"type\": \"contacts\", \"id\": \"{{lastContactId}}\" }\n          ]\n      }\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
