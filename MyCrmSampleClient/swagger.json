@@ -5,6 +5,465 @@
     "version": "v1"
   },
   "paths": {
+    "/jsonapi/advisers/{id}": {
+      "get": {
+        "tags": [
+          "Adviser"
+        ],
+        "operationId": "Adviser_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdviserDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/advisers": {
+      "get": {
+        "tags": [
+          "Adviser"
+        ],
+        "operationId": "Advisers_Get",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "style": "form",
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "style": "form",
+            "explode": false,
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pagination"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdvisersDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/advisers/{id}/relationships/contactGroups": {
+      "get": {
+        "tags": [
+          "Adviser"
+        ],
+        "operationId": "AdviserRelationship_Get_ContactGroups",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/adviser-details/{id}/adviser": {
+      "get": {
+        "tags": [
+          "AdviserDetails"
+        ],
+        "operationId": "AdviserDetailRelated_Get_Advisers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdvisersDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/adviser-details/{id}": {
+      "get": {
+        "tags": [
+          "AdviserDetails"
+        ],
+        "operationId": "AdviserDetail_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdviserDetailDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/adviser-details": {
+      "get": {
+        "tags": [
+          "AdviserDetails"
+        ],
+        "operationId": "AdviserDetails_Get",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "style": "form",
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "style": "form",
+            "explode": false,
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pagination"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdviserDetailsDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/adviser-details/{id}/relationships/adviser": {
+      "get": {
+        "tags": [
+          "AdviserDetails"
+        ],
+        "operationId": "AdviserDetailRelationship_Get_Advisers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/contact-external-references/{id}/contact": {
+      "get": {
+        "tags": [
+          "ContactExternalReferences"
+        ],
+        "operationId": "ContactExternalReferenceRelated_Get_Contacts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactsDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "ContactExternalReferences"
+        ],
+        "operationId": "ContactExternalReferenceRelated_Head_Contacts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/contact-external-references": {
       "get": {
         "tags": [
@@ -1224,7 +1683,7 @@
         "tags": [
           "ContactMarketingConsent"
         ],
-        "operationId": "ContactMarketingConsent_Patch",
+        "operationId": "ContactMarketing_Patch",
         "parameters": [
           {
             "name": "id",
@@ -1238,31 +1697,39 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
+            "application/vnd.api+json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactMarketing"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ContactMarketing"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ContactMarketing"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ContactMarketing"
+                "$ref": "#/components/schemas/ContactMarketingDocument"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactMarketingDocument"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
           }
         }
       },
@@ -1270,7 +1737,7 @@
         "tags": [
           "ContactMarketingConsent"
         ],
-        "operationId": "ContactMarketingConsent_Get",
+        "operationId": "ContactMarketing_Get",
         "parameters": [
           {
             "name": "id",
@@ -1284,7 +1751,27 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactMarketingDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
           }
         }
       }
@@ -4245,49 +4732,54 @@
         }
       }
     },
-    "/jsonapi/leads": {
-      "post": {
+    "/jsonapi/deal-notes/{id}/deal": {
+      "get": {
         "tags": [
-          "Leads"
+          "Notes"
         ],
-        "operationId": "Leads_Post",
-        "requestBody": {
-          "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Lead"
+        "operationId": "DealNoteRelated_Get_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealsDocument"
+                }
               }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Lead"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Lead"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Lead"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
               }
             }
           }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
         }
-      }
-    },
-    "/jsonapi/leads/{id}": {
-      "get": {
+      },
+      "head": {
         "tags": [
-          "Leads"
+          "Notes"
         ],
-        "operationId": "Leads_Get",
+        "operationId": "DealNoteRelated_Head_Deals",
         "parameters": [
           {
             "name": "id",
@@ -4302,6 +4794,641 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/leads": {
+      "post": {
+        "tags": [
+          "Leads"
+        ],
+        "operationId": "Lead_Post",
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "headers": {
+              "Location": {
+                "description": "Location of newly created resource",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/leads/{id}": {
+      "get": {
+        "tags": [
+          "Leads"
+        ],
+        "operationId": "Lead_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-notes": {
+      "get": {
+        "tags": [
+          "Notes"
+        ],
+        "operationId": "DealNotes_Get",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "style": "form",
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "style": "form",
+            "explode": false,
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pagination"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealNotesDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Notes"
+        ],
+        "operationId": "DealNotes_Head",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Notes"
+        ],
+        "operationId": "DealNote_Post",
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DealNoteDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "headers": {
+              "Location": {
+                "description": "Location of newly created resource",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealNoteDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-notes/{id}": {
+      "get": {
+        "tags": [
+          "Notes"
+        ],
+        "operationId": "DealNote_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealNoteDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Notes"
+        ],
+        "operationId": "DealNote_Head",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Notes"
+        ],
+        "operationId": "DealNote_Patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DealNoteDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealNoteDocument"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Notes"
+        ],
+        "operationId": "DealNote_Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-notes/{id}/relationships/deal": {
+      "get": {
+        "tags": [
+          "Notes"
+        ],
+        "operationId": "DealNoteRelationship_Get_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Notes"
+        ],
+        "operationId": "DealNoteRelationship_Get_Head_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Notes"
+        ],
+        "operationId": "DealNoteRelationship_Post_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipsSingleDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Notes"
+        ],
+        "operationId": "DealNoteRelationship_Patch_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipsSingleDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Notes"
+        ],
+        "operationId": "DealNoteRelationship_Delete_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
           }
         }
       }
@@ -4953,12 +6080,12 @@
         }
       }
     },
-    "/jsonapi/contact-external-references/{id}/contact": {
+    "/jsonapi/advisers/{id}/contactGroups": {
       "get": {
         "tags": [
-          "ContactExternalReferences"
+          "Adviser"
         ],
-        "operationId": "ContactExternalReferenceRelated_Get_Contacts",
+        "operationId": "AdviserRelated_Get_ContactGroups",
         "parameters": [
           {
             "name": "id",
@@ -4976,7 +6103,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactsDocument"
+                  "$ref": "#/components/schemas/ContactGroupsDocument"
                 }
               }
             }
@@ -4995,12 +6122,14 @@
             }
           }
         }
-      },
-      "head": {
+      }
+    },
+    "/jsonapi/advisers/{id}/adviserDetails": {
+      "get": {
         "tags": [
-          "ContactExternalReferences"
+          "Adviser"
         ],
-        "operationId": "ContactExternalReferenceRelated_Head_Contacts",
+        "operationId": "AdviserRelated_Get_AdviserDetails",
         "parameters": [
           {
             "name": "id",
@@ -5014,7 +6143,58 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdviserDetailsDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/advisers/{id}/relationships/adviserDetails": {
+      "get": {
+        "tags": [
+          "Adviser"
+        ],
+        "operationId": "AdviserRelationship_Get_AdviserDetails",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized"
@@ -6180,85 +7360,6 @@
         }
       }
     },
-    "/jsonapi/contacts/{id}/contactAddress": {
-      "get": {
-        "tags": [
-          "Contacts"
-        ],
-        "operationId": "ContactRelated_Get_ContactAddresses",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ContactAddressesDocument"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "head": {
-        "tags": [
-          "Contacts"
-        ],
-        "operationId": "ContactRelated_Head_ContactAddresses",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/jsonapi/contacts/{id}/externalReferences": {
       "get": {
         "tags": [
@@ -6417,12 +7518,12 @@
         }
       }
     },
-    "/jsonapi/contacts/{id}/relationships/contactAddress": {
+    "/jsonapi/contacts/{id}/contactAddress": {
       "get": {
         "tags": [
           "Contacts"
         ],
-        "operationId": "ContactRelationship_Get_ContactAddresses",
+        "operationId": "ContactRelated_Get_ContactAddresses",
         "parameters": [
           {
             "name": "id",
@@ -6440,7 +7541,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+                  "$ref": "#/components/schemas/ContactAddressesDocument"
                 }
               }
             }
@@ -6464,7 +7565,7 @@
         "tags": [
           "Contacts"
         ],
-        "operationId": "ContactRelationship_Get_Head_ContactAddresses",
+        "operationId": "ContactRelated_Head_ContactAddresses",
         "parameters": [
           {
             "name": "id",
@@ -6479,135 +7580,6 @@
         "responses": {
           "200": {
             "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Contacts"
-        ],
-        "operationId": "ContactRelationship_Post_ContactAddresses",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/vnd.api+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": ""
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Contacts"
-        ],
-        "operationId": "ContactRelationship_Patch_ContactAddresses",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/vnd.api+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": ""
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Contacts"
-        ],
-        "operationId": "ContactRelationship_Delete_ContactAddresses",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": ""
           },
           "401": {
             "description": "Unauthorized"
@@ -7010,6 +7982,214 @@
           "Contacts"
         ],
         "operationId": "ContactRelationship_Delete_DealParticipants",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/contacts/{id}/relationships/contactAddress": {
+      "get": {
+        "tags": [
+          "Contacts"
+        ],
+        "operationId": "ContactRelationship_Get_ContactAddresses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Contacts"
+        ],
+        "operationId": "ContactRelationship_Get_Head_ContactAddresses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Contacts"
+        ],
+        "operationId": "ContactRelationship_Post_ContactAddresses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Contacts"
+        ],
+        "operationId": "ContactRelationship_Patch_ContactAddresses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Contacts"
+        ],
+        "operationId": "ContactRelationship_Delete_ContactAddresses",
         "parameters": [
           {
             "name": "id",
@@ -7615,85 +8795,6 @@
         }
       }
     },
-    "/jsonapi/deals/{id}/dealNotes": {
-      "get": {
-        "tags": [
-          "Deals"
-        ],
-        "operationId": "DealRelated_Get_DealNotes",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DealNotesDocument"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "head": {
-        "tags": [
-          "Deals"
-        ],
-        "operationId": "DealRelated_Head_DealNotes",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/jsonapi/deals/{id}/participants": {
       "get": {
         "tags": [
@@ -8168,12 +9269,12 @@
         }
       }
     },
-    "/jsonapi/deals/{id}/relationships/dealNotes": {
+    "/jsonapi/deals/{id}/dealNotes": {
       "get": {
         "tags": [
           "Deals"
         ],
-        "operationId": "DealRelationship_Get_DealNotes",
+        "operationId": "DealRelated_Get_DealNotes",
         "parameters": [
           {
             "name": "id",
@@ -8191,7 +9292,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+                  "$ref": "#/components/schemas/DealNotesDocument"
                 }
               }
             }
@@ -8215,7 +9316,7 @@
         "tags": [
           "Deals"
         ],
-        "operationId": "DealRelationship_Get_Head_DealNotes",
+        "operationId": "DealRelated_Head_DealNotes",
         "parameters": [
           {
             "name": "id",
@@ -8230,135 +9331,6 @@
         "responses": {
           "200": {
             "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Deals"
-        ],
-        "operationId": "DealRelationship_Post_DealNotes",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/vnd.api+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": ""
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Deals"
-        ],
-        "operationId": "DealRelationship_Patch_DealNotes",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/vnd.api+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": ""
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Deals"
-        ],
-        "operationId": "DealRelationship_Delete_DealNotes",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": ""
           },
           "401": {
             "description": "Unauthorized"
@@ -9624,6 +10596,214 @@
         }
       }
     },
+    "/jsonapi/deals/{id}/relationships/dealNotes": {
+      "get": {
+        "tags": [
+          "Deals"
+        ],
+        "operationId": "DealRelationship_Get_DealNotes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Deals"
+        ],
+        "operationId": "DealRelationship_Get_Head_DealNotes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Deals"
+        ],
+        "operationId": "DealRelationship_Post_DealNotes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Deals"
+        ],
+        "operationId": "DealRelationship_Patch_DealNotes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Deals"
+        ],
+        "operationId": "DealRelationship_Delete_DealNotes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/integrations/{id}/dealExternalReferences": {
       "get": {
         "tags": [
@@ -9920,166 +11100,34 @@
           "id"
         ],
         "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/IncludedResource"
-          }
-        ],
         "properties": {
-          "type": {
-            "$ref": "#/components/schemas/AddressEntityType"
-          },
           "id": {
             "pattern": "^[1-9]\\d*$",
             "type": "string",
             "readOnly": true
           },
-          "attributes": {
-            "$ref": "#/components/schemas/AddressAttributes"
-          },
-          "relationships": {
-            "$ref": "#/components/schemas/AddressRelationships"
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ResourceLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
+          "addressDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactAddress"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "AddressAttributes": {
-        "type": "object",
-        "properties": {
-          "postCode": {
-            "maxLength": 500,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "suburb": {
-            "maxLength": 500,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "streetAddress": {
-            "maxLength": 500,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "country": {
-            "maxLength": 500,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "state": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "AddressDocument": {
-        "required": [
-          "data"
-        ],
-        "type": "object",
-        "properties": {
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "jsonApi": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TopLevelLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "data": {
-            "$ref": "#/components/schemas/Address"
-          },
-          "included": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncludedResource"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
-        }
-      },
-      "AddressEntityType": {
+      "AddressType": {
         "enum": [
-          "address"
+          "CurrentAddress",
+          "PostalAddress",
+          "PostSettlementAddress",
+          "PreviousAddress",
+          "Other"
         ],
-        "type": "string"
-      },
-      "AddressesDocument": {
-        "required": [
-          "data"
-        ],
-        "type": "object",
-        "properties": {
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "jsonApi": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TopLevelLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Address"
-            }
-          },
-          "included": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncludedResource"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
-        }
-      },
-      "AddressRelationships": {
-        "type": "object",
-        "properties": {
-          "addressDetails": {
-            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-          }
+        "type": "string",
+        "x-ms-enum": {
+          "name": "AddressType",
+          "modelAsString": true
         }
       },
       "Adviser": {
@@ -10125,7 +11173,20 @@
         "additionalProperties": false
       },
       "AdviserAttributes": {
-        "type": "object"
+        "type": "object",
+        "properties": {
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
       },
       "AdviserDetail": {
         "required": [
@@ -10133,12 +11194,45 @@
           "id"
         ],
         "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
         "properties": {
+          "type": {
+            "$ref": "#/components/schemas/AdviserDetailsEntityType"
+          },
           "id": {
             "pattern": "^[1-9]\\d*$",
             "type": "string",
             "readOnly": true
           },
+          "attributes": {
+            "$ref": "#/components/schemas/AdviserDetailAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/AdviserDetailRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AdviserDetailAttributes": {
+        "type": "object",
+        "properties": {
           "created": {
             "type": "string",
             "format": "date-time",
@@ -10187,17 +11281,104 @@
             "type": "string",
             "nullable": true
           },
-          "adviser": {
-            "$ref": "#/components/schemas/Adviser"
-          },
           "updated": {
             "type": "string",
             "format": "date-time",
             "nullable": true,
             "readOnly": true
           }
-        },
-        "additionalProperties": false
+        }
+      },
+      "AdviserDetailDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/AdviserDetail"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "AdviserDetailRelationships": {
+        "type": "object",
+        "properties": {
+          "adviser": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          }
+        }
+      },
+      "AdviserDetailsDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdviserDetail"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "AdviserDetailsEntityType": {
+        "enum": [
+          "adviser-details"
+        ],
+        "type": "string"
       },
       "AdviserDocument": {
         "required": [
@@ -10240,6 +11421,9 @@
         "type": "object",
         "properties": {
           "adviserDetails": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          },
+          "brokerBranding": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
           "contactGroups": {
@@ -10292,6 +11476,27 @@
           "advisers"
         ],
         "type": "string"
+      },
+      "ApiAddressClientEntity": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "contact": {
+            "$ref": "#/components/schemas/Contact"
+          },
+          "addressDetails": {
+            "$ref": "#/components/schemas/ContactAddress"
+          }
+        },
+        "additionalProperties": false
       },
       "ApiAdviserProfile": {
         "required": [
@@ -10454,6 +11659,21 @@
         },
         "additionalProperties": false
       },
+      "ApiProductLender": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ClientAddressType": {
         "enum": [
           "Current",
@@ -10553,51 +11773,6 @@
         "additionalProperties": false
       },
       "ContactAddressAttributes": {
-        "type": "object"
-      },
-      "ContactAddressDetail": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/IncludedResource"
-          }
-        ],
-        "properties": {
-          "type": {
-            "$ref": "#/components/schemas/ContactAddressDetailsEntityType"
-          },
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          },
-          "attributes": {
-            "$ref": "#/components/schemas/ContactAddressDetailAttributes"
-          },
-          "relationships": {
-            "$ref": "#/components/schemas/ContactAddressDetailRelationships"
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ResourceLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ContactAddressDetailAttributes": {
         "type": "object",
         "properties": {
           "updated": {
@@ -10611,102 +11786,36 @@
             "format": "date-time",
             "nullable": true,
             "readOnly": true
-          }
-        }
-      },
-      "ContactAddressDetailDocument": {
-        "required": [
-          "data"
-        ],
-        "type": "object",
-        "properties": {
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
+          },
+          "addressType": {
+            "$ref": "#/components/schemas/AddressType"
+          },
+          "streetAddress": {
+            "type": "string",
+            "nullable": true,
             "readOnly": true
           },
-          "jsonApi": {
-            "type": "object",
-            "additionalProperties": { },
+          "country": {
+            "type": "string",
+            "nullable": true,
             "readOnly": true
           },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TopLevelLinks"
-              }
-            ],
+          "suburb": {
+            "type": "string",
+            "nullable": true,
             "readOnly": true
           },
-          "data": {
-            "$ref": "#/components/schemas/ContactAddressDetail"
+          "postCode": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
           },
-          "included": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncludedResource"
-            },
+          "state": {
+            "type": "string",
             "nullable": true,
             "readOnly": true
           }
         }
-      },
-      "ContactAddressDetailRelationships": {
-        "type": "object",
-        "properties": {
-          "contactAddress": {
-            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-          },
-          "address": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
-          }
-        }
-      },
-      "ContactAddressDetailsDocument": {
-        "required": [
-          "data"
-        ],
-        "type": "object",
-        "properties": {
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "jsonApi": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TopLevelLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ContactAddressDetail"
-            }
-          },
-          "included": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncludedResource"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
-        }
-      },
-      "ContactAddressDetailsEntityType": {
-        "enum": [
-          "contact-address-details"
-        ],
-        "type": "string"
       },
       "ContactAddressDocument": {
         "required": [
@@ -10794,11 +11903,8 @@
       "ContactAddressRelationships": {
         "type": "object",
         "properties": {
-          "contact": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
-          },
-          "addressDetails": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          "contactAddress": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           }
         }
       },
@@ -11139,6 +12245,14 @@
             "minLength": 0,
             "type": "string",
             "nullable": true
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
           },
           "notes": {
             "type": "string",
@@ -11538,13 +12652,13 @@
           "contactGroup": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
-          "contactAddress": {
-            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-          },
           "externalReferences": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           },
           "deals": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
+          "contactAddress": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           }
         }
@@ -11594,6 +12708,24 @@
           "contacts"
         ],
         "type": "string"
+      },
+      "CrmContactCategoryUser": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "brokerBranding": {
+            "$ref": "#/components/schemas/FamilyBrokerBranding"
+          }
+        },
+        "additionalProperties": false
       },
       "CtrlLoanStatus": {
         "required": [
@@ -11667,13 +12799,13 @@
             "nullable": true,
             "readOnly": true
           },
-          "dealTypeId": {
-            "$ref": "#/components/schemas/LoanAppLendingCategory"
-          },
           "customStatusName": {
             "type": "string",
             "nullable": true,
             "readOnly": true
+          },
+          "dealTypeId": {
+            "$ref": "#/components/schemas/LoanAppLendingCategory"
           },
           "name": {
             "type": "string",
@@ -11683,6 +12815,18 @@
             "$ref": "#/components/schemas/SystemStatus"
           },
           "opportunity": {
+            "$ref": "#/components/schemas/Opportunity"
+          },
+          "splits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Split"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "lenderName": {
+            "type": "string",
             "nullable": true,
             "readOnly": true
           }
@@ -12063,17 +13207,15 @@
       "DealNoteAttributes": {
         "type": "object",
         "properties": {
-          "updated": {
+          "title": {
+            "maxLength": 200,
+            "minLength": 0,
             "type": "string",
-            "format": "date-time",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
-          "created": {
+          "detail": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           }
         }
       },
@@ -12117,9 +13259,6 @@
       "DealNoteRelationships": {
         "type": "object",
         "properties": {
-          "note": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
-          },
           "deal": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
@@ -12216,8 +13355,9 @@
       "DealParticipantAttributes": {
         "type": "object",
         "properties": {
-          "detail": {
+          "updated": {
             "type": "string",
+            "format": "date-time",
             "nullable": true,
             "readOnly": true
           },
@@ -12227,38 +13367,16 @@
             "nullable": true,
             "readOnly": true
           },
-          "isAccountant": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "isSolicitor": {
-            "type": "boolean",
-            "nullable": true
-          },
           "isApplicant": {
             "type": "boolean",
             "nullable": true
-          },
-          "isGuarantor": {
-            "type": "boolean",
-            "nullable": true,
-            "readOnly": true
           },
           "isDependent": {
             "type": "boolean",
             "nullable": true
           },
-          "isAssetSupplier": {
+          "isGuarantor": {
             "type": "boolean",
-            "nullable": true
-          },
-          "isClientSoleTrader": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time",
             "nullable": true,
             "readOnly": true
           }
@@ -12364,9 +13482,6 @@
           "dealScenario": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
-          "dealNotes": {
-            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-          },
           "participants": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           },
@@ -12389,6 +13504,9 @@
           },
           "adviser": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          },
+          "dealNotes": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           }
         }
       },
@@ -12619,15 +13737,51 @@
       "DealStructureAttributes": {
         "type": "object",
         "properties": {
+          "fixedRateBeginDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "readOnly": true
+          },
+          "rateTypePeriodMonths": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "readOnly": true
+          },
+          "loanStructureType": {
+            "$ref": "#/components/schemas/LoanStructureType"
+          },
+          "interestRate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "rateType": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "paymentAmount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
           "fixedRateExpiryDate": {
             "type": "string",
             "format": "date",
             "nullable": true,
             "readOnly": true
           },
-          "fixedRateBeginDate": {
-            "type": "string",
-            "format": "date",
+          "loanTermYears": {
+            "type": "number",
+            "format": "double",
             "nullable": true,
             "readOnly": true
           }
@@ -12715,12 +13869,6 @@
       "DealStructureImportantDateAttributes": {
         "type": "object",
         "properties": {
-          "finishDate": {
-            "type": "string",
-            "format": "date",
-            "nullable": true,
-            "readOnly": true
-          },
           "startDate": {
             "type": "string",
             "format": "date",
@@ -12729,6 +13877,12 @@
           },
           "dateType": {
             "$ref": "#/components/schemas/LoanStructureImportantDateTypes"
+          },
+          "finishDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "readOnly": true
           }
         }
       },
@@ -12991,26 +14145,18 @@
             "pattern": "^[1-9]\\d*$",
             "type": "string",
             "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FamilyCommunication": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
           },
-          "dealNotes": {
+          "advisers": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DealNote"
+              "$ref": "#/components/schemas/Adviser"
+            },
+            "nullable": true
+          },
+          "contactCategories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CrmContactCategoryUser"
             },
             "nullable": true
           }
@@ -13200,8 +14346,15 @@
       },
       "ImportantDate": {
         "enum": [
-          "SettlementDate",
-          "LodgedDate"
+          "Settled",
+          "FinanceClause",
+          "NotProceeding",
+          "Lodged",
+          "PreApproved",
+          "ConditionallyApproved",
+          "Approved",
+          "PreApprovedExpiry",
+          "EstimatedSettled"
         ],
         "type": "string",
         "x-ms-enum": {
@@ -13228,16 +14381,15 @@
           "propertyName": "type",
           "mapping": {
             "contact-address": "#/components/schemas/ContactAddress",
-            "contact-address-details": "#/components/schemas/ContactAddressDetail",
-            "address": "#/components/schemas/Address",
             "high-level-summary": "#/components/schemas/HighLevelSummary",
             "deal-scenario": "#/components/schemas/DealScenario",
-            "deal-notes": "#/components/schemas/DealNote",
             "deal-participants": "#/components/schemas/DealParticipant",
             "deal-important-dates": "#/components/schemas/DealImportantDate",
             "deal-structure-important-dates": "#/components/schemas/DealStructureImportantDate",
             "deal-structures": "#/components/schemas/DealStructure",
+            "adviser-details": "#/components/schemas/AdviserDetail",
             "advisers": "#/components/schemas/Adviser",
+            "deal-notes": "#/components/schemas/DealNote",
             "deals": "#/components/schemas/Deal",
             "deal-external-references": "#/components/schemas/DealExternalReference",
             "integrations": "#/components/schemas/Integration",
@@ -13682,6 +14834,39 @@
           "modelAsString": true
         }
       },
+      "LoanStructureType": {
+        "enum": [
+          "PrincipalInterest",
+          "InterestOnly",
+          "RevolvingCredit",
+          "Offset"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "LoanStructureType",
+          "modelAsString": true
+        }
+      },
+      "Opportunity": {
+        "type": "object",
+        "properties": {
+          "proposedLoanAmount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "securityAmount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "summaryNotes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Pagination": {
         "type": "object",
         "properties": {
@@ -14080,6 +15265,68 @@
         },
         "additionalProperties": false
       },
+      "Split": {
+        "type": "object",
+        "properties": {
+          "loanTermYears": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "rateType": {
+            "type": "string",
+            "nullable": true
+          },
+          "loanStructureType": {
+            "$ref": "#/components/schemas/LoanStructureType"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "interestRate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "rateTypePeriodMonths": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "paymentAmount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "dates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SplitDates"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SplitDates": {
+        "type": "object",
+        "properties": {
+          "dateType": {
+            "$ref": "#/components/schemas/LoanStructureImportantDateTypes"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "finishDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "SystemStatus": {
         "enum": [
           "NewLeads",
@@ -14150,6 +15397,24 @@
           }
         },
         "additionalProperties": false
+      },
+      "WorkbenchLogType": {
+        "enum": [
+          "Email",
+          "Mail",
+          "Notes",
+          "RequirementAdd",
+          "RequirementCompleted",
+          "RequirementUnticked",
+          "RequirementUpdated",
+          "RequirementDeleted",
+          "NextWorkDate"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "WorkbenchLogType",
+          "modelAsString": true
+        }
       }
     },
     "securitySchemes": {

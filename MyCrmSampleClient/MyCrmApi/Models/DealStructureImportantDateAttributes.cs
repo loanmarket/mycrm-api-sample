@@ -18,18 +18,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of DealStructureImportantDateAttributes. </summary>
-        /// <param name="finishDate"></param>
         /// <param name="startDate"></param>
         /// <param name="dateType"></param>
-        internal DealStructureImportantDateAttributes(DateTimeOffset? finishDate, DateTimeOffset? startDate, LoanStructureImportantDateTypes? dateType)
+        /// <param name="finishDate"></param>
+        internal DealStructureImportantDateAttributes(DateTimeOffset? startDate, LoanStructureImportantDateTypes? dateType, DateTimeOffset? finishDate)
         {
-            FinishDate = finishDate;
             StartDate = startDate;
             DateType = dateType;
+            FinishDate = finishDate;
         }
 
-        public DateTimeOffset? FinishDate { get; }
         public DateTimeOffset? StartDate { get; }
         public LoanStructureImportantDateTypes? DateType { get; set; }
+        public DateTimeOffset? FinishDate { get; }
     }
 }

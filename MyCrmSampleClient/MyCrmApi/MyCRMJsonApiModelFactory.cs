@@ -14,21 +14,20 @@ namespace MyCrmSampleClient.MyCrmApi.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class MyCRMJsonApiModelFactory
     {
-        /// <summary> Initializes a new instance of ContactExternalReferencesDocument. </summary>
+        /// <summary> Initializes a new instance of AdviserDocument. </summary>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
         /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
         /// <param name="links"></param>
         /// <param name="data"></param>
         /// <param name="included"></param>
-        /// <returns> A new <see cref="Models.ContactExternalReferencesDocument"/> instance for mocking. </returns>
-        public static ContactExternalReferencesDocument ContactExternalReferencesDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, ContactExternalReferencesDocumentLinks links = null, IEnumerable<ContactExternalReference> data = null, IEnumerable<IncludedResource> included = null)
+        /// <returns> A new <see cref="Models.AdviserDocument"/> instance for mocking. </returns>
+        public static AdviserDocument AdviserDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, AdviserDocumentLinks links = null, Adviser data = null, IEnumerable<IncludedResource> included = null)
         {
             meta ??= new Dictionary<string, object>();
             jsonApi ??= new Dictionary<string, object>();
-            data ??= new List<ContactExternalReference>();
             included ??= new List<IncludedResource>();
 
-            return new ContactExternalReferencesDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
+            return new AdviserDocument(meta, jsonApi, links, data, included?.ToList());
         }
 
         /// <summary> Initializes a new instance of TopLevelLinks. </summary>
@@ -45,19 +44,28 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             return new TopLevelLinks(self, related, describedBy, first, last, prev, next);
         }
 
-        /// <summary> Initializes a new instance of ContactExternalReference. </summary>
+        /// <summary> Initializes a new instance of Adviser. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="attributes"></param>
         /// <param name="relationships"></param>
         /// <param name="links"></param>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        /// <returns> A new <see cref="Models.ContactExternalReference"/> instance for mocking. </returns>
-        public static ContactExternalReference ContactExternalReference(string type = null, string id = null, ContactExternalReferenceAttributes attributes = null, ContactExternalReferenceRelationships relationships = null, ContactExternalReferenceLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        /// <returns> A new <see cref="Models.Adviser"/> instance for mocking. </returns>
+        public static Adviser Adviser(string type = null, string id = null, AdviserAttributes attributes = null, AdviserRelationships relationships = null, AdviserLinks links = null, IReadOnlyDictionary<string, object> meta = null)
         {
             meta ??= new Dictionary<string, object>();
 
-            return new ContactExternalReference(type, id, attributes, relationships, links, meta);
+            return new Adviser(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of AdviserAttributes. </summary>
+        /// <param name="created"></param>
+        /// <param name="email"></param>
+        /// <returns> A new <see cref="Models.AdviserAttributes"/> instance for mocking. </returns>
+        public static AdviserAttributes AdviserAttributes(DateTimeOffset? created = null, string email = null)
+        {
+            return new AdviserAttributes(created, email);
         }
 
         /// <summary> Initializes a new instance of RelationshipsSingleDocument. </summary>
@@ -81,6 +89,19 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             return new RelationshipLinks(self, related);
         }
 
+        /// <summary> Initializes a new instance of RelationshipsMultipleDocument. </summary>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="data"></param>
+        /// <returns> A new <see cref="Models.RelationshipsMultipleDocument"/> instance for mocking. </returns>
+        public static RelationshipsMultipleDocument RelationshipsMultipleDocument(RelationshipsMultipleDocumentLinks links = null, IReadOnlyDictionary<string, object> meta = null, IEnumerable<ResourceIdentifier> data = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            data ??= new List<ResourceIdentifier>();
+
+            return new RelationshipsMultipleDocument(links, meta, data?.ToList());
+        }
+
         /// <summary> Initializes a new instance of ResourceLinks. </summary>
         /// <param name="self"></param>
         /// <returns> A new <see cref="Models.ResourceLinks"/> instance for mocking. </returns>
@@ -89,20 +110,85 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             return new ResourceLinks(self);
         }
 
-        /// <summary> Initializes a new instance of ContactExternalReferenceDocument. </summary>
+        /// <summary> Initializes a new instance of AdvisersDocument. </summary>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
         /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
         /// <param name="links"></param>
         /// <param name="data"></param>
         /// <param name="included"></param>
-        /// <returns> A new <see cref="Models.ContactExternalReferenceDocument"/> instance for mocking. </returns>
-        public static ContactExternalReferenceDocument ContactExternalReferenceDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, ContactExternalReferenceDocumentLinks links = null, ContactExternalReference data = null, IEnumerable<IncludedResource> included = null)
+        /// <returns> A new <see cref="Models.AdvisersDocument"/> instance for mocking. </returns>
+        public static AdvisersDocument AdvisersDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, AdvisersDocumentLinks links = null, IEnumerable<Adviser> data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            data ??= new List<Adviser>();
+            included ??= new List<IncludedResource>();
+
+            return new AdvisersDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of AdviserDetailDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.AdviserDetailDocument"/> instance for mocking. </returns>
+        public static AdviserDetailDocument AdviserDetailDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, AdviserDetailDocumentLinks links = null, AdviserDetail data = null, IEnumerable<IncludedResource> included = null)
         {
             meta ??= new Dictionary<string, object>();
             jsonApi ??= new Dictionary<string, object>();
             included ??= new List<IncludedResource>();
 
-            return new ContactExternalReferenceDocument(meta, jsonApi, links, data, included?.ToList());
+            return new AdviserDetailDocument(meta, jsonApi, links, data, included?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of AdviserDetail. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"></param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <returns> A new <see cref="Models.AdviserDetail"/> instance for mocking. </returns>
+        public static AdviserDetail AdviserDetail(string type = null, string id = null, AdviserDetailAttributes attributes = null, AdviserDetailRelationships relationships = null, AdviserDetailLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        {
+            meta ??= new Dictionary<string, object>();
+
+            return new AdviserDetail(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of AdviserDetailAttributes. </summary>
+        /// <param name="created"></param>
+        /// <param name="mobile"></param>
+        /// <param name="title"></param>
+        /// <param name="firstName"></param>
+        /// <param name="middleName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="preferredName"></param>
+        /// <param name="email"></param>
+        /// <param name="updated"></param>
+        /// <returns> A new <see cref="Models.AdviserDetailAttributes"/> instance for mocking. </returns>
+        public static AdviserDetailAttributes AdviserDetailAttributes(DateTimeOffset? created = null, string mobile = null, string title = null, string firstName = null, string middleName = null, string lastName = null, string preferredName = null, string email = null, DateTimeOffset? updated = null)
+        {
+            return new AdviserDetailAttributes(created, mobile, title, firstName, middleName, lastName, preferredName, email, updated);
+        }
+
+        /// <summary> Initializes a new instance of AdviserDetailsDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.AdviserDetailsDocument"/> instance for mocking. </returns>
+        public static AdviserDetailsDocument AdviserDetailsDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, AdviserDetailsDocumentLinks links = null, IEnumerable<AdviserDetail> data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            data ??= new List<AdviserDetail>();
+            included ??= new List<IncludedResource>();
+
+            return new AdviserDetailsDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
         }
 
         /// <summary> Initializes a new instance of ContactsDocument. </summary>
@@ -155,17 +241,52 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             return new ContactAttributes(created, mobile, title, firstName, middleName, lastName, preferredName, email, updated, hasMarketingConsent, dateOfBirth);
         }
 
-        /// <summary> Initializes a new instance of RelationshipsMultipleDocument. </summary>
-        /// <param name="links"></param>
+        /// <summary> Initializes a new instance of ContactExternalReferencesDocument. </summary>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
         /// <param name="data"></param>
-        /// <returns> A new <see cref="Models.RelationshipsMultipleDocument"/> instance for mocking. </returns>
-        public static RelationshipsMultipleDocument RelationshipsMultipleDocument(RelationshipsMultipleDocumentLinks links = null, IReadOnlyDictionary<string, object> meta = null, IEnumerable<ResourceIdentifier> data = null)
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.ContactExternalReferencesDocument"/> instance for mocking. </returns>
+        public static ContactExternalReferencesDocument ContactExternalReferencesDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, ContactExternalReferencesDocumentLinks links = null, IEnumerable<ContactExternalReference> data = null, IEnumerable<IncludedResource> included = null)
         {
             meta ??= new Dictionary<string, object>();
-            data ??= new List<ResourceIdentifier>();
+            jsonApi ??= new Dictionary<string, object>();
+            data ??= new List<ContactExternalReference>();
+            included ??= new List<IncludedResource>();
 
-            return new RelationshipsMultipleDocument(links, meta, data?.ToList());
+            return new ContactExternalReferencesDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ContactExternalReference. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"></param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <returns> A new <see cref="Models.ContactExternalReference"/> instance for mocking. </returns>
+        public static ContactExternalReference ContactExternalReference(string type = null, string id = null, ContactExternalReferenceAttributes attributes = null, ContactExternalReferenceRelationships relationships = null, ContactExternalReferenceLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        {
+            meta ??= new Dictionary<string, object>();
+
+            return new ContactExternalReference(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of ContactExternalReferenceDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.ContactExternalReferenceDocument"/> instance for mocking. </returns>
+        public static ContactExternalReferenceDocument ContactExternalReferenceDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, ContactExternalReferenceDocumentLinks links = null, ContactExternalReference data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            included ??= new List<IncludedResource>();
+
+            return new ContactExternalReferenceDocument(meta, jsonApi, links, data, included?.ToList());
         }
 
         /// <summary> Initializes a new instance of ContactGroupsDocument. </summary>
@@ -208,11 +329,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="utmTerm"></param>
         /// <param name="utmContent"></param>
         /// <param name="utmCampaign"></param>
+        /// <param name="categories"></param>
         /// <param name="notes"></param>
         /// <returns> A new <see cref="Models.ContactGroupAttributes"/> instance for mocking. </returns>
-        public static ContactGroupAttributes ContactGroupAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, string utmSource = null, string utmMedium = null, string utmTerm = null, string utmContent = null, string utmCampaign = null, string notes = null)
+        public static ContactGroupAttributes ContactGroupAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, string utmSource = null, string utmMedium = null, string utmTerm = null, string utmContent = null, string utmCampaign = null, IEnumerable<string> categories = null, string notes = null)
         {
-            return new ContactGroupAttributes(updated, created, utmSource, utmMedium, utmTerm, utmContent, utmCampaign, notes);
+            categories ??= new List<string>();
+
+            return new ContactGroupAttributes(updated, created, utmSource, utmMedium, utmTerm, utmContent, utmCampaign, categories?.ToList(), notes);
         }
 
         /// <summary> Initializes a new instance of ContactGroupDocument. </summary>
@@ -229,6 +353,22 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             included ??= new List<IncludedResource>();
 
             return new ContactGroupDocument(meta, jsonApi, links, data, included?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ContactMarketingDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.ContactMarketingDocument"/> instance for mocking. </returns>
+        public static ContactMarketingDocument ContactMarketingDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, ContactMarketingDocumentLinks links = null, ContactMarketing data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            included ??= new List<IncludedResource>();
+
+            return new ContactMarketingDocument(meta, jsonApi, links, data, included?.ToList());
         }
 
         /// <summary> Initializes a new instance of ContactMarketing. </summary>
@@ -306,15 +446,46 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of DealAttributes. </summary>
         /// <param name="updated"></param>
         /// <param name="created"></param>
-        /// <param name="dealTypeId"></param>
         /// <param name="customStatusName"></param>
+        /// <param name="dealTypeId"></param>
         /// <param name="name"></param>
         /// <param name="dealStatus"></param>
-        /// <param name="opportunity"> Anything. </param>
+        /// <param name="opportunity"></param>
+        /// <param name="splits"></param>
+        /// <param name="lenderName"></param>
         /// <returns> A new <see cref="Models.DealAttributes"/> instance for mocking. </returns>
-        public static DealAttributes DealAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, LoanAppLendingCategory? dealTypeId = null, string customStatusName = null, string name = null, SystemStatus? dealStatus = null, object opportunity = null)
+        public static DealAttributes DealAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, string customStatusName = null, LoanAppLendingCategory? dealTypeId = null, string name = null, SystemStatus? dealStatus = null, Opportunity opportunity = null, IEnumerable<Split> splits = null, string lenderName = null)
         {
-            return new DealAttributes(updated, created, dealTypeId, customStatusName, name, dealStatus, opportunity);
+            splits ??= new List<Split>();
+
+            return new DealAttributes(updated, created, customStatusName, dealTypeId, name, dealStatus, opportunity, splits?.ToList(), lenderName);
+        }
+
+        /// <summary> Initializes a new instance of Split. </summary>
+        /// <param name="loanTermYears"></param>
+        /// <param name="rateType"></param>
+        /// <param name="loanStructureType"></param>
+        /// <param name="amount"></param>
+        /// <param name="interestRate"></param>
+        /// <param name="rateTypePeriodMonths"></param>
+        /// <param name="paymentAmount"></param>
+        /// <param name="dates"></param>
+        /// <returns> A new <see cref="Models.Split"/> instance for mocking. </returns>
+        public static Split Split(double? loanTermYears = null, string rateType = null, LoanStructureType? loanStructureType = null, double? amount = null, double? interestRate = null, int? rateTypePeriodMonths = null, double? paymentAmount = null, IEnumerable<SplitDates> dates = null)
+        {
+            dates ??= new List<SplitDates>();
+
+            return new Split(loanTermYears, rateType, loanStructureType, amount, interestRate, rateTypePeriodMonths, paymentAmount, dates?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of SplitDates. </summary>
+        /// <param name="dateType"></param>
+        /// <param name="startDate"></param>
+        /// <param name="finishDate"></param>
+        /// <returns> A new <see cref="Models.SplitDates"/> instance for mocking. </returns>
+        public static SplitDates SplitDates(LoanStructureImportantDateTypes? dateType = null, DateTimeOffset? startDate = null, DateTimeOffset? finishDate = null)
+        {
+            return new SplitDates(dateType, startDate, finishDate);
         }
 
         /// <summary> Initializes a new instance of DealExternalReferencesDocument. </summary>
@@ -398,20 +569,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of DealParticipantAttributes. </summary>
-        /// <param name="detail"></param>
-        /// <param name="created"></param>
-        /// <param name="isAccountant"></param>
-        /// <param name="isSolicitor"></param>
-        /// <param name="isApplicant"></param>
-        /// <param name="isGuarantor"></param>
-        /// <param name="isDependent"></param>
-        /// <param name="isAssetSupplier"></param>
-        /// <param name="isClientSoleTrader"></param>
         /// <param name="updated"></param>
+        /// <param name="created"></param>
+        /// <param name="isApplicant"></param>
+        /// <param name="isDependent"></param>
+        /// <param name="isGuarantor"></param>
         /// <returns> A new <see cref="Models.DealParticipantAttributes"/> instance for mocking. </returns>
-        public static DealParticipantAttributes DealParticipantAttributes(string detail = null, DateTimeOffset? created = null, bool? isAccountant = null, bool? isSolicitor = null, bool? isApplicant = null, bool? isGuarantor = null, bool? isDependent = null, bool? isAssetSupplier = null, bool? isClientSoleTrader = null, DateTimeOffset? updated = null)
+        public static DealParticipantAttributes DealParticipantAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, bool? isApplicant = null, bool? isDependent = null, bool? isGuarantor = null)
         {
-            return new DealParticipantAttributes(detail, created, isAccountant, isSolicitor, isApplicant, isGuarantor, isDependent, isAssetSupplier, isClientSoleTrader, updated);
+            return new DealParticipantAttributes(updated, created, isApplicant, isDependent, isGuarantor);
         }
 
         /// <summary> Initializes a new instance of DealParticipantDocument. </summary>
@@ -537,6 +703,22 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             return new IntegrationDocument(meta, jsonApi, links, data, included?.ToList());
         }
 
+        /// <summary> Initializes a new instance of LeadDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.LeadDocument"/> instance for mocking. </returns>
+        public static LeadDocument LeadDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, LeadDocumentLinks links = null, Lead data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            included ??= new List<IncludedResource>();
+
+            return new LeadDocument(meta, jsonApi, links, data, included?.ToList());
+        }
+
         /// <summary> Initializes a new instance of Lead. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
@@ -550,6 +732,54 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             meta ??= new Dictionary<string, object>();
 
             return new Lead(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of DealNotesDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.DealNotesDocument"/> instance for mocking. </returns>
+        public static DealNotesDocument DealNotesDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, DealNotesDocumentLinks links = null, IEnumerable<DealNote> data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            data ??= new List<DealNote>();
+            included ??= new List<IncludedResource>();
+
+            return new DealNotesDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DealNote. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"></param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <returns> A new <see cref="Models.DealNote"/> instance for mocking. </returns>
+        public static DealNote DealNote(string type = null, string id = null, DealNoteAttributes attributes = null, DealNoteRelationships relationships = null, DealNoteLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        {
+            meta ??= new Dictionary<string, object>();
+
+            return new DealNote(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of DealNoteDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.DealNoteDocument"/> instance for mocking. </returns>
+        public static DealNoteDocument DealNoteDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, DealNoteDocumentLinks links = null, DealNote data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            included ??= new List<IncludedResource>();
+
+            return new DealNoteDocument(meta, jsonApi, links, data, included?.ToList());
         }
 
         /// <summary> Initializes a new instance of ContactGroupReferrersDocument. </summary>
@@ -607,38 +837,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             included ??= new List<IncludedResource>();
 
             return new ContactGroupReferrerDocument(meta, jsonApi, links, data, included?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AdvisersDocument. </summary>
-        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
-        /// <param name="links"></param>
-        /// <param name="data"></param>
-        /// <param name="included"></param>
-        /// <returns> A new <see cref="Models.AdvisersDocument"/> instance for mocking. </returns>
-        public static AdvisersDocument AdvisersDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, AdvisersDocumentLinks links = null, IEnumerable<Adviser> data = null, IEnumerable<IncludedResource> included = null)
-        {
-            meta ??= new Dictionary<string, object>();
-            jsonApi ??= new Dictionary<string, object>();
-            data ??= new List<Adviser>();
-            included ??= new List<IncludedResource>();
-
-            return new AdvisersDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of Adviser. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="attributes"> Any object. </param>
-        /// <param name="relationships"></param>
-        /// <param name="links"></param>
-        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        /// <returns> A new <see cref="Models.Adviser"/> instance for mocking. </returns>
-        public static Adviser Adviser(string type = null, string id = null, object attributes = null, AdviserRelationships relationships = null, AdviserLinks links = null, IReadOnlyDictionary<string, object> meta = null)
-        {
-            meta ??= new Dictionary<string, object>();
-
-            return new Adviser(type, id, attributes, relationships, links, meta);
         }
 
         /// <summary> Initializes a new instance of ReferrerOrganizationsDocument. </summary>
@@ -725,57 +923,31 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of ContactAddress. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="attributes"> Any object. </param>
+        /// <param name="attributes"></param>
         /// <param name="relationships"></param>
         /// <param name="links"></param>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
         /// <returns> A new <see cref="Models.ContactAddress"/> instance for mocking. </returns>
-        public static ContactAddress ContactAddress(string type = null, string id = null, object attributes = null, ContactAddressRelationships relationships = null, ContactAddressLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        public static ContactAddress ContactAddress(string type = null, string id = null, ContactAddressAttributes attributes = null, ContactAddressRelationships relationships = null, ContactAddressLinks links = null, IReadOnlyDictionary<string, object> meta = null)
         {
             meta ??= new Dictionary<string, object>();
 
             return new ContactAddress(type, id, attributes, relationships, links, meta);
         }
 
-        /// <summary> Initializes a new instance of DealNotesDocument. </summary>
-        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
-        /// <param name="links"></param>
-        /// <param name="data"></param>
-        /// <param name="included"></param>
-        /// <returns> A new <see cref="Models.DealNotesDocument"/> instance for mocking. </returns>
-        public static DealNotesDocument DealNotesDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, DealNotesDocumentLinks links = null, IEnumerable<DealNote> data = null, IEnumerable<IncludedResource> included = null)
-        {
-            meta ??= new Dictionary<string, object>();
-            jsonApi ??= new Dictionary<string, object>();
-            data ??= new List<DealNote>();
-            included ??= new List<IncludedResource>();
-
-            return new DealNotesDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DealNote. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="attributes"></param>
-        /// <param name="relationships"></param>
-        /// <param name="links"></param>
-        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        /// <returns> A new <see cref="Models.DealNote"/> instance for mocking. </returns>
-        public static DealNote DealNote(string type = null, string id = null, DealNoteAttributes attributes = null, DealNoteRelationships relationships = null, DealNoteLinks links = null, IReadOnlyDictionary<string, object> meta = null)
-        {
-            meta ??= new Dictionary<string, object>();
-
-            return new DealNote(type, id, attributes, relationships, links, meta);
-        }
-
-        /// <summary> Initializes a new instance of DealNoteAttributes. </summary>
+        /// <summary> Initializes a new instance of ContactAddressAttributes. </summary>
         /// <param name="updated"></param>
         /// <param name="created"></param>
-        /// <returns> A new <see cref="Models.DealNoteAttributes"/> instance for mocking. </returns>
-        public static DealNoteAttributes DealNoteAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null)
+        /// <param name="addressType"></param>
+        /// <param name="streetAddress"></param>
+        /// <param name="country"></param>
+        /// <param name="suburb"></param>
+        /// <param name="postCode"></param>
+        /// <param name="state"></param>
+        /// <returns> A new <see cref="Models.ContactAddressAttributes"/> instance for mocking. </returns>
+        public static ContactAddressAttributes ContactAddressAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, AddressType? addressType = null, string streetAddress = null, string country = null, string suburb = null, string postCode = null, string state = null)
         {
-            return new DealNoteAttributes(updated, created);
+            return new ContactAddressAttributes(updated, created, addressType, streetAddress, country, suburb, postCode, state);
         }
 
         /// <summary> Initializes a new instance of DealImportantDatesDocument. </summary>
@@ -852,51 +1024,19 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of DealStructureAttributes. </summary>
-        /// <param name="fixedRateExpiryDate"></param>
         /// <param name="fixedRateBeginDate"></param>
+        /// <param name="rateTypePeriodMonths"></param>
+        /// <param name="loanStructureType"></param>
+        /// <param name="interestRate"></param>
+        /// <param name="amount"></param>
+        /// <param name="rateType"></param>
+        /// <param name="paymentAmount"></param>
+        /// <param name="fixedRateExpiryDate"></param>
+        /// <param name="loanTermYears"></param>
         /// <returns> A new <see cref="Models.DealStructureAttributes"/> instance for mocking. </returns>
-        public static DealStructureAttributes DealStructureAttributes(DateTimeOffset? fixedRateExpiryDate = null, DateTimeOffset? fixedRateBeginDate = null)
+        public static DealStructureAttributes DealStructureAttributes(DateTimeOffset? fixedRateBeginDate = null, int? rateTypePeriodMonths = null, LoanStructureType? loanStructureType = null, double? interestRate = null, double? amount = null, string rateType = null, double? paymentAmount = null, DateTimeOffset? fixedRateExpiryDate = null, double? loanTermYears = null)
         {
-            return new DealStructureAttributes(fixedRateExpiryDate, fixedRateBeginDate);
-        }
-
-        /// <summary> Initializes a new instance of Address. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="attributes"></param>
-        /// <param name="relationships"></param>
-        /// <param name="links"></param>
-        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        /// <returns> A new <see cref="Models.Address"/> instance for mocking. </returns>
-        public static Address Address(string type = null, string id = null, AddressAttributes attributes = null, AddressRelationships relationships = null, AddressLinks links = null, IReadOnlyDictionary<string, object> meta = null)
-        {
-            meta ??= new Dictionary<string, object>();
-
-            return new Address(type, id, attributes, relationships, links, meta);
-        }
-
-        /// <summary> Initializes a new instance of ContactAddressDetail. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="attributes"></param>
-        /// <param name="relationships"></param>
-        /// <param name="links"></param>
-        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        /// <returns> A new <see cref="Models.ContactAddressDetail"/> instance for mocking. </returns>
-        public static ContactAddressDetail ContactAddressDetail(string type = null, string id = null, ContactAddressDetailAttributes attributes = null, ContactAddressDetailRelationships relationships = null, ContactAddressDetailLinks links = null, IReadOnlyDictionary<string, object> meta = null)
-        {
-            meta ??= new Dictionary<string, object>();
-
-            return new ContactAddressDetail(type, id, attributes, relationships, links, meta);
-        }
-
-        /// <summary> Initializes a new instance of ContactAddressDetailAttributes. </summary>
-        /// <param name="updated"></param>
-        /// <param name="created"></param>
-        /// <returns> A new <see cref="Models.ContactAddressDetailAttributes"/> instance for mocking. </returns>
-        public static ContactAddressDetailAttributes ContactAddressDetailAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null)
-        {
-            return new ContactAddressDetailAttributes(updated, created);
+            return new DealStructureAttributes(fixedRateBeginDate, rateTypePeriodMonths, loanStructureType, interestRate, amount, rateType, paymentAmount, fixedRateExpiryDate, loanTermYears);
         }
 
         /// <summary> Initializes a new instance of DealStructureImportantDate. </summary>
@@ -915,13 +1055,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of DealStructureImportantDateAttributes. </summary>
-        /// <param name="finishDate"></param>
         /// <param name="startDate"></param>
         /// <param name="dateType"></param>
+        /// <param name="finishDate"></param>
         /// <returns> A new <see cref="Models.DealStructureImportantDateAttributes"/> instance for mocking. </returns>
-        public static DealStructureImportantDateAttributes DealStructureImportantDateAttributes(DateTimeOffset? finishDate = null, DateTimeOffset? startDate = null, LoanStructureImportantDateTypes? dateType = null)
+        public static DealStructureImportantDateAttributes DealStructureImportantDateAttributes(DateTimeOffset? startDate = null, LoanStructureImportantDateTypes? dateType = null, DateTimeOffset? finishDate = null)
         {
-            return new DealStructureImportantDateAttributes(finishDate, startDate, dateType);
+            return new DealStructureImportantDateAttributes(startDate, dateType, finishDate);
         }
 
         /// <summary> Initializes a new instance of HighLevelSummary. </summary>

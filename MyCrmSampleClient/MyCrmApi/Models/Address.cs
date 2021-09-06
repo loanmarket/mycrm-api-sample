@@ -5,41 +5,30 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The Address. </summary>
-    public partial class Address : IncludedResource
+    internal partial class Address
     {
         /// <summary> Initializes a new instance of Address. </summary>
-        public Address()
-        {
-            Meta = new ChangeTrackingDictionary<string, object>();
-            Type = "address";
-        }
-
-        /// <summary> Initializes a new instance of Address. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="attributes"></param>
-        /// <param name="relationships"></param>
-        /// <param name="links"></param>
-        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        internal Address(string type, string id, AddressAttributes attributes, AddressRelationships relationships, AddressLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        internal Address(string id)
         {
-            Attributes = attributes;
-            Relationships = relationships;
-            Links = links;
-            Meta = meta;
-            Type = type ?? "address";
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            Id = id;
+            AddressDetails = new ChangeTrackingList<ContactAddress>();
         }
 
-        public AddressAttributes Attributes { get; set; }
-        public AddressRelationships Relationships { get; set; }
-        public AddressLinks Links { get; }
-        /// <summary> Dictionary of &lt;any&gt;. </summary>
-        public IReadOnlyDictionary<string, object> Meta { get; }
+        public string Id { get; }
+        public IReadOnlyList<ContactAddress> AddressDetails { get; }
     }
 }

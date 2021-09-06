@@ -20,6 +20,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("adviserDetails");
                 writer.WriteObjectValue(AdviserDetails);
             }
+            if (Optional.IsDefined(BrokerBranding))
+            {
+                writer.WritePropertyName("brokerBranding");
+                writer.WriteObjectValue(BrokerBranding);
+            }
             if (Optional.IsDefined(ContactGroups))
             {
                 writer.WritePropertyName("contactGroups");
@@ -31,6 +36,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         internal static AdviserRelationships DeserializeAdviserRelationships(JsonElement element)
         {
             Optional<RelationshipsSingleDocument> adviserDetails = default;
+            Optional<RelationshipsSingleDocument> brokerBranding = default;
             Optional<RelationshipsMultipleDocument> contactGroups = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,6 +50,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     adviserDetails = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
                     continue;
                 }
+                if (property.NameEquals("brokerBranding"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    brokerBranding = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("contactGroups"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -55,7 +71,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new AdviserRelationships(adviserDetails.Value, contactGroups.Value);
+            return new AdviserRelationships(adviserDetails.Value, brokerBranding.Value, contactGroups.Value);
         }
     }
 }

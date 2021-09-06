@@ -18,15 +18,36 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of DealStructureAttributes. </summary>
-        /// <param name="fixedRateExpiryDate"></param>
         /// <param name="fixedRateBeginDate"></param>
-        internal DealStructureAttributes(DateTimeOffset? fixedRateExpiryDate, DateTimeOffset? fixedRateBeginDate)
+        /// <param name="rateTypePeriodMonths"></param>
+        /// <param name="loanStructureType"></param>
+        /// <param name="interestRate"></param>
+        /// <param name="amount"></param>
+        /// <param name="rateType"></param>
+        /// <param name="paymentAmount"></param>
+        /// <param name="fixedRateExpiryDate"></param>
+        /// <param name="loanTermYears"></param>
+        internal DealStructureAttributes(DateTimeOffset? fixedRateBeginDate, int? rateTypePeriodMonths, LoanStructureType? loanStructureType, double? interestRate, double? amount, string rateType, double? paymentAmount, DateTimeOffset? fixedRateExpiryDate, double? loanTermYears)
         {
-            FixedRateExpiryDate = fixedRateExpiryDate;
             FixedRateBeginDate = fixedRateBeginDate;
+            RateTypePeriodMonths = rateTypePeriodMonths;
+            LoanStructureType = loanStructureType;
+            InterestRate = interestRate;
+            Amount = amount;
+            RateType = rateType;
+            PaymentAmount = paymentAmount;
+            FixedRateExpiryDate = fixedRateExpiryDate;
+            LoanTermYears = loanTermYears;
         }
 
-        public DateTimeOffset? FixedRateExpiryDate { get; }
         public DateTimeOffset? FixedRateBeginDate { get; }
+        public int? RateTypePeriodMonths { get; }
+        public LoanStructureType? LoanStructureType { get; set; }
+        public double? InterestRate { get; set; }
+        public double? Amount { get; set; }
+        public string RateType { get; set; }
+        public double? PaymentAmount { get; set; }
+        public DateTimeOffset? FixedRateExpiryDate { get; }
+        public double? LoanTermYears { get; }
     }
 }

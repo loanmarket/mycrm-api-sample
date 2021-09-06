@@ -5,36 +5,41 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The AdviserDetail. </summary>
-    internal partial class AdviserDetail
+    public partial class AdviserDetail : IncludedResource
     {
         /// <summary> Initializes a new instance of AdviserDetail. </summary>
-        /// <param name="id"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal AdviserDetail(string id)
+        public AdviserDetail()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            Id = id;
+            Meta = new ChangeTrackingDictionary<string, object>();
+            Type = "adviser-details";
         }
 
-        public string Id { get; }
-        public DateTimeOffset? Created { get; }
-        public string Mobile { get; }
-        public string Title { get; }
-        public string FirstName { get; }
-        public string MiddleName { get; }
-        public string LastName { get; }
-        public string PreferredName { get; }
-        public string Email { get; }
-        public Adviser Adviser { get; }
-        public DateTimeOffset? Updated { get; }
+        /// <summary> Initializes a new instance of AdviserDetail. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"></param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        internal AdviserDetail(string type, string id, AdviserDetailAttributes attributes, AdviserDetailRelationships relationships, AdviserDetailLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
+        {
+            Attributes = attributes;
+            Relationships = relationships;
+            Links = links;
+            Meta = meta;
+            Type = type ?? "adviser-details";
+        }
+
+        public AdviserDetailAttributes Attributes { get; set; }
+        public AdviserDetailRelationships Relationships { get; set; }
+        public AdviserDetailLinks Links { get; }
+        /// <summary> Dictionary of &lt;any&gt;. </summary>
+        public IReadOnlyDictionary<string, object> Meta { get; }
     }
 }

@@ -15,47 +15,31 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Contact))
+            if (Optional.IsDefined(ContactAddress))
             {
-                writer.WritePropertyName("contact");
-                writer.WriteObjectValue(Contact);
-            }
-            if (Optional.IsDefined(AddressDetails))
-            {
-                writer.WritePropertyName("addressDetails");
-                writer.WriteObjectValue(AddressDetails);
+                writer.WritePropertyName("contactAddress");
+                writer.WriteObjectValue(ContactAddress);
             }
             writer.WriteEndObject();
         }
 
         internal static ContactAddressRelationships DeserializeContactAddressRelationships(JsonElement element)
         {
-            Optional<RelationshipsSingleDocument> contact = default;
-            Optional<RelationshipsSingleDocument> addressDetails = default;
+            Optional<RelationshipsMultipleDocument> contactAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contact"))
+                if (property.NameEquals("contactAddress"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    contact = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("addressDetails"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    addressDetails = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    contactAddress = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
                     continue;
                 }
             }
-            return new ContactAddressRelationships(contact.Value, addressDetails.Value);
+            return new ContactAddressRelationships(contactAddress.Value);
         }
     }
 }

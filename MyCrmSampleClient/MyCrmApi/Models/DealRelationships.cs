@@ -17,32 +17,32 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Initializes a new instance of DealRelationships. </summary>
         /// <param name="dealScenario"></param>
-        /// <param name="dealNotes"></param>
         /// <param name="participants"></param>
         /// <param name="externalReferences"></param>
         /// <param name="dealStructures"></param>
         /// <param name="contacts"></param>
         /// <param name="importantDates"></param>
         /// <param name="adviser"></param>
-        internal DealRelationships(RelationshipsSingleDocument dealScenario, RelationshipsMultipleDocument dealNotes, RelationshipsMultipleDocument participants, RelationshipsMultipleDocument externalReferences, RelationshipsMultipleDocument dealStructures, DealRelationshipsContacts contacts, RelationshipsMultipleDocument importantDates, RelationshipsSingleDocument adviser)
+        /// <param name="dealNotes"></param>
+        internal DealRelationships(RelationshipsSingleDocument dealScenario, RelationshipsMultipleDocument participants, RelationshipsMultipleDocument externalReferences, RelationshipsMultipleDocument dealStructures, DealRelationshipsContacts contacts, RelationshipsMultipleDocument importantDates, RelationshipsSingleDocument adviser, RelationshipsMultipleDocument dealNotes)
         {
             DealScenario = dealScenario;
-            DealNotes = dealNotes;
             Participants = participants;
             ExternalReferences = externalReferences;
             DealStructures = dealStructures;
             Contacts = contacts;
             ImportantDates = importantDates;
             Adviser = adviser;
+            DealNotes = dealNotes;
         }
 
         public RelationshipsSingleDocument DealScenario { get; set; }
-        public RelationshipsMultipleDocument DealNotes { get; set; }
         public RelationshipsMultipleDocument Participants { get; set; }
         public RelationshipsMultipleDocument ExternalReferences { get; set; }
         public RelationshipsMultipleDocument DealStructures { get; set; }
         public DealRelationshipsContacts Contacts { get; set; }
         public RelationshipsMultipleDocument ImportantDates { get; set; }
         public RelationshipsSingleDocument Adviser { get; set; }
+        public RelationshipsMultipleDocument DealNotes { get; set; }
     }
 }

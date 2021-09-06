@@ -179,146 +179,6 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelationshipsMultipleDocument>> GetDealNotesAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealNotes");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetDealNotesAsync(id, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelationshipsMultipleDocument> GetDealNotes(int id, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealNotes");
-            scope.Start();
-            try
-            {
-                return RestClient.GetDealNotes(id, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostDealNotesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.PostDealNotes");
-            scope.Start();
-            try
-            {
-                return await RestClient.PostDealNotesAsync(id, body, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostDealNotes(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.PostDealNotes");
-            scope.Start();
-            try
-            {
-                return RestClient.PostDealNotes(id, body, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PatchDealNotesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.PatchDealNotes");
-            scope.Start();
-            try
-            {
-                return await RestClient.PatchDealNotesAsync(id, body, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PatchDealNotes(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.PatchDealNotes");
-            scope.Start();
-            try
-            {
-                return RestClient.PatchDealNotes(id, body, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteDealNotesAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.DeleteDealNotes");
-            scope.Start();
-            try
-            {
-                return await RestClient.DeleteDealNotesAsync(id, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteDealNotes(int id, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.DeleteDealNotes");
-            scope.Start();
-            try
-            {
-                return RestClient.DeleteDealNotes(id, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RelationshipsMultipleDocument>> GetDealParticipantsAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealParticipants");
@@ -1149,6 +1009,146 @@ namespace MyCrmSampleClient.MyCrmApi
             try
             {
                 return RestClient.DeleteAdvisers(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetDealNotesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealNotes");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetDealNotesAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetDealNotes(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealNotes");
+            scope.Start();
+            try
+            {
+                return RestClient.GetDealNotes(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostDealNotesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.PostDealNotes");
+            scope.Start();
+            try
+            {
+                return await RestClient.PostDealNotesAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostDealNotes(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.PostDealNotes");
+            scope.Start();
+            try
+            {
+                return RestClient.PostDealNotes(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchDealNotesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.PatchDealNotes");
+            scope.Start();
+            try
+            {
+                return await RestClient.PatchDealNotesAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchDealNotes(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.PatchDealNotes");
+            scope.Start();
+            try
+            {
+                return RestClient.PatchDealNotes(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteDealNotesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.DeleteDealNotes");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteDealNotesAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteDealNotes(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.DeleteDealNotes");
+            scope.Start();
+            try
+            {
+                return RestClient.DeleteDealNotes(id, cancellationToken);
             }
             catch (Exception e)
             {

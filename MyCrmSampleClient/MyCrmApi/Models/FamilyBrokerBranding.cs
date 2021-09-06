@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
@@ -23,8 +25,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             }
 
             Id = id;
+            Advisers = new ChangeTrackingList<Adviser>();
+            ContactCategories = new ChangeTrackingList<CrmContactCategoryUser>();
         }
 
         public string Id { get; }
+        public IReadOnlyList<Adviser> Advisers { get; }
+        public IReadOnlyList<CrmContactCategoryUser> ContactCategories { get; }
     }
 }

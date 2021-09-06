@@ -23,11 +23,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of Adviser. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="attributes"> Any object. </param>
+        /// <param name="attributes"></param>
         /// <param name="relationships"></param>
         /// <param name="links"></param>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        internal Adviser(string type, string id, object attributes, AdviserRelationships relationships, AdviserLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
+        internal Adviser(string type, string id, AdviserAttributes attributes, AdviserRelationships relationships, AdviserLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
         {
             Attributes = attributes;
             Relationships = relationships;
@@ -36,8 +36,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Type = type ?? "advisers";
         }
 
-        /// <summary> Any object. </summary>
-        public object Attributes { get; set; }
+        public AdviserAttributes Attributes { get; set; }
         public AdviserRelationships Relationships { get; set; }
         public AdviserLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>

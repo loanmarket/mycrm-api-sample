@@ -20,11 +20,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("contactGroup");
                 writer.WriteObjectValue(ContactGroup);
             }
-            if (Optional.IsDefined(ContactAddress))
-            {
-                writer.WritePropertyName("contactAddress");
-                writer.WriteObjectValue(ContactAddress);
-            }
             if (Optional.IsDefined(ExternalReferences))
             {
                 writer.WritePropertyName("externalReferences");
@@ -35,15 +30,20 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("deals");
                 writer.WriteObjectValue(Deals);
             }
+            if (Optional.IsDefined(ContactAddress))
+            {
+                writer.WritePropertyName("contactAddress");
+                writer.WriteObjectValue(ContactAddress);
+            }
             writer.WriteEndObject();
         }
 
         internal static ContactRelationships DeserializeContactRelationships(JsonElement element)
         {
             Optional<RelationshipsSingleDocument> contactGroup = default;
-            Optional<RelationshipsMultipleDocument> contactAddress = default;
             Optional<RelationshipsMultipleDocument> externalReferences = default;
             Optional<RelationshipsMultipleDocument> deals = default;
+            Optional<RelationshipsMultipleDocument> contactAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contactGroup"))
@@ -54,16 +54,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     contactGroup = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("contactAddress"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    contactAddress = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
                     continue;
                 }
                 if (property.NameEquals("externalReferences"))
@@ -86,8 +76,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     deals = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
                     continue;
                 }
+                if (property.NameEquals("contactAddress"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    contactAddress = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
+                    continue;
+                }
             }
-            return new ContactRelationships(contactGroup.Value, contactAddress.Value, externalReferences.Value, deals.Value);
+            return new ContactRelationships(contactGroup.Value, externalReferences.Value, deals.Value, contactAddress.Value);
         }
     }
 }

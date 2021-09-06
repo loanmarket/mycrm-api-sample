@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,37 +15,61 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Title))
+            {
+                if (Title != null)
+                {
+                    writer.WritePropertyName("title");
+                    writer.WriteStringValue(Title);
+                }
+                else
+                {
+                    writer.WriteNull("title");
+                }
+            }
+            if (Optional.IsDefined(Detail))
+            {
+                if (Detail != null)
+                {
+                    writer.WritePropertyName("detail");
+                    writer.WriteStringValue(Detail);
+                }
+                else
+                {
+                    writer.WriteNull("detail");
+                }
+            }
             writer.WriteEndObject();
         }
 
         internal static DealNoteAttributes DeserializeDealNoteAttributes(JsonElement element)
         {
-            Optional<DateTimeOffset?> updated = default;
-            Optional<DateTimeOffset?> created = default;
+            Optional<string> title = default;
+            Optional<string> detail = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("updated"))
+                if (property.NameEquals("title"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        updated = null;
+                        title = null;
                         continue;
                     }
-                    updated = property.Value.GetDateTimeOffset("O");
+                    title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("created"))
+                if (property.NameEquals("detail"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        created = null;
+                        detail = null;
                         continue;
                     }
-                    created = property.Value.GetDateTimeOffset("O");
+                    detail = property.Value.GetString();
                     continue;
                 }
             }
-            return new DealNoteAttributes(Optional.ToNullable(updated), Optional.ToNullable(created));
+            return new DealNoteAttributes(title.Value, detail.Value);
         }
     }
 }

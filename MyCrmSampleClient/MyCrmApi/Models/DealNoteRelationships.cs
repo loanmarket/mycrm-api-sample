@@ -16,15 +16,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of DealNoteRelationships. </summary>
-        /// <param name="note"></param>
         /// <param name="deal"></param>
-        internal DealNoteRelationships(RelationshipsSingleDocument note, RelationshipsSingleDocument deal)
+        internal DealNoteRelationships(RelationshipsSingleDocument deal)
         {
-            Note = note;
             Deal = deal;
         }
 
-        public RelationshipsSingleDocument Note { get; set; }
         public RelationshipsSingleDocument Deal { get; set; }
     }
 }

@@ -12,12 +12,12 @@ using Azure.Core;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The LeadDocument. </summary>
-    internal partial class LeadDocument
+    public partial class LeadDocument
     {
         /// <summary> Initializes a new instance of LeadDocument. </summary>
         /// <param name="data"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        internal LeadDocument(Lead data)
+        public LeadDocument(Lead data)
         {
             if (data == null)
             {
@@ -30,12 +30,27 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Included = new ChangeTrackingList<IncludedResource>();
         }
 
+        /// <summary> Initializes a new instance of LeadDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        internal LeadDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, LeadDocumentLinks links, Lead data, IReadOnlyList<IncludedResource> included)
+        {
+            Meta = meta;
+            JsonApi = jsonApi;
+            Links = links;
+            Data = data;
+            Included = included;
+        }
+
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> JsonApi { get; }
         public LeadDocumentLinks Links { get; }
-        public Lead Data { get; }
+        public Lead Data { get; set; }
         public IReadOnlyList<IncludedResource> Included { get; }
     }
 }
