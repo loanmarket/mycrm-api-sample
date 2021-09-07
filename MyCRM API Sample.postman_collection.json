@@ -29,15 +29,62 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/jsonapi/advisers/:id/adviserDetails",
+									"raw": "{{PublicAPI_Url}}/jsonapi/advisers/:id?include=adviserDetails",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
 									"path": [
 										"jsonapi",
 										"advisers",
-										":id",
-										"adviserDetails"
+										":id"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "adviserDetails"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{lastAdviserId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Last Adviser Org",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/jsonapi/advisers/:id?include=adviserDetails",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"jsonapi",
+										"advisers",
+										":id"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "adviserDetails"
+										}
 									],
 									"variable": [
 										{
@@ -1532,7 +1579,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"deals\",\n    \"attributes\": {\n      \"dealTypeId\": 1,\n      \"name\": \"Home Loan 1 for the Stones\"\n    },\n    \"relationships\": {\n      \"contacts\": {\n          \"data\": [\n              { \"type\": \"contacts\", \"id\": \"{{lastContactId}}\" }\n          ]\n      }\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"deals\",\n    \"attributes\": {\n      \"dealType\": \"Residential\",\n      \"name\": \"Home Loan 1 for the Stones\"\n    },\n    \"relationships\": {\n      \"contacts\": {\n          \"data\": [\n              { \"type\": \"contacts\", \"id\": \"{{lastContactId}}\" }\n          ]\n      }\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
