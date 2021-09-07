@@ -20,10 +20,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("adviserDetails");
                 writer.WriteObjectValue(AdviserDetails);
             }
-            if (Optional.IsDefined(BrokerBranding))
+            if (Optional.IsDefined(Organisation))
             {
-                writer.WritePropertyName("brokerBranding");
-                writer.WriteObjectValue(BrokerBranding);
+                writer.WritePropertyName("organisation");
+                writer.WriteObjectValue(Organisation);
             }
             if (Optional.IsDefined(ContactGroups))
             {
@@ -36,7 +36,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         internal static AdviserRelationships DeserializeAdviserRelationships(JsonElement element)
         {
             Optional<RelationshipsSingleDocument> adviserDetails = default;
-            Optional<RelationshipsSingleDocument> brokerBranding = default;
+            Optional<RelationshipsSingleDocument> organisation = default;
             Optional<RelationshipsMultipleDocument> contactGroups = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,14 +50,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     adviserDetails = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
                     continue;
                 }
-                if (property.NameEquals("brokerBranding"))
+                if (property.NameEquals("organisation"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    brokerBranding = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    organisation = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
                     continue;
                 }
                 if (property.NameEquals("contactGroups"))
@@ -71,7 +71,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new AdviserRelationships(adviserDetails.Value, brokerBranding.Value, contactGroups.Value);
+            return new AdviserRelationships(adviserDetails.Value, organisation.Value, contactGroups.Value);
         }
     }
 }

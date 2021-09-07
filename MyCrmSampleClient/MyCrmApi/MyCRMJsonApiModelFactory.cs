@@ -447,18 +447,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="updated"></param>
         /// <param name="created"></param>
         /// <param name="customStatusName"></param>
-        /// <param name="dealTypeId"></param>
+        /// <param name="dealType"></param>
         /// <param name="name"></param>
         /// <param name="dealStatus"></param>
         /// <param name="opportunity"></param>
         /// <param name="splits"></param>
         /// <param name="lenderName"></param>
         /// <returns> A new <see cref="Models.DealAttributes"/> instance for mocking. </returns>
-        public static DealAttributes DealAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, string customStatusName = null, LoanAppLendingCategory? dealTypeId = null, string name = null, SystemStatus? dealStatus = null, Opportunity opportunity = null, IEnumerable<Split> splits = null, string lenderName = null)
+        public static DealAttributes DealAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, string customStatusName = null, DealType? dealType = null, string name = null, SystemStatus? dealStatus = null, Opportunity opportunity = null, IEnumerable<Split> splits = null, string lenderName = null)
         {
             splits ??= new List<Split>();
 
-            return new DealAttributes(updated, created, customStatusName, dealTypeId, name, dealStatus, opportunity, splits?.ToList(), lenderName);
+            return new DealAttributes(updated, created, customStatusName, dealType, name, dealStatus, opportunity, splits?.ToList(), lenderName);
         }
 
         /// <summary> Initializes a new instance of Split. </summary>
@@ -732,6 +732,41 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             meta ??= new Dictionary<string, object>();
 
             return new Lead(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of LeadAttributes. </summary>
+        /// <param name="dateOfBirth"></param>
+        /// <param name="title"></param>
+        /// <param name="firstName"></param>
+        /// <param name="preferredName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="email"></param>
+        /// <param name="mobile"></param>
+        /// <param name="gender"></param>
+        /// <param name="hasMarketingConsent"></param>
+        /// <param name="isGuarantor"></param>
+        /// <param name="isDependant"></param>
+        /// <param name="isPrimary"></param>
+        /// <param name="streetAddress"></param>
+        /// <param name="suburb"></param>
+        /// <param name="state"></param>
+        /// <param name="postCode"></param>
+        /// <param name="country"></param>
+        /// <param name="addressType"></param>
+        /// <param name="noteTitle"></param>
+        /// <param name="noteDetails"></param>
+        /// <param name="utmSource"></param>
+        /// <param name="utmMedium"></param>
+        /// <param name="utmCampaign"></param>
+        /// <param name="utmTerm"></param>
+        /// <param name="utmContent"></param>
+        /// <param name="sourceSystemUrl"></param>
+        /// <param name="customStatusName"></param>
+        /// <param name="dealStatus"></param>
+        /// <returns> A new <see cref="Models.LeadAttributes"/> instance for mocking. </returns>
+        public static LeadAttributes LeadAttributes(DateTimeOffset? dateOfBirth = null, Title? title = null, string firstName = null, string preferredName = null, string lastName = null, string email = null, string mobile = null, Gender? gender = null, bool? hasMarketingConsent = null, bool? isGuarantor = null, bool? isDependant = null, bool? isPrimary = null, string streetAddress = null, string suburb = null, string state = null, string postCode = null, string country = null, ClientAddressType? addressType = null, string noteTitle = null, string noteDetails = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, string sourceSystemUrl = null, string customStatusName = null, SystemStatus? dealStatus = null)
+        {
+            return new LeadAttributes(dateOfBirth, title, firstName, preferredName, lastName, email, mobile, gender, hasMarketingConsent, isGuarantor, isDependant, isPrimary, streetAddress, suburb, state, postCode, country, addressType, noteTitle, noteDetails, utmSource, utmMedium, utmCampaign, utmTerm, utmContent, sourceSystemUrl, customStatusName, dealStatus);
         }
 
         /// <summary> Initializes a new instance of DealNotesDocument. </summary>
@@ -1037,6 +1072,32 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public static DealStructureAttributes DealStructureAttributes(DateTimeOffset? fixedRateBeginDate = null, int? rateTypePeriodMonths = null, LoanStructureType? loanStructureType = null, double? interestRate = null, double? amount = null, string rateType = null, double? paymentAmount = null, DateTimeOffset? fixedRateExpiryDate = null, double? loanTermYears = null)
         {
             return new DealStructureAttributes(fixedRateBeginDate, rateTypePeriodMonths, loanStructureType, interestRate, amount, rateType, paymentAmount, fixedRateExpiryDate, loanTermYears);
+        }
+
+        /// <summary> Initializes a new instance of Organisation. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"></param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <returns> A new <see cref="Models.Organisation"/> instance for mocking. </returns>
+        public static Organisation Organisation(string type = null, string id = null, OrganisationAttributes attributes = null, OrganisationRelationships relationships = null, OrganisationLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        {
+            meta ??= new Dictionary<string, object>();
+
+            return new Organisation(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of OrganisationAttributes. </summary>
+        /// <param name="email"></param>
+        /// <param name="name"></param>
+        /// <param name="tradingName"></param>
+        /// <param name="website"></param>
+        /// <returns> A new <see cref="Models.OrganisationAttributes"/> instance for mocking. </returns>
+        public static OrganisationAttributes OrganisationAttributes(string email = null, string name = null, string tradingName = null, string website = null)
+        {
+            return new OrganisationAttributes(email, name, tradingName, website);
         }
 
         /// <summary> Initializes a new instance of DealStructureImportantDate. </summary>

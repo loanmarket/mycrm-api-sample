@@ -24,18 +24,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="updated"></param>
         /// <param name="created"></param>
         /// <param name="customStatusName"></param>
-        /// <param name="dealTypeId"></param>
+        /// <param name="dealType"></param>
         /// <param name="name"></param>
         /// <param name="dealStatus"></param>
         /// <param name="opportunity"></param>
         /// <param name="splits"></param>
         /// <param name="lenderName"></param>
-        internal DealAttributes(DateTimeOffset? updated, DateTimeOffset? created, string customStatusName, LoanAppLendingCategory? dealTypeId, string name, SystemStatus? dealStatus, Opportunity opportunity, IReadOnlyList<Split> splits, string lenderName)
+        internal DealAttributes(DateTimeOffset? updated, DateTimeOffset? created, string customStatusName, DealType? dealType, string name, SystemStatus? dealStatus, Opportunity opportunity, IReadOnlyList<Split> splits, string lenderName)
         {
             Updated = updated;
             Created = created;
             CustomStatusName = customStatusName;
-            DealTypeId = dealTypeId;
+            DealType = dealType;
             Name = name;
             DealStatus = dealStatus;
             Opportunity = opportunity;
@@ -46,7 +46,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public DateTimeOffset? Updated { get; }
         public DateTimeOffset? Created { get; }
         public string CustomStatusName { get; }
-        public LoanAppLendingCategory? DealTypeId { get; set; }
+        public DealType? DealType { get; set; }
         public string Name { get; set; }
         public SystemStatus? DealStatus { get; set; }
         public Opportunity Opportunity { get; set; }

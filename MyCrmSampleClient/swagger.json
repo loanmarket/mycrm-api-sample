@@ -129,94 +129,6 @@
         }
       }
     },
-    "/jsonapi/advisers/{id}/relationships/contactGroups": {
-      "get": {
-        "tags": [
-          "Adviser"
-        ],
-        "operationId": "AdviserRelationship_Get_ContactGroups",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/jsonapi/adviser-details/{id}/adviser": {
-      "get": {
-        "tags": [
-          "AdviserDetails"
-        ],
-        "operationId": "AdviserDetailRelated_Get_Advisers",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AdvisersDocument"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/jsonapi/adviser-details/{id}": {
       "get": {
         "tags": [
@@ -6080,12 +5992,12 @@
         }
       }
     },
-    "/jsonapi/advisers/{id}/contactGroups": {
+    "/jsonapi/adviser-details/{id}/adviser": {
       "get": {
         "tags": [
-          "Adviser"
+          "AdviserDetails"
         ],
-        "operationId": "AdviserRelated_Get_ContactGroups",
+        "operationId": "AdviserDetailRelated_Get_Advisers",
         "parameters": [
           {
             "name": "id",
@@ -6103,95 +6015,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactGroupsDocument"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/jsonapi/advisers/{id}/adviserDetails": {
-      "get": {
-        "tags": [
-          "Adviser"
-        ],
-        "operationId": "AdviserRelated_Get_AdviserDetails",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AdviserDetailsDocument"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/jsonapi/advisers/{id}/relationships/adviserDetails": {
-      "get": {
-        "tags": [
-          "Adviser"
-        ],
-        "operationId": "AdviserRelationship_Get_AdviserDetails",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
+                  "$ref": "#/components/schemas/AdvisersDocument"
                 }
               }
             }
@@ -11423,7 +11247,7 @@
           "adviserDetails": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
-          "brokerBranding": {
+          "organisation": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
           "contactGroups": {
@@ -11519,156 +11343,7 @@
           },
           "bio": {
             "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiAggregator": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiCtrlBusinessUnit": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiCtrlPipelineCategory": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiCtrlPipeLineStatus": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiCtrlPipelineStatusGroup": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiCtrlPipeLineSubStatus": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiCtrlPipelineType": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiOrgPipelineStatus": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiPipelineCards": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiProductLender": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
+            "nullable": true,
             "readOnly": true
           }
         },
@@ -12722,22 +12397,7 @@
             "readOnly": true
           },
           "brokerBranding": {
-            "$ref": "#/components/schemas/FamilyBrokerBranding"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CtrlLoanStatus": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
+            "$ref": "#/components/schemas/Organisation"
           }
         },
         "additionalProperties": false
@@ -12804,8 +12464,8 @@
             "nullable": true,
             "readOnly": true
           },
-          "dealTypeId": {
-            "$ref": "#/components/schemas/LoanAppLendingCategory"
+          "dealType": {
+            "$ref": "#/components/schemas/DealType"
           },
           "name": {
             "type": "string",
@@ -13369,11 +13029,13 @@
           },
           "isApplicant": {
             "type": "boolean",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "isDependent": {
             "type": "boolean",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "isGuarantor": {
             "type": "boolean",
@@ -13755,23 +13417,27 @@
           "interestRate": {
             "type": "number",
             "format": "double",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "amount": {
             "type": "number",
             "format": "double",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "rateType": {
             "maxLength": 50,
             "minLength": 0,
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "paymentAmount": {
             "type": "number",
             "format": "double",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "fixedRateExpiryDate": {
             "type": "string",
@@ -14034,6 +13700,21 @@
         ],
         "type": "string"
       },
+      "DealType": {
+        "enum": [
+          "Residential",
+          "Commercial",
+          "SmallBusiness",
+          "AssetFinance",
+          "PersonalLoan",
+          "DepositBond"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "DealType",
+          "modelAsString": true
+        }
+      },
       "Error": {
         "type": "object",
         "properties": {
@@ -14115,65 +13796,6 @@
           "parameter": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FamilyAssociatedEntity": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FamilyBrokerBranding": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          },
-          "advisers": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Adviser"
-            },
-            "nullable": true
-          },
-          "contactCategories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CrmContactCategoryUser"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FamilyLogin": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -14393,6 +14015,7 @@
             "deals": "#/components/schemas/Deal",
             "deal-external-references": "#/components/schemas/DealExternalReference",
             "integrations": "#/components/schemas/Integration",
+            "organisation": "#/components/schemas/Organisation",
             "referrer-organization": "#/components/schemas/ReferrerOrganization",
             "referrer": "#/components/schemas/Referrer",
             "contact-groups": "#/components/schemas/ContactGroup",
@@ -14611,111 +14234,135 @@
       "LeadAttributes": {
         "type": "object",
         "properties": {
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "writeOnly": true
+          },
           "title": {
             "$ref": "#/components/schemas/Title"
           },
           "firstName": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "preferredName": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "lastName": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "email": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "mobile": {
             "type": "string",
-            "nullable": true
-          },
-          "dateOfBirth": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "gender": {
             "$ref": "#/components/schemas/Gender"
           },
           "hasMarketingConsent": {
             "type": "boolean",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "isGuarantor": {
             "type": "boolean",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "isDependant": {
             "type": "boolean",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "isPrimary": {
             "type": "boolean",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "streetAddress": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "suburb": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "state": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "postCode": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "country": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "addressType": {
             "$ref": "#/components/schemas/ClientAddressType"
           },
           "noteTitle": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "noteDetails": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "utmSource": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "utmMedium": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "utmCampaign": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "utmTerm": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "utmContent": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "sourceSystemUrl": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "writeOnly": true
           },
           "customStatusName": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "dealStatus": {
             "$ref": "#/components/schemas/SystemStatus"
@@ -14808,21 +14455,6 @@
         ],
         "type": "string"
       },
-      "LoanAppLendingCategory": {
-        "enum": [
-          "Residential",
-          "Commercial",
-          "SmallBusiness",
-          "AssetFinance",
-          "PersonalLoan",
-          "DepositBond"
-        ],
-        "type": "string",
-        "x-ms-enum": {
-          "name": "LoanAppLendingCategory",
-          "modelAsString": true
-        }
-      },
       "LoanStructureImportantDateTypes": {
         "enum": [
           "InterestOnly",
@@ -14866,6 +14498,175 @@
           }
         },
         "additionalProperties": false
+      },
+      "Organisation": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/OrganisationEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/OrganisationAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/OrganisationRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrganisationAttributes": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "name": {
+            "maxLength": 300,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "tradingName": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "website": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "OrganisationDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/Organisation"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "OrganisationEntityType": {
+        "enum": [
+          "organisation"
+        ],
+        "type": "string"
+      },
+      "OrganisationRelationships": {
+        "type": "object",
+        "properties": {
+          "advisers": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
+          "contactCategories": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          }
+        }
+      },
+      "OrganisationsDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Organisation"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
       },
       "Pagination": {
         "type": "object",

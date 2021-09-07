@@ -17,17 +17,17 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Initializes a new instance of AdviserRelationships. </summary>
         /// <param name="adviserDetails"></param>
-        /// <param name="brokerBranding"></param>
+        /// <param name="organisation"></param>
         /// <param name="contactGroups"></param>
-        internal AdviserRelationships(RelationshipsSingleDocument adviserDetails, RelationshipsSingleDocument brokerBranding, RelationshipsMultipleDocument contactGroups)
+        internal AdviserRelationships(RelationshipsSingleDocument adviserDetails, RelationshipsSingleDocument organisation, RelationshipsMultipleDocument contactGroups)
         {
             AdviserDetails = adviserDetails;
-            BrokerBranding = brokerBranding;
+            Organisation = organisation;
             ContactGroups = contactGroups;
         }
 
         public RelationshipsSingleDocument AdviserDetails { get; set; }
-        public RelationshipsSingleDocument BrokerBranding { get; set; }
+        public RelationshipsSingleDocument Organisation { get; set; }
         public RelationshipsMultipleDocument ContactGroups { get; set; }
     }
 }

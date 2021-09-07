@@ -34,8 +34,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         public DateTimeOffset? Updated { get; }
         public DateTimeOffset? Created { get; }
-        public bool? IsApplicant { get; set; }
-        public bool? IsDependent { get; set; }
+        public bool? IsApplicant { get; }
+        public bool? IsDependent { get; }
         public bool? IsGuarantor { get; }
     }
 }

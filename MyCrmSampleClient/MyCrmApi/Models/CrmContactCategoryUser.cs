@@ -26,6 +26,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         public string Id { get; }
-        public FamilyBrokerBranding BrokerBranding { get; }
+        public Organisation BrokerBranding { get; }
     }
 }

@@ -43,10 +43,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public DateTimeOffset? FixedRateBeginDate { get; }
         public int? RateTypePeriodMonths { get; }
         public LoanStructureType? LoanStructureType { get; set; }
-        public double? InterestRate { get; set; }
-        public double? Amount { get; set; }
-        public string RateType { get; set; }
-        public double? PaymentAmount { get; set; }
+        public double? InterestRate { get; }
+        public double? Amount { get; }
+        public string RateType { get; }
+        public double? PaymentAmount { get; }
         public DateTimeOffset? FixedRateExpiryDate { get; }
         public double? LoanTermYears { get; }
     }

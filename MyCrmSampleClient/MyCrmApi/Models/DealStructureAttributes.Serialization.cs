@@ -21,54 +21,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("loanStructureType");
                 writer.WriteStringValue(LoanStructureType.Value.ToString());
             }
-            if (Optional.IsDefined(InterestRate))
-            {
-                if (InterestRate != null)
-                {
-                    writer.WritePropertyName("interestRate");
-                    writer.WriteNumberValue(InterestRate.Value);
-                }
-                else
-                {
-                    writer.WriteNull("interestRate");
-                }
-            }
-            if (Optional.IsDefined(Amount))
-            {
-                if (Amount != null)
-                {
-                    writer.WritePropertyName("amount");
-                    writer.WriteNumberValue(Amount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("amount");
-                }
-            }
-            if (Optional.IsDefined(RateType))
-            {
-                if (RateType != null)
-                {
-                    writer.WritePropertyName("rateType");
-                    writer.WriteStringValue(RateType);
-                }
-                else
-                {
-                    writer.WriteNull("rateType");
-                }
-            }
-            if (Optional.IsDefined(PaymentAmount))
-            {
-                if (PaymentAmount != null)
-                {
-                    writer.WritePropertyName("paymentAmount");
-                    writer.WriteNumberValue(PaymentAmount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("paymentAmount");
-                }
-            }
             writer.WriteEndObject();
         }
 

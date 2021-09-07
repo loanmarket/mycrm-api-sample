@@ -15,8 +15,6 @@ namespace MyCrmSampleClient
         public AdviserDetailRelatedClient AdviserDetailRelated { get; }
         public AdviserDetailRelationshipClient AdviserDetailRelationship { get; }
         public AdviserDetailsClient AdviserDetails { get; }
-        public AdviserRelatedClient AdviserRelated { get; }
-        public AdviserRelationshipClient AdviserRelationship { get; }
         public AdvisersClient Advisers { get; }
         public ContactClient Contact { get; }
         public ContactExternalReferenceClient ContactExternalReference { get; }
@@ -67,8 +65,6 @@ namespace MyCrmSampleClient
             AdviserDetailRelationship =
                 new AdviserDetailRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
             AdviserDetails = new AdviserDetailsClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            AdviserRelated = new AdviserRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            AdviserRelationship = new AdviserRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
             Advisers = new AdvisersClient(ClientDiagnostics, Pipeline, options.Endpoint);
             Contact = new ContactClient(ClientDiagnostics, Pipeline, options.Endpoint);
             ContactExternalReference =

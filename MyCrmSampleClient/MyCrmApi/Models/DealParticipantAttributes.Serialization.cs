@@ -16,30 +16,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsApplicant))
-            {
-                if (IsApplicant != null)
-                {
-                    writer.WritePropertyName("isApplicant");
-                    writer.WriteBooleanValue(IsApplicant.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isApplicant");
-                }
-            }
-            if (Optional.IsDefined(IsDependent))
-            {
-                if (IsDependent != null)
-                {
-                    writer.WritePropertyName("isDependent");
-                    writer.WriteBooleanValue(IsDependent.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isDependent");
-                }
-            }
             writer.WriteEndObject();
         }
 
