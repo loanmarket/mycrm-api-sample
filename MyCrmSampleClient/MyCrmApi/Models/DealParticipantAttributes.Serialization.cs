@@ -16,103 +16,26 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsAccountant))
-            {
-                if (IsAccountant != null)
-                {
-                    writer.WritePropertyName("isAccountant");
-                    writer.WriteBooleanValue(IsAccountant.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isAccountant");
-                }
-            }
-            if (Optional.IsDefined(IsSolicitor))
-            {
-                if (IsSolicitor != null)
-                {
-                    writer.WritePropertyName("isSolicitor");
-                    writer.WriteBooleanValue(IsSolicitor.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isSolicitor");
-                }
-            }
-            if (Optional.IsDefined(IsApplicant))
-            {
-                if (IsApplicant != null)
-                {
-                    writer.WritePropertyName("isApplicant");
-                    writer.WriteBooleanValue(IsApplicant.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isApplicant");
-                }
-            }
-            if (Optional.IsDefined(IsDependent))
-            {
-                if (IsDependent != null)
-                {
-                    writer.WritePropertyName("isDependent");
-                    writer.WriteBooleanValue(IsDependent.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isDependent");
-                }
-            }
-            if (Optional.IsDefined(IsAssetSupplier))
-            {
-                if (IsAssetSupplier != null)
-                {
-                    writer.WritePropertyName("isAssetSupplier");
-                    writer.WriteBooleanValue(IsAssetSupplier.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isAssetSupplier");
-                }
-            }
-            if (Optional.IsDefined(IsClientSoleTrader))
-            {
-                if (IsClientSoleTrader != null)
-                {
-                    writer.WritePropertyName("isClientSoleTrader");
-                    writer.WriteBooleanValue(IsClientSoleTrader.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isClientSoleTrader");
-                }
-            }
             writer.WriteEndObject();
         }
 
         internal static DealParticipantAttributes DeserializeDealParticipantAttributes(JsonElement element)
         {
-            Optional<string> detail = default;
-            Optional<DateTimeOffset?> created = default;
-            Optional<bool?> isAccountant = default;
-            Optional<bool?> isSolicitor = default;
-            Optional<bool?> isApplicant = default;
-            Optional<bool?> isGuarantor = default;
-            Optional<bool?> isDependent = default;
-            Optional<bool?> isAssetSupplier = default;
-            Optional<bool?> isClientSoleTrader = default;
             Optional<DateTimeOffset?> updated = default;
+            Optional<DateTimeOffset?> created = default;
+            Optional<bool?> isApplicant = default;
+            Optional<bool?> isDependent = default;
+            Optional<bool?> isGuarantor = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("detail"))
+                if (property.NameEquals("updated"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        detail = null;
+                        updated = null;
                         continue;
                     }
-                    detail = property.Value.GetString();
+                    updated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("created"))
@@ -125,26 +48,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     created = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isAccountant"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        isAccountant = null;
-                        continue;
-                    }
-                    isAccountant = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("isSolicitor"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        isSolicitor = null;
-                        continue;
-                    }
-                    isSolicitor = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("isApplicant"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -153,16 +56,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     isApplicant = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("isGuarantor"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        isGuarantor = null;
-                        continue;
-                    }
-                    isGuarantor = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("isDependent"))
@@ -175,38 +68,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     isDependent = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isAssetSupplier"))
+                if (property.NameEquals("isGuarantor"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        isAssetSupplier = null;
+                        isGuarantor = null;
                         continue;
                     }
-                    isAssetSupplier = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("isClientSoleTrader"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        isClientSoleTrader = null;
-                        continue;
-                    }
-                    isClientSoleTrader = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("updated"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        updated = null;
-                        continue;
-                    }
-                    updated = property.Value.GetDateTimeOffset("O");
+                    isGuarantor = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new DealParticipantAttributes(detail.Value, Optional.ToNullable(created), Optional.ToNullable(isAccountant), Optional.ToNullable(isSolicitor), Optional.ToNullable(isApplicant), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependent), Optional.ToNullable(isAssetSupplier), Optional.ToNullable(isClientSoleTrader), Optional.ToNullable(updated));
+            return new DealParticipantAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), Optional.ToNullable(isApplicant), Optional.ToNullable(isDependent), Optional.ToNullable(isGuarantor));
         }
     }
 }

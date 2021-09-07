@@ -73,40 +73,6 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContactAddressesDocument>> GetContactAddressesAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetContactAddresses");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetContactAddressesAsync(id, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContactAddressesDocument> GetContactAddresses(int id, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetContactAddresses");
-            scope.Start();
-            try
-            {
-                return RestClient.GetContactAddresses(id, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContactExternalReferencesDocument>> GetContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetContactExternalReferences");
@@ -165,6 +131,40 @@ namespace MyCrmSampleClient.MyCrmApi
             try
             {
                 return RestClient.GetDealParticipants(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ContactAddressesDocument>> GetContactAddressesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetContactAddresses");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetContactAddressesAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ContactAddressesDocument> GetContactAddresses(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetContactAddresses");
+            scope.Start();
+            try
+            {
+                return RestClient.GetContactAddresses(id, cancellationToken);
             }
             catch (Exception e)
             {

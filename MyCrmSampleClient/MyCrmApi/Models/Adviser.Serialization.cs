@@ -45,7 +45,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static Adviser DeserializeAdviser(JsonElement element)
         {
-            Optional<object> attributes = default;
+            Optional<AdviserAttributes> attributes = default;
             Optional<AdviserRelationships> relationships = default;
             Optional<AdviserLinks> links = default;
             Optional<IReadOnlyDictionary<string, object>> meta = default;
@@ -60,7 +60,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    attributes = property.Value.GetObject();
+                    attributes = AdviserAttributes.DeserializeAdviserAttributes(property.Value);
                     continue;
                 }
                 if (property.NameEquals("relationships"))

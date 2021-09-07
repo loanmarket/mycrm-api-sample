@@ -16,6 +16,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(DateOfBirth))
+            {
+                if (DateOfBirth != null)
+                {
+                    writer.WritePropertyName("dateOfBirth");
+                    writer.WriteStringValue(DateOfBirth.Value, "D");
+                }
+                else
+                {
+                    writer.WriteNull("dateOfBirth");
+                }
+            }
             if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title");
@@ -79,18 +91,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 else
                 {
                     writer.WriteNull("mobile");
-                }
-            }
-            if (Optional.IsDefined(DateOfBirth))
-            {
-                if (DateOfBirth != null)
-                {
-                    writer.WritePropertyName("dateOfBirth");
-                    writer.WriteStringValue(DateOfBirth.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("dateOfBirth");
                 }
             }
             if (Optional.IsDefined(Gender))
@@ -307,18 +307,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("sourceSystemUrl");
                 }
             }
-            if (Optional.IsDefined(CustomStatusName))
-            {
-                if (CustomStatusName != null)
-                {
-                    writer.WritePropertyName("customStatusName");
-                    writer.WriteStringValue(CustomStatusName);
-                }
-                else
-                {
-                    writer.WriteNull("customStatusName");
-                }
-            }
             if (Optional.IsDefined(DealStatus))
             {
                 writer.WritePropertyName("dealStatus");
@@ -329,13 +317,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static LeadAttributes DeserializeLeadAttributes(JsonElement element)
         {
+            Optional<DateTimeOffset?> dateOfBirth = default;
             Optional<Title> title = default;
             Optional<string> firstName = default;
             Optional<string> preferredName = default;
             Optional<string> lastName = default;
             Optional<string> email = default;
             Optional<string> mobile = default;
-            Optional<DateTimeOffset?> dateOfBirth = default;
             Optional<Gender> gender = default;
             Optional<bool?> hasMarketingConsent = default;
             Optional<bool?> isGuarantor = default;
@@ -359,6 +347,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<SystemStatus> dealStatus = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("dateOfBirth"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dateOfBirth = null;
+                        continue;
+                    }
+                    dateOfBirth = property.Value.GetDateTimeOffset("D");
+                    continue;
+                }
                 if (property.NameEquals("title"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -417,16 +415,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     mobile = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dateOfBirth"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        dateOfBirth = null;
-                        continue;
-                    }
-                    dateOfBirth = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("gender"))
@@ -640,7 +628,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new LeadAttributes(Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(dateOfBirth), Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), streetAddress.Value, suburb.Value, state.Value, postCode.Value, country.Value, Optional.ToNullable(addressType), noteTitle.Value, noteDetails.Value, utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, sourceSystemUrl.Value, customStatusName.Value, Optional.ToNullable(dealStatus));
+            return new LeadAttributes(Optional.ToNullable(dateOfBirth), Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), streetAddress.Value, suburb.Value, state.Value, postCode.Value, country.Value, Optional.ToNullable(addressType), noteTitle.Value, noteDetails.Value, utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, sourceSystemUrl.Value, customStatusName.Value, Optional.ToNullable(dealStatus));
         }
     }
 }

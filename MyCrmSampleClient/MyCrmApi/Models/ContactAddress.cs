@@ -23,11 +23,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of ContactAddress. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="attributes"> Any object. </param>
+        /// <param name="attributes"></param>
         /// <param name="relationships"></param>
         /// <param name="links"></param>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        internal ContactAddress(string type, string id, object attributes, ContactAddressRelationships relationships, ContactAddressLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
+        internal ContactAddress(string type, string id, ContactAddressAttributes attributes, ContactAddressRelationships relationships, ContactAddressLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
         {
             Attributes = attributes;
             Relationships = relationships;
@@ -36,8 +36,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Type = type ?? "contact-address";
         }
 
-        /// <summary> Any object. </summary>
-        public object Attributes { get; set; }
+        public ContactAddressAttributes Attributes { get; set; }
         public ContactAddressRelationships Relationships { get; set; }
         public ContactAddressLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>

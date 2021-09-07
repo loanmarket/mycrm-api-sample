@@ -92,65 +92,6 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreateGetDealNotesRequest(int id)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jsonapi/deals/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/dealNotes", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DealNotesDocument>> GetDealNotesAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetDealNotesRequest(id);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DealNotesDocument value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DealNotesDocument.DeserializeDealNotesDocument(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 401:
-                    return Response.FromValue((DealNotesDocument)null, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DealNotesDocument> GetDealNotes(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetDealNotesRequest(id);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DealNotesDocument value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DealNotesDocument.DeserializeDealNotesDocument(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 401:
-                    return Response.FromValue((DealNotesDocument)null, message.Response);
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateGetDealParticipantsRequest(int id)
         {
             var message = _pipeline.CreateMessage();
@@ -500,6 +441,65 @@ namespace MyCrmSampleClient.MyCrmApi
                     }
                 case 401:
                     return Response.FromValue((AdvisersDocument)null, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetDealNotesRequest(int id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/jsonapi/deals/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/dealNotes", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<DealNotesDocument>> GetDealNotesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetDealNotesRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DealNotesDocument value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DealNotesDocument.DeserializeDealNotesDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((DealNotesDocument)null, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<DealNotesDocument> GetDealNotes(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetDealNotesRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DealNotesDocument value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DealNotesDocument.DeserializeDealNotesDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((DealNotesDocument)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

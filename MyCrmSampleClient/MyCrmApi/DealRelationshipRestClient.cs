@@ -255,228 +255,6 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreateGetDealNotesRequest(int id)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jsonapi/deals/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/dealNotes", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RelationshipsMultipleDocument>> GetDealNotesAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetDealNotesRequest(id);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RelationshipsMultipleDocument value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 401:
-                    return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RelationshipsMultipleDocument> GetDealNotes(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetDealNotesRequest(id);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RelationshipsMultipleDocument value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 401:
-                    return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreatePostDealNotesRequest(int id, RelationshipsMultipleDocument body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jsonapi/deals/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/dealNotes", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/vnd.api+json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
-            return message;
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PostDealNotesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreatePostDealNotesRequest(id, body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PostDealNotes(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreatePostDealNotesRequest(id, body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreatePatchDealNotesRequest(int id, RelationshipsMultipleDocument body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jsonapi/deals/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/dealNotes", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/vnd.api+json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
-            return message;
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PatchDealNotesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreatePatchDealNotesRequest(id, body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PatchDealNotes(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreatePatchDealNotesRequest(id, body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateDeleteDealNotesRequest(int id)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jsonapi/deals/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/dealNotes", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteDealNotesAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateDeleteDealNotesRequest(id);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response DeleteDealNotes(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateDeleteDealNotesRequest(id);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateGetDealParticipantsRequest(int id)
         {
             var message = _pipeline.CreateMessage();
@@ -1798,6 +1576,228 @@ namespace MyCrmSampleClient.MyCrmApi
         public Response DeleteAdvisers(int id, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteAdvisersRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetDealNotesRequest(int id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/jsonapi/deals/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/dealNotes", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<RelationshipsMultipleDocument>> GetDealNotesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetDealNotesRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RelationshipsMultipleDocument value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<RelationshipsMultipleDocument> GetDealNotes(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetDealNotesRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RelationshipsMultipleDocument value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePostDealNotesRequest(int id, RelationshipsMultipleDocument body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/jsonapi/deals/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/dealNotes", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            if (body != null)
+            {
+                request.Headers.Add("Content-Type", "application/vnd.api+json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> PostDealNotesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePostDealNotesRequest(id, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response PostDealNotes(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePostDealNotesRequest(id, body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePatchDealNotesRequest(int id, RelationshipsMultipleDocument body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/jsonapi/deals/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/dealNotes", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            if (body != null)
+            {
+                request.Headers.Add("Content-Type", "application/vnd.api+json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> PatchDealNotesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePatchDealNotesRequest(id, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response PatchDealNotes(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePatchDealNotesRequest(id, body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteDealNotesRequest(int id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/jsonapi/deals/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/dealNotes", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> DeleteDealNotesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteDealNotesRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response DeleteDealNotes(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteDealNotesRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

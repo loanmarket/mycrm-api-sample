@@ -18,13 +18,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of LeadAttributes. </summary>
+        /// <param name="dateOfBirth"></param>
         /// <param name="title"></param>
         /// <param name="firstName"></param>
         /// <param name="preferredName"></param>
         /// <param name="lastName"></param>
         /// <param name="email"></param>
         /// <param name="mobile"></param>
-        /// <param name="dateOfBirth"></param>
         /// <param name="gender"></param>
         /// <param name="hasMarketingConsent"></param>
         /// <param name="isGuarantor"></param>
@@ -46,15 +46,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="sourceSystemUrl"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
-        internal LeadAttributes(Title? title, string firstName, string preferredName, string lastName, string email, string mobile, DateTimeOffset? dateOfBirth, Gender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, ClientAddressType? addressType, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, string customStatusName, SystemStatus? dealStatus)
+        internal LeadAttributes(DateTimeOffset? dateOfBirth, Title? title, string firstName, string preferredName, string lastName, string email, string mobile, Gender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, ClientAddressType? addressType, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, string customStatusName, SystemStatus? dealStatus)
         {
+            DateOfBirth = dateOfBirth;
             Title = title;
             FirstName = firstName;
             PreferredName = preferredName;
             LastName = lastName;
             Email = email;
             Mobile = mobile;
-            DateOfBirth = dateOfBirth;
             Gender = gender;
             HasMarketingConsent = hasMarketingConsent;
             IsGuarantor = isGuarantor;
@@ -78,13 +78,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             DealStatus = dealStatus;
         }
 
+        public DateTimeOffset? DateOfBirth { get; set; }
         public Title? Title { get; set; }
         public string FirstName { get; set; }
         public string PreferredName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Mobile { get; set; }
-        public DateTimeOffset? DateOfBirth { get; set; }
         public Gender? Gender { get; set; }
         public bool? HasMarketingConsent { get; set; }
         public bool? IsGuarantor { get; set; }
@@ -104,7 +104,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string UtmTerm { get; set; }
         public string UtmContent { get; set; }
         public string SourceSystemUrl { get; set; }
-        public string CustomStatusName { get; set; }
+        public string CustomStatusName { get; }
         public SystemStatus? DealStatus { get; set; }
     }
 }

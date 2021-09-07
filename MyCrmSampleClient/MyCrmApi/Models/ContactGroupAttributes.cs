@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
@@ -15,6 +17,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of ContactGroupAttributes. </summary>
         public ContactGroupAttributes()
         {
+            Categories = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContactGroupAttributes. </summary>
@@ -25,8 +28,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="utmTerm"></param>
         /// <param name="utmContent"></param>
         /// <param name="utmCampaign"></param>
+        /// <param name="categories"></param>
         /// <param name="notes"></param>
-        internal ContactGroupAttributes(DateTimeOffset? updated, DateTimeOffset? created, string utmSource, string utmMedium, string utmTerm, string utmContent, string utmCampaign, string notes)
+        internal ContactGroupAttributes(DateTimeOffset? updated, DateTimeOffset? created, string utmSource, string utmMedium, string utmTerm, string utmContent, string utmCampaign, IReadOnlyList<string> categories, string notes)
         {
             Updated = updated;
             Created = created;
@@ -35,6 +39,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             UtmTerm = utmTerm;
             UtmContent = utmContent;
             UtmCampaign = utmCampaign;
+            Categories = categories;
             Notes = notes;
         }
 
@@ -45,6 +50,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string UtmTerm { get; set; }
         public string UtmContent { get; set; }
         public string UtmCampaign { get; set; }
+        public IReadOnlyList<string> Categories { get; }
         public string Notes { get; set; }
     }
 }

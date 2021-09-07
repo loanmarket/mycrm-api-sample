@@ -38,10 +38,10 @@ namespace MyCrmSampleClient.MyCrmApi
             _pipeline = pipeline;
         }
 
-        /// <param name="filter"> The ArrayOfGet0ItemsItem to use. </param>
-        /// <param name="sort"> The ArrayOfGet1ItemsItem to use. </param>
+        /// <param name="filter"> The ArrayOfString to use. </param>
+        /// <param name="sort"> The ArrayOfString to use. </param>
         /// <param name="page"> The Pagination to use. </param>
-        /// <param name="include"> The ArrayOfGet3ItemsItem to use. </param>
+        /// <param name="include"> The ArrayOfString to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContactExternalReferencesDocument>> GetAsync(IEnumerable<string> filter = null, IEnumerable<string> sort = null, Pagination page = null, IEnumerable<string> include = null, CancellationToken cancellationToken = default)
         {
@@ -58,10 +58,10 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <param name="filter"> The ArrayOfGet0ItemsItem to use. </param>
-        /// <param name="sort"> The ArrayOfGet1ItemsItem to use. </param>
+        /// <param name="filter"> The ArrayOfString to use. </param>
+        /// <param name="sort"> The ArrayOfString to use. </param>
         /// <param name="page"> The Pagination to use. </param>
-        /// <param name="include"> The ArrayOfGet3ItemsItem to use. </param>
+        /// <param name="include"> The ArrayOfString to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContactExternalReferencesDocument> Get(IEnumerable<string> filter = null, IEnumerable<string> sort = null, Pagination page = null, IEnumerable<string> include = null, CancellationToken cancellationToken = default)
         {

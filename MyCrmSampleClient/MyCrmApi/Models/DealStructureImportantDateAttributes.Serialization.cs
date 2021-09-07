@@ -26,21 +26,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static DealStructureImportantDateAttributes DeserializeDealStructureImportantDateAttributes(JsonElement element)
         {
-            Optional<DateTimeOffset?> finishDate = default;
             Optional<DateTimeOffset?> startDate = default;
             Optional<LoanStructureImportantDateTypes> dateType = default;
+            Optional<DateTimeOffset?> finishDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("finishDate"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        finishDate = null;
-                        continue;
-                    }
-                    finishDate = property.Value.GetDateTimeOffset("D");
-                    continue;
-                }
                 if (property.NameEquals("startDate"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -61,8 +51,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     dateType = new LoanStructureImportantDateTypes(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("finishDate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        finishDate = null;
+                        continue;
+                    }
+                    finishDate = property.Value.GetDateTimeOffset("D");
+                    continue;
+                }
             }
-            return new DealStructureImportantDateAttributes(Optional.ToNullable(finishDate), Optional.ToNullable(startDate), Optional.ToNullable(dateType));
+            return new DealStructureImportantDateAttributes(Optional.ToNullable(startDate), Optional.ToNullable(dateType), Optional.ToNullable(finishDate));
         }
     }
 }

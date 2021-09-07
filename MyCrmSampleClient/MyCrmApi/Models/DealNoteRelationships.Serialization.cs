@@ -15,11 +15,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Note))
-            {
-                writer.WritePropertyName("note");
-                writer.WriteObjectValue(Note);
-            }
             if (Optional.IsDefined(Deal))
             {
                 writer.WritePropertyName("deal");
@@ -30,20 +25,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static DealNoteRelationships DeserializeDealNoteRelationships(JsonElement element)
         {
-            Optional<RelationshipsSingleDocument> note = default;
             Optional<RelationshipsSingleDocument> deal = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("note"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    note = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("deal"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -55,7 +39,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new DealNoteRelationships(note.Value, deal.Value);
+            return new DealNoteRelationships(deal.Value);
         }
     }
 }

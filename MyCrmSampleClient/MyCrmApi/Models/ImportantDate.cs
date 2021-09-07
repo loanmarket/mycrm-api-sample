@@ -22,13 +22,34 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SettlementDateValue = "SettlementDate";
-        private const string LodgedDateValue = "LodgedDate";
+        private const string SettledValue = "Settled";
+        private const string FinanceClauseValue = "FinanceClause";
+        private const string NotProceedingValue = "NotProceeding";
+        private const string LodgedValue = "Lodged";
+        private const string PreApprovedValue = "PreApproved";
+        private const string ConditionallyApprovedValue = "ConditionallyApproved";
+        private const string ApprovedValue = "Approved";
+        private const string PreApprovedExpiryValue = "PreApprovedExpiry";
+        private const string EstimatedSettledValue = "EstimatedSettled";
 
-        /// <summary> SettlementDate. </summary>
-        public static ImportantDate SettlementDate { get; } = new ImportantDate(SettlementDateValue);
-        /// <summary> LodgedDate. </summary>
-        public static ImportantDate LodgedDate { get; } = new ImportantDate(LodgedDateValue);
+        /// <summary> Settled. </summary>
+        public static ImportantDate Settled { get; } = new ImportantDate(SettledValue);
+        /// <summary> FinanceClause. </summary>
+        public static ImportantDate FinanceClause { get; } = new ImportantDate(FinanceClauseValue);
+        /// <summary> NotProceeding. </summary>
+        public static ImportantDate NotProceeding { get; } = new ImportantDate(NotProceedingValue);
+        /// <summary> Lodged. </summary>
+        public static ImportantDate Lodged { get; } = new ImportantDate(LodgedValue);
+        /// <summary> PreApproved. </summary>
+        public static ImportantDate PreApproved { get; } = new ImportantDate(PreApprovedValue);
+        /// <summary> ConditionallyApproved. </summary>
+        public static ImportantDate ConditionallyApproved { get; } = new ImportantDate(ConditionallyApprovedValue);
+        /// <summary> Approved. </summary>
+        public static ImportantDate Approved { get; } = new ImportantDate(ApprovedValue);
+        /// <summary> PreApprovedExpiry. </summary>
+        public static ImportantDate PreApprovedExpiry { get; } = new ImportantDate(PreApprovedExpiryValue);
+        /// <summary> EstimatedSettled. </summary>
+        public static ImportantDate EstimatedSettled { get; } = new ImportantDate(EstimatedSettledValue);
         /// <summary> Determines if two <see cref="ImportantDate"/> values are the same. </summary>
         public static bool operator ==(ImportantDate left, ImportantDate right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImportantDate"/> values are not the same. </summary>

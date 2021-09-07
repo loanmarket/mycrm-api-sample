@@ -17,20 +17,20 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Initializes a new instance of ContactRelationships. </summary>
         /// <param name="contactGroup"></param>
-        /// <param name="contactAddress"></param>
         /// <param name="externalReferences"></param>
         /// <param name="deals"></param>
-        internal ContactRelationships(RelationshipsSingleDocument contactGroup, RelationshipsMultipleDocument contactAddress, RelationshipsMultipleDocument externalReferences, RelationshipsMultipleDocument deals)
+        /// <param name="contactAddress"></param>
+        internal ContactRelationships(RelationshipsSingleDocument contactGroup, RelationshipsMultipleDocument externalReferences, RelationshipsMultipleDocument deals, RelationshipsMultipleDocument contactAddress)
         {
             ContactGroup = contactGroup;
-            ContactAddress = contactAddress;
             ExternalReferences = externalReferences;
             Deals = deals;
+            ContactAddress = contactAddress;
         }
 
         public RelationshipsSingleDocument ContactGroup { get; set; }
-        public RelationshipsMultipleDocument ContactAddress { get; set; }
         public RelationshipsMultipleDocument ExternalReferences { get; set; }
         public RelationshipsMultipleDocument Deals { get; set; }
+        public RelationshipsMultipleDocument ContactAddress { get; set; }
     }
 }

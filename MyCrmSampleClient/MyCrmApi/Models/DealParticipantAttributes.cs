@@ -18,39 +18,24 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of DealParticipantAttributes. </summary>
-        /// <param name="detail"></param>
-        /// <param name="created"></param>
-        /// <param name="isAccountant"></param>
-        /// <param name="isSolicitor"></param>
-        /// <param name="isApplicant"></param>
-        /// <param name="isGuarantor"></param>
-        /// <param name="isDependent"></param>
-        /// <param name="isAssetSupplier"></param>
-        /// <param name="isClientSoleTrader"></param>
         /// <param name="updated"></param>
-        internal DealParticipantAttributes(string detail, DateTimeOffset? created, bool? isAccountant, bool? isSolicitor, bool? isApplicant, bool? isGuarantor, bool? isDependent, bool? isAssetSupplier, bool? isClientSoleTrader, DateTimeOffset? updated)
+        /// <param name="created"></param>
+        /// <param name="isApplicant"></param>
+        /// <param name="isDependent"></param>
+        /// <param name="isGuarantor"></param>
+        internal DealParticipantAttributes(DateTimeOffset? updated, DateTimeOffset? created, bool? isApplicant, bool? isDependent, bool? isGuarantor)
         {
-            Detail = detail;
-            Created = created;
-            IsAccountant = isAccountant;
-            IsSolicitor = isSolicitor;
-            IsApplicant = isApplicant;
-            IsGuarantor = isGuarantor;
-            IsDependent = isDependent;
-            IsAssetSupplier = isAssetSupplier;
-            IsClientSoleTrader = isClientSoleTrader;
             Updated = updated;
+            Created = created;
+            IsApplicant = isApplicant;
+            IsDependent = isDependent;
+            IsGuarantor = isGuarantor;
         }
 
-        public string Detail { get; }
-        public DateTimeOffset? Created { get; }
-        public bool? IsAccountant { get; set; }
-        public bool? IsSolicitor { get; set; }
-        public bool? IsApplicant { get; set; }
-        public bool? IsGuarantor { get; }
-        public bool? IsDependent { get; set; }
-        public bool? IsAssetSupplier { get; set; }
-        public bool? IsClientSoleTrader { get; set; }
         public DateTimeOffset? Updated { get; }
+        public DateTimeOffset? Created { get; }
+        public bool? IsApplicant { get; }
+        public bool? IsDependent { get; }
+        public bool? IsGuarantor { get; }
     }
 }

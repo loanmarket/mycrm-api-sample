@@ -38,10 +38,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "address": return Address.DeserializeAddress(element);
-                    case "advisers": return Adviser.DeserializeAdviser(element);
+                    case "adviser-details": return AdviserDetail.DeserializeAdviserDetail(element);
                     case "contact-address": return ContactAddress.DeserializeContactAddress(element);
-                    case "contact-address-details": return ContactAddressDetail.DeserializeContactAddressDetail(element);
+                    case "contact-external-references": return ContactExternalReference.DeserializeContactExternalReference(element);
                     case "contact-group-referrers": return ContactGroupReferrer.DeserializeContactGroupReferrer(element);
                     case "contact-groups": return ContactGroup.DeserializeContactGroup(element);
                     case "contact-marketing": return ContactMarketing.DeserializeContactMarketing(element);
@@ -57,9 +56,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     case "high-level-summary": return HighLevelSummary.DeserializeHighLevelSummary(element);
                     case "integrations": return Integration.DeserializeIntegration(element);
                     case "leads": return Lead.DeserializeLead(element);
+                    case "organisation": return Organisation.DeserializeOrganisation(element);
                     case "referrer": return Referrer.DeserializeReferrer(element);
                     case "referrer-organization": return ReferrerOrganization.DeserializeReferrerOrganization(element);
-                    case "contact-external-references": return ContactExternalReference.DeserializeContactExternalReference(element);
+                    case "advisers": return Adviser.DeserializeAdviser(element);
                 }
             }
             string type = default;

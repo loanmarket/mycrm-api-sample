@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The DealNoteAttributes. </summary>
@@ -18,15 +16,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of DealNoteAttributes. </summary>
-        /// <param name="updated"></param>
-        /// <param name="created"></param>
-        internal DealNoteAttributes(DateTimeOffset? updated, DateTimeOffset? created)
+        /// <param name="title"></param>
+        /// <param name="detail"></param>
+        internal DealNoteAttributes(string title, string detail)
         {
-            Updated = updated;
-            Created = created;
+            Title = title;
+            Detail = detail;
         }
 
-        public DateTimeOffset? Updated { get; }
-        public DateTimeOffset? Created { get; }
+        public string Title { get; set; }
+        public string Detail { get; set; }
     }
 }

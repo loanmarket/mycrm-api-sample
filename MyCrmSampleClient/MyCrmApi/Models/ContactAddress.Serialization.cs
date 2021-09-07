@@ -45,7 +45,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static ContactAddress DeserializeContactAddress(JsonElement element)
         {
-            Optional<object> attributes = default;
+            Optional<ContactAddressAttributes> attributes = default;
             Optional<ContactAddressRelationships> relationships = default;
             Optional<ContactAddressLinks> links = default;
             Optional<IReadOnlyDictionary<string, object>> meta = default;
@@ -60,7 +60,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    attributes = property.Value.GetObject();
+                    attributes = ContactAddressAttributes.DeserializeContactAddressAttributes(property.Value);
                     continue;
                 }
                 if (property.NameEquals("relationships"))

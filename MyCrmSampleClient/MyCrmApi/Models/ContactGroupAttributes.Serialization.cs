@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -100,6 +101,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> utmTerm = default;
             Optional<string> utmContent = default;
             Optional<string> utmCampaign = default;
+            Optional<IReadOnlyList<string>> categories = default;
             Optional<string> notes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -173,6 +175,21 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     utmCampaign = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("categories"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        categories = null;
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    categories = array;
+                    continue;
+                }
                 if (property.NameEquals("notes"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -184,7 +201,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ContactGroupAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), utmSource.Value, utmMedium.Value, utmTerm.Value, utmContent.Value, utmCampaign.Value, notes.Value);
+            return new ContactGroupAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), utmSource.Value, utmMedium.Value, utmTerm.Value, utmContent.Value, utmCampaign.Value, Optional.ToList(categories), notes.Value);
         }
     }
 }
