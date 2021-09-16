@@ -28,8 +28,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="linkedIn"></param>
         /// <param name="twitter"></param>
         /// <param name="youtubeFeatured"></param>
+        /// <param name="calendly"></param>
         /// <param name="youtubeChannel"></param>
-        internal AdviserAttributes(string googlePlaces, DateTimeOffset? created, string bio, string jobTitle, string email, string skype, string facebook, string linkedIn, string twitter, string youtubeFeatured, string youtubeChannel)
+        internal AdviserAttributes(string googlePlaces, DateTimeOffset? created, string bio, string jobTitle, string email, string skype, string facebook, string linkedIn, string twitter, string youtubeFeatured, string calendly, string youtubeChannel)
         {
             GooglePlaces = googlePlaces;
             Created = created;
@@ -41,6 +42,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             LinkedIn = linkedIn;
             Twitter = twitter;
             YoutubeFeatured = youtubeFeatured;
+            Calendly = calendly;
             YoutubeChannel = youtubeChannel;
         }
 
@@ -64,6 +66,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string Twitter { get; }
         /// <summary> Gets the youtube featured. </summary>
         public string YoutubeFeatured { get; }
+        /// <summary> Gets the calendly. </summary>
+        public string Calendly { get; }
         /// <summary> Gets the youtube channel. </summary>
         public string YoutubeChannel { get; }
     }

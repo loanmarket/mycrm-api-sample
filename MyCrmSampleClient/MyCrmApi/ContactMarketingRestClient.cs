@@ -54,7 +54,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> &gt; ```id```: the contact id. </summary>
+        /// <summary> The contact id. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The ContactMarketingDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,7 +79,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: the contact id. </summary>
+        /// <summary> The contact id. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The ContactMarketingDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -118,7 +118,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> &gt; ```id```: the contact id. </summary>
+        /// <summary> The contact id. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ContactMarketingDocument>> GetAsync(int id, CancellationToken cancellationToken = default)
@@ -141,7 +141,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: the contact id. </summary>
+        /// <summary> The contact id. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ContactMarketingDocument> Get(int id, CancellationToken cancellationToken = default)

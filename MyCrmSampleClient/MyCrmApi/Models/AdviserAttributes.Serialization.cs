@@ -31,6 +31,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> linkedIn = default;
             Optional<string> twitter = default;
             Optional<string> youtubeFeatured = default;
+            Optional<string> calendly = default;
             Optional<string> youtubeChannel = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -134,6 +135,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     youtubeFeatured = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("calendly"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        calendly = null;
+                        continue;
+                    }
+                    calendly = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("youtubeChannel"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -145,7 +156,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new AdviserAttributes(googlePlaces.Value, Optional.ToNullable(created), bio.Value, jobTitle.Value, email.Value, skype.Value, facebook.Value, linkedIn.Value, twitter.Value, youtubeFeatured.Value, youtubeChannel.Value);
+            return new AdviserAttributes(googlePlaces.Value, Optional.ToNullable(created), bio.Value, jobTitle.Value, email.Value, skype.Value, facebook.Value, linkedIn.Value, twitter.Value, youtubeFeatured.Value, calendly.Value, youtubeChannel.Value);
         }
     }
 }

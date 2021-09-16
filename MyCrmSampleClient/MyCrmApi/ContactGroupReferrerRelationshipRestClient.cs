@@ -47,7 +47,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> &gt; ```id```: The identifier of the referrer. </summary>
+        /// <summary> The identifier of the referrer. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="relationshipName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -70,7 +70,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the referrer. </summary>
+        /// <summary> The identifier of the referrer. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="relationshipName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -116,7 +116,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> &gt; ```id```: The identifier of the primary referrer resource. </summary>
+        /// <summary> The identifier of the primary referrer resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="relationshipName"> The String to use. </param>
         /// <param name="body"> The any to use. </param>
@@ -142,7 +142,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the primary referrer resource. </summary>
+        /// <summary> The identifier of the primary referrer resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="relationshipName"> The String to use. </param>
         /// <param name="body"> The any to use. </param>
@@ -191,7 +191,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> &gt; ```id```: The identifier of the referrer. </summary>
+        /// <summary> The identifier of the referrer. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="relationshipName"> The String to use. </param>
         /// <param name="body"> The any to use. </param>
@@ -217,7 +217,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the referrer. </summary>
+        /// <summary> The identifier of the referrer. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="relationshipName"> The String to use. </param>
         /// <param name="body"> The any to use. </param>
@@ -259,7 +259,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> &gt; ```id```: The identifier of the referrer. </summary>
+        /// <summary> The identifier of the referrer. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="relationshipName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -283,7 +283,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the referrer. </summary>
+        /// <summary> The identifier of the referrer. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="relationshipName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

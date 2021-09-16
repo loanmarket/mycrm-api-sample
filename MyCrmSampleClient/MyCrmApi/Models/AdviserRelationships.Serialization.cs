@@ -30,6 +30,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("apiFamilySocialMedia");
                 writer.WriteObjectValue(ApiFamilySocialMedia);
             }
+            if (Optional.IsDefined(ApiFamilyLeadsProfile))
+            {
+                writer.WritePropertyName("apiFamilyLeadsProfile");
+                writer.WriteObjectValue(ApiFamilyLeadsProfile);
+            }
             if (Optional.IsDefined(ContactGroups))
             {
                 writer.WritePropertyName("contactGroups");
@@ -43,6 +48,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<RelationshipsSingleDocument> adviserDetails = default;
             Optional<RelationshipsSingleDocument> organisation = default;
             Optional<RelationshipsSingleDocument> apiFamilySocialMedia = default;
+            Optional<RelationshipsSingleDocument> apiFamilyLeadsProfile = default;
             Optional<RelationshipsMultipleDocument> contactGroups = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -76,6 +82,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     apiFamilySocialMedia = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
                     continue;
                 }
+                if (property.NameEquals("apiFamilyLeadsProfile"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    apiFamilyLeadsProfile = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("contactGroups"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -87,7 +103,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new AdviserRelationships(adviserDetails.Value, organisation.Value, apiFamilySocialMedia.Value, contactGroups.Value);
+            return new AdviserRelationships(adviserDetails.Value, organisation.Value, apiFamilySocialMedia.Value, apiFamilyLeadsProfile.Value, contactGroups.Value);
         }
     }
 }

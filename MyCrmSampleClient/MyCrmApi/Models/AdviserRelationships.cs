@@ -19,12 +19,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="adviserDetails"></param>
         /// <param name="organisation"></param>
         /// <param name="apiFamilySocialMedia"></param>
+        /// <param name="apiFamilyLeadsProfile"></param>
         /// <param name="contactGroups"></param>
-        internal AdviserRelationships(RelationshipsSingleDocument adviserDetails, RelationshipsSingleDocument organisation, RelationshipsSingleDocument apiFamilySocialMedia, RelationshipsMultipleDocument contactGroups)
+        internal AdviserRelationships(RelationshipsSingleDocument adviserDetails, RelationshipsSingleDocument organisation, RelationshipsSingleDocument apiFamilySocialMedia, RelationshipsSingleDocument apiFamilyLeadsProfile, RelationshipsMultipleDocument contactGroups)
         {
             AdviserDetails = adviserDetails;
             Organisation = organisation;
             ApiFamilySocialMedia = apiFamilySocialMedia;
+            ApiFamilyLeadsProfile = apiFamilyLeadsProfile;
             ContactGroups = contactGroups;
         }
 
@@ -34,6 +36,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public RelationshipsSingleDocument Organisation { get; set; }
         /// <summary> Gets or sets the api family social media. </summary>
         public RelationshipsSingleDocument ApiFamilySocialMedia { get; set; }
+        /// <summary> Gets or sets the api family leads profile. </summary>
+        public RelationshipsSingleDocument ApiFamilyLeadsProfile { get; set; }
         /// <summary> Gets or sets the contact groups. </summary>
         public RelationshipsMultipleDocument ContactGroups { get; set; }
     }

@@ -37,7 +37,7 @@ namespace MyCrmSampleClient.MyCrmApi
             _pipeline = pipeline;
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DealScenariosDocument>> GetDealScenariosAsync(int id, CancellationToken cancellationToken = default)
@@ -55,7 +55,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DealScenariosDocument> GetDealScenarios(int id, CancellationToken cancellationToken = default)
@@ -73,7 +73,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DealParticipantsDocument>> GetDealParticipantsAsync(int id, CancellationToken cancellationToken = default)
@@ -91,7 +91,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DealParticipantsDocument> GetDealParticipants(int id, CancellationToken cancellationToken = default)
@@ -109,7 +109,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DealExternalReferencesDocument>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
@@ -127,7 +127,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DealExternalReferencesDocument> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
@@ -145,7 +145,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
@@ -163,7 +163,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
@@ -181,7 +181,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DealImportantDatesDocument>> GetDealImportantDatesAsync(int id, CancellationToken cancellationToken = default)
@@ -199,7 +199,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DealImportantDatesDocument> GetDealImportantDates(int id, CancellationToken cancellationToken = default)
@@ -217,7 +217,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DealStructuresDocument>> GetDealStructuresAsync(int id, CancellationToken cancellationToken = default)
@@ -235,7 +235,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DealStructuresDocument> GetDealStructures(int id, CancellationToken cancellationToken = default)
@@ -253,7 +253,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AdvisersDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
@@ -271,7 +271,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AdvisersDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)
@@ -289,7 +289,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DealNotesDocument>> GetDealNotesAsync(int id, CancellationToken cancellationToken = default)
@@ -307,7 +307,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal. </summary>
+        /// <summary> The identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DealNotesDocument> GetDealNotes(int id, CancellationToken cancellationToken = default)

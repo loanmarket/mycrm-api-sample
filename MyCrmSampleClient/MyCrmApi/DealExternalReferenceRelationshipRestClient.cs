@@ -48,7 +48,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal external reference. </summary>
+        /// <summary> The identifier of the deal external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<RelationshipsSingleDocument>> GetDealsAsync(int id, CancellationToken cancellationToken = default)
@@ -71,7 +71,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal external reference. </summary>
+        /// <summary> The identifier of the deal external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<RelationshipsSingleDocument> GetDeals(int id, CancellationToken cancellationToken = default)
@@ -116,7 +116,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> &gt; ```id```: The identifier of the primary deal external reference resource. </summary>
+        /// <summary> The identifier of the primary deal external reference resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,7 +135,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the primary deal external reference resource. </summary>
+        /// <summary> The identifier of the primary deal external reference resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -176,7 +176,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal external reference. </summary>
+        /// <summary> The identifier of the deal external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,7 +195,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal external reference. </summary>
+        /// <summary> The identifier of the deal external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,7 +229,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal external reference. </summary>
+        /// <summary> The identifier of the deal external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> DeleteDealsAsync(int id, CancellationToken cancellationToken = default)
@@ -246,7 +246,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal external reference. </summary>
+        /// <summary> The identifier of the deal external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response DeleteDeals(int id, CancellationToken cancellationToken = default)
@@ -278,7 +278,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal external reference. </summary>
+        /// <summary> The identifier of the deal external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<RelationshipsSingleDocument>> GetIntegrationsAsync(int id, CancellationToken cancellationToken = default)
@@ -301,7 +301,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal external reference. </summary>
+        /// <summary> The identifier of the deal external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<RelationshipsSingleDocument> GetIntegrations(int id, CancellationToken cancellationToken = default)
@@ -346,7 +346,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> &gt; ```id```: The identifier of the primary deal external reference resource. </summary>
+        /// <summary> The identifier of the primary deal external reference resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -365,7 +365,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the primary deal external reference resource. </summary>
+        /// <summary> The identifier of the primary deal external reference resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -406,7 +406,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal external reference. </summary>
+        /// <summary> The identifier of the deal external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -425,7 +425,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal external reference. </summary>
+        /// <summary> The identifier of the deal external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -459,7 +459,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal external reference. </summary>
+        /// <summary> The identifier of the deal external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> DeleteIntegrationsAsync(int id, CancellationToken cancellationToken = default)
@@ -476,7 +476,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> &gt; ```id```: The identifier of the deal external reference. </summary>
+        /// <summary> The identifier of the deal external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response DeleteIntegrations(int id, CancellationToken cancellationToken = default)

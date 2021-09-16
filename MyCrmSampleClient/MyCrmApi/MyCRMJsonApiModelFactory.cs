@@ -70,11 +70,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="linkedIn"></param>
         /// <param name="twitter"></param>
         /// <param name="youtubeFeatured"></param>
+        /// <param name="calendly"></param>
         /// <param name="youtubeChannel"></param>
         /// <returns> A new <see cref="Models.AdviserAttributes"/> instance for mocking. </returns>
-        public static AdviserAttributes AdviserAttributes(string googlePlaces = null, DateTimeOffset? created = null, string bio = null, string jobTitle = null, string email = null, string skype = null, string facebook = null, string linkedIn = null, string twitter = null, string youtubeFeatured = null, string youtubeChannel = null)
+        public static AdviserAttributes AdviserAttributes(string googlePlaces = null, DateTimeOffset? created = null, string bio = null, string jobTitle = null, string email = null, string skype = null, string facebook = null, string linkedIn = null, string twitter = null, string youtubeFeatured = null, string calendly = null, string youtubeChannel = null)
         {
-            return new AdviserAttributes(googlePlaces, created, bio, jobTitle, email, skype, facebook, linkedIn, twitter, youtubeFeatured, youtubeChannel);
+            return new AdviserAttributes(googlePlaces, created, bio, jobTitle, email, skype, facebook, linkedIn, twitter, youtubeFeatured, calendly, youtubeChannel);
         }
 
         /// <summary> Initializes a new instance of RelationshipsSingleDocument. </summary>
