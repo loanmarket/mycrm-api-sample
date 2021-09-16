@@ -25,7 +25,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Id = id;
         }
 
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
+        /// <summary> Gets the broker branding. </summary>
         public Organisation BrokerBranding { get; }
     }
 }

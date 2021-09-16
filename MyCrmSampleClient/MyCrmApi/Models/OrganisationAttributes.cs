@@ -28,9 +28,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Website = website;
         }
 
+        /// <summary> Gets the email. </summary>
         public string Email { get; }
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the trading name. </summary>
         public string TradingName { get; }
+        /// <summary> Gets the website. </summary>
         public string Website { get; }
     }
 }

@@ -44,16 +44,27 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             DateOfBirth = dateOfBirth;
         }
 
+        /// <summary> Gets the created. </summary>
         public DateTimeOffset? Created { get; }
+        /// <summary> Gets or sets the mobile. </summary>
         public string Mobile { get; set; }
+        /// <summary> Gets or sets the title. </summary>
         public string Title { get; set; }
+        /// <summary> Gets or sets the first name. </summary>
         public string FirstName { get; set; }
+        /// <summary> Gets or sets the middle name. </summary>
         public string MiddleName { get; set; }
+        /// <summary> Gets or sets the last name. </summary>
         public string LastName { get; set; }
+        /// <summary> Gets or sets the preferred name. </summary>
         public string PreferredName { get; set; }
+        /// <summary> Gets or sets the email. </summary>
         public string Email { get; set; }
+        /// <summary> Gets the updated. </summary>
         public DateTimeOffset? Updated { get; }
+        /// <summary> Gets or sets the has marketing consent. </summary>
         public bool? HasMarketingConsent { get; set; }
+        /// <summary> Gets or sets the date of birth. </summary>
         public DateTimeOffset? DateOfBirth { get; set; }
     }
 }

@@ -36,13 +36,21 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Meta = meta;
         }
 
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
+        /// <summary> Gets the links. </summary>
         public ErrorLinks Links { get; }
+        /// <summary> Gets the status. </summary>
         public string Status { get; }
+        /// <summary> Gets the code. </summary>
         public string Code { get; }
+        /// <summary> Gets the title. </summary>
         public string Title { get; }
+        /// <summary> Gets the detail. </summary>
         public string Detail { get; }
+        /// <summary> Gets the source. </summary>
         public ErrorSource Source { get; }
+        /// <summary> Gets the meta. </summary>
         public ErrorMeta Meta { get; }
     }
 }

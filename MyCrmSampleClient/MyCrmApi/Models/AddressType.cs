@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The AddressType. </summary>
-    public readonly partial struct AddressType : IEquatable<AddressType>
+    internal readonly partial struct AddressType : IEquatable<AddressType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AddressType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AddressType(string value)
         {

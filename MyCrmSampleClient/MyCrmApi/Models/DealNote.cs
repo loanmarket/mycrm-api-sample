@@ -36,8 +36,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Type = type ?? "deal-notes";
         }
 
+        /// <summary> Gets or sets the attributes. </summary>
         public DealNoteAttributes Attributes { get; set; }
+        /// <summary> Gets or sets the relationships. </summary>
         public DealNoteRelationships Relationships { get; set; }
+        /// <summary> Gets the links. </summary>
         public DealNoteLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }

@@ -30,9 +30,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Description = description;
         }
 
+        /// <summary> Gets the updated. </summary>
         public DateTimeOffset? Updated { get; }
+        /// <summary> Gets the created. </summary>
         public DateTimeOffset? Created { get; }
+        /// <summary> Gets or sets the name. </summary>
         public string Name { get; set; }
+        /// <summary> Gets or sets the description. </summary>
         public string Description { get; set; }
     }
 }

@@ -10,6 +10,8 @@
         "tags": [
           "Adviser"
         ],
+        "summary": "Gets a single adviser by id",
+        "description": "> ```id```: the adviser id. aka My Crm family_id",
         "operationId": "Adviser_Get",
         "parameters": [
           {
@@ -54,6 +56,7 @@
         "tags": [
           "Adviser"
         ],
+        "summary": "Gets a collection of advisers",
         "operationId": "Advisers_Get",
         "parameters": [
           {
@@ -134,6 +137,8 @@
         "tags": [
           "AdviserDetails"
         ],
+        "summary": "Gets a single set of adviser details by id",
+        "description": "> ```id```: the id of the set of adviser details.  aka ClientId, aka My Crm ID",
         "operationId": "AdviserDetail_Get",
         "parameters": [
           {
@@ -178,6 +183,7 @@
         "tags": [
           "AdviserDetails"
         ],
+        "summary": "Gets adviser details for a collection of advisers",
         "operationId": "AdviserDetails_Get",
         "parameters": [
           {
@@ -258,6 +264,8 @@
         "tags": [
           "AdviserDetails"
         ],
+        "summary": "Gets advisers related to a single set of adviser details",
+        "description": "> ```id```: the id of the set of adviser details.  aka ClientId, aka My Crm ID",
         "operationId": "AdviserDetailRelationship_Get_Advisers",
         "parameters": [
           {
@@ -302,6 +310,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Gets contacts via a single related contact external reference",
+        "description": "> ```id```: The identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelated_Get_Contacts",
         "parameters": [
           {
@@ -344,6 +354,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactExternalReferenceRelated_Head_Contacts",
         "parameters": [
           {
@@ -381,6 +393,7 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Gets a collection of external references of contacts",
         "operationId": "ContactExternalReferences_Get",
         "parameters": [
           {
@@ -459,6 +472,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactExternalReferences_Head",
         "responses": {
           "200": {
@@ -483,6 +498,7 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Creates a new contact external reference with attributes, relationships or both",
         "operationId": "ContactExternalReference_Post",
         "requestBody": {
           "content": {
@@ -533,6 +549,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Gets a single contact external reference by id",
+        "description": "> ```id```: The identifier of the contact external reference",
         "operationId": "ContactExternalReference_Get",
         "parameters": [
           {
@@ -575,6 +593,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactExternalReference_Head",
         "parameters": [
           {
@@ -610,6 +630,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Updates the attributes and/or relationships of an existing contact external reference. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
+        "description": "> ```id```: The identifier of the contact external reference",
         "operationId": "ContactExternalReference_Patch",
         "parameters": [
           {
@@ -664,6 +686,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Deletes an existing contact external reference",
+        "description": "> ```id```: The identifier of the contact external reference",
         "operationId": "ContactExternalReference_Delete",
         "parameters": [
           {
@@ -701,6 +725,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Gets a contacts related to a single contact external reference",
+        "description": "> ```id```: The identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelationship_Get_Contacts",
         "parameters": [
           {
@@ -743,6 +769,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactExternalReferenceRelationship_Get_Head_Contacts",
         "parameters": [
           {
@@ -778,6 +806,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Adds contacts to a to-many relationship with an existing contact external reference",
+        "description": "> ```id```: The identifier of the primary contact external reference resource",
         "operationId": "ContactExternalReferenceRelationship_Post_Contacts",
         "parameters": [
           {
@@ -825,6 +855,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Performs a complete replacement of a contact relationship on an existing contact external reference",
+        "description": "> ```id```: The identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelationship_Patch_Contacts",
         "parameters": [
           {
@@ -872,6 +904,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Removes a contact external reference from a to-many relationship with contacts",
+        "description": "> ```id```: The identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelationship_Delete_Contacts",
         "parameters": [
           {
@@ -909,6 +943,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Gets contacts via a single related contact group",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelated_Get_Contacts",
         "parameters": [
           {
@@ -951,6 +987,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactGroupRelated_Head_Contacts",
         "parameters": [
           {
@@ -988,6 +1026,7 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Gets a collection of contact groups",
         "operationId": "ContactGroups_Get",
         "parameters": [
           {
@@ -1066,6 +1105,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactGroups_Head",
         "responses": {
           "200": {
@@ -1090,6 +1131,7 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Creates a new contact group with attributes, relationships or both",
         "operationId": "ContactGroup_Post",
         "requestBody": {
           "content": {
@@ -1140,6 +1182,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Gets a single contact group by id",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroup_Get",
         "parameters": [
           {
@@ -1182,6 +1226,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactGroup_Head",
         "parameters": [
           {
@@ -1217,6 +1263,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Updates the attributes and/or relationships of an existing contact group. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroup_Patch",
         "parameters": [
           {
@@ -1271,6 +1319,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Deletes an existing contact group",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroup_Delete",
         "parameters": [
           {
@@ -1308,6 +1358,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Gets a contacts related to a single contact group",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelationship_Get_Contacts",
         "parameters": [
           {
@@ -1350,6 +1402,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactGroupRelationship_Get_Head_Contacts",
         "parameters": [
           {
@@ -1385,6 +1439,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Adds contacts to a to-many relationship with an existing contact group",
+        "description": "> ```id```: The identifier of the primary contact group resource",
         "operationId": "ContactGroupRelationship_Post_Contacts",
         "parameters": [
           {
@@ -1432,6 +1488,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Performs a complete replacement of a contacts relationship on an existing contact group",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelationship_Patch_Contacts",
         "parameters": [
           {
@@ -1479,6 +1537,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Removes a contact group from a to-many relationship with contacts",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelationship_Delete_Contacts",
         "parameters": [
           {
@@ -1516,6 +1576,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Gets contactGroups via a single related contact",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelated_Get_ContactGroups",
         "parameters": [
           {
@@ -1558,6 +1620,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactRelated_Head_ContactGroups",
         "parameters": [
           {
@@ -1595,6 +1659,8 @@
         "tags": [
           "ContactMarketingConsent"
         ],
+        "summary": "Updates the marketing consent declaration of an existing contact",
+        "description": "> ```id```: the contact id",
         "operationId": "ContactMarketing_Patch",
         "parameters": [
           {
@@ -1649,6 +1715,8 @@
         "tags": [
           "ContactMarketingConsent"
         ],
+        "summary": "Gets the marketing consent declaration of a single contact",
+        "description": "> ```id```: the contact id",
         "operationId": "ContactMarketing_Get",
         "parameters": [
           {
@@ -1693,6 +1761,7 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Creates a new contact with attributes, relationships or both",
         "operationId": "Contact_Post",
         "requestBody": {
           "content": {
@@ -1741,6 +1810,7 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Gets a collection of contacts",
         "operationId": "Contacts_Get",
         "parameters": [
           {
@@ -1819,6 +1889,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "Contacts_Head",
         "responses": {
           "200": {
@@ -1845,6 +1917,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Updates the attributes and/or relationships of an existing contact. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "Contact_Patch",
         "parameters": [
           {
@@ -1899,6 +1973,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Gets a single contact by id",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "Contact_Get",
         "parameters": [
           {
@@ -1941,6 +2017,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "Contact_Head",
         "parameters": [
           {
@@ -1976,6 +2054,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Deletes an existing contact",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "Contact_Delete",
         "parameters": [
           {
@@ -2013,6 +2093,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Gets a contactGroups related to a single contact",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelationship_Get_ContactGroups",
         "parameters": [
           {
@@ -2055,6 +2137,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactRelationship_Get_Head_ContactGroups",
         "parameters": [
           {
@@ -2090,6 +2174,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Adds contactGroups to a to-many relationship with an existing contact",
+        "description": "> ```id```: The identifier of the primary contact resource",
         "operationId": "ContactRelationship_Post_ContactGroups",
         "parameters": [
           {
@@ -2137,6 +2223,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Performs a complete replacement of a contactGroup relationship on an existing contact",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelationship_Patch_ContactGroups",
         "parameters": [
           {
@@ -2184,6 +2272,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Removes a contact from a to-many relationship with contactGroups",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelationship_Delete_ContactGroups",
         "parameters": [
           {
@@ -2221,6 +2311,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Gets deals via a single related deal external reference",
+        "description": "> ```id```: The identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelated_Get_Deals",
         "parameters": [
           {
@@ -2263,6 +2355,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealExternalReferenceRelated_Head_Deals",
         "parameters": [
           {
@@ -2300,6 +2394,7 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Gets a collection of external references of deals",
         "operationId": "DealExternalReferences_Get",
         "parameters": [
           {
@@ -2378,6 +2473,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealExternalReferences_Head",
         "responses": {
           "200": {
@@ -2402,6 +2499,7 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Creates a new deal external reference with attributes, relationships or both",
         "operationId": "DealExternalReference_Post",
         "requestBody": {
           "content": {
@@ -2452,6 +2550,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Gets a single deal external reference by id",
+        "description": "> ```id```: The identifier of the deal external reference",
         "operationId": "DealExternalReference_Get",
         "parameters": [
           {
@@ -2494,6 +2594,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealExternalReference_Head",
         "parameters": [
           {
@@ -2529,6 +2631,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Updates the attributes and/or relationships of an existing deal external reference. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
+        "description": "> ```id```: The identifier of the deal external reference",
         "operationId": "DealExternalReference_Patch",
         "parameters": [
           {
@@ -2583,6 +2687,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Deletes an existing deal external reference",
+        "description": "> ```id```: The identifier of the deal external reference",
         "operationId": "DealExternalReference_Delete",
         "parameters": [
           {
@@ -2620,6 +2726,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Gets a deals related to a single deal external reference",
+        "description": "> ```id```: The identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelationship_Get_Deals",
         "parameters": [
           {
@@ -2662,6 +2770,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealExternalReferenceRelationship_Get_Head_Deals",
         "parameters": [
           {
@@ -2697,6 +2807,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Adds deals to a to-many relationship with an existing deal external reference",
+        "description": "> ```id```: The identifier of the primary deal external reference resource",
         "operationId": "DealExternalReferenceRelationship_Post_Deals",
         "parameters": [
           {
@@ -2744,6 +2856,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Performs a complete replacement of a deal relationship on an existing deal external reference",
+        "description": "> ```id```: The identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelationship_Patch_Deals",
         "parameters": [
           {
@@ -2791,6 +2905,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Removes a deal external reference from a to-many relationship with deals",
+        "description": "> ```id```: The identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelationship_Delete_Deals",
         "parameters": [
           {
@@ -2828,6 +2944,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Gets contacts via a single related participants in a deal",
+        "description": "> ```id```: The identifier of the participants in a deal",
         "operationId": "DealParticipantRelated_Get_Contacts",
         "parameters": [
           {
@@ -2870,6 +2988,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealParticipantRelated_Head_Contacts",
         "parameters": [
           {
@@ -2907,6 +3027,7 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Gets a collection of participants in deals",
         "operationId": "DealParticipants_Get",
         "parameters": [
           {
@@ -2985,6 +3106,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealParticipants_Head",
         "responses": {
           "200": {
@@ -3009,6 +3132,7 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Creates a new participants in a deal with attributes, relationships or both",
         "operationId": "DealParticipant_Post",
         "requestBody": {
           "content": {
@@ -3059,6 +3183,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Gets a single participants in a deal by id",
+        "description": "> ```id```: The identifier of the participants in a deal",
         "operationId": "DealParticipant_Get",
         "parameters": [
           {
@@ -3101,6 +3227,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealParticipant_Head",
         "parameters": [
           {
@@ -3136,6 +3264,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Updates the attributes and/or relationships of an existing participants in a deal. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
+        "description": "> ```id```: The identifier of the participants in a deal",
         "operationId": "DealParticipant_Patch",
         "parameters": [
           {
@@ -3190,6 +3320,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Deletes an existing participants in a deal",
+        "description": "> ```id```: The identifier of the participants in a deal",
         "operationId": "DealParticipant_Delete",
         "parameters": [
           {
@@ -3227,6 +3359,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Gets a contacts related to a single participants in a deal",
+        "description": "> ```id```: The identifier of the participants in a deal",
         "operationId": "DealParticipantRelationship_Get_Contacts",
         "parameters": [
           {
@@ -3269,6 +3403,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealParticipantRelationship_Get_Head_Contacts",
         "parameters": [
           {
@@ -3304,6 +3440,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Adds contacts to a to-many relationship with an existing participants in a deal",
+        "description": "> ```id```: The identifier of the primary participants in a deal resource",
         "operationId": "DealParticipantRelationship_Post_Contacts",
         "parameters": [
           {
@@ -3351,6 +3489,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Performs a complete replacement of a contact relationship on an existing participants in a deal",
+        "description": "> ```id```: The identifier of the participants in a deal",
         "operationId": "DealParticipantRelationship_Patch_Contacts",
         "parameters": [
           {
@@ -3398,6 +3538,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Removes a participants in a deal from a to-many relationship with contacts",
+        "description": "> ```id```: The identifier of the participants in a deal",
         "operationId": "DealParticipantRelationship_Delete_Contacts",
         "parameters": [
           {
@@ -3435,6 +3577,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets dealScenarios via a single related deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelated_Get_DealScenarios",
         "parameters": [
           {
@@ -3477,6 +3621,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelated_Head_DealScenarios",
         "parameters": [
           {
@@ -3514,6 +3660,7 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets a collection of deals",
         "operationId": "Deals_Get",
         "parameters": [
           {
@@ -3592,6 +3739,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "Deals_Head",
         "responses": {
           "200": {
@@ -3616,6 +3765,7 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Creates a new deal with attributes, relationships or both",
         "operationId": "Deal_Post",
         "requestBody": {
           "content": {
@@ -3666,6 +3816,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets a single deal by id",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "Deal_Get",
         "parameters": [
           {
@@ -3708,6 +3860,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "Deal_Head",
         "parameters": [
           {
@@ -3743,6 +3897,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Updates the attributes and/or relationships of an existing deal. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "Deal_Patch",
         "parameters": [
           {
@@ -3797,6 +3953,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Deletes an existing deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "Deal_Delete",
         "parameters": [
           {
@@ -3834,6 +3992,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets a dealScenarios related to a single deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Get_DealScenarios",
         "parameters": [
           {
@@ -3876,6 +4036,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelationship_Get_Head_DealScenarios",
         "parameters": [
           {
@@ -3911,6 +4073,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Adds dealScenarios to a to-many relationship with an existing deal",
+        "description": "> ```id```: The identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_DealScenarios",
         "parameters": [
           {
@@ -3958,6 +4122,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Performs a complete replacement of a dealScenario relationship on an existing deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Patch_DealScenarios",
         "parameters": [
           {
@@ -4005,6 +4171,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Removes a deal from a to-many relationship with dealScenarios",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Delete_DealScenarios",
         "parameters": [
           {
@@ -4042,6 +4210,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Gets contactExternalReferences via a single related integration",
+        "description": "> ```id```: The identifier of the integration",
         "operationId": "IntegrationRelated_Get_ContactExternalReferences",
         "parameters": [
           {
@@ -4084,6 +4254,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "IntegrationRelated_Head_ContactExternalReferences",
         "parameters": [
           {
@@ -4121,6 +4293,7 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Gets a collection of integrations",
         "operationId": "Integrations_Get",
         "parameters": [
           {
@@ -4199,6 +4372,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "Integrations_Head",
         "responses": {
           "200": {
@@ -4223,6 +4398,7 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Creates a new integration with attributes, relationships or both",
         "operationId": "Integration_Post",
         "requestBody": {
           "content": {
@@ -4273,6 +4449,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Gets a single integration by id",
+        "description": "> ```id```: The identifier of the integration",
         "operationId": "Integration_Get",
         "parameters": [
           {
@@ -4315,6 +4493,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "Integration_Head",
         "parameters": [
           {
@@ -4350,6 +4530,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Updates the attributes and/or relationships of an existing integration. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
+        "description": "> ```id```: The identifier of the integration",
         "operationId": "Integration_Patch",
         "parameters": [
           {
@@ -4404,6 +4586,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Deletes an existing integration",
+        "description": "> ```id```: The identifier of the integration",
         "operationId": "Integration_Delete",
         "parameters": [
           {
@@ -4441,6 +4625,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Gets a contactExternalReferences related to a single integration",
+        "description": "> ```id```: The identifier of the integration",
         "operationId": "IntegrationRelationship_Get_ContactExternalReferences",
         "parameters": [
           {
@@ -4483,6 +4669,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "IntegrationRelationship_Get_Head_ContactExternalReferences",
         "parameters": [
           {
@@ -4518,6 +4706,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Adds contactExternalReferences to a to-many relationship with an existing integration",
+        "description": "> ```id```: The identifier of the primary integration resource",
         "operationId": "IntegrationRelationship_Post_ContactExternalReferences",
         "parameters": [
           {
@@ -4565,6 +4755,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Performs a complete replacement of a contactExternalReferences relationship on an existing integration",
+        "description": "> ```id```: The identifier of the integration",
         "operationId": "IntegrationRelationship_Patch_ContactExternalReferences",
         "parameters": [
           {
@@ -4612,6 +4804,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Removes a integration from a to-many relationship with contactExternalReferences",
+        "description": "> ```id```: The identifier of the integration",
         "operationId": "IntegrationRelationship_Delete_ContactExternalReferences",
         "parameters": [
           {
@@ -4649,6 +4843,8 @@
         "tags": [
           "Notes"
         ],
+        "summary": "Gets deals via a single related deal note",
+        "description": "> ```id```: The identifier of the deal note",
         "operationId": "DealNoteRelated_Get_Deals",
         "parameters": [
           {
@@ -4691,6 +4887,8 @@
         "tags": [
           "Notes"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealNoteRelated_Head_Deals",
         "parameters": [
           {
@@ -4728,6 +4926,7 @@
         "tags": [
           "Leads"
         ],
+        "summary": "Creates a lead, including contact and deal attributes",
         "operationId": "Lead_Post",
         "requestBody": {
           "content": {
@@ -4778,6 +4977,8 @@
         "tags": [
           "Leads"
         ],
+        "summary": "Gets select details if an existing lead",
+        "description": "> ```id```: The identifier of the lead",
         "operationId": "Lead_Get",
         "parameters": [
           {
@@ -4822,6 +5023,7 @@
         "tags": [
           "Notes"
         ],
+        "summary": "Gets a collection of notes on deals",
         "operationId": "DealNotes_Get",
         "parameters": [
           {
@@ -4900,6 +5102,8 @@
         "tags": [
           "Notes"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealNotes_Head",
         "responses": {
           "200": {
@@ -4924,6 +5128,7 @@
         "tags": [
           "Notes"
         ],
+        "summary": "Creates a new deal note with attributes, relationships or both",
         "operationId": "DealNote_Post",
         "requestBody": {
           "content": {
@@ -4974,6 +5179,8 @@
         "tags": [
           "Notes"
         ],
+        "summary": "Gets a single deal note by id",
+        "description": "> ```id```: The identifier of the deal note",
         "operationId": "DealNote_Get",
         "parameters": [
           {
@@ -5016,6 +5223,8 @@
         "tags": [
           "Notes"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealNote_Head",
         "parameters": [
           {
@@ -5051,6 +5260,8 @@
         "tags": [
           "Notes"
         ],
+        "summary": "Updates the attributes and/or relationships of an existing deal note. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
+        "description": "> ```id```: The identifier of the deal note",
         "operationId": "DealNote_Patch",
         "parameters": [
           {
@@ -5105,6 +5316,8 @@
         "tags": [
           "Notes"
         ],
+        "summary": "Deletes an existing deal note",
+        "description": "> ```id```: The identifier of the deal note",
         "operationId": "DealNote_Delete",
         "parameters": [
           {
@@ -5142,6 +5355,8 @@
         "tags": [
           "Notes"
         ],
+        "summary": "Gets a deals related to a single deal note",
+        "description": "> ```id```: The identifier of the deal note",
         "operationId": "DealNoteRelationship_Get_Deals",
         "parameters": [
           {
@@ -5184,6 +5399,8 @@
         "tags": [
           "Notes"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealNoteRelationship_Get_Head_Deals",
         "parameters": [
           {
@@ -5219,6 +5436,8 @@
         "tags": [
           "Notes"
         ],
+        "summary": "Adds deals to a to-many relationship with an existing deal note",
+        "description": "> ```id```: The identifier of the primary deal note resource",
         "operationId": "DealNoteRelationship_Post_Deals",
         "parameters": [
           {
@@ -5266,6 +5485,8 @@
         "tags": [
           "Notes"
         ],
+        "summary": "Performs a complete replacement of a deal relationship on an existing deal note",
+        "description": "> ```id```: The identifier of the deal note",
         "operationId": "DealNoteRelationship_Patch_Deals",
         "parameters": [
           {
@@ -5313,6 +5534,8 @@
         "tags": [
           "Notes"
         ],
+        "summary": "Removes a deal note from a to-many relationship with deals",
+        "description": "> ```id```: The identifier of the deal note",
         "operationId": "DealNoteRelationship_Delete_Deals",
         "parameters": [
           {
@@ -5350,6 +5573,7 @@
         "tags": [
           "Referrers"
         ],
+        "summary": "Gets a collection of referrers",
         "operationId": "ContactGroupReferrers_Get",
         "parameters": [
           {
@@ -5428,6 +5652,8 @@
         "tags": [
           "Referrers"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactGroupReferrers_Head",
         "responses": {
           "200": {
@@ -5452,6 +5678,7 @@
         "tags": [
           "Referrers"
         ],
+        "summary": "Creates a new referrer with attributes, relationships or both",
         "operationId": "ContactGroupReferrer_Post",
         "requestBody": {
           "content": {
@@ -5502,6 +5729,8 @@
         "tags": [
           "Referrers"
         ],
+        "summary": "Gets a single referrer by id",
+        "description": "> ```id```: The identifier of the referrer",
         "operationId": "ContactGroupReferrer_Get",
         "parameters": [
           {
@@ -5544,6 +5773,8 @@
         "tags": [
           "Referrers"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactGroupReferrer_Head",
         "parameters": [
           {
@@ -5579,6 +5810,8 @@
         "tags": [
           "Referrers"
         ],
+        "summary": "Updates the attributes and/or relationships of an existing referrer. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
+        "description": "> ```id```: The identifier of the referrer",
         "operationId": "ContactGroupReferrer_Patch",
         "parameters": [
           {
@@ -5633,6 +5866,8 @@
         "tags": [
           "Referrers"
         ],
+        "summary": "Deletes an existing referrer",
+        "description": "> ```id```: The identifier of the referrer",
         "operationId": "ContactGroupReferrer_Delete",
         "parameters": [
           {
@@ -5670,6 +5905,8 @@
         "tags": [
           "Referrers"
         ],
+        "summary": "Gets {{{RelationshipNames}}} via a single related referrer",
+        "description": "> ```id```: The identifier of the referrer",
         "operationId": "ContactGroupReferrerRelated_Get",
         "parameters": [
           {
@@ -5716,6 +5953,8 @@
         "tags": [
           "Referrers"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactGroupReferrerRelated_Head",
         "parameters": [
           {
@@ -5761,6 +6000,8 @@
         "tags": [
           "Referrers"
         ],
+        "summary": "Gets a {{{RelationshipNames}}} related to a single referrer",
+        "description": "> ```id```: The identifier of the referrer",
         "operationId": "ContactGroupReferrerRelationship_Get",
         "parameters": [
           {
@@ -5807,6 +6048,8 @@
         "tags": [
           "Referrers"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactGroupReferrerRelationship_Get_Head",
         "parameters": [
           {
@@ -5850,6 +6093,8 @@
         "tags": [
           "Referrers"
         ],
+        "summary": "Adds {{{RelationshipNames}}} to a to-many relationship with an existing referrer",
+        "description": "> ```id```: The identifier of the primary referrer resource",
         "operationId": "ContactGroupReferrerRelationship_Post",
         "parameters": [
           {
@@ -5901,6 +6146,8 @@
         "tags": [
           "Referrers"
         ],
+        "summary": "Performs a complete replacement of a {{{RelationshipName}}} relationship on an existing referrer",
+        "description": "> ```id```: The identifier of the referrer",
         "operationId": "ContactGroupReferrerRelationship_Patch",
         "parameters": [
           {
@@ -5952,6 +6199,8 @@
         "tags": [
           "Referrers"
         ],
+        "summary": "Removes a referrer from a to-many relationship with {{{RelationshipNames}}}",
+        "description": "> ```id```: The identifier of the referrer",
         "operationId": "ContactGroupReferrerRelationship_Delete",
         "parameters": [
           {
@@ -5997,6 +6246,8 @@
         "tags": [
           "AdviserDetails"
         ],
+        "summary": "Gets advisers via the id of a single related set of adviser details",
+        "description": "> ```id```: the id of the set of adviser details.  aka ClientId, aka My Crm ID",
         "operationId": "AdviserDetailRelated_Get_Advisers",
         "parameters": [
           {
@@ -6041,6 +6292,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Gets integrations via a single related contact external reference",
+        "description": "> ```id```: The identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelated_Get_Integrations",
         "parameters": [
           {
@@ -6083,6 +6336,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactExternalReferenceRelated_Head_Integrations",
         "parameters": [
           {
@@ -6120,6 +6375,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Gets a integrations related to a single contact external reference",
+        "description": "> ```id```: The identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelationship_Get_Integrations",
         "parameters": [
           {
@@ -6162,6 +6419,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactExternalReferenceRelationship_Get_Head_Integrations",
         "parameters": [
           {
@@ -6197,6 +6456,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Adds integrations to a to-many relationship with an existing contact external reference",
+        "description": "> ```id```: The identifier of the primary contact external reference resource",
         "operationId": "ContactExternalReferenceRelationship_Post_Integrations",
         "parameters": [
           {
@@ -6244,6 +6505,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Performs a complete replacement of a integration relationship on an existing contact external reference",
+        "description": "> ```id```: The identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelationship_Patch_Integrations",
         "parameters": [
           {
@@ -6291,6 +6554,8 @@
         "tags": [
           "ContactExternalReferences"
         ],
+        "summary": "Removes a contact external reference from a to-many relationship with integrations",
+        "description": "> ```id```: The identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelationship_Delete_Integrations",
         "parameters": [
           {
@@ -6328,6 +6593,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Gets advisers via a single related contact group",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelated_Get_Advisers",
         "parameters": [
           {
@@ -6370,6 +6637,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactGroupRelated_Head_Advisers",
         "parameters": [
           {
@@ -6407,6 +6676,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Gets referrerOrganizations via a single related contact group",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelated_Get_ReferrerOrganizations",
         "parameters": [
           {
@@ -6449,6 +6720,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactGroupRelated_Head_ReferrerOrganizations",
         "parameters": [
           {
@@ -6486,6 +6759,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Gets referrers via a single related contact group",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelated_Get_Referrers",
         "parameters": [
           {
@@ -6528,6 +6803,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactGroupRelated_Head_Referrers",
         "parameters": [
           {
@@ -6565,6 +6842,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Gets a advisers related to a single contact group",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelationship_Get_Advisers",
         "parameters": [
           {
@@ -6607,6 +6886,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactGroupRelationship_Get_Head_Advisers",
         "parameters": [
           {
@@ -6642,6 +6923,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Adds advisers to a to-many relationship with an existing contact group",
+        "description": "> ```id```: The identifier of the primary contact group resource",
         "operationId": "ContactGroupRelationship_Post_Advisers",
         "parameters": [
           {
@@ -6689,6 +6972,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Performs a complete replacement of a adviser relationship on an existing contact group",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelationship_Patch_Advisers",
         "parameters": [
           {
@@ -6736,6 +7021,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Removes a contact group from a to-many relationship with advisers",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelationship_Delete_Advisers",
         "parameters": [
           {
@@ -6773,6 +7060,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Gets a referrerOrganizations related to a single contact group",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelationship_Get_ReferrerOrganizations",
         "parameters": [
           {
@@ -6815,6 +7104,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactGroupRelationship_Get_Head_ReferrerOrganizations",
         "parameters": [
           {
@@ -6850,6 +7141,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Adds referrerOrganizations to a to-many relationship with an existing contact group",
+        "description": "> ```id```: The identifier of the primary contact group resource",
         "operationId": "ContactGroupRelationship_Post_ReferrerOrganizations",
         "parameters": [
           {
@@ -6897,6 +7190,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Performs a complete replacement of a referrerOrganization relationship on an existing contact group",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelationship_Patch_ReferrerOrganizations",
         "parameters": [
           {
@@ -6944,6 +7239,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Removes a contact group from a to-many relationship with referrerOrganizations",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelationship_Delete_ReferrerOrganizations",
         "parameters": [
           {
@@ -6981,6 +7278,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Gets a referrers related to a single contact group",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelationship_Get_Referrers",
         "parameters": [
           {
@@ -7023,6 +7322,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactGroupRelationship_Get_Head_Referrers",
         "parameters": [
           {
@@ -7058,6 +7359,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Adds referrers to a to-many relationship with an existing contact group",
+        "description": "> ```id```: The identifier of the primary contact group resource",
         "operationId": "ContactGroupRelationship_Post_Referrers",
         "parameters": [
           {
@@ -7105,6 +7408,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Performs a complete replacement of a referrer relationship on an existing contact group",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelationship_Patch_Referrers",
         "parameters": [
           {
@@ -7152,6 +7457,8 @@
         "tags": [
           "ContactGroups"
         ],
+        "summary": "Removes a contact group from a to-many relationship with referrers",
+        "description": "> ```id```: The identifier of the contact group",
         "operationId": "ContactGroupRelationship_Delete_Referrers",
         "parameters": [
           {
@@ -7189,6 +7496,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Gets externalReferences via a single related contact",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelated_Get_ContactExternalReferences",
         "parameters": [
           {
@@ -7231,6 +7540,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactRelated_Head_ContactExternalReferences",
         "parameters": [
           {
@@ -7268,6 +7579,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Gets deals via a single related contact",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelated_Get_DealParticipants",
         "parameters": [
           {
@@ -7310,6 +7623,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactRelated_Head_DealParticipants",
         "parameters": [
           {
@@ -7347,6 +7662,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Gets contactAddresses via a single related contact",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelated_Get_ContactAddresses",
         "parameters": [
           {
@@ -7389,6 +7706,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactRelated_Head_ContactAddresses",
         "parameters": [
           {
@@ -7426,6 +7745,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Gets a externalReferences related to a single contact",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelationship_Get_ContactExternalReferences",
         "parameters": [
           {
@@ -7468,6 +7789,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactRelationship_Get_Head_ContactExternalReferences",
         "parameters": [
           {
@@ -7503,6 +7826,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Adds externalReferences to a to-many relationship with an existing contact",
+        "description": "> ```id```: The identifier of the primary contact resource",
         "operationId": "ContactRelationship_Post_ContactExternalReferences",
         "parameters": [
           {
@@ -7550,6 +7875,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Performs a complete replacement of a externalReferences relationship on an existing contact",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelationship_Patch_ContactExternalReferences",
         "parameters": [
           {
@@ -7597,6 +7924,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Removes a contact from a to-many relationship with externalReferences",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelationship_Delete_ContactExternalReferences",
         "parameters": [
           {
@@ -7634,6 +7963,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Gets a deals related to a single contact",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelationship_Get_DealParticipants",
         "parameters": [
           {
@@ -7676,6 +8007,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactRelationship_Get_Head_DealParticipants",
         "parameters": [
           {
@@ -7711,6 +8044,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Adds deals to a to-many relationship with an existing contact",
+        "description": "> ```id```: The identifier of the primary contact resource",
         "operationId": "ContactRelationship_Post_DealParticipants",
         "parameters": [
           {
@@ -7758,6 +8093,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Performs a complete replacement of a deals relationship on an existing contact",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelationship_Patch_DealParticipants",
         "parameters": [
           {
@@ -7805,6 +8142,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Removes a contact from a to-many relationship with deals",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelationship_Delete_DealParticipants",
         "parameters": [
           {
@@ -7842,6 +8181,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Gets a contactAddresses related to a single contact",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelationship_Get_ContactAddresses",
         "parameters": [
           {
@@ -7884,6 +8225,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "ContactRelationship_Get_Head_ContactAddresses",
         "parameters": [
           {
@@ -7919,6 +8262,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Adds contactAddresses to a to-many relationship with an existing contact",
+        "description": "> ```id```: The identifier of the primary contact resource",
         "operationId": "ContactRelationship_Post_ContactAddresses",
         "parameters": [
           {
@@ -7966,6 +8311,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Performs a complete replacement of a contactAddress relationship on an existing contact",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelationship_Patch_ContactAddresses",
         "parameters": [
           {
@@ -8013,6 +8360,8 @@
         "tags": [
           "Contacts"
         ],
+        "summary": "Removes a contact from a to-many relationship with contactAddresses",
+        "description": "> ```id```: The identifier of the contact",
         "operationId": "ContactRelationship_Delete_ContactAddresses",
         "parameters": [
           {
@@ -8050,6 +8399,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Gets integrations via a single related deal external reference",
+        "description": "> ```id```: The identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelated_Get_Integrations",
         "parameters": [
           {
@@ -8092,6 +8443,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealExternalReferenceRelated_Head_Integrations",
         "parameters": [
           {
@@ -8129,6 +8482,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Gets a integrations related to a single deal external reference",
+        "description": "> ```id```: The identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelationship_Get_Integrations",
         "parameters": [
           {
@@ -8171,6 +8526,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealExternalReferenceRelationship_Get_Head_Integrations",
         "parameters": [
           {
@@ -8206,6 +8563,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Adds integrations to a to-many relationship with an existing deal external reference",
+        "description": "> ```id```: The identifier of the primary deal external reference resource",
         "operationId": "DealExternalReferenceRelationship_Post_Integrations",
         "parameters": [
           {
@@ -8253,6 +8612,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Performs a complete replacement of a integration relationship on an existing deal external reference",
+        "description": "> ```id```: The identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelationship_Patch_Integrations",
         "parameters": [
           {
@@ -8300,6 +8661,8 @@
         "tags": [
           "DealExternalReferences"
         ],
+        "summary": "Removes a deal external reference from a to-many relationship with integrations",
+        "description": "> ```id```: The identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelationship_Delete_Integrations",
         "parameters": [
           {
@@ -8337,6 +8700,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Gets deals via a single related participants in a deal",
+        "description": "> ```id```: The identifier of the participants in a deal",
         "operationId": "DealParticipantRelated_Get_Deals",
         "parameters": [
           {
@@ -8379,6 +8744,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealParticipantRelated_Head_Deals",
         "parameters": [
           {
@@ -8416,6 +8783,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Gets a deals related to a single participants in a deal",
+        "description": "> ```id```: The identifier of the participants in a deal",
         "operationId": "DealParticipantRelationship_Get_Deals",
         "parameters": [
           {
@@ -8458,6 +8827,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealParticipantRelationship_Get_Head_Deals",
         "parameters": [
           {
@@ -8493,6 +8864,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Adds deals to a to-many relationship with an existing participants in a deal",
+        "description": "> ```id```: The identifier of the primary participants in a deal resource",
         "operationId": "DealParticipantRelationship_Post_Deals",
         "parameters": [
           {
@@ -8540,6 +8913,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Performs a complete replacement of a deal relationship on an existing participants in a deal",
+        "description": "> ```id```: The identifier of the participants in a deal",
         "operationId": "DealParticipantRelationship_Patch_Deals",
         "parameters": [
           {
@@ -8587,6 +8962,8 @@
         "tags": [
           "DealParticipants"
         ],
+        "summary": "Removes a participants in a deal from a to-many relationship with deals",
+        "description": "> ```id```: The identifier of the participants in a deal",
         "operationId": "DealParticipantRelationship_Delete_Deals",
         "parameters": [
           {
@@ -8624,6 +9001,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets participants via a single related deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelated_Get_DealParticipants",
         "parameters": [
           {
@@ -8666,6 +9045,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelated_Head_DealParticipants",
         "parameters": [
           {
@@ -8703,6 +9084,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets externalReferences via a single related deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelated_Get_DealExternalReferences",
         "parameters": [
           {
@@ -8745,6 +9128,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelated_Head_DealExternalReferences",
         "parameters": [
           {
@@ -8782,6 +9167,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets contacts via a single related deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelated_Get_Contacts",
         "parameters": [
           {
@@ -8824,6 +9211,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelated_Head_Contacts",
         "parameters": [
           {
@@ -8861,6 +9250,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets importantDates via a single related deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelated_Get_DealImportantDates",
         "parameters": [
           {
@@ -8903,6 +9294,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelated_Head_DealImportantDates",
         "parameters": [
           {
@@ -8940,6 +9333,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets dealStructures via a single related deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelated_Get_DealStructures",
         "parameters": [
           {
@@ -8982,6 +9377,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelated_Head_DealStructures",
         "parameters": [
           {
@@ -9019,6 +9416,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets advisers via a single related deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelated_Get_Advisers",
         "parameters": [
           {
@@ -9061,6 +9460,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelated_Head_Advisers",
         "parameters": [
           {
@@ -9098,6 +9499,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets dealNotes via a single related deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelated_Get_DealNotes",
         "parameters": [
           {
@@ -9140,6 +9543,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelated_Head_DealNotes",
         "parameters": [
           {
@@ -9177,6 +9582,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets a participants related to a single deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Get_DealParticipants",
         "parameters": [
           {
@@ -9219,6 +9626,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelationship_Get_Head_DealParticipants",
         "parameters": [
           {
@@ -9254,6 +9663,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Adds participants to a to-many relationship with an existing deal",
+        "description": "> ```id```: The identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_DealParticipants",
         "parameters": [
           {
@@ -9301,6 +9712,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Performs a complete replacement of a participants relationship on an existing deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Patch_DealParticipants",
         "parameters": [
           {
@@ -9348,6 +9761,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Removes a deal from a to-many relationship with participants",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Delete_DealParticipants",
         "parameters": [
           {
@@ -9385,6 +9800,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets a externalReferences related to a single deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Get_DealExternalReferences",
         "parameters": [
           {
@@ -9427,6 +9844,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelationship_Get_Head_DealExternalReferences",
         "parameters": [
           {
@@ -9462,6 +9881,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Adds externalReferences to a to-many relationship with an existing deal",
+        "description": "> ```id```: The identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_DealExternalReferences",
         "parameters": [
           {
@@ -9509,6 +9930,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Performs a complete replacement of a externalReferences relationship on an existing deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Patch_DealExternalReferences",
         "parameters": [
           {
@@ -9556,6 +9979,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Removes a deal from a to-many relationship with externalReferences",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Delete_DealExternalReferences",
         "parameters": [
           {
@@ -9593,6 +10018,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets a contacts related to a single deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Get_Contacts",
         "parameters": [
           {
@@ -9635,6 +10062,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelationship_Get_Head_Contacts",
         "parameters": [
           {
@@ -9670,6 +10099,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Adds contacts to a to-many relationship with an existing deal",
+        "description": "> ```id```: The identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_Contacts",
         "parameters": [
           {
@@ -9717,6 +10148,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Performs a complete replacement of a contacts relationship on an existing deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Patch_Contacts",
         "parameters": [
           {
@@ -9764,6 +10197,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Removes a deal from a to-many relationship with contacts",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Delete_Contacts",
         "parameters": [
           {
@@ -9801,6 +10236,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets a importantDates related to a single deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Get_DealImportantDates",
         "parameters": [
           {
@@ -9843,6 +10280,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelationship_Get_Head_DealImportantDates",
         "parameters": [
           {
@@ -9878,6 +10317,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Adds importantDates to a to-many relationship with an existing deal",
+        "description": "> ```id```: The identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_DealImportantDates",
         "parameters": [
           {
@@ -9925,6 +10366,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Performs a complete replacement of a importantDates relationship on an existing deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Patch_DealImportantDates",
         "parameters": [
           {
@@ -9972,6 +10415,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Removes a deal from a to-many relationship with importantDates",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Delete_DealImportantDates",
         "parameters": [
           {
@@ -10009,6 +10454,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets a dealStructures related to a single deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Get_DealStructures",
         "parameters": [
           {
@@ -10051,6 +10498,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelationship_Get_Head_DealStructures",
         "parameters": [
           {
@@ -10086,6 +10535,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Adds dealStructures to a to-many relationship with an existing deal",
+        "description": "> ```id```: The identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_DealStructures",
         "parameters": [
           {
@@ -10133,6 +10584,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Performs a complete replacement of a dealStructures relationship on an existing deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Patch_DealStructures",
         "parameters": [
           {
@@ -10180,6 +10633,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Removes a deal from a to-many relationship with dealStructures",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Delete_DealStructures",
         "parameters": [
           {
@@ -10217,6 +10672,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets a advisers related to a single deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Get_Advisers",
         "parameters": [
           {
@@ -10259,6 +10716,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelationship_Get_Head_Advisers",
         "parameters": [
           {
@@ -10294,6 +10753,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Adds advisers to a to-many relationship with an existing deal",
+        "description": "> ```id```: The identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_Advisers",
         "parameters": [
           {
@@ -10341,6 +10802,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Performs a complete replacement of a adviser relationship on an existing deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Patch_Advisers",
         "parameters": [
           {
@@ -10388,6 +10851,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Removes a deal from a to-many relationship with advisers",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Delete_Advisers",
         "parameters": [
           {
@@ -10425,6 +10890,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Gets a dealNotes related to a single deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Get_DealNotes",
         "parameters": [
           {
@@ -10467,6 +10934,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "DealRelationship_Get_Head_DealNotes",
         "parameters": [
           {
@@ -10502,6 +10971,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Adds dealNotes to a to-many relationship with an existing deal",
+        "description": "> ```id```: The identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_DealNotes",
         "parameters": [
           {
@@ -10549,6 +11020,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Performs a complete replacement of a dealNotes relationship on an existing deal",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Patch_DealNotes",
         "parameters": [
           {
@@ -10596,6 +11069,8 @@
         "tags": [
           "Deals"
         ],
+        "summary": "Removes a deal from a to-many relationship with dealNotes",
+        "description": "> ```id```: The identifier of the deal",
         "operationId": "DealRelationship_Delete_DealNotes",
         "parameters": [
           {
@@ -10633,6 +11108,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Gets dealExternalReferences via a single related integration",
+        "description": "> ```id```: The identifier of the integration",
         "operationId": "IntegrationRelated_Get_DealExternalReferences",
         "parameters": [
           {
@@ -10675,6 +11152,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "IntegrationRelated_Head_DealExternalReferences",
         "parameters": [
           {
@@ -10712,6 +11191,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Gets a dealExternalReferences related to a single integration",
+        "description": "> ```id```: The identifier of the integration",
         "operationId": "IntegrationRelationship_Get_DealExternalReferences",
         "parameters": [
           {
@@ -10754,6 +11235,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
         "operationId": "IntegrationRelationship_Get_Head_DealExternalReferences",
         "parameters": [
           {
@@ -10789,6 +11272,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Adds dealExternalReferences to a to-many relationship with an existing integration",
+        "description": "> ```id```: The identifier of the primary integration resource",
         "operationId": "IntegrationRelationship_Post_DealExternalReferences",
         "parameters": [
           {
@@ -10836,6 +11321,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Performs a complete replacement of a dealExternalReferences relationship on an existing integration",
+        "description": "> ```id```: The identifier of the integration",
         "operationId": "IntegrationRelationship_Patch_DealExternalReferences",
         "parameters": [
           {
@@ -10883,6 +11370,8 @@
         "tags": [
           "Integrations"
         ],
+        "summary": "Removes a integration from a to-many relationship with dealExternalReferences",
+        "description": "> ```id```: The identifier of the integration",
         "operationId": "IntegrationRelationship_Delete_DealExternalReferences",
         "parameters": [
           {
@@ -10999,13 +11488,58 @@
       "AdviserAttributes": {
         "type": "object",
         "properties": {
+          "googlePlaces": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
           "created": {
             "type": "string",
             "format": "date-time",
             "nullable": true,
             "readOnly": true
           },
+          "bio": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "jobTitle": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
           "email": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "skype": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "facebook": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "linkedIn": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "twitter": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "youtubeFeatured": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "youtubeChannel": {
             "type": "string",
             "nullable": true,
             "readOnly": true
@@ -11057,13 +11591,13 @@
       "AdviserDetailAttributes": {
         "type": "object",
         "properties": {
-          "created": {
+          "description": {
+            "maxLength": 2000,
+            "minLength": 0,
             "type": "string",
-            "format": "date-time",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
-          "mobile": {
+          "placeOfBirth": {
             "maxLength": 100,
             "minLength": 0,
             "type": "string",
@@ -11099,13 +11633,60 @@
             "type": "string",
             "nullable": true
           },
+          "homePhone": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "businessPhone": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "mobilePhone": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "email": {
             "maxLength": 100,
             "minLength": 0,
             "type": "string",
             "nullable": true
           },
+          "birthCountry": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "fax": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "workEmail": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
           "updated": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "created": {
             "type": "string",
             "format": "date-time",
             "nullable": true,
@@ -11250,6 +11831,9 @@
           "organisation": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
+          "apiFamilySocialMedia": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          },
           "contactGroups": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           }
@@ -11345,6 +11929,62 @@
             "type": "string",
             "nullable": true,
             "readOnly": true
+          },
+          "adviser": {
+            "$ref": "#/components/schemas/Adviser"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiFamilySocialMedia": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "linkedInUrl": {
+            "maxLength": 2000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "facebookUrl": {
+            "maxLength": 2000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "googleMyBusinessUrl": {
+            "maxLength": 2000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "youtubeUrl": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "twitterUrl": {
+            "maxLength": 2000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "adviser": {
+            "$ref": "#/components/schemas/Adviser"
           }
         },
         "additionalProperties": false
@@ -11463,7 +12103,12 @@
             "readOnly": true
           },
           "addressType": {
-            "$ref": "#/components/schemas/AddressType"
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressType"
+              }
+            ]
           },
           "streetAddress": {
             "type": "string",
@@ -12459,20 +13104,40 @@
             "nullable": true,
             "readOnly": true
           },
+          "dates": {
+            "$ref": "#/components/schemas/ImportantDatesSet"
+          },
+          "totalLoanAmount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true
+          },
           "customStatusName": {
             "type": "string",
             "nullable": true,
             "readOnly": true
           },
           "dealType": {
-            "$ref": "#/components/schemas/DealType"
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DealType"
+              }
+            ]
           },
           "name": {
             "type": "string",
             "nullable": true
           },
           "dealStatus": {
-            "$ref": "#/components/schemas/SystemStatus"
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SystemStatus"
+              }
+            ],
+            "readOnly": true
           },
           "opportunity": {
             "$ref": "#/components/schemas/Opportunity"
@@ -12727,7 +13392,13 @@
             "readOnly": true
           },
           "dateType": {
-            "$ref": "#/components/schemas/ImportantDate"
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ImportantDate"
+              }
+            ],
+            "readOnly": true
           }
         }
       },
@@ -13412,7 +14083,12 @@
             "readOnly": true
           },
           "loanStructureType": {
-            "$ref": "#/components/schemas/LoanStructureType"
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LoanStructureType"
+              }
+            ]
           },
           "interestRate": {
             "type": "number",
@@ -13439,7 +14115,7 @@
             "nullable": true,
             "readOnly": true
           },
-          "fixedRateExpiryDate": {
+          "interestOnlyExpiryDate": {
             "type": "string",
             "format": "date",
             "nullable": true,
@@ -13448,6 +14124,12 @@
           "loanTermYears": {
             "type": "number",
             "format": "double",
+            "nullable": true,
+            "readOnly": true
+          },
+          "fixedRateExpiryDate": {
+            "type": "string",
+            "format": "date",
             "nullable": true,
             "readOnly": true
           }
@@ -13542,7 +14224,13 @@
             "readOnly": true
           },
           "dateType": {
-            "$ref": "#/components/schemas/LoanStructureImportantDateTypes"
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LoanStructureImportantDateTypes"
+              }
+            ],
+            "readOnly": true
           },
           "finishDate": {
             "type": "string",
@@ -13984,6 +14672,57 @@
           "modelAsString": true
         }
       },
+      "ImportantDatesSet": {
+        "type": "object",
+        "properties": {
+          "settled": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lodged": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "financeClause": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "notProceeding": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "approved": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "preApproved": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "conditionallyApproved": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "preApprovedExpiry": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "estimatedSettled": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "IncludedResource": {
         "required": [
           "type"
@@ -14241,7 +14980,13 @@
             "writeOnly": true
           },
           "title": {
-            "$ref": "#/components/schemas/Title"
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Title"
+              }
+            ],
+            "writeOnly": true
           },
           "firstName": {
             "type": "string",
@@ -14269,7 +15014,13 @@
             "writeOnly": true
           },
           "gender": {
-            "$ref": "#/components/schemas/Gender"
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Gender"
+              }
+            ],
+            "writeOnly": true
           },
           "hasMarketingConsent": {
             "type": "boolean",
@@ -14317,7 +15068,13 @@
             "writeOnly": true
           },
           "addressType": {
-            "$ref": "#/components/schemas/ClientAddressType"
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientAddressType"
+              }
+            ],
+            "writeOnly": true
           },
           "noteTitle": {
             "type": "string",
@@ -14365,7 +15122,13 @@
             "readOnly": true
           },
           "dealStatus": {
-            "$ref": "#/components/schemas/SystemStatus"
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SystemStatus"
+              }
+            ],
+            "readOnly": true
           }
         }
       },
@@ -15101,29 +15864,35 @@
             "format": "double",
             "nullable": true
           },
-          "dates": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SplitDates"
-            },
+          "fixedRateStartDate": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "SplitDates": {
-        "type": "object",
-        "properties": {
-          "dateType": {
-            "$ref": "#/components/schemas/LoanStructureImportantDateTypes"
           },
-          "startDate": {
+          "fixedRateEndDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
-          "finishDate": {
+          "interestOnlyStartDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
+          },
+          "interestOnlyEndDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "repaymentHolidayStartDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "repaymentHolidayEndDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "additionalProperties": false

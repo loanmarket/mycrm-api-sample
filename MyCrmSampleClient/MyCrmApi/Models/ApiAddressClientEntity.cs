@@ -25,8 +25,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Id = id;
         }
 
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
+        /// <summary> Gets the contact. </summary>
         public Contact Contact { get; }
+        /// <summary> Gets the address details. </summary>
         public ContactAddress AddressDetails { get; }
     }
 }

@@ -26,7 +26,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             HasMarketingConsent = hasMarketingConsent;
         }
 
+        /// <summary> Gets the updated. </summary>
         public DateTimeOffset? Updated { get; }
+        /// <summary> Gets or sets the has marketing consent. </summary>
         public bool? HasMarketingConsent { get; set; }
     }
 }

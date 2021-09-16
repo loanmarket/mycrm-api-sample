@@ -22,6 +22,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Adviser = adviser;
         }
 
+        /// <summary> Gets or sets the adviser. </summary>
         public RelationshipsSingleDocument Adviser { get; set; }
     }
 }

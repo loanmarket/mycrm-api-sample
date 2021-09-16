@@ -37,6 +37,7 @@ namespace MyCrmSampleClient.MyCrmApi
             _pipeline = pipeline;
         }
 
+        /// <summary> Creates a new contact group with attributes, relationships or both. </summary>
         /// <param name="body"> The ContactGroupDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContactGroupDocument>> PostAsync(ContactGroupDocument body = null, CancellationToken cancellationToken = default)
@@ -54,6 +55,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Creates a new contact group with attributes, relationships or both. </summary>
         /// <param name="body"> The ContactGroupDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContactGroupDocument> Post(ContactGroupDocument body = null, CancellationToken cancellationToken = default)
@@ -71,6 +73,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContactGroupDocument>> GetAsync(int id, CancellationToken cancellationToken = default)
@@ -88,6 +91,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContactGroupDocument> Get(int id, CancellationToken cancellationToken = default)
@@ -105,6 +109,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The ContactGroupDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -123,6 +128,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The ContactGroupDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,6 +147,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(int id, CancellationToken cancellationToken = default)
@@ -158,6 +165,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(int id, CancellationToken cancellationToken = default)

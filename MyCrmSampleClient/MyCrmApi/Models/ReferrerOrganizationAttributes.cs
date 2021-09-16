@@ -22,6 +22,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             ReferrerOrgName = referrerOrgName;
         }
 
+        /// <summary> Gets or sets the referrer org name. </summary>
         public string ReferrerOrgName { get; set; }
     }
 }

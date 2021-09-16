@@ -34,12 +34,19 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Next = next;
         }
 
+        /// <summary> Gets the self. </summary>
         public string Self { get; }
+        /// <summary> Gets the related. </summary>
         public string Related { get; }
+        /// <summary> Gets the described by. </summary>
         public string DescribedBy { get; }
+        /// <summary> Gets the first. </summary>
         public string First { get; }
+        /// <summary> Gets the last. </summary>
         public string Last { get; }
+        /// <summary> Gets the prev. </summary>
         public string Prev { get; }
+        /// <summary> Gets the next. </summary>
         public string Next { get; }
     }
 }

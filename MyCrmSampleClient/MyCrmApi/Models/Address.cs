@@ -28,7 +28,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             AddressDetails = new ChangeTrackingList<ContactAddress>();
         }
 
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
+        /// <summary> Gets the address details. </summary>
         public IReadOnlyList<ContactAddress> AddressDetails { get; }
     }
 }

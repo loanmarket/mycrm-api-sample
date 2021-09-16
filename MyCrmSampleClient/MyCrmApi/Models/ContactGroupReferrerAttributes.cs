@@ -24,7 +24,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             ReferrerName = referrerName;
         }
 
+        /// <summary> Gets the referrer organization name. </summary>
         public string ReferrerOrganizationName { get; }
+        /// <summary> Gets the referrer name. </summary>
         public string ReferrerName { get; }
     }
 }

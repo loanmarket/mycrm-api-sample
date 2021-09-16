@@ -53,6 +53,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Creates a new integration with attributes, relationships or both. </summary>
         /// <param name="body"> The IntegrationDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<IntegrationDocument, IntegrationPostHeaders>> PostAsync(IntegrationDocument body = null, CancellationToken cancellationToken = default)
@@ -76,6 +77,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Creates a new integration with attributes, relationships or both. </summary>
         /// <param name="body"> The IntegrationDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<IntegrationDocument, IntegrationPostHeaders> Post(IntegrationDocument body = null, CancellationToken cancellationToken = default)
@@ -113,6 +115,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> &gt; ```id```: The identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<IntegrationDocument>> GetAsync(int id, CancellationToken cancellationToken = default)
@@ -135,6 +138,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<IntegrationDocument> Get(int id, CancellationToken cancellationToken = default)
@@ -178,6 +182,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> &gt; ```id```: The identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The IntegrationDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -202,6 +207,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The IntegrationDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -240,6 +246,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> &gt; ```id```: The identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> DeleteAsync(int id, CancellationToken cancellationToken = default)
@@ -256,6 +263,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response Delete(int id, CancellationToken cancellationToken = default)

@@ -28,7 +28,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<DateTimeOffset?> updated = default;
             Optional<DateTimeOffset?> created = default;
-            Optional<AddressType> addressType = default;
+            Optional<ContactAddressAttributesAddressType> addressType = default;
             Optional<string> streetAddress = default;
             Optional<string> country = default;
             Optional<string> suburb = default;
@@ -63,7 +63,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    addressType = new AddressType(property.Value.GetString());
+                    addressType = new ContactAddressAttributesAddressType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("streetAddress"))

@@ -36,8 +36,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Type = type ?? "contact-external-references";
         }
 
+        /// <summary> Gets or sets the attributes. </summary>
         public ContactExternalReferenceAttributes Attributes { get; set; }
+        /// <summary> Gets or sets the relationships. </summary>
         public ContactExternalReferenceRelationships Relationships { get; set; }
+        /// <summary> Gets the links. </summary>
         public ContactExternalReferenceLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }

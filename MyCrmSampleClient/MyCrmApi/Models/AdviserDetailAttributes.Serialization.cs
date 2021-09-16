@@ -16,16 +16,28 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mobile))
+            if (Optional.IsDefined(Description))
             {
-                if (Mobile != null)
+                if (Description != null)
                 {
-                    writer.WritePropertyName("mobile");
-                    writer.WriteStringValue(Mobile);
+                    writer.WritePropertyName("description");
+                    writer.WriteStringValue(Description);
                 }
                 else
                 {
-                    writer.WriteNull("mobile");
+                    writer.WriteNull("description");
+                }
+            }
+            if (Optional.IsDefined(PlaceOfBirth))
+            {
+                if (PlaceOfBirth != null)
+                {
+                    writer.WritePropertyName("placeOfBirth");
+                    writer.WriteStringValue(PlaceOfBirth);
+                }
+                else
+                {
+                    writer.WriteNull("placeOfBirth");
                 }
             }
             if (Optional.IsDefined(Title))
@@ -88,6 +100,42 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("preferredName");
                 }
             }
+            if (Optional.IsDefined(HomePhone))
+            {
+                if (HomePhone != null)
+                {
+                    writer.WritePropertyName("homePhone");
+                    writer.WriteStringValue(HomePhone);
+                }
+                else
+                {
+                    writer.WriteNull("homePhone");
+                }
+            }
+            if (Optional.IsDefined(BusinessPhone))
+            {
+                if (BusinessPhone != null)
+                {
+                    writer.WritePropertyName("businessPhone");
+                    writer.WriteStringValue(BusinessPhone);
+                }
+                else
+                {
+                    writer.WriteNull("businessPhone");
+                }
+            }
+            if (Optional.IsDefined(MobilePhone))
+            {
+                if (MobilePhone != null)
+                {
+                    writer.WritePropertyName("mobilePhone");
+                    writer.WriteStringValue(MobilePhone);
+                }
+                else
+                {
+                    writer.WriteNull("mobilePhone");
+                }
+            }
             if (Optional.IsDefined(Email))
             {
                 if (Email != null)
@@ -100,40 +148,96 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("email");
                 }
             }
+            if (Optional.IsDefined(BirthCountry))
+            {
+                if (BirthCountry != null)
+                {
+                    writer.WritePropertyName("birthCountry");
+                    writer.WriteStringValue(BirthCountry);
+                }
+                else
+                {
+                    writer.WriteNull("birthCountry");
+                }
+            }
+            if (Optional.IsDefined(Fax))
+            {
+                if (Fax != null)
+                {
+                    writer.WritePropertyName("fax");
+                    writer.WriteStringValue(Fax);
+                }
+                else
+                {
+                    writer.WriteNull("fax");
+                }
+            }
+            if (Optional.IsDefined(WorkEmail))
+            {
+                if (WorkEmail != null)
+                {
+                    writer.WritePropertyName("workEmail");
+                    writer.WriteStringValue(WorkEmail);
+                }
+                else
+                {
+                    writer.WriteNull("workEmail");
+                }
+            }
+            if (Optional.IsDefined(DateOfBirth))
+            {
+                if (DateOfBirth != null)
+                {
+                    writer.WritePropertyName("dateOfBirth");
+                    writer.WriteStringValue(DateOfBirth.Value, "D");
+                }
+                else
+                {
+                    writer.WriteNull("dateOfBirth");
+                }
+            }
             writer.WriteEndObject();
         }
 
         internal static AdviserDetailAttributes DeserializeAdviserDetailAttributes(JsonElement element)
         {
-            Optional<DateTimeOffset?> created = default;
-            Optional<string> mobile = default;
+            Optional<string> description = default;
+            Optional<string> placeOfBirth = default;
             Optional<string> title = default;
             Optional<string> firstName = default;
             Optional<string> middleName = default;
             Optional<string> lastName = default;
             Optional<string> preferredName = default;
+            Optional<string> homePhone = default;
+            Optional<string> businessPhone = default;
+            Optional<string> mobilePhone = default;
             Optional<string> email = default;
+            Optional<string> birthCountry = default;
+            Optional<string> fax = default;
+            Optional<string> workEmail = default;
+            Optional<DateTimeOffset?> dateOfBirth = default;
             Optional<DateTimeOffset?> updated = default;
+            Optional<DateTimeOffset?> created = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("created"))
+                if (property.NameEquals("description"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        created = null;
+                        description = null;
                         continue;
                     }
-                    created = property.Value.GetDateTimeOffset("O");
+                    description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mobile"))
+                if (property.NameEquals("placeOfBirth"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        mobile = null;
+                        placeOfBirth = null;
                         continue;
                     }
-                    mobile = property.Value.GetString();
+                    placeOfBirth = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("title"))
@@ -186,6 +290,36 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     preferredName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("homePhone"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        homePhone = null;
+                        continue;
+                    }
+                    homePhone = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("businessPhone"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        businessPhone = null;
+                        continue;
+                    }
+                    businessPhone = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("mobilePhone"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        mobilePhone = null;
+                        continue;
+                    }
+                    mobilePhone = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("email"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -194,6 +328,46 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     email = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("birthCountry"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        birthCountry = null;
+                        continue;
+                    }
+                    birthCountry = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fax"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        fax = null;
+                        continue;
+                    }
+                    fax = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("workEmail"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        workEmail = null;
+                        continue;
+                    }
+                    workEmail = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dateOfBirth"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dateOfBirth = null;
+                        continue;
+                    }
+                    dateOfBirth = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("updated"))
@@ -206,8 +380,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     updated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("created"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        created = null;
+                        continue;
+                    }
+                    created = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new AdviserDetailAttributes(Optional.ToNullable(created), mobile.Value, title.Value, firstName.Value, middleName.Value, lastName.Value, preferredName.Value, email.Value, Optional.ToNullable(updated));
+            return new AdviserDetailAttributes(description.Value, placeOfBirth.Value, title.Value, firstName.Value, middleName.Value, lastName.Value, preferredName.Value, homePhone.Value, businessPhone.Value, mobilePhone.Value, email.Value, birthCountry.Value, fax.Value, workEmail.Value, Optional.ToNullable(dateOfBirth), Optional.ToNullable(updated), Optional.ToNullable(created));
         }
     }
 }

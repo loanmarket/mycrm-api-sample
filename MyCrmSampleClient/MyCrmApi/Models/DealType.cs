@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The DealType. </summary>
-    public readonly partial struct DealType : IEquatable<DealType>
+    internal readonly partial struct DealType : IEquatable<DealType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DealType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DealType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DealType(string value)
         {

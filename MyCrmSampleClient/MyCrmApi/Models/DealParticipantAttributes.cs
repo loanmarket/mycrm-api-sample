@@ -32,10 +32,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             IsGuarantor = isGuarantor;
         }
 
+        /// <summary> Gets the updated. </summary>
         public DateTimeOffset? Updated { get; }
+        /// <summary> Gets the created. </summary>
         public DateTimeOffset? Created { get; }
+        /// <summary> Gets the is applicant. </summary>
         public bool? IsApplicant { get; }
+        /// <summary> Gets the is dependent. </summary>
         public bool? IsDependent { get; }
+        /// <summary> Gets the is guarantor. </summary>
         public bool? IsGuarantor { get; }
     }
 }

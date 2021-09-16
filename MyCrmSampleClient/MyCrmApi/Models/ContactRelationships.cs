@@ -28,9 +28,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             ContactAddress = contactAddress;
         }
 
+        /// <summary> Gets or sets the contact group. </summary>
         public RelationshipsSingleDocument ContactGroup { get; set; }
+        /// <summary> Gets or sets the external references. </summary>
         public RelationshipsMultipleDocument ExternalReferences { get; set; }
+        /// <summary> Gets or sets the deals. </summary>
         public RelationshipsMultipleDocument Deals { get; set; }
+        /// <summary> Gets or sets the contact address. </summary>
         public RelationshipsMultipleDocument ContactAddress { get; set; }
     }
 }

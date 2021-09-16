@@ -43,14 +43,23 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Notes = notes;
         }
 
+        /// <summary> Gets the updated. </summary>
         public DateTimeOffset? Updated { get; }
+        /// <summary> Gets the created. </summary>
         public DateTimeOffset? Created { get; }
+        /// <summary> Gets or sets the utm source. </summary>
         public string UtmSource { get; set; }
+        /// <summary> Gets or sets the utm medium. </summary>
         public string UtmMedium { get; set; }
+        /// <summary> Gets or sets the utm term. </summary>
         public string UtmTerm { get; set; }
+        /// <summary> Gets or sets the utm content. </summary>
         public string UtmContent { get; set; }
+        /// <summary> Gets or sets the utm campaign. </summary>
         public string UtmCampaign { get; set; }
+        /// <summary> Gets the categories. </summary>
         public IReadOnlyList<string> Categories { get; }
+        /// <summary> Gets or sets the notes. </summary>
         public string Notes { get; set; }
     }
 }

@@ -24,7 +24,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             DealExternalReferences = dealExternalReferences;
         }
 
+        /// <summary> Gets or sets the contact external references. </summary>
         public RelationshipsMultipleDocument ContactExternalReferences { get; set; }
+        /// <summary> Gets or sets the deal external references. </summary>
         public RelationshipsMultipleDocument DealExternalReferences { get; set; }
     }
 }

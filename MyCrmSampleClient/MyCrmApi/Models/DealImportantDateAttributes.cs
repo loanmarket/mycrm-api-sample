@@ -20,13 +20,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of DealImportantDateAttributes. </summary>
         /// <param name="date"></param>
         /// <param name="dateType"></param>
-        internal DealImportantDateAttributes(DateTimeOffset? date, ImportantDate? dateType)
+        internal DealImportantDateAttributes(DateTimeOffset? date, DealImportantDateAttributesDateType? dateType)
         {
             Date = date;
             DateType = dateType;
         }
 
+        /// <summary> Gets the date. </summary>
         public DateTimeOffset? Date { get; }
-        public ImportantDate? DateType { get; set; }
+        /// <summary> Gets the date type. </summary>
+        public DealImportantDateAttributesDateType? DateType { get; }
     }
 }

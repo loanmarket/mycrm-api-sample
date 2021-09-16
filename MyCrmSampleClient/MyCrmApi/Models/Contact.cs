@@ -36,8 +36,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Type = type ?? "contacts";
         }
 
+        /// <summary> Gets or sets the attributes. </summary>
         public ContactAttributes Attributes { get; set; }
+        /// <summary> Gets or sets the relationships. </summary>
         public ContactRelationships Relationships { get; set; }
+        /// <summary> Gets the links. </summary>
         public ContactLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }

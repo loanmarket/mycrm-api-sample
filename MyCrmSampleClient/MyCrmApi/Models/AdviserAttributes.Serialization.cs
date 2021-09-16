@@ -21,10 +21,29 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static AdviserAttributes DeserializeAdviserAttributes(JsonElement element)
         {
+            Optional<string> googlePlaces = default;
             Optional<DateTimeOffset?> created = default;
+            Optional<string> bio = default;
+            Optional<string> jobTitle = default;
             Optional<string> email = default;
+            Optional<string> skype = default;
+            Optional<string> facebook = default;
+            Optional<string> linkedIn = default;
+            Optional<string> twitter = default;
+            Optional<string> youtubeFeatured = default;
+            Optional<string> youtubeChannel = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("googlePlaces"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        googlePlaces = null;
+                        continue;
+                    }
+                    googlePlaces = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("created"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -33,6 +52,26 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     created = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("bio"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        bio = null;
+                        continue;
+                    }
+                    bio = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("jobTitle"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        jobTitle = null;
+                        continue;
+                    }
+                    jobTitle = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("email"))
@@ -45,8 +84,68 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     email = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("skype"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        skype = null;
+                        continue;
+                    }
+                    skype = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("facebook"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        facebook = null;
+                        continue;
+                    }
+                    facebook = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("linkedIn"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        linkedIn = null;
+                        continue;
+                    }
+                    linkedIn = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("twitter"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        twitter = null;
+                        continue;
+                    }
+                    twitter = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("youtubeFeatured"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        youtubeFeatured = null;
+                        continue;
+                    }
+                    youtubeFeatured = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("youtubeChannel"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        youtubeChannel = null;
+                        continue;
+                    }
+                    youtubeChannel = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AdviserAttributes(Optional.ToNullable(created), email.Value);
+            return new AdviserAttributes(googlePlaces.Value, Optional.ToNullable(created), bio.Value, jobTitle.Value, email.Value, skype.Value, facebook.Value, linkedIn.Value, twitter.Value, youtubeFeatured.Value, youtubeChannel.Value);
         }
     }
 }

@@ -36,8 +36,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Type = type ?? "high-level-summary";
         }
 
+        /// <summary> Gets or sets the attributes. </summary>
         public HighLevelSummaryAttributes Attributes { get; set; }
+        /// <summary> Gets or sets the relationships. </summary>
         public HighLevelSummaryRelationships Relationships { get; set; }
+        /// <summary> Gets the links. </summary>
         public HighLevelSummaryLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }

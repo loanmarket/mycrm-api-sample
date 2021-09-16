@@ -28,13 +28,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<DateTimeOffset?> fixedRateBeginDate = default;
             Optional<int?> rateTypePeriodMonths = default;
-            Optional<LoanStructureType> loanStructureType = default;
+            Optional<DealStructureAttributesLoanStructureType> loanStructureType = default;
             Optional<double?> interestRate = default;
             Optional<double?> amount = default;
             Optional<string> rateType = default;
             Optional<double?> paymentAmount = default;
-            Optional<DateTimeOffset?> fixedRateExpiryDate = default;
+            Optional<DateTimeOffset?> interestOnlyExpiryDate = default;
             Optional<double?> loanTermYears = default;
+            Optional<DateTimeOffset?> fixedRateExpiryDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fixedRateBeginDate"))
@@ -64,7 +65,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    loanStructureType = new LoanStructureType(property.Value.GetString());
+                    loanStructureType = new DealStructureAttributesLoanStructureType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("interestRate"))
@@ -107,14 +108,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     paymentAmount = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("fixedRateExpiryDate"))
+                if (property.NameEquals("interestOnlyExpiryDate"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        fixedRateExpiryDate = null;
+                        interestOnlyExpiryDate = null;
                         continue;
                     }
-                    fixedRateExpiryDate = property.Value.GetDateTimeOffset("D");
+                    interestOnlyExpiryDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("loanTermYears"))
@@ -127,8 +128,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     loanTermYears = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("fixedRateExpiryDate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        fixedRateExpiryDate = null;
+                        continue;
+                    }
+                    fixedRateExpiryDate = property.Value.GetDateTimeOffset("D");
+                    continue;
+                }
             }
-            return new DealStructureAttributes(Optional.ToNullable(fixedRateBeginDate), Optional.ToNullable(rateTypePeriodMonths), Optional.ToNullable(loanStructureType), Optional.ToNullable(interestRate), Optional.ToNullable(amount), rateType.Value, Optional.ToNullable(paymentAmount), Optional.ToNullable(fixedRateExpiryDate), Optional.ToNullable(loanTermYears));
+            return new DealStructureAttributes(Optional.ToNullable(fixedRateBeginDate), Optional.ToNullable(rateTypePeriodMonths), Optional.ToNullable(loanStructureType), Optional.ToNullable(interestRate), Optional.ToNullable(amount), rateType.Value, Optional.ToNullable(paymentAmount), Optional.ToNullable(interestOnlyExpiryDate), Optional.ToNullable(loanTermYears), Optional.ToNullable(fixedRateExpiryDate));
         }
     }
 }

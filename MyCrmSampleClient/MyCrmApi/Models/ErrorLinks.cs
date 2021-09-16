@@ -22,6 +22,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             About = about;
         }
 
+        /// <summary> Gets the about. </summary>
         public string About { get; }
     }
 }

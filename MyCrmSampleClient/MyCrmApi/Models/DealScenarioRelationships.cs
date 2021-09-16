@@ -22,6 +22,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             HighLevelSummary = highLevelSummary;
         }
 
+        /// <summary> Gets or sets the high level summary. </summary>
         public RelationshipsSingleDocument HighLevelSummary { get; set; }
     }
 }

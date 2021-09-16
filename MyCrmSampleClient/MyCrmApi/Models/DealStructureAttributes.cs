@@ -25,9 +25,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="amount"></param>
         /// <param name="rateType"></param>
         /// <param name="paymentAmount"></param>
-        /// <param name="fixedRateExpiryDate"></param>
+        /// <param name="interestOnlyExpiryDate"></param>
         /// <param name="loanTermYears"></param>
-        internal DealStructureAttributes(DateTimeOffset? fixedRateBeginDate, int? rateTypePeriodMonths, LoanStructureType? loanStructureType, double? interestRate, double? amount, string rateType, double? paymentAmount, DateTimeOffset? fixedRateExpiryDate, double? loanTermYears)
+        /// <param name="fixedRateExpiryDate"></param>
+        internal DealStructureAttributes(DateTimeOffset? fixedRateBeginDate, int? rateTypePeriodMonths, DealStructureAttributesLoanStructureType? loanStructureType, double? interestRate, double? amount, string rateType, double? paymentAmount, DateTimeOffset? interestOnlyExpiryDate, double? loanTermYears, DateTimeOffset? fixedRateExpiryDate)
         {
             FixedRateBeginDate = fixedRateBeginDate;
             RateTypePeriodMonths = rateTypePeriodMonths;
@@ -36,18 +37,30 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Amount = amount;
             RateType = rateType;
             PaymentAmount = paymentAmount;
-            FixedRateExpiryDate = fixedRateExpiryDate;
+            InterestOnlyExpiryDate = interestOnlyExpiryDate;
             LoanTermYears = loanTermYears;
+            FixedRateExpiryDate = fixedRateExpiryDate;
         }
 
+        /// <summary> Gets the fixed rate begin date. </summary>
         public DateTimeOffset? FixedRateBeginDate { get; }
+        /// <summary> Gets the rate type period months. </summary>
         public int? RateTypePeriodMonths { get; }
-        public LoanStructureType? LoanStructureType { get; set; }
+        /// <summary> Gets or sets the loan structure type. </summary>
+        public DealStructureAttributesLoanStructureType? LoanStructureType { get; set; }
+        /// <summary> Gets the interest rate. </summary>
         public double? InterestRate { get; }
+        /// <summary> Gets the amount. </summary>
         public double? Amount { get; }
+        /// <summary> Gets the rate type. </summary>
         public string RateType { get; }
+        /// <summary> Gets the payment amount. </summary>
         public double? PaymentAmount { get; }
-        public DateTimeOffset? FixedRateExpiryDate { get; }
+        /// <summary> Gets the interest only expiry date. </summary>
+        public DateTimeOffset? InterestOnlyExpiryDate { get; }
+        /// <summary> Gets the loan term years. </summary>
         public double? LoanTermYears { get; }
+        /// <summary> Gets the fixed rate expiry date. </summary>
+        public DateTimeOffset? FixedRateExpiryDate { get; }
     }
 }

@@ -22,6 +22,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             DealStructure = dealStructure;
         }
 
+        /// <summary> Gets or sets the deal structure. </summary>
         public RelationshipsSingleDocument DealStructure { get; set; }
     }
 }

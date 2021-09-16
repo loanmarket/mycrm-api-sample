@@ -18,15 +18,53 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of AdviserAttributes. </summary>
+        /// <param name="googlePlaces"></param>
         /// <param name="created"></param>
+        /// <param name="bio"></param>
+        /// <param name="jobTitle"></param>
         /// <param name="email"></param>
-        internal AdviserAttributes(DateTimeOffset? created, string email)
+        /// <param name="skype"></param>
+        /// <param name="facebook"></param>
+        /// <param name="linkedIn"></param>
+        /// <param name="twitter"></param>
+        /// <param name="youtubeFeatured"></param>
+        /// <param name="youtubeChannel"></param>
+        internal AdviserAttributes(string googlePlaces, DateTimeOffset? created, string bio, string jobTitle, string email, string skype, string facebook, string linkedIn, string twitter, string youtubeFeatured, string youtubeChannel)
         {
+            GooglePlaces = googlePlaces;
             Created = created;
+            Bio = bio;
+            JobTitle = jobTitle;
             Email = email;
+            Skype = skype;
+            Facebook = facebook;
+            LinkedIn = linkedIn;
+            Twitter = twitter;
+            YoutubeFeatured = youtubeFeatured;
+            YoutubeChannel = youtubeChannel;
         }
 
+        /// <summary> Gets the google places. </summary>
+        public string GooglePlaces { get; }
+        /// <summary> Gets the created. </summary>
         public DateTimeOffset? Created { get; }
+        /// <summary> Gets the bio. </summary>
+        public string Bio { get; }
+        /// <summary> Gets the job title. </summary>
+        public string JobTitle { get; }
+        /// <summary> Gets the email. </summary>
         public string Email { get; }
+        /// <summary> Gets the skype. </summary>
+        public string Skype { get; }
+        /// <summary> Gets the facebook. </summary>
+        public string Facebook { get; }
+        /// <summary> Gets the linked in. </summary>
+        public string LinkedIn { get; }
+        /// <summary> Gets the twitter. </summary>
+        public string Twitter { get; }
+        /// <summary> Gets the youtube featured. </summary>
+        public string YoutubeFeatured { get; }
+        /// <summary> Gets the youtube channel. </summary>
+        public string YoutubeChannel { get; }
     }
 }

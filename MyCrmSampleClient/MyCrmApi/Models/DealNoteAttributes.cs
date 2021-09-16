@@ -24,7 +24,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Detail = detail;
         }
 
+        /// <summary> Gets or sets the title. </summary>
         public string Title { get; set; }
+        /// <summary> Gets or sets the detail. </summary>
         public string Detail { get; set; }
     }
 }

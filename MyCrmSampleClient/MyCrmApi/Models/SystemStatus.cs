@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The SystemStatus. </summary>
-    public readonly partial struct SystemStatus : IEquatable<SystemStatus>
+    internal readonly partial struct SystemStatus : IEquatable<SystemStatus>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SystemStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SystemStatus(string value)
         {

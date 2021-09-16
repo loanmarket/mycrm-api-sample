@@ -24,7 +24,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Parameter = parameter;
         }
 
+        /// <summary> Gets the pointer. </summary>
         public string Pointer { get; }
+        /// <summary> Gets the parameter. </summary>
         public string Parameter { get; }
     }
 }

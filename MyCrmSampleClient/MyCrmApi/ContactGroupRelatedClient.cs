@@ -37,6 +37,7 @@ namespace MyCrmSampleClient.MyCrmApi
             _pipeline = pipeline;
         }
 
+        /// <summary> &gt; ```id```: The identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
@@ -54,6 +55,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
@@ -71,6 +73,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AdvisersDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
@@ -88,6 +91,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AdvisersDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)
@@ -105,6 +109,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ReferrerOrganizationsDocument>> GetReferrerOrganizationsAsync(int id, CancellationToken cancellationToken = default)
@@ -122,6 +127,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ReferrerOrganizationsDocument> GetReferrerOrganizations(int id, CancellationToken cancellationToken = default)
@@ -139,6 +145,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ReferrersDocument>> GetReferrersAsync(int id, CancellationToken cancellationToken = default)
@@ -156,6 +163,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> &gt; ```id```: The identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ReferrersDocument> GetReferrers(int id, CancellationToken cancellationToken = default)

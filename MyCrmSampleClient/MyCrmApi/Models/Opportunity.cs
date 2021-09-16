@@ -26,8 +26,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             SummaryNotes = summaryNotes;
         }
 
+        /// <summary> Gets or sets the proposed loan amount. </summary>
         public double? ProposedLoanAmount { get; set; }
+        /// <summary> Gets or sets the security amount. </summary>
         public double? SecurityAmount { get; set; }
+        /// <summary> Gets or sets the summary notes. </summary>
         public string SummaryNotes { get; set; }
     }
 }

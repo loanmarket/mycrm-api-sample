@@ -307,24 +307,19 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("sourceSystemUrl");
                 }
             }
-            if (Optional.IsDefined(DealStatus))
-            {
-                writer.WritePropertyName("dealStatus");
-                writer.WriteStringValue(DealStatus.Value.ToString());
-            }
             writer.WriteEndObject();
         }
 
         internal static LeadAttributes DeserializeLeadAttributes(JsonElement element)
         {
             Optional<DateTimeOffset?> dateOfBirth = default;
-            Optional<Title> title = default;
+            Optional<LeadAttributesTitle> title = default;
             Optional<string> firstName = default;
             Optional<string> preferredName = default;
             Optional<string> lastName = default;
             Optional<string> email = default;
             Optional<string> mobile = default;
-            Optional<Gender> gender = default;
+            Optional<LeadAttributesGender> gender = default;
             Optional<bool?> hasMarketingConsent = default;
             Optional<bool?> isGuarantor = default;
             Optional<bool?> isDependant = default;
@@ -334,7 +329,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> state = default;
             Optional<string> postCode = default;
             Optional<string> country = default;
-            Optional<ClientAddressType> addressType = default;
+            Optional<LeadAttributesAddressType> addressType = default;
             Optional<string> noteTitle = default;
             Optional<string> noteDetails = default;
             Optional<string> utmSource = default;
@@ -344,7 +339,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> utmContent = default;
             Optional<string> sourceSystemUrl = default;
             Optional<string> customStatusName = default;
-            Optional<SystemStatus> dealStatus = default;
+            Optional<LeadAttributesDealStatus> dealStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateOfBirth"))
@@ -364,7 +359,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    title = new Title(property.Value.GetString());
+                    title = new LeadAttributesTitle(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("firstName"))
@@ -424,7 +419,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    gender = new Gender(property.Value.GetString());
+                    gender = new LeadAttributesGender(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hasMarketingConsent"))
@@ -524,7 +519,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    addressType = new ClientAddressType(property.Value.GetString());
+                    addressType = new LeadAttributesAddressType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("noteTitle"))
@@ -624,7 +619,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dealStatus = new SystemStatus(property.Value.GetString());
+                    dealStatus = new LeadAttributesDealStatus(property.Value.GetString());
                     continue;
                 }
             }
