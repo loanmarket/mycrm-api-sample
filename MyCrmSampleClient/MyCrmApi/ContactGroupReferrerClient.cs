@@ -73,7 +73,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the referrer. </summary>
+        /// <summary> Where `id` is the identifier of the referrer. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContactGroupReferrerDocument>> GetAsync(int id, CancellationToken cancellationToken = default)
@@ -91,7 +91,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the referrer. </summary>
+        /// <summary> Where `id` is the identifier of the referrer. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContactGroupReferrerDocument> Get(int id, CancellationToken cancellationToken = default)
@@ -109,7 +109,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the referrer. </summary>
+        /// <summary> Where `id` is the identifier of the referrer. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The ContactGroupReferrerDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,7 +128,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the referrer. </summary>
+        /// <summary> Where `id` is the identifier of the referrer. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The ContactGroupReferrerDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -147,7 +147,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the referrer. </summary>
+        /// <summary> Where `id` is the identifier of the referrer. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(int id, CancellationToken cancellationToken = default)
@@ -165,7 +165,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the referrer. </summary>
+        /// <summary> Where `id` is the identifier of the referrer. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(int id, CancellationToken cancellationToken = default)

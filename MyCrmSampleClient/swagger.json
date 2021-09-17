@@ -11,7 +11,7 @@
           "Adviser"
         ],
         "summary": "Gets a single adviser by id",
-        "description": "The adviser id. aka MyCrm family_id",
+        "description": "Where `id` is the identifier of the adviser. aka MyCrm family_id",
         "operationId": "Adviser_Get",
         "parameters": [
           {
@@ -138,7 +138,7 @@
           "AdviserDetails"
         ],
         "summary": "Gets a single set of adviser details by id",
-        "description": "The id of the set of adviser details.  aka ClientId, aka My Crm ID",
+        "description": "Where `id` is the identifier of the set of adviser details.  aka ClientId, aka My Crm ID",
         "operationId": "AdviserDetail_Get",
         "parameters": [
           {
@@ -265,7 +265,7 @@
           "AdviserDetails"
         ],
         "summary": "Gets advisers related to a single set of adviser details",
-        "description": "The id of the set of adviser details.  aka ClientId, aka My Crm ID",
+        "description": "Where `id` is the identifier of the set of adviser details.  aka ClientId, aka My Crm ID",
         "operationId": "AdviserDetailRelationship_Get_Advisers",
         "parameters": [
           {
@@ -311,7 +311,7 @@
           "ContactExternalReferences"
         ],
         "summary": "Gets contacts via a single related contact external reference",
-        "description": "The identifier of the contact external reference",
+        "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelated_Get_Contacts",
         "parameters": [
           {
@@ -550,7 +550,7 @@
           "ContactExternalReferences"
         ],
         "summary": "Gets a single contact external reference by id",
-        "description": "The identifier of the contact external reference",
+        "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReference_Get",
         "parameters": [
           {
@@ -631,7 +631,7 @@
           "ContactExternalReferences"
         ],
         "summary": "Updates the attributes and/or relationships of an existing contact external reference. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
-        "description": "The identifier of the contact external reference",
+        "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReference_Patch",
         "parameters": [
           {
@@ -687,7 +687,7 @@
           "ContactExternalReferences"
         ],
         "summary": "Deletes an existing contact external reference",
-        "description": "The identifier of the contact external reference",
+        "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReference_Delete",
         "parameters": [
           {
@@ -726,7 +726,7 @@
           "ContactExternalReferences"
         ],
         "summary": "Gets a contacts related to a single contact external reference",
-        "description": "The identifier of the contact external reference",
+        "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelationship_Get_Contacts",
         "parameters": [
           {
@@ -807,7 +807,7 @@
           "ContactExternalReferences"
         ],
         "summary": "Adds contacts to a to-many relationship with an existing contact external reference",
-        "description": "The identifier of the primary contact external reference resource",
+        "description": "Where `id` is the identifier of the primary contact external reference resource",
         "operationId": "ContactExternalReferenceRelationship_Post_Contacts",
         "parameters": [
           {
@@ -856,7 +856,7 @@
           "ContactExternalReferences"
         ],
         "summary": "Performs a complete replacement of a contact relationship on an existing contact external reference",
-        "description": "The identifier of the contact external reference",
+        "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelationship_Patch_Contacts",
         "parameters": [
           {
@@ -905,7 +905,7 @@
           "ContactExternalReferences"
         ],
         "summary": "Removes a contact external reference from a to-many relationship with contacts",
-        "description": "The identifier of the contact external reference",
+        "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelationship_Delete_Contacts",
         "parameters": [
           {
@@ -944,7 +944,7 @@
           "ContactGroups"
         ],
         "summary": "Gets contacts via a single related contact group",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelated_Get_Contacts",
         "parameters": [
           {
@@ -1183,7 +1183,7 @@
           "ContactGroups"
         ],
         "summary": "Gets a single contact group by id",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroup_Get",
         "parameters": [
           {
@@ -1264,7 +1264,7 @@
           "ContactGroups"
         ],
         "summary": "Updates the attributes and/or relationships of an existing contact group. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroup_Patch",
         "parameters": [
           {
@@ -1320,7 +1320,7 @@
           "ContactGroups"
         ],
         "summary": "Deletes an existing contact group",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroup_Delete",
         "parameters": [
           {
@@ -1359,7 +1359,7 @@
           "ContactGroups"
         ],
         "summary": "Gets a contacts related to a single contact group",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Get_Contacts",
         "parameters": [
           {
@@ -1440,7 +1440,7 @@
           "ContactGroups"
         ],
         "summary": "Adds contacts to a to-many relationship with an existing contact group",
-        "description": "The identifier of the primary contact group resource",
+        "description": "Where `id` is the identifier of the primary contact group resource",
         "operationId": "ContactGroupRelationship_Post_Contacts",
         "parameters": [
           {
@@ -1489,7 +1489,7 @@
           "ContactGroups"
         ],
         "summary": "Performs a complete replacement of a contacts relationship on an existing contact group",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Patch_Contacts",
         "parameters": [
           {
@@ -1538,7 +1538,7 @@
           "ContactGroups"
         ],
         "summary": "Removes a contact group from a to-many relationship with contacts",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Delete_Contacts",
         "parameters": [
           {
@@ -1577,7 +1577,7 @@
           "Contacts"
         ],
         "summary": "Gets contactGroups via a single related contact",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelated_Get_ContactGroups",
         "parameters": [
           {
@@ -1660,7 +1660,7 @@
           "ContactMarketingConsent"
         ],
         "summary": "Updates the marketing consent declaration of an existing contact",
-        "description": "The contact id",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactMarketing_Patch",
         "parameters": [
           {
@@ -1716,7 +1716,7 @@
           "ContactMarketingConsent"
         ],
         "summary": "Gets the marketing consent declaration of a single contact",
-        "description": "The contact id",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactMarketing_Get",
         "parameters": [
           {
@@ -1918,7 +1918,7 @@
           "Contacts"
         ],
         "summary": "Updates the attributes and/or relationships of an existing contact. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "Contact_Patch",
         "parameters": [
           {
@@ -1974,7 +1974,7 @@
           "Contacts"
         ],
         "summary": "Gets a single contact by id",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "Contact_Get",
         "parameters": [
           {
@@ -2055,7 +2055,7 @@
           "Contacts"
         ],
         "summary": "Deletes an existing contact",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "Contact_Delete",
         "parameters": [
           {
@@ -2094,7 +2094,7 @@
           "Contacts"
         ],
         "summary": "Gets a contactGroups related to a single contact",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelationship_Get_ContactGroups",
         "parameters": [
           {
@@ -2175,7 +2175,7 @@
           "Contacts"
         ],
         "summary": "Adds contactGroups to a to-many relationship with an existing contact",
-        "description": "The identifier of the primary contact resource",
+        "description": "Where `id` is the identifier of the primary contact resource",
         "operationId": "ContactRelationship_Post_ContactGroups",
         "parameters": [
           {
@@ -2224,7 +2224,7 @@
           "Contacts"
         ],
         "summary": "Performs a complete replacement of a contactGroup relationship on an existing contact",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelationship_Patch_ContactGroups",
         "parameters": [
           {
@@ -2273,7 +2273,7 @@
           "Contacts"
         ],
         "summary": "Removes a contact from a to-many relationship with contactGroups",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelationship_Delete_ContactGroups",
         "parameters": [
           {
@@ -2312,7 +2312,7 @@
           "DealExternalReferences"
         ],
         "summary": "Gets deals via a single related deal external reference",
-        "description": "The identifier of the deal external reference",
+        "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelated_Get_Deals",
         "parameters": [
           {
@@ -2551,7 +2551,7 @@
           "DealExternalReferences"
         ],
         "summary": "Gets a single deal external reference by id",
-        "description": "The identifier of the deal external reference",
+        "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReference_Get",
         "parameters": [
           {
@@ -2632,7 +2632,7 @@
           "DealExternalReferences"
         ],
         "summary": "Updates the attributes and/or relationships of an existing deal external reference. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
-        "description": "The identifier of the deal external reference",
+        "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReference_Patch",
         "parameters": [
           {
@@ -2688,7 +2688,7 @@
           "DealExternalReferences"
         ],
         "summary": "Deletes an existing deal external reference",
-        "description": "The identifier of the deal external reference",
+        "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReference_Delete",
         "parameters": [
           {
@@ -2727,7 +2727,7 @@
           "DealExternalReferences"
         ],
         "summary": "Gets a deals related to a single deal external reference",
-        "description": "The identifier of the deal external reference",
+        "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelationship_Get_Deals",
         "parameters": [
           {
@@ -2808,7 +2808,7 @@
           "DealExternalReferences"
         ],
         "summary": "Adds deals to a to-many relationship with an existing deal external reference",
-        "description": "The identifier of the primary deal external reference resource",
+        "description": "Where `id` is the identifier of the primary deal external reference resource",
         "operationId": "DealExternalReferenceRelationship_Post_Deals",
         "parameters": [
           {
@@ -2857,7 +2857,7 @@
           "DealExternalReferences"
         ],
         "summary": "Performs a complete replacement of a deal relationship on an existing deal external reference",
-        "description": "The identifier of the deal external reference",
+        "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelationship_Patch_Deals",
         "parameters": [
           {
@@ -2906,7 +2906,7 @@
           "DealExternalReferences"
         ],
         "summary": "Removes a deal external reference from a to-many relationship with deals",
-        "description": "The identifier of the deal external reference",
+        "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelationship_Delete_Deals",
         "parameters": [
           {
@@ -2945,7 +2945,7 @@
           "DealParticipants"
         ],
         "summary": "Gets contacts via a single related participants in a deal",
-        "description": "The identifier of the participants in a deal",
+        "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipantRelated_Get_Contacts",
         "parameters": [
           {
@@ -3184,7 +3184,7 @@
           "DealParticipants"
         ],
         "summary": "Gets a single participants in a deal by id",
-        "description": "The identifier of the participants in a deal",
+        "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipant_Get",
         "parameters": [
           {
@@ -3265,7 +3265,7 @@
           "DealParticipants"
         ],
         "summary": "Updates the attributes and/or relationships of an existing participants in a deal. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
-        "description": "The identifier of the participants in a deal",
+        "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipant_Patch",
         "parameters": [
           {
@@ -3321,7 +3321,7 @@
           "DealParticipants"
         ],
         "summary": "Deletes an existing participants in a deal",
-        "description": "The identifier of the participants in a deal",
+        "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipant_Delete",
         "parameters": [
           {
@@ -3360,7 +3360,7 @@
           "DealParticipants"
         ],
         "summary": "Gets a contacts related to a single participants in a deal",
-        "description": "The identifier of the participants in a deal",
+        "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipantRelationship_Get_Contacts",
         "parameters": [
           {
@@ -3441,7 +3441,7 @@
           "DealParticipants"
         ],
         "summary": "Adds contacts to a to-many relationship with an existing participants in a deal",
-        "description": "The identifier of the primary participants in a deal resource",
+        "description": "Where `id` is the identifier of the primary participants in a deal resource",
         "operationId": "DealParticipantRelationship_Post_Contacts",
         "parameters": [
           {
@@ -3490,7 +3490,7 @@
           "DealParticipants"
         ],
         "summary": "Performs a complete replacement of a contact relationship on an existing participants in a deal",
-        "description": "The identifier of the participants in a deal",
+        "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipantRelationship_Patch_Contacts",
         "parameters": [
           {
@@ -3539,7 +3539,7 @@
           "DealParticipants"
         ],
         "summary": "Removes a participants in a deal from a to-many relationship with contacts",
-        "description": "The identifier of the participants in a deal",
+        "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipantRelationship_Delete_Contacts",
         "parameters": [
           {
@@ -3578,7 +3578,7 @@
           "Deals"
         ],
         "summary": "Gets dealScenarios via a single related deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelated_Get_DealScenarios",
         "parameters": [
           {
@@ -3817,7 +3817,7 @@
           "Deals"
         ],
         "summary": "Gets a single deal by id",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "Deal_Get",
         "parameters": [
           {
@@ -3898,7 +3898,7 @@
           "Deals"
         ],
         "summary": "Updates the attributes and/or relationships of an existing deal. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "Deal_Patch",
         "parameters": [
           {
@@ -3954,7 +3954,7 @@
           "Deals"
         ],
         "summary": "Deletes an existing deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "Deal_Delete",
         "parameters": [
           {
@@ -3993,7 +3993,7 @@
           "Deals"
         ],
         "summary": "Gets a dealScenarios related to a single deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Get_DealScenarios",
         "parameters": [
           {
@@ -4074,7 +4074,7 @@
           "Deals"
         ],
         "summary": "Adds dealScenarios to a to-many relationship with an existing deal",
-        "description": "The identifier of the primary deal resource",
+        "description": "Where `id` is the identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_DealScenarios",
         "parameters": [
           {
@@ -4123,7 +4123,7 @@
           "Deals"
         ],
         "summary": "Performs a complete replacement of a dealScenario relationship on an existing deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Patch_DealScenarios",
         "parameters": [
           {
@@ -4172,7 +4172,7 @@
           "Deals"
         ],
         "summary": "Removes a deal from a to-many relationship with dealScenarios",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Delete_DealScenarios",
         "parameters": [
           {
@@ -4211,7 +4211,7 @@
           "Integrations"
         ],
         "summary": "Gets contactExternalReferences via a single related integration",
-        "description": "The identifier of the integration",
+        "description": "Where `id` is the identifier of the integration",
         "operationId": "IntegrationRelated_Get_ContactExternalReferences",
         "parameters": [
           {
@@ -4450,7 +4450,7 @@
           "Integrations"
         ],
         "summary": "Gets a single integration by id",
-        "description": "The identifier of the integration",
+        "description": "Where `id` is the identifier of the integration",
         "operationId": "Integration_Get",
         "parameters": [
           {
@@ -4531,7 +4531,7 @@
           "Integrations"
         ],
         "summary": "Updates the attributes and/or relationships of an existing integration. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
-        "description": "The identifier of the integration",
+        "description": "Where `id` is the identifier of the integration",
         "operationId": "Integration_Patch",
         "parameters": [
           {
@@ -4587,7 +4587,7 @@
           "Integrations"
         ],
         "summary": "Deletes an existing integration",
-        "description": "The identifier of the integration",
+        "description": "Where `id` is the identifier of the integration",
         "operationId": "Integration_Delete",
         "parameters": [
           {
@@ -4626,7 +4626,7 @@
           "Integrations"
         ],
         "summary": "Gets a contactExternalReferences related to a single integration",
-        "description": "The identifier of the integration",
+        "description": "Where `id` is the identifier of the integration",
         "operationId": "IntegrationRelationship_Get_ContactExternalReferences",
         "parameters": [
           {
@@ -4707,7 +4707,7 @@
           "Integrations"
         ],
         "summary": "Adds contactExternalReferences to a to-many relationship with an existing integration",
-        "description": "The identifier of the primary integration resource",
+        "description": "Where `id` is the identifier of the primary integration resource",
         "operationId": "IntegrationRelationship_Post_ContactExternalReferences",
         "parameters": [
           {
@@ -4756,7 +4756,7 @@
           "Integrations"
         ],
         "summary": "Performs a complete replacement of a contactExternalReferences relationship on an existing integration",
-        "description": "The identifier of the integration",
+        "description": "Where `id` is the identifier of the integration",
         "operationId": "IntegrationRelationship_Patch_ContactExternalReferences",
         "parameters": [
           {
@@ -4805,7 +4805,7 @@
           "Integrations"
         ],
         "summary": "Removes a integration from a to-many relationship with contactExternalReferences",
-        "description": "The identifier of the integration",
+        "description": "Where `id` is the identifier of the integration",
         "operationId": "IntegrationRelationship_Delete_ContactExternalReferences",
         "parameters": [
           {
@@ -4844,7 +4844,7 @@
           "Notes"
         ],
         "summary": "Gets deals via a single related deal note",
-        "description": "The identifier of the deal note",
+        "description": "Where `id` is the identifier of the deal note",
         "operationId": "DealNoteRelated_Get_Deals",
         "parameters": [
           {
@@ -4978,7 +4978,7 @@
           "Leads"
         ],
         "summary": "Gets select details if an existing lead",
-        "description": "The identifier of the lead",
+        "description": "Where `id` is the identifier of the lead",
         "operationId": "Lead_Get",
         "parameters": [
           {
@@ -5180,7 +5180,7 @@
           "Notes"
         ],
         "summary": "Gets a single deal note by id",
-        "description": "The identifier of the deal note",
+        "description": "Where `id` is the identifier of the deal note",
         "operationId": "DealNote_Get",
         "parameters": [
           {
@@ -5261,7 +5261,7 @@
           "Notes"
         ],
         "summary": "Updates the attributes and/or relationships of an existing deal note. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
-        "description": "The identifier of the deal note",
+        "description": "Where `id` is the identifier of the deal note",
         "operationId": "DealNote_Patch",
         "parameters": [
           {
@@ -5317,7 +5317,7 @@
           "Notes"
         ],
         "summary": "Deletes an existing deal note",
-        "description": "The identifier of the deal note",
+        "description": "Where `id` is the identifier of the deal note",
         "operationId": "DealNote_Delete",
         "parameters": [
           {
@@ -5356,7 +5356,7 @@
           "Notes"
         ],
         "summary": "Gets a deals related to a single deal note",
-        "description": "The identifier of the deal note",
+        "description": "Where `id` is the identifier of the deal note",
         "operationId": "DealNoteRelationship_Get_Deals",
         "parameters": [
           {
@@ -5437,7 +5437,7 @@
           "Notes"
         ],
         "summary": "Adds deals to a to-many relationship with an existing deal note",
-        "description": "The identifier of the primary deal note resource",
+        "description": "Where `id` is the identifier of the primary deal note resource",
         "operationId": "DealNoteRelationship_Post_Deals",
         "parameters": [
           {
@@ -5486,7 +5486,7 @@
           "Notes"
         ],
         "summary": "Performs a complete replacement of a deal relationship on an existing deal note",
-        "description": "The identifier of the deal note",
+        "description": "Where `id` is the identifier of the deal note",
         "operationId": "DealNoteRelationship_Patch_Deals",
         "parameters": [
           {
@@ -5535,7 +5535,7 @@
           "Notes"
         ],
         "summary": "Removes a deal note from a to-many relationship with deals",
-        "description": "The identifier of the deal note",
+        "description": "Where `id` is the identifier of the deal note",
         "operationId": "DealNoteRelationship_Delete_Deals",
         "parameters": [
           {
@@ -5730,7 +5730,7 @@
           "Referrers"
         ],
         "summary": "Gets a single referrer by id",
-        "description": "The identifier of the referrer",
+        "description": "Where `id` is the identifier of the referrer",
         "operationId": "ContactGroupReferrer_Get",
         "parameters": [
           {
@@ -5811,7 +5811,7 @@
           "Referrers"
         ],
         "summary": "Updates the attributes and/or relationships of an existing referrer. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
-        "description": "The identifier of the referrer",
+        "description": "Where `id` is the identifier of the referrer",
         "operationId": "ContactGroupReferrer_Patch",
         "parameters": [
           {
@@ -5867,7 +5867,7 @@
           "Referrers"
         ],
         "summary": "Deletes an existing referrer",
-        "description": "The identifier of the referrer",
+        "description": "Where `id` is the identifier of the referrer",
         "operationId": "ContactGroupReferrer_Delete",
         "parameters": [
           {
@@ -5906,7 +5906,7 @@
           "Referrers"
         ],
         "summary": "Gets {{{RelationshipNames}}} via a single related referrer",
-        "description": "The identifier of the referrer",
+        "description": "Where `id` is the identifier of the referrer",
         "operationId": "ContactGroupReferrerRelated_Get",
         "parameters": [
           {
@@ -6001,7 +6001,7 @@
           "Referrers"
         ],
         "summary": "Gets a {{{RelationshipNames}}} related to a single referrer",
-        "description": "The identifier of the referrer",
+        "description": "Where `id` is the identifier of the referrer",
         "operationId": "ContactGroupReferrerRelationship_Get",
         "parameters": [
           {
@@ -6094,7 +6094,7 @@
           "Referrers"
         ],
         "summary": "Adds {{{RelationshipNames}}} to a to-many relationship with an existing referrer",
-        "description": "The identifier of the primary referrer resource",
+        "description": "Where `id` is the identifier of the primary referrer resource",
         "operationId": "ContactGroupReferrerRelationship_Post",
         "parameters": [
           {
@@ -6147,7 +6147,7 @@
           "Referrers"
         ],
         "summary": "Performs a complete replacement of a {{{RelationshipName}}} relationship on an existing referrer",
-        "description": "The identifier of the referrer",
+        "description": "Where `id` is the identifier of the referrer",
         "operationId": "ContactGroupReferrerRelationship_Patch",
         "parameters": [
           {
@@ -6200,7 +6200,7 @@
           "Referrers"
         ],
         "summary": "Removes a referrer from a to-many relationship with {{{RelationshipNames}}}",
-        "description": "The identifier of the referrer",
+        "description": "Where `id` is the identifier of the referrer",
         "operationId": "ContactGroupReferrerRelationship_Delete",
         "parameters": [
           {
@@ -6247,7 +6247,7 @@
           "AdviserDetails"
         ],
         "summary": "Gets advisers via the id of a single related set of adviser details",
-        "description": "The id of the set of adviser details.  aka ClientId, aka My Crm ID",
+        "description": "Where `id` is the identifier of the set of adviser details.  aka ClientId, aka My Crm ID",
         "operationId": "AdviserDetailRelated_Get_Advisers",
         "parameters": [
           {
@@ -6293,7 +6293,7 @@
           "ContactExternalReferences"
         ],
         "summary": "Gets integrations via a single related contact external reference",
-        "description": "The identifier of the contact external reference",
+        "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelated_Get_Integrations",
         "parameters": [
           {
@@ -6376,7 +6376,7 @@
           "ContactExternalReferences"
         ],
         "summary": "Gets a integrations related to a single contact external reference",
-        "description": "The identifier of the contact external reference",
+        "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelationship_Get_Integrations",
         "parameters": [
           {
@@ -6457,7 +6457,7 @@
           "ContactExternalReferences"
         ],
         "summary": "Adds integrations to a to-many relationship with an existing contact external reference",
-        "description": "The identifier of the primary contact external reference resource",
+        "description": "Where `id` is the identifier of the primary contact external reference resource",
         "operationId": "ContactExternalReferenceRelationship_Post_Integrations",
         "parameters": [
           {
@@ -6506,7 +6506,7 @@
           "ContactExternalReferences"
         ],
         "summary": "Performs a complete replacement of a integration relationship on an existing contact external reference",
-        "description": "The identifier of the contact external reference",
+        "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelationship_Patch_Integrations",
         "parameters": [
           {
@@ -6555,7 +6555,7 @@
           "ContactExternalReferences"
         ],
         "summary": "Removes a contact external reference from a to-many relationship with integrations",
-        "description": "The identifier of the contact external reference",
+        "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelationship_Delete_Integrations",
         "parameters": [
           {
@@ -6594,7 +6594,7 @@
           "ContactGroups"
         ],
         "summary": "Gets advisers via a single related contact group",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelated_Get_Advisers",
         "parameters": [
           {
@@ -6677,7 +6677,7 @@
           "ContactGroups"
         ],
         "summary": "Gets referrerOrganizations via a single related contact group",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelated_Get_ReferrerOrganizations",
         "parameters": [
           {
@@ -6760,7 +6760,7 @@
           "ContactGroups"
         ],
         "summary": "Gets referrers via a single related contact group",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelated_Get_Referrers",
         "parameters": [
           {
@@ -6843,7 +6843,7 @@
           "ContactGroups"
         ],
         "summary": "Gets a advisers related to a single contact group",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Get_Advisers",
         "parameters": [
           {
@@ -6924,7 +6924,7 @@
           "ContactGroups"
         ],
         "summary": "Adds advisers to a to-many relationship with an existing contact group",
-        "description": "The identifier of the primary contact group resource",
+        "description": "Where `id` is the identifier of the primary contact group resource",
         "operationId": "ContactGroupRelationship_Post_Advisers",
         "parameters": [
           {
@@ -6973,7 +6973,7 @@
           "ContactGroups"
         ],
         "summary": "Performs a complete replacement of a adviser relationship on an existing contact group",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Patch_Advisers",
         "parameters": [
           {
@@ -7022,7 +7022,7 @@
           "ContactGroups"
         ],
         "summary": "Removes a contact group from a to-many relationship with advisers",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Delete_Advisers",
         "parameters": [
           {
@@ -7061,7 +7061,7 @@
           "ContactGroups"
         ],
         "summary": "Gets a referrerOrganizations related to a single contact group",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Get_ReferrerOrganizations",
         "parameters": [
           {
@@ -7142,7 +7142,7 @@
           "ContactGroups"
         ],
         "summary": "Adds referrerOrganizations to a to-many relationship with an existing contact group",
-        "description": "The identifier of the primary contact group resource",
+        "description": "Where `id` is the identifier of the primary contact group resource",
         "operationId": "ContactGroupRelationship_Post_ReferrerOrganizations",
         "parameters": [
           {
@@ -7191,7 +7191,7 @@
           "ContactGroups"
         ],
         "summary": "Performs a complete replacement of a referrerOrganization relationship on an existing contact group",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Patch_ReferrerOrganizations",
         "parameters": [
           {
@@ -7240,7 +7240,7 @@
           "ContactGroups"
         ],
         "summary": "Removes a contact group from a to-many relationship with referrerOrganizations",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Delete_ReferrerOrganizations",
         "parameters": [
           {
@@ -7279,7 +7279,7 @@
           "ContactGroups"
         ],
         "summary": "Gets a referrers related to a single contact group",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Get_Referrers",
         "parameters": [
           {
@@ -7360,7 +7360,7 @@
           "ContactGroups"
         ],
         "summary": "Adds referrers to a to-many relationship with an existing contact group",
-        "description": "The identifier of the primary contact group resource",
+        "description": "Where `id` is the identifier of the primary contact group resource",
         "operationId": "ContactGroupRelationship_Post_Referrers",
         "parameters": [
           {
@@ -7409,7 +7409,7 @@
           "ContactGroups"
         ],
         "summary": "Performs a complete replacement of a referrer relationship on an existing contact group",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Patch_Referrers",
         "parameters": [
           {
@@ -7458,7 +7458,7 @@
           "ContactGroups"
         ],
         "summary": "Removes a contact group from a to-many relationship with referrers",
-        "description": "The identifier of the contact group",
+        "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Delete_Referrers",
         "parameters": [
           {
@@ -7497,7 +7497,7 @@
           "Contacts"
         ],
         "summary": "Gets externalReferences via a single related contact",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelated_Get_ContactExternalReferences",
         "parameters": [
           {
@@ -7580,7 +7580,7 @@
           "Contacts"
         ],
         "summary": "Gets deals via a single related contact",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelated_Get_DealParticipants",
         "parameters": [
           {
@@ -7663,7 +7663,7 @@
           "Contacts"
         ],
         "summary": "Gets contactAddresses via a single related contact",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelated_Get_ContactAddresses",
         "parameters": [
           {
@@ -7746,7 +7746,7 @@
           "Contacts"
         ],
         "summary": "Gets a externalReferences related to a single contact",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelationship_Get_ContactExternalReferences",
         "parameters": [
           {
@@ -7827,7 +7827,7 @@
           "Contacts"
         ],
         "summary": "Adds externalReferences to a to-many relationship with an existing contact",
-        "description": "The identifier of the primary contact resource",
+        "description": "Where `id` is the identifier of the primary contact resource",
         "operationId": "ContactRelationship_Post_ContactExternalReferences",
         "parameters": [
           {
@@ -7876,7 +7876,7 @@
           "Contacts"
         ],
         "summary": "Performs a complete replacement of a externalReferences relationship on an existing contact",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelationship_Patch_ContactExternalReferences",
         "parameters": [
           {
@@ -7925,7 +7925,7 @@
           "Contacts"
         ],
         "summary": "Removes a contact from a to-many relationship with externalReferences",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelationship_Delete_ContactExternalReferences",
         "parameters": [
           {
@@ -7964,7 +7964,7 @@
           "Contacts"
         ],
         "summary": "Gets a deals related to a single contact",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelationship_Get_DealParticipants",
         "parameters": [
           {
@@ -8045,7 +8045,7 @@
           "Contacts"
         ],
         "summary": "Adds deals to a to-many relationship with an existing contact",
-        "description": "The identifier of the primary contact resource",
+        "description": "Where `id` is the identifier of the primary contact resource",
         "operationId": "ContactRelationship_Post_DealParticipants",
         "parameters": [
           {
@@ -8094,7 +8094,7 @@
           "Contacts"
         ],
         "summary": "Performs a complete replacement of a deals relationship on an existing contact",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelationship_Patch_DealParticipants",
         "parameters": [
           {
@@ -8143,7 +8143,7 @@
           "Contacts"
         ],
         "summary": "Removes a contact from a to-many relationship with deals",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelationship_Delete_DealParticipants",
         "parameters": [
           {
@@ -8182,7 +8182,7 @@
           "Contacts"
         ],
         "summary": "Gets a contactAddresses related to a single contact",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelationship_Get_ContactAddresses",
         "parameters": [
           {
@@ -8263,7 +8263,7 @@
           "Contacts"
         ],
         "summary": "Adds contactAddresses to a to-many relationship with an existing contact",
-        "description": "The identifier of the primary contact resource",
+        "description": "Where `id` is the identifier of the primary contact resource",
         "operationId": "ContactRelationship_Post_ContactAddresses",
         "parameters": [
           {
@@ -8312,7 +8312,7 @@
           "Contacts"
         ],
         "summary": "Performs a complete replacement of a contactAddress relationship on an existing contact",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelationship_Patch_ContactAddresses",
         "parameters": [
           {
@@ -8361,7 +8361,7 @@
           "Contacts"
         ],
         "summary": "Removes a contact from a to-many relationship with contactAddresses",
-        "description": "The identifier of the contact",
+        "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelationship_Delete_ContactAddresses",
         "parameters": [
           {
@@ -8400,7 +8400,7 @@
           "DealExternalReferences"
         ],
         "summary": "Gets integrations via a single related deal external reference",
-        "description": "The identifier of the deal external reference",
+        "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelated_Get_Integrations",
         "parameters": [
           {
@@ -8483,7 +8483,7 @@
           "DealExternalReferences"
         ],
         "summary": "Gets a integrations related to a single deal external reference",
-        "description": "The identifier of the deal external reference",
+        "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelationship_Get_Integrations",
         "parameters": [
           {
@@ -8564,7 +8564,7 @@
           "DealExternalReferences"
         ],
         "summary": "Adds integrations to a to-many relationship with an existing deal external reference",
-        "description": "The identifier of the primary deal external reference resource",
+        "description": "Where `id` is the identifier of the primary deal external reference resource",
         "operationId": "DealExternalReferenceRelationship_Post_Integrations",
         "parameters": [
           {
@@ -8613,7 +8613,7 @@
           "DealExternalReferences"
         ],
         "summary": "Performs a complete replacement of a integration relationship on an existing deal external reference",
-        "description": "The identifier of the deal external reference",
+        "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelationship_Patch_Integrations",
         "parameters": [
           {
@@ -8662,7 +8662,7 @@
           "DealExternalReferences"
         ],
         "summary": "Removes a deal external reference from a to-many relationship with integrations",
-        "description": "The identifier of the deal external reference",
+        "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelationship_Delete_Integrations",
         "parameters": [
           {
@@ -8701,7 +8701,7 @@
           "DealParticipants"
         ],
         "summary": "Gets deals via a single related participants in a deal",
-        "description": "The identifier of the participants in a deal",
+        "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipantRelated_Get_Deals",
         "parameters": [
           {
@@ -8784,7 +8784,7 @@
           "DealParticipants"
         ],
         "summary": "Gets a deals related to a single participants in a deal",
-        "description": "The identifier of the participants in a deal",
+        "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipantRelationship_Get_Deals",
         "parameters": [
           {
@@ -8865,7 +8865,7 @@
           "DealParticipants"
         ],
         "summary": "Adds deals to a to-many relationship with an existing participants in a deal",
-        "description": "The identifier of the primary participants in a deal resource",
+        "description": "Where `id` is the identifier of the primary participants in a deal resource",
         "operationId": "DealParticipantRelationship_Post_Deals",
         "parameters": [
           {
@@ -8914,7 +8914,7 @@
           "DealParticipants"
         ],
         "summary": "Performs a complete replacement of a deal relationship on an existing participants in a deal",
-        "description": "The identifier of the participants in a deal",
+        "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipantRelationship_Patch_Deals",
         "parameters": [
           {
@@ -8963,7 +8963,7 @@
           "DealParticipants"
         ],
         "summary": "Removes a participants in a deal from a to-many relationship with deals",
-        "description": "The identifier of the participants in a deal",
+        "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipantRelationship_Delete_Deals",
         "parameters": [
           {
@@ -9002,7 +9002,7 @@
           "Deals"
         ],
         "summary": "Gets participants via a single related deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelated_Get_DealParticipants",
         "parameters": [
           {
@@ -9085,7 +9085,7 @@
           "Deals"
         ],
         "summary": "Gets externalReferences via a single related deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelated_Get_DealExternalReferences",
         "parameters": [
           {
@@ -9168,7 +9168,7 @@
           "Deals"
         ],
         "summary": "Gets contacts via a single related deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelated_Get_Contacts",
         "parameters": [
           {
@@ -9251,7 +9251,7 @@
           "Deals"
         ],
         "summary": "Gets importantDates via a single related deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelated_Get_DealImportantDates",
         "parameters": [
           {
@@ -9334,7 +9334,7 @@
           "Deals"
         ],
         "summary": "Gets dealStructures via a single related deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelated_Get_DealStructures",
         "parameters": [
           {
@@ -9417,7 +9417,7 @@
           "Deals"
         ],
         "summary": "Gets advisers via a single related deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelated_Get_Advisers",
         "parameters": [
           {
@@ -9500,7 +9500,7 @@
           "Deals"
         ],
         "summary": "Gets dealNotes via a single related deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelated_Get_DealNotes",
         "parameters": [
           {
@@ -9583,7 +9583,7 @@
           "Deals"
         ],
         "summary": "Gets a participants related to a single deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Get_DealParticipants",
         "parameters": [
           {
@@ -9664,7 +9664,7 @@
           "Deals"
         ],
         "summary": "Adds participants to a to-many relationship with an existing deal",
-        "description": "The identifier of the primary deal resource",
+        "description": "Where `id` is the identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_DealParticipants",
         "parameters": [
           {
@@ -9713,7 +9713,7 @@
           "Deals"
         ],
         "summary": "Performs a complete replacement of a participants relationship on an existing deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Patch_DealParticipants",
         "parameters": [
           {
@@ -9762,7 +9762,7 @@
           "Deals"
         ],
         "summary": "Removes a deal from a to-many relationship with participants",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Delete_DealParticipants",
         "parameters": [
           {
@@ -9801,7 +9801,7 @@
           "Deals"
         ],
         "summary": "Gets a externalReferences related to a single deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Get_DealExternalReferences",
         "parameters": [
           {
@@ -9882,7 +9882,7 @@
           "Deals"
         ],
         "summary": "Adds externalReferences to a to-many relationship with an existing deal",
-        "description": "The identifier of the primary deal resource",
+        "description": "Where `id` is the identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_DealExternalReferences",
         "parameters": [
           {
@@ -9931,7 +9931,7 @@
           "Deals"
         ],
         "summary": "Performs a complete replacement of a externalReferences relationship on an existing deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Patch_DealExternalReferences",
         "parameters": [
           {
@@ -9980,7 +9980,7 @@
           "Deals"
         ],
         "summary": "Removes a deal from a to-many relationship with externalReferences",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Delete_DealExternalReferences",
         "parameters": [
           {
@@ -10019,7 +10019,7 @@
           "Deals"
         ],
         "summary": "Gets a contacts related to a single deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Get_Contacts",
         "parameters": [
           {
@@ -10100,7 +10100,7 @@
           "Deals"
         ],
         "summary": "Adds contacts to a to-many relationship with an existing deal",
-        "description": "The identifier of the primary deal resource",
+        "description": "Where `id` is the identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_Contacts",
         "parameters": [
           {
@@ -10149,7 +10149,7 @@
           "Deals"
         ],
         "summary": "Performs a complete replacement of a contacts relationship on an existing deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Patch_Contacts",
         "parameters": [
           {
@@ -10198,7 +10198,7 @@
           "Deals"
         ],
         "summary": "Removes a deal from a to-many relationship with contacts",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Delete_Contacts",
         "parameters": [
           {
@@ -10237,7 +10237,7 @@
           "Deals"
         ],
         "summary": "Gets a importantDates related to a single deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Get_DealImportantDates",
         "parameters": [
           {
@@ -10318,7 +10318,7 @@
           "Deals"
         ],
         "summary": "Adds importantDates to a to-many relationship with an existing deal",
-        "description": "The identifier of the primary deal resource",
+        "description": "Where `id` is the identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_DealImportantDates",
         "parameters": [
           {
@@ -10367,7 +10367,7 @@
           "Deals"
         ],
         "summary": "Performs a complete replacement of a importantDates relationship on an existing deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Patch_DealImportantDates",
         "parameters": [
           {
@@ -10416,7 +10416,7 @@
           "Deals"
         ],
         "summary": "Removes a deal from a to-many relationship with importantDates",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Delete_DealImportantDates",
         "parameters": [
           {
@@ -10455,7 +10455,7 @@
           "Deals"
         ],
         "summary": "Gets a dealStructures related to a single deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Get_DealStructures",
         "parameters": [
           {
@@ -10536,7 +10536,7 @@
           "Deals"
         ],
         "summary": "Adds dealStructures to a to-many relationship with an existing deal",
-        "description": "The identifier of the primary deal resource",
+        "description": "Where `id` is the identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_DealStructures",
         "parameters": [
           {
@@ -10585,7 +10585,7 @@
           "Deals"
         ],
         "summary": "Performs a complete replacement of a dealStructures relationship on an existing deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Patch_DealStructures",
         "parameters": [
           {
@@ -10634,7 +10634,7 @@
           "Deals"
         ],
         "summary": "Removes a deal from a to-many relationship with dealStructures",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Delete_DealStructures",
         "parameters": [
           {
@@ -10673,7 +10673,7 @@
           "Deals"
         ],
         "summary": "Gets a advisers related to a single deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Get_Advisers",
         "parameters": [
           {
@@ -10754,7 +10754,7 @@
           "Deals"
         ],
         "summary": "Adds advisers to a to-many relationship with an existing deal",
-        "description": "The identifier of the primary deal resource",
+        "description": "Where `id` is the identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_Advisers",
         "parameters": [
           {
@@ -10803,7 +10803,7 @@
           "Deals"
         ],
         "summary": "Performs a complete replacement of a adviser relationship on an existing deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Patch_Advisers",
         "parameters": [
           {
@@ -10852,7 +10852,7 @@
           "Deals"
         ],
         "summary": "Removes a deal from a to-many relationship with advisers",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Delete_Advisers",
         "parameters": [
           {
@@ -10891,7 +10891,7 @@
           "Deals"
         ],
         "summary": "Gets a dealNotes related to a single deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Get_DealNotes",
         "parameters": [
           {
@@ -10972,7 +10972,7 @@
           "Deals"
         ],
         "summary": "Adds dealNotes to a to-many relationship with an existing deal",
-        "description": "The identifier of the primary deal resource",
+        "description": "Where `id` is the identifier of the primary deal resource",
         "operationId": "DealRelationship_Post_DealNotes",
         "parameters": [
           {
@@ -11021,7 +11021,7 @@
           "Deals"
         ],
         "summary": "Performs a complete replacement of a dealNotes relationship on an existing deal",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Patch_DealNotes",
         "parameters": [
           {
@@ -11070,7 +11070,7 @@
           "Deals"
         ],
         "summary": "Removes a deal from a to-many relationship with dealNotes",
-        "description": "The identifier of the deal",
+        "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Delete_DealNotes",
         "parameters": [
           {
@@ -11109,7 +11109,7 @@
           "Integrations"
         ],
         "summary": "Gets dealExternalReferences via a single related integration",
-        "description": "The identifier of the integration",
+        "description": "Where `id` is the identifier of the integration",
         "operationId": "IntegrationRelated_Get_DealExternalReferences",
         "parameters": [
           {
@@ -11192,7 +11192,7 @@
           "Integrations"
         ],
         "summary": "Gets a dealExternalReferences related to a single integration",
-        "description": "The identifier of the integration",
+        "description": "Where `id` is the identifier of the integration",
         "operationId": "IntegrationRelationship_Get_DealExternalReferences",
         "parameters": [
           {
@@ -11273,7 +11273,7 @@
           "Integrations"
         ],
         "summary": "Adds dealExternalReferences to a to-many relationship with an existing integration",
-        "description": "The identifier of the primary integration resource",
+        "description": "Where `id` is the identifier of the primary integration resource",
         "operationId": "IntegrationRelationship_Post_DealExternalReferences",
         "parameters": [
           {
@@ -11322,7 +11322,7 @@
           "Integrations"
         ],
         "summary": "Performs a complete replacement of a dealExternalReferences relationship on an existing integration",
-        "description": "The identifier of the integration",
+        "description": "Where `id` is the identifier of the integration",
         "operationId": "IntegrationRelationship_Patch_DealExternalReferences",
         "parameters": [
           {
@@ -11371,7 +11371,7 @@
           "Integrations"
         ],
         "summary": "Removes a integration from a to-many relationship with dealExternalReferences",
-        "description": "The identifier of the integration",
+        "description": "Where `id` is the identifier of the integration",
         "operationId": "IntegrationRelationship_Delete_DealExternalReferences",
         "parameters": [
           {

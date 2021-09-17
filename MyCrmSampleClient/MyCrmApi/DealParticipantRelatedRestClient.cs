@@ -48,7 +48,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> The identifier of the participants in a deal. </summary>
+        /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
@@ -71,7 +71,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the participants in a deal. </summary>
+        /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
@@ -109,7 +109,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> The identifier of the participants in a deal. </summary>
+        /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<DealsDocument>> GetDealsAsync(int id, CancellationToken cancellationToken = default)
@@ -132,7 +132,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the participants in a deal. </summary>
+        /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<DealsDocument> GetDeals(int id, CancellationToken cancellationToken = default)

@@ -37,7 +37,7 @@ namespace MyCrmSampleClient.MyCrmApi
             _pipeline = pipeline;
         }
 
-        /// <summary> The identifier of the deal note. </summary>
+        /// <summary> Where `id` is the identifier of the deal note. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DealsDocument>> GetDealsAsync(int id, CancellationToken cancellationToken = default)
@@ -55,7 +55,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the deal note. </summary>
+        /// <summary> Where `id` is the identifier of the deal note. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DealsDocument> GetDeals(int id, CancellationToken cancellationToken = default)

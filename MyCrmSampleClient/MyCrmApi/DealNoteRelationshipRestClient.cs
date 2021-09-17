@@ -48,7 +48,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> The identifier of the deal note. </summary>
+        /// <summary> Where `id` is the identifier of the deal note. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<RelationshipsSingleDocument>> GetDealsAsync(int id, CancellationToken cancellationToken = default)
@@ -71,7 +71,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the deal note. </summary>
+        /// <summary> Where `id` is the identifier of the deal note. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<RelationshipsSingleDocument> GetDeals(int id, CancellationToken cancellationToken = default)
@@ -116,7 +116,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> The identifier of the primary deal note resource. </summary>
+        /// <summary> Where `id` is the identifier of the primary deal note resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,7 +135,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the primary deal note resource. </summary>
+        /// <summary> Where `id` is the identifier of the primary deal note resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -176,7 +176,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> The identifier of the deal note. </summary>
+        /// <summary> Where `id` is the identifier of the deal note. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,7 +195,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the deal note. </summary>
+        /// <summary> Where `id` is the identifier of the deal note. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,7 +229,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> The identifier of the deal note. </summary>
+        /// <summary> Where `id` is the identifier of the deal note. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> DeleteDealsAsync(int id, CancellationToken cancellationToken = default)
@@ -246,7 +246,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the deal note. </summary>
+        /// <summary> Where `id` is the identifier of the deal note. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response DeleteDeals(int id, CancellationToken cancellationToken = default)

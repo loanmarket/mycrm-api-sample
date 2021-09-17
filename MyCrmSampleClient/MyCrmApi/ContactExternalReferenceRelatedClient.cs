@@ -37,7 +37,7 @@ namespace MyCrmSampleClient.MyCrmApi
             _pipeline = pipeline;
         }
 
-        /// <summary> The identifier of the contact external reference. </summary>
+        /// <summary> Where `id` is the identifier of the contact external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
@@ -55,7 +55,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the contact external reference. </summary>
+        /// <summary> Where `id` is the identifier of the contact external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
@@ -73,7 +73,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the contact external reference. </summary>
+        /// <summary> Where `id` is the identifier of the contact external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IntegrationsDocument>> GetIntegrationsAsync(int id, CancellationToken cancellationToken = default)
@@ -91,7 +91,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> The identifier of the contact external reference. </summary>
+        /// <summary> Where `id` is the identifier of the contact external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IntegrationsDocument> GetIntegrations(int id, CancellationToken cancellationToken = default)
