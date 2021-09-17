@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The Gender. </summary>
-    public readonly partial struct Gender : IEquatable<Gender>
+    internal readonly partial struct Gender : IEquatable<Gender>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="Gender"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="Gender"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public Gender(string value)
         {

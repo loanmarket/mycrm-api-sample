@@ -26,6 +26,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Errors = errors;
         }
 
+        /// <summary> Gets the errors. </summary>
         public IReadOnlyList<Error> Errors { get; }
     }
 }

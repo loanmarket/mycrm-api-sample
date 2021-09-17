@@ -53,6 +53,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Creates a lead, including contact and deal attributes. </summary>
         /// <param name="body"> The LeadDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<LeadDocument, LeadPostHeaders>> PostAsync(LeadDocument body = null, CancellationToken cancellationToken = default)
@@ -76,6 +77,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Creates a lead, including contact and deal attributes. </summary>
         /// <param name="body"> The LeadDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<LeadDocument, LeadPostHeaders> Post(LeadDocument body = null, CancellationToken cancellationToken = default)
@@ -113,6 +115,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the lead. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<LeadDocument>> GetAsync(int id, CancellationToken cancellationToken = default)
@@ -135,6 +138,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the lead. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<LeadDocument> Get(int id, CancellationToken cancellationToken = default)

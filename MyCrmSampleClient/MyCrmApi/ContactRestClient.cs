@@ -53,6 +53,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Creates a new contact with attributes, relationships or both. </summary>
         /// <param name="body"> The ContactDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<ContactDocument, ContactPostHeaders>> PostAsync(ContactDocument body = null, CancellationToken cancellationToken = default)
@@ -76,6 +77,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Creates a new contact with attributes, relationships or both. </summary>
         /// <param name="body"> The ContactDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<ContactDocument, ContactPostHeaders> Post(ContactDocument body = null, CancellationToken cancellationToken = default)
@@ -120,6 +122,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The ContactDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -144,6 +147,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The ContactDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -182,6 +186,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ContactDocument>> GetAsync(int id, CancellationToken cancellationToken = default)
@@ -204,6 +209,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ContactDocument> Get(int id, CancellationToken cancellationToken = default)
@@ -240,6 +246,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> DeleteAsync(int id, CancellationToken cancellationToken = default)
@@ -256,6 +263,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response Delete(int id, CancellationToken cancellationToken = default)

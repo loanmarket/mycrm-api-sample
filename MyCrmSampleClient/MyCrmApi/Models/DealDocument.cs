@@ -49,8 +49,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public IReadOnlyDictionary<string, object> Meta { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> JsonApi { get; }
+        /// <summary> Gets the links. </summary>
         public DealDocumentLinks Links { get; }
+        /// <summary> Gets or sets the data. </summary>
         public Deal Data { get; set; }
+        /// <summary> Gets the included. </summary>
         public IReadOnlyList<IncludedResource> Included { get; }
     }
 }

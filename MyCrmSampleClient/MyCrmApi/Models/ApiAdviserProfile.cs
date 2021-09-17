@@ -25,8 +25,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Id = id;
         }
 
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
+        /// <summary> Gets the job title. </summary>
         public string JobTitle { get; }
+        /// <summary> Gets the bio. </summary>
         public string Bio { get; }
+        /// <summary> Gets the adviser. </summary>
+        public Adviser Adviser { get; }
     }
 }

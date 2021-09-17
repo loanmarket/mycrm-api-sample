@@ -22,6 +22,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             ReferrerName = referrerName;
         }
 
+        /// <summary> Gets or sets the referrer name. </summary>
         public string ReferrerName { get; set; }
     }
 }

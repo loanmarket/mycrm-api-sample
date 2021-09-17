@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The LoanStructureImportantDateTypes. </summary>
-    public readonly partial struct LoanStructureImportantDateTypes : IEquatable<LoanStructureImportantDateTypes>
+    internal readonly partial struct LoanStructureImportantDateTypes : IEquatable<LoanStructureImportantDateTypes>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="LoanStructureImportantDateTypes"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoanStructureImportantDateTypes"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LoanStructureImportantDateTypes(string value)
         {

@@ -18,36 +18,77 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of AdviserDetailAttributes. </summary>
-        /// <param name="created"></param>
-        /// <param name="mobile"></param>
+        /// <param name="description"></param>
+        /// <param name="placeOfBirth"></param>
         /// <param name="title"></param>
         /// <param name="firstName"></param>
         /// <param name="middleName"></param>
         /// <param name="lastName"></param>
         /// <param name="preferredName"></param>
+        /// <param name="homePhone"></param>
+        /// <param name="businessPhone"></param>
+        /// <param name="mobilePhone"></param>
         /// <param name="email"></param>
+        /// <param name="birthCountry"></param>
+        /// <param name="fax"></param>
+        /// <param name="workEmail"></param>
+        /// <param name="dateOfBirth"></param>
         /// <param name="updated"></param>
-        internal AdviserDetailAttributes(DateTimeOffset? created, string mobile, string title, string firstName, string middleName, string lastName, string preferredName, string email, DateTimeOffset? updated)
+        /// <param name="created"></param>
+        internal AdviserDetailAttributes(string description, string placeOfBirth, string title, string firstName, string middleName, string lastName, string preferredName, string homePhone, string businessPhone, string mobilePhone, string email, string birthCountry, string fax, string workEmail, DateTimeOffset? dateOfBirth, DateTimeOffset? updated, DateTimeOffset? created)
         {
-            Created = created;
-            Mobile = mobile;
+            Description = description;
+            PlaceOfBirth = placeOfBirth;
             Title = title;
             FirstName = firstName;
             MiddleName = middleName;
             LastName = lastName;
             PreferredName = preferredName;
+            HomePhone = homePhone;
+            BusinessPhone = businessPhone;
+            MobilePhone = mobilePhone;
             Email = email;
+            BirthCountry = birthCountry;
+            Fax = fax;
+            WorkEmail = workEmail;
+            DateOfBirth = dateOfBirth;
             Updated = updated;
+            Created = created;
         }
 
-        public DateTimeOffset? Created { get; }
-        public string Mobile { get; set; }
+        /// <summary> Gets or sets the description. </summary>
+        public string Description { get; set; }
+        /// <summary> Gets or sets the place of birth. </summary>
+        public string PlaceOfBirth { get; set; }
+        /// <summary> Gets or sets the title. </summary>
         public string Title { get; set; }
+        /// <summary> Gets or sets the first name. </summary>
         public string FirstName { get; set; }
+        /// <summary> Gets or sets the middle name. </summary>
         public string MiddleName { get; set; }
+        /// <summary> Gets or sets the last name. </summary>
         public string LastName { get; set; }
+        /// <summary> Gets or sets the preferred name. </summary>
         public string PreferredName { get; set; }
+        /// <summary> Gets or sets the home phone. </summary>
+        public string HomePhone { get; set; }
+        /// <summary> Gets or sets the business phone. </summary>
+        public string BusinessPhone { get; set; }
+        /// <summary> Gets or sets the mobile phone. </summary>
+        public string MobilePhone { get; set; }
+        /// <summary> Gets or sets the email. </summary>
         public string Email { get; set; }
+        /// <summary> Gets or sets the birth country. </summary>
+        public string BirthCountry { get; set; }
+        /// <summary> Gets or sets the fax. </summary>
+        public string Fax { get; set; }
+        /// <summary> Gets or sets the work email. </summary>
+        public string WorkEmail { get; set; }
+        /// <summary> Gets or sets the date of birth. </summary>
+        public DateTimeOffset? DateOfBirth { get; set; }
+        /// <summary> Gets the updated. </summary>
         public DateTimeOffset? Updated { get; }
+        /// <summary> Gets the created. </summary>
+        public DateTimeOffset? Created { get; }
     }
 }

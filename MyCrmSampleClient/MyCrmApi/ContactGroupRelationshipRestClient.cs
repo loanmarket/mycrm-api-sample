@@ -48,6 +48,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<RelationshipsMultipleDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
@@ -70,6 +71,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<RelationshipsMultipleDocument> GetContacts(int id, CancellationToken cancellationToken = default)
@@ -114,6 +116,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +135,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -172,6 +176,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -190,6 +195,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -223,6 +229,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> DeleteContactsAsync(int id, CancellationToken cancellationToken = default)
@@ -239,6 +246,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response DeleteContacts(int id, CancellationToken cancellationToken = default)
@@ -270,6 +278,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<RelationshipsSingleDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
@@ -292,6 +301,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<RelationshipsSingleDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)
@@ -336,6 +346,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -354,6 +365,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -394,6 +406,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -412,6 +425,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -445,6 +459,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> DeleteAdvisersAsync(int id, CancellationToken cancellationToken = default)
@@ -461,6 +476,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response DeleteAdvisers(int id, CancellationToken cancellationToken = default)
@@ -492,6 +508,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<RelationshipsSingleDocument>> GetReferrerOrganizationsAsync(int id, CancellationToken cancellationToken = default)
@@ -514,6 +531,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<RelationshipsSingleDocument> GetReferrerOrganizations(int id, CancellationToken cancellationToken = default)
@@ -558,6 +576,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -576,6 +595,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -616,6 +636,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -634,6 +655,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -667,6 +689,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> DeleteReferrerOrganizationsAsync(int id, CancellationToken cancellationToken = default)
@@ -683,6 +706,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response DeleteReferrerOrganizations(int id, CancellationToken cancellationToken = default)
@@ -714,6 +738,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<RelationshipsSingleDocument>> GetReferrersAsync(int id, CancellationToken cancellationToken = default)
@@ -736,6 +761,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<RelationshipsSingleDocument> GetReferrers(int id, CancellationToken cancellationToken = default)
@@ -780,6 +806,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -798,6 +825,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -838,6 +866,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -856,6 +885,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -889,6 +919,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> DeleteReferrersAsync(int id, CancellationToken cancellationToken = default)
@@ -905,6 +936,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response DeleteReferrers(int id, CancellationToken cancellationToken = default)

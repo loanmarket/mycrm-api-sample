@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +22,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<double?> interestRate = default;
             Optional<int?> rateTypePeriodMonths = default;
             Optional<double?> paymentAmount = default;
-            Optional<IReadOnlyList<SplitDates>> dates = default;
+            Optional<DateTimeOffset?> fixedRateStartDate = default;
+            Optional<DateTimeOffset?> fixedRateEndDate = default;
+            Optional<DateTimeOffset?> interestOnlyStartDate = default;
+            Optional<DateTimeOffset?> interestOnlyEndDate = default;
+            Optional<DateTimeOffset?> repaymentHolidayStartDate = default;
+            Optional<DateTimeOffset?> repaymentHolidayEndDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loanTermYears"))
@@ -95,23 +100,68 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     paymentAmount = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("dates"))
+                if (property.NameEquals("fixedRateStartDate"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dates = null;
+                        fixedRateStartDate = null;
                         continue;
                     }
-                    List<SplitDates> array = new List<SplitDates>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    fixedRateStartDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("fixedRateEndDate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(SplitDates.DeserializeSplitDates(item));
+                        fixedRateEndDate = null;
+                        continue;
                     }
-                    dates = array;
+                    fixedRateEndDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("interestOnlyStartDate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        interestOnlyStartDate = null;
+                        continue;
+                    }
+                    interestOnlyStartDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("interestOnlyEndDate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        interestOnlyEndDate = null;
+                        continue;
+                    }
+                    interestOnlyEndDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("repaymentHolidayStartDate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        repaymentHolidayStartDate = null;
+                        continue;
+                    }
+                    repaymentHolidayStartDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("repaymentHolidayEndDate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        repaymentHolidayEndDate = null;
+                        continue;
+                    }
+                    repaymentHolidayEndDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new Split(Optional.ToNullable(loanTermYears), rateType.Value, Optional.ToNullable(loanStructureType), Optional.ToNullable(amount), Optional.ToNullable(interestRate), Optional.ToNullable(rateTypePeriodMonths), Optional.ToNullable(paymentAmount), Optional.ToList(dates));
+            return new Split(Optional.ToNullable(loanTermYears), rateType.Value, Optional.ToNullable(loanStructureType), Optional.ToNullable(amount), Optional.ToNullable(interestRate), Optional.ToNullable(rateTypePeriodMonths), Optional.ToNullable(paymentAmount), Optional.ToNullable(fixedRateStartDate), Optional.ToNullable(fixedRateEndDate), Optional.ToNullable(interestOnlyStartDate), Optional.ToNullable(interestOnlyEndDate), Optional.ToNullable(repaymentHolidayStartDate), Optional.ToNullable(repaymentHolidayEndDate));
         }
     }
 }

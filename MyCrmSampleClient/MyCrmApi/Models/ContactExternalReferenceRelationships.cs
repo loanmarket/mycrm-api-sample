@@ -24,7 +24,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Contact = contact;
         }
 
+        /// <summary> Gets or sets the integration. </summary>
         public RelationshipsSingleDocument Integration { get; set; }
+        /// <summary> Gets or sets the contact. </summary>
         public RelationshipsSingleDocument Contact { get; set; }
     }
 }

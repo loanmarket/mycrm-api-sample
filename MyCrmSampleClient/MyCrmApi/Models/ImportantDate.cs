@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The ImportantDate. </summary>
-    public readonly partial struct ImportantDate : IEquatable<ImportantDate>
+    internal readonly partial struct ImportantDate : IEquatable<ImportantDate>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ImportantDate"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportantDate"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImportantDate(string value)
         {

@@ -18,16 +18,27 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of AdviserRelationships. </summary>
         /// <param name="adviserDetails"></param>
         /// <param name="organisation"></param>
+        /// <param name="apiFamilySocialMedia"></param>
+        /// <param name="apiFamilyLeadsProfile"></param>
         /// <param name="contactGroups"></param>
-        internal AdviserRelationships(RelationshipsSingleDocument adviserDetails, RelationshipsSingleDocument organisation, RelationshipsMultipleDocument contactGroups)
+        internal AdviserRelationships(RelationshipsSingleDocument adviserDetails, RelationshipsSingleDocument organisation, RelationshipsSingleDocument apiFamilySocialMedia, RelationshipsSingleDocument apiFamilyLeadsProfile, RelationshipsMultipleDocument contactGroups)
         {
             AdviserDetails = adviserDetails;
             Organisation = organisation;
+            ApiFamilySocialMedia = apiFamilySocialMedia;
+            ApiFamilyLeadsProfile = apiFamilyLeadsProfile;
             ContactGroups = contactGroups;
         }
 
+        /// <summary> Gets or sets the adviser details. </summary>
         public RelationshipsSingleDocument AdviserDetails { get; set; }
+        /// <summary> Gets or sets the organisation. </summary>
         public RelationshipsSingleDocument Organisation { get; set; }
+        /// <summary> Gets or sets the api family social media. </summary>
+        public RelationshipsSingleDocument ApiFamilySocialMedia { get; set; }
+        /// <summary> Gets or sets the api family leads profile. </summary>
+        public RelationshipsSingleDocument ApiFamilyLeadsProfile { get; set; }
+        /// <summary> Gets or sets the contact groups. </summary>
         public RelationshipsMultipleDocument ContactGroups { get; set; }
     }
 }

@@ -28,9 +28,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Referrer = referrer;
         }
 
+        /// <summary> Gets or sets the contacts. </summary>
         public RelationshipsMultipleDocument Contacts { get; set; }
+        /// <summary> Gets or sets the adviser. </summary>
         public RelationshipsSingleDocument Adviser { get; set; }
+        /// <summary> Gets or sets the referrer organization. </summary>
         public RelationshipsSingleDocument ReferrerOrganization { get; set; }
+        /// <summary> Gets or sets the referrer. </summary>
         public RelationshipsSingleDocument Referrer { get; set; }
     }
 }

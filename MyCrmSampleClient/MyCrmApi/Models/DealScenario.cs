@@ -38,7 +38,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Any object. </summary>
         public object Attributes { get; set; }
+        /// <summary> Gets or sets the relationships. </summary>
         public DealScenarioRelationships Relationships { get; set; }
+        /// <summary> Gets the links. </summary>
         public DealScenarioLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }

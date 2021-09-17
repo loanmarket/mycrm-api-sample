@@ -16,18 +16,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DateType))
-            {
-                writer.WritePropertyName("dateType");
-                writer.WriteStringValue(DateType.Value.ToString());
-            }
             writer.WriteEndObject();
         }
 
         internal static DealImportantDateAttributes DeserializeDealImportantDateAttributes(JsonElement element)
         {
             Optional<DateTimeOffset?> date = default;
-            Optional<ImportantDate> dateType = default;
+            Optional<DealImportantDateAttributesDateType> dateType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("date"))
@@ -47,7 +42,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dateType = new ImportantDate(property.Value.GetString());
+                    dateType = new DealImportantDateAttributesDateType(property.Value.GetString());
                     continue;
                 }
             }

@@ -15,7 +15,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="LoanStructureType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoanStructureType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LoanStructureType(string value)
         {

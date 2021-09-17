@@ -46,7 +46,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="sourceSystemUrl"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
-        internal LeadAttributes(DateTimeOffset? dateOfBirth, Title? title, string firstName, string preferredName, string lastName, string email, string mobile, Gender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, ClientAddressType? addressType, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, string customStatusName, SystemStatus? dealStatus)
+        internal LeadAttributes(DateTimeOffset? dateOfBirth, LeadAttributesTitle? title, string firstName, string preferredName, string lastName, string email, string mobile, LeadAttributesGender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, LeadAttributesAddressType? addressType, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, string customStatusName, LeadAttributesDealStatus? dealStatus)
         {
             DateOfBirth = dateOfBirth;
             Title = title;
@@ -78,33 +78,61 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             DealStatus = dealStatus;
         }
 
+        /// <summary> Gets or sets the date of birth. </summary>
         public DateTimeOffset? DateOfBirth { get; set; }
-        public Title? Title { get; set; }
+        /// <summary> Gets or sets the title. </summary>
+        public LeadAttributesTitle? Title { get; set; }
+        /// <summary> Gets or sets the first name. </summary>
         public string FirstName { get; set; }
+        /// <summary> Gets or sets the preferred name. </summary>
         public string PreferredName { get; set; }
+        /// <summary> Gets or sets the last name. </summary>
         public string LastName { get; set; }
+        /// <summary> Gets or sets the email. </summary>
         public string Email { get; set; }
+        /// <summary> Gets or sets the mobile. </summary>
         public string Mobile { get; set; }
-        public Gender? Gender { get; set; }
+        /// <summary> Gets or sets the gender. </summary>
+        public LeadAttributesGender? Gender { get; set; }
+        /// <summary> Gets or sets the has marketing consent. </summary>
         public bool? HasMarketingConsent { get; set; }
+        /// <summary> Gets or sets the is guarantor. </summary>
         public bool? IsGuarantor { get; set; }
+        /// <summary> Gets or sets the is dependant. </summary>
         public bool? IsDependant { get; set; }
+        /// <summary> Gets or sets the is primary. </summary>
         public bool? IsPrimary { get; set; }
+        /// <summary> Gets or sets the street address. </summary>
         public string StreetAddress { get; set; }
+        /// <summary> Gets or sets the suburb. </summary>
         public string Suburb { get; set; }
+        /// <summary> Gets or sets the state. </summary>
         public string State { get; set; }
+        /// <summary> Gets or sets the post code. </summary>
         public string PostCode { get; set; }
+        /// <summary> Gets or sets the country. </summary>
         public string Country { get; set; }
-        public ClientAddressType? AddressType { get; set; }
+        /// <summary> Gets or sets the address type. </summary>
+        public LeadAttributesAddressType? AddressType { get; set; }
+        /// <summary> Gets or sets the note title. </summary>
         public string NoteTitle { get; set; }
+        /// <summary> Gets or sets the note details. </summary>
         public string NoteDetails { get; set; }
+        /// <summary> Gets or sets the utm source. </summary>
         public string UtmSource { get; set; }
+        /// <summary> Gets or sets the utm medium. </summary>
         public string UtmMedium { get; set; }
+        /// <summary> Gets or sets the utm campaign. </summary>
         public string UtmCampaign { get; set; }
+        /// <summary> Gets or sets the utm term. </summary>
         public string UtmTerm { get; set; }
+        /// <summary> Gets or sets the utm content. </summary>
         public string UtmContent { get; set; }
+        /// <summary> Gets or sets the source system url. </summary>
         public string SourceSystemUrl { get; set; }
+        /// <summary> Gets the custom status name. </summary>
         public string CustomStatusName { get; }
-        public SystemStatus? DealStatus { get; set; }
+        /// <summary> Gets the deal status. </summary>
+        public LeadAttributesDealStatus? DealStatus { get; }
     }
 }

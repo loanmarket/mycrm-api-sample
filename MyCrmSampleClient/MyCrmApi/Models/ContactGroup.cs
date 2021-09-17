@@ -36,8 +36,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Type = type ?? "contact-groups";
         }
 
+        /// <summary> Gets or sets the attributes. </summary>
         public ContactGroupAttributes Attributes { get; set; }
+        /// <summary> Gets or sets the relationships. </summary>
         public ContactGroupRelationships Relationships { get; set; }
+        /// <summary> Gets the links. </summary>
         public ContactGroupLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }

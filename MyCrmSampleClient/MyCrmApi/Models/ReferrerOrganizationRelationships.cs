@@ -22,6 +22,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             ContactGroups = contactGroups;
         }
 
+        /// <summary> Gets or sets the contact groups. </summary>
         public RelationshipsMultipleDocument ContactGroups { get; set; }
     }
 }

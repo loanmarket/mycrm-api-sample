@@ -22,6 +22,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Self = self;
         }
 
+        /// <summary> Gets the self. </summary>
         public string Self { get; }
     }
 }

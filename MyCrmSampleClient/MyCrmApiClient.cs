@@ -3,8 +3,8 @@ using MyCrmSampleClient.MyCrmApi;
 
 namespace MyCrmSampleClient
 {
-    // ls -1 *Client.cs | grep -v RestClient | sed 's/^\(.*\)\.cs$/        public \1Client \1 { get; }/'
-    // ls -1 *Client.cs | grep -v RestClient | sed 's/^\(.*\)\.cs$/            \1 = new \1Client(ClientDiagnostics, Pipeline, options.Endpoint);/'
+    // ls -1 *Client.cs | grep -v RestClient | sed 's/^\(.*\)Client\.cs$/        public \1Client \1 { get; }/'
+    // ls -1 *Client.cs | grep -v RestClient | sed 's/^\(.*\)Client\.cs$/            \1 = new \1Client(ClientDiagnostics, Pipeline, options.Endpoint);/'
     internal class MyCrmApiClient
     {
         private HttpPipeline Pipeline { get; }
@@ -59,6 +59,7 @@ namespace MyCrmSampleClient
         {
             Pipeline = options.Build(credential, options);
             ClientDiagnostics = new ClientDiagnostics(options);
+            
             Adviser = new AdviserClient(ClientDiagnostics, Pipeline, options.Endpoint);
             AdviserDetail = new AdviserDetailClient(ClientDiagnostics, Pipeline, options.Endpoint);
             AdviserDetailRelated = new AdviserDetailRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);

@@ -23,6 +23,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of DealAttributes. </summary>
         /// <param name="updated"></param>
         /// <param name="created"></param>
+        /// <param name="dates"></param>
+        /// <param name="totalLoanAmount"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealType"></param>
         /// <param name="name"></param>
@@ -30,10 +32,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="opportunity"></param>
         /// <param name="splits"></param>
         /// <param name="lenderName"></param>
-        internal DealAttributes(DateTimeOffset? updated, DateTimeOffset? created, string customStatusName, DealType? dealType, string name, SystemStatus? dealStatus, Opportunity opportunity, IReadOnlyList<Split> splits, string lenderName)
+        internal DealAttributes(DateTimeOffset? updated, DateTimeOffset? created, ImportantDatesSet dates, double? totalLoanAmount, string customStatusName, DealAttributesDealType? dealType, string name, DealAttributesDealStatus? dealStatus, Opportunity opportunity, IReadOnlyList<Split> splits, string lenderName)
         {
             Updated = updated;
             Created = created;
+            Dates = dates;
+            TotalLoanAmount = totalLoanAmount;
             CustomStatusName = customStatusName;
             DealType = dealType;
             Name = name;
@@ -43,14 +47,27 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             LenderName = lenderName;
         }
 
+        /// <summary> Gets the updated. </summary>
         public DateTimeOffset? Updated { get; }
+        /// <summary> Gets the created. </summary>
         public DateTimeOffset? Created { get; }
+        /// <summary> Gets or sets the dates. </summary>
+        public ImportantDatesSet Dates { get; set; }
+        /// <summary> Gets the total loan amount. </summary>
+        public double? TotalLoanAmount { get; }
+        /// <summary> Gets the custom status name. </summary>
         public string CustomStatusName { get; }
-        public DealType? DealType { get; set; }
+        /// <summary> Gets or sets the deal type. </summary>
+        public DealAttributesDealType? DealType { get; set; }
+        /// <summary> Gets or sets the name. </summary>
         public string Name { get; set; }
-        public SystemStatus? DealStatus { get; set; }
+        /// <summary> Gets the deal status. </summary>
+        public DealAttributesDealStatus? DealStatus { get; }
+        /// <summary> Gets or sets the opportunity. </summary>
         public Opportunity Opportunity { get; set; }
+        /// <summary> Gets the splits. </summary>
         public IReadOnlyList<Split> Splits { get; }
+        /// <summary> Gets the lender name. </summary>
         public string LenderName { get; }
     }
 }

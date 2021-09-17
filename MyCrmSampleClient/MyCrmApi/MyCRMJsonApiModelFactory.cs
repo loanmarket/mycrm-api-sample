@@ -60,12 +60,22 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of AdviserAttributes. </summary>
+        /// <param name="googlePlaces"></param>
         /// <param name="created"></param>
+        /// <param name="bio"></param>
+        /// <param name="jobTitle"></param>
         /// <param name="email"></param>
+        /// <param name="skype"></param>
+        /// <param name="facebook"></param>
+        /// <param name="linkedIn"></param>
+        /// <param name="twitter"></param>
+        /// <param name="youtubeFeatured"></param>
+        /// <param name="calendly"></param>
+        /// <param name="youtubeChannel"></param>
         /// <returns> A new <see cref="Models.AdviserAttributes"/> instance for mocking. </returns>
-        public static AdviserAttributes AdviserAttributes(DateTimeOffset? created = null, string email = null)
+        public static AdviserAttributes AdviserAttributes(string googlePlaces = null, DateTimeOffset? created = null, string bio = null, string jobTitle = null, string email = null, string skype = null, string facebook = null, string linkedIn = null, string twitter = null, string youtubeFeatured = null, string calendly = null, string youtubeChannel = null)
         {
-            return new AdviserAttributes(created, email);
+            return new AdviserAttributes(googlePlaces, created, bio, jobTitle, email, skype, facebook, linkedIn, twitter, youtubeFeatured, calendly, youtubeChannel);
         }
 
         /// <summary> Initializes a new instance of RelationshipsSingleDocument. </summary>
@@ -159,19 +169,27 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of AdviserDetailAttributes. </summary>
-        /// <param name="created"></param>
-        /// <param name="mobile"></param>
+        /// <param name="description"></param>
+        /// <param name="placeOfBirth"></param>
         /// <param name="title"></param>
         /// <param name="firstName"></param>
         /// <param name="middleName"></param>
         /// <param name="lastName"></param>
         /// <param name="preferredName"></param>
+        /// <param name="homePhone"></param>
+        /// <param name="businessPhone"></param>
+        /// <param name="mobilePhone"></param>
         /// <param name="email"></param>
+        /// <param name="birthCountry"></param>
+        /// <param name="fax"></param>
+        /// <param name="workEmail"></param>
+        /// <param name="dateOfBirth"></param>
         /// <param name="updated"></param>
+        /// <param name="created"></param>
         /// <returns> A new <see cref="Models.AdviserDetailAttributes"/> instance for mocking. </returns>
-        public static AdviserDetailAttributes AdviserDetailAttributes(DateTimeOffset? created = null, string mobile = null, string title = null, string firstName = null, string middleName = null, string lastName = null, string preferredName = null, string email = null, DateTimeOffset? updated = null)
+        public static AdviserDetailAttributes AdviserDetailAttributes(string description = null, string placeOfBirth = null, string title = null, string firstName = null, string middleName = null, string lastName = null, string preferredName = null, string homePhone = null, string businessPhone = null, string mobilePhone = null, string email = null, string birthCountry = null, string fax = null, string workEmail = null, DateTimeOffset? dateOfBirth = null, DateTimeOffset? updated = null, DateTimeOffset? created = null)
         {
-            return new AdviserDetailAttributes(created, mobile, title, firstName, middleName, lastName, preferredName, email, updated);
+            return new AdviserDetailAttributes(description, placeOfBirth, title, firstName, middleName, lastName, preferredName, homePhone, businessPhone, mobilePhone, email, birthCountry, fax, workEmail, dateOfBirth, updated, created);
         }
 
         /// <summary> Initializes a new instance of AdviserDetailsDocument. </summary>
@@ -446,6 +464,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of DealAttributes. </summary>
         /// <param name="updated"></param>
         /// <param name="created"></param>
+        /// <param name="dates"></param>
+        /// <param name="totalLoanAmount"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealType"></param>
         /// <param name="name"></param>
@@ -454,11 +474,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="splits"></param>
         /// <param name="lenderName"></param>
         /// <returns> A new <see cref="Models.DealAttributes"/> instance for mocking. </returns>
-        public static DealAttributes DealAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, string customStatusName = null, DealType? dealType = null, string name = null, SystemStatus? dealStatus = null, Opportunity opportunity = null, IEnumerable<Split> splits = null, string lenderName = null)
+        public static DealAttributes DealAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, ImportantDatesSet dates = null, double? totalLoanAmount = null, string customStatusName = null, DealAttributesDealType? dealType = null, string name = null, DealAttributesDealStatus? dealStatus = null, Opportunity opportunity = null, IEnumerable<Split> splits = null, string lenderName = null)
         {
             splits ??= new List<Split>();
 
-            return new DealAttributes(updated, created, customStatusName, dealType, name, dealStatus, opportunity, splits?.ToList(), lenderName);
+            return new DealAttributes(updated, created, dates, totalLoanAmount, customStatusName, dealType, name, dealStatus, opportunity, splits?.ToList(), lenderName);
         }
 
         /// <summary> Initializes a new instance of Split. </summary>
@@ -469,23 +489,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="interestRate"></param>
         /// <param name="rateTypePeriodMonths"></param>
         /// <param name="paymentAmount"></param>
-        /// <param name="dates"></param>
+        /// <param name="fixedRateStartDate"></param>
+        /// <param name="fixedRateEndDate"></param>
+        /// <param name="interestOnlyStartDate"></param>
+        /// <param name="interestOnlyEndDate"></param>
+        /// <param name="repaymentHolidayStartDate"></param>
+        /// <param name="repaymentHolidayEndDate"></param>
         /// <returns> A new <see cref="Models.Split"/> instance for mocking. </returns>
-        public static Split Split(double? loanTermYears = null, string rateType = null, LoanStructureType? loanStructureType = null, double? amount = null, double? interestRate = null, int? rateTypePeriodMonths = null, double? paymentAmount = null, IEnumerable<SplitDates> dates = null)
+        public static Split Split(double? loanTermYears = null, string rateType = null, LoanStructureType? loanStructureType = null, double? amount = null, double? interestRate = null, int? rateTypePeriodMonths = null, double? paymentAmount = null, DateTimeOffset? fixedRateStartDate = null, DateTimeOffset? fixedRateEndDate = null, DateTimeOffset? interestOnlyStartDate = null, DateTimeOffset? interestOnlyEndDate = null, DateTimeOffset? repaymentHolidayStartDate = null, DateTimeOffset? repaymentHolidayEndDate = null)
         {
-            dates ??= new List<SplitDates>();
-
-            return new Split(loanTermYears, rateType, loanStructureType, amount, interestRate, rateTypePeriodMonths, paymentAmount, dates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SplitDates. </summary>
-        /// <param name="dateType"></param>
-        /// <param name="startDate"></param>
-        /// <param name="finishDate"></param>
-        /// <returns> A new <see cref="Models.SplitDates"/> instance for mocking. </returns>
-        public static SplitDates SplitDates(LoanStructureImportantDateTypes? dateType = null, DateTimeOffset? startDate = null, DateTimeOffset? finishDate = null)
-        {
-            return new SplitDates(dateType, startDate, finishDate);
+            return new Split(loanTermYears, rateType, loanStructureType, amount, interestRate, rateTypePeriodMonths, paymentAmount, fixedRateStartDate, fixedRateEndDate, interestOnlyStartDate, interestOnlyEndDate, repaymentHolidayStartDate, repaymentHolidayEndDate);
         }
 
         /// <summary> Initializes a new instance of DealExternalReferencesDocument. </summary>
@@ -764,7 +777,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
         /// <returns> A new <see cref="Models.LeadAttributes"/> instance for mocking. </returns>
-        public static LeadAttributes LeadAttributes(DateTimeOffset? dateOfBirth = null, Title? title = null, string firstName = null, string preferredName = null, string lastName = null, string email = null, string mobile = null, Gender? gender = null, bool? hasMarketingConsent = null, bool? isGuarantor = null, bool? isDependant = null, bool? isPrimary = null, string streetAddress = null, string suburb = null, string state = null, string postCode = null, string country = null, ClientAddressType? addressType = null, string noteTitle = null, string noteDetails = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, string sourceSystemUrl = null, string customStatusName = null, SystemStatus? dealStatus = null)
+        public static LeadAttributes LeadAttributes(DateTimeOffset? dateOfBirth = null, LeadAttributesTitle? title = null, string firstName = null, string preferredName = null, string lastName = null, string email = null, string mobile = null, LeadAttributesGender? gender = null, bool? hasMarketingConsent = null, bool? isGuarantor = null, bool? isDependant = null, bool? isPrimary = null, string streetAddress = null, string suburb = null, string state = null, string postCode = null, string country = null, LeadAttributesAddressType? addressType = null, string noteTitle = null, string noteDetails = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, string sourceSystemUrl = null, string customStatusName = null, LeadAttributesDealStatus? dealStatus = null)
         {
             return new LeadAttributes(dateOfBirth, title, firstName, preferredName, lastName, email, mobile, gender, hasMarketingConsent, isGuarantor, isDependant, isPrimary, streetAddress, suburb, state, postCode, country, addressType, noteTitle, noteDetails, utmSource, utmMedium, utmCampaign, utmTerm, utmContent, sourceSystemUrl, customStatusName, dealStatus);
         }
@@ -980,7 +993,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="postCode"></param>
         /// <param name="state"></param>
         /// <returns> A new <see cref="Models.ContactAddressAttributes"/> instance for mocking. </returns>
-        public static ContactAddressAttributes ContactAddressAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, AddressType? addressType = null, string streetAddress = null, string country = null, string suburb = null, string postCode = null, string state = null)
+        public static ContactAddressAttributes ContactAddressAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, ContactAddressAttributesAddressType? addressType = null, string streetAddress = null, string country = null, string suburb = null, string postCode = null, string state = null)
         {
             return new ContactAddressAttributes(updated, created, addressType, streetAddress, country, suburb, postCode, state);
         }
@@ -1021,7 +1034,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="date"></param>
         /// <param name="dateType"></param>
         /// <returns> A new <see cref="Models.DealImportantDateAttributes"/> instance for mocking. </returns>
-        public static DealImportantDateAttributes DealImportantDateAttributes(DateTimeOffset? date = null, ImportantDate? dateType = null)
+        public static DealImportantDateAttributes DealImportantDateAttributes(DateTimeOffset? date = null, DealImportantDateAttributesDateType? dateType = null)
         {
             return new DealImportantDateAttributes(date, dateType);
         }
@@ -1066,12 +1079,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="amount"></param>
         /// <param name="rateType"></param>
         /// <param name="paymentAmount"></param>
-        /// <param name="fixedRateExpiryDate"></param>
+        /// <param name="interestOnlyExpiryDate"></param>
         /// <param name="loanTermYears"></param>
+        /// <param name="fixedRateExpiryDate"></param>
         /// <returns> A new <see cref="Models.DealStructureAttributes"/> instance for mocking. </returns>
-        public static DealStructureAttributes DealStructureAttributes(DateTimeOffset? fixedRateBeginDate = null, int? rateTypePeriodMonths = null, LoanStructureType? loanStructureType = null, double? interestRate = null, double? amount = null, string rateType = null, double? paymentAmount = null, DateTimeOffset? fixedRateExpiryDate = null, double? loanTermYears = null)
+        public static DealStructureAttributes DealStructureAttributes(DateTimeOffset? fixedRateBeginDate = null, int? rateTypePeriodMonths = null, DealStructureAttributesLoanStructureType? loanStructureType = null, double? interestRate = null, double? amount = null, string rateType = null, double? paymentAmount = null, DateTimeOffset? interestOnlyExpiryDate = null, double? loanTermYears = null, DateTimeOffset? fixedRateExpiryDate = null)
         {
-            return new DealStructureAttributes(fixedRateBeginDate, rateTypePeriodMonths, loanStructureType, interestRate, amount, rateType, paymentAmount, fixedRateExpiryDate, loanTermYears);
+            return new DealStructureAttributes(fixedRateBeginDate, rateTypePeriodMonths, loanStructureType, interestRate, amount, rateType, paymentAmount, interestOnlyExpiryDate, loanTermYears, fixedRateExpiryDate);
         }
 
         /// <summary> Initializes a new instance of Organisation. </summary>
@@ -1120,7 +1134,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="dateType"></param>
         /// <param name="finishDate"></param>
         /// <returns> A new <see cref="Models.DealStructureImportantDateAttributes"/> instance for mocking. </returns>
-        public static DealStructureImportantDateAttributes DealStructureImportantDateAttributes(DateTimeOffset? startDate = null, LoanStructureImportantDateTypes? dateType = null, DateTimeOffset? finishDate = null)
+        public static DealStructureImportantDateAttributes DealStructureImportantDateAttributes(DateTimeOffset? startDate = null, DealStructureImportantDateAttributesDateType? dateType = null, DateTimeOffset? finishDate = null)
         {
             return new DealStructureImportantDateAttributes(startDate, dateType, finishDate);
         }

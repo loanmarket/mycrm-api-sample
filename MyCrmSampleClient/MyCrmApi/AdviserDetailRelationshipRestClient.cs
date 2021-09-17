@@ -48,6 +48,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Where `id` is the identifier of the set of adviser details.  aka ClientId, aka My Crm ID. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<RelationshipsSingleDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
@@ -70,6 +71,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Where `id` is the identifier of the set of adviser details.  aka ClientId, aka My Crm ID. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<RelationshipsSingleDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)

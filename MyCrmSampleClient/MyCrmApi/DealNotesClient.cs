@@ -38,6 +38,7 @@ namespace MyCrmSampleClient.MyCrmApi
             _pipeline = pipeline;
         }
 
+        /// <summary> Gets a collection of notes on deals. </summary>
         /// <param name="filter"> The ArrayOfString to use. </param>
         /// <param name="sort"> The ArrayOfString to use. </param>
         /// <param name="page"> The Pagination to use. </param>
@@ -58,6 +59,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Gets a collection of notes on deals. </summary>
         /// <param name="filter"> The ArrayOfString to use. </param>
         /// <param name="sort"> The ArrayOfString to use. </param>
         /// <param name="page"> The Pagination to use. </param>

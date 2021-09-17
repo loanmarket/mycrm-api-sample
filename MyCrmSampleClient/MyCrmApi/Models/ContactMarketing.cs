@@ -36,9 +36,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Type = type ?? "contact-marketing";
         }
 
+        /// <summary> Gets or sets the attributes. </summary>
         public ContactMarketingAttributes Attributes { get; set; }
         /// <summary> Any object. </summary>
         public object Relationships { get; set; }
+        /// <summary> Gets the links. </summary>
         public ContactMarketingLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }

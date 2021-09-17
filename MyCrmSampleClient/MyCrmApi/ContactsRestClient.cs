@@ -63,6 +63,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
+        /// <summary> Gets a collection of contacts. </summary>
         /// <param name="filter"> The ArrayOfString to use. </param>
         /// <param name="sort"> The ArrayOfString to use. </param>
         /// <param name="page"> The Pagination to use. </param>
@@ -88,6 +89,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
+        /// <summary> Gets a collection of contacts. </summary>
         /// <param name="filter"> The ArrayOfString to use. </param>
         /// <param name="sort"> The ArrayOfString to use. </param>
         /// <param name="page"> The Pagination to use. </param>

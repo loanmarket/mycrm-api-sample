@@ -5,8 +5,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Core;
+using System;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
@@ -16,7 +15,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of Split. </summary>
         internal Split()
         {
-            Dates = new ChangeTrackingList<SplitDates>();
         }
 
         /// <summary> Initializes a new instance of Split. </summary>
@@ -27,8 +25,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="interestRate"></param>
         /// <param name="rateTypePeriodMonths"></param>
         /// <param name="paymentAmount"></param>
-        /// <param name="dates"></param>
-        internal Split(double? loanTermYears, string rateType, LoanStructureType? loanStructureType, double? amount, double? interestRate, int? rateTypePeriodMonths, double? paymentAmount, IReadOnlyList<SplitDates> dates)
+        /// <param name="fixedRateStartDate"></param>
+        /// <param name="fixedRateEndDate"></param>
+        /// <param name="interestOnlyStartDate"></param>
+        /// <param name="interestOnlyEndDate"></param>
+        /// <param name="repaymentHolidayStartDate"></param>
+        /// <param name="repaymentHolidayEndDate"></param>
+        internal Split(double? loanTermYears, string rateType, LoanStructureType? loanStructureType, double? amount, double? interestRate, int? rateTypePeriodMonths, double? paymentAmount, DateTimeOffset? fixedRateStartDate, DateTimeOffset? fixedRateEndDate, DateTimeOffset? interestOnlyStartDate, DateTimeOffset? interestOnlyEndDate, DateTimeOffset? repaymentHolidayStartDate, DateTimeOffset? repaymentHolidayEndDate)
         {
             LoanTermYears = loanTermYears;
             RateType = rateType;
@@ -37,16 +40,39 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             InterestRate = interestRate;
             RateTypePeriodMonths = rateTypePeriodMonths;
             PaymentAmount = paymentAmount;
-            Dates = dates;
+            FixedRateStartDate = fixedRateStartDate;
+            FixedRateEndDate = fixedRateEndDate;
+            InterestOnlyStartDate = interestOnlyStartDate;
+            InterestOnlyEndDate = interestOnlyEndDate;
+            RepaymentHolidayStartDate = repaymentHolidayStartDate;
+            RepaymentHolidayEndDate = repaymentHolidayEndDate;
         }
 
+        /// <summary> Gets the loan term years. </summary>
         public double? LoanTermYears { get; }
+        /// <summary> Gets the rate type. </summary>
         public string RateType { get; }
+        /// <summary> Gets the loan structure type. </summary>
         public LoanStructureType? LoanStructureType { get; }
+        /// <summary> Gets the amount. </summary>
         public double? Amount { get; }
+        /// <summary> Gets the interest rate. </summary>
         public double? InterestRate { get; }
+        /// <summary> Gets the rate type period months. </summary>
         public int? RateTypePeriodMonths { get; }
+        /// <summary> Gets the payment amount. </summary>
         public double? PaymentAmount { get; }
-        public IReadOnlyList<SplitDates> Dates { get; }
+        /// <summary> Gets the fixed rate start date. </summary>
+        public DateTimeOffset? FixedRateStartDate { get; }
+        /// <summary> Gets the fixed rate end date. </summary>
+        public DateTimeOffset? FixedRateEndDate { get; }
+        /// <summary> Gets the interest only start date. </summary>
+        public DateTimeOffset? InterestOnlyStartDate { get; }
+        /// <summary> Gets the interest only end date. </summary>
+        public DateTimeOffset? InterestOnlyEndDate { get; }
+        /// <summary> Gets the repayment holiday start date. </summary>
+        public DateTimeOffset? RepaymentHolidayStartDate { get; }
+        /// <summary> Gets the repayment holiday end date. </summary>
+        public DateTimeOffset? RepaymentHolidayEndDate { get; }
     }
 }

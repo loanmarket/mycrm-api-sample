@@ -36,8 +36,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Type = type ?? "advisers";
         }
 
+        /// <summary> Gets or sets the attributes. </summary>
         public AdviserAttributes Attributes { get; set; }
+        /// <summary> Gets or sets the relationships. </summary>
         public AdviserRelationships Relationships { get; set; }
+        /// <summary> Gets the links. </summary>
         public AdviserLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }

@@ -15,7 +15,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
         }
 
+        /// <summary> Gets or sets the size. </summary>
         public int? Size { get; set; }
+        /// <summary> Gets or sets the number. </summary>
         public int? Number { get; set; }
     }
 }

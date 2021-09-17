@@ -22,6 +22,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             ContactAddress = contactAddress;
         }
 
+        /// <summary> Gets or sets the contact address. </summary>
         public RelationshipsMultipleDocument ContactAddress { get; set; }
     }
 }

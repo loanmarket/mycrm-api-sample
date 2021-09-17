@@ -24,7 +24,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Deal = deal;
         }
 
+        /// <summary> Gets or sets the integration. </summary>
         public RelationshipsSingleDocument Integration { get; set; }
+        /// <summary> Gets or sets the deal. </summary>
         public RelationshipsSingleDocument Deal { get; set; }
     }
 }

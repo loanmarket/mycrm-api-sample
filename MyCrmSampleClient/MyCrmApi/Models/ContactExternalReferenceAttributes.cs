@@ -22,6 +22,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             ExternalReference = externalReference;
         }
 
+        /// <summary> Gets or sets the external reference. </summary>
         public string ExternalReference { get; set; }
     }
 }

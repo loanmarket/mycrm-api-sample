@@ -17,6 +17,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Dates))
+            {
+                writer.WritePropertyName("dates");
+                writer.WriteObjectValue(Dates);
+            }
             if (Optional.IsDefined(DealType))
             {
                 writer.WritePropertyName("dealType");
@@ -34,11 +39,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("name");
                 }
             }
-            if (Optional.IsDefined(DealStatus))
-            {
-                writer.WritePropertyName("dealStatus");
-                writer.WriteStringValue(DealStatus.Value.ToString());
-            }
             if (Optional.IsDefined(Opportunity))
             {
                 writer.WritePropertyName("opportunity");
@@ -51,10 +51,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<DateTimeOffset?> updated = default;
             Optional<DateTimeOffset?> created = default;
+            Optional<ImportantDatesSet> dates = default;
+            Optional<double?> totalLoanAmount = default;
             Optional<string> customStatusName = default;
-            Optional<DealType> dealType = default;
+            Optional<DealAttributesDealType> dealType = default;
             Optional<string> name = default;
-            Optional<SystemStatus> dealStatus = default;
+            Optional<DealAttributesDealStatus> dealStatus = default;
             Optional<Opportunity> opportunity = default;
             Optional<IReadOnlyList<Split>> splits = default;
             Optional<string> lenderName = default;
@@ -80,6 +82,26 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     created = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("dates"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dates = ImportantDatesSet.DeserializeImportantDatesSet(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("totalLoanAmount"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        totalLoanAmount = null;
+                        continue;
+                    }
+                    totalLoanAmount = property.Value.GetDouble();
+                    continue;
+                }
                 if (property.NameEquals("customStatusName"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -97,7 +119,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dealType = new DealType(property.Value.GetString());
+                    dealType = new DealAttributesDealType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -117,7 +139,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dealStatus = new SystemStatus(property.Value.GetString());
+                    dealStatus = new DealAttributesDealStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("opportunity"))
@@ -156,7 +178,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new DealAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), customStatusName.Value, Optional.ToNullable(dealType), name.Value, Optional.ToNullable(dealStatus), opportunity.Value, Optional.ToList(splits), lenderName.Value);
+            return new DealAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), dates.Value, Optional.ToNullable(totalLoanAmount), customStatusName.Value, Optional.ToNullable(dealType), name.Value, Optional.ToNullable(dealStatus), opportunity.Value, Optional.ToList(splits), lenderName.Value);
         }
     }
 }

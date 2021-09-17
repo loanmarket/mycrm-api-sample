@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The Title. </summary>
-    public readonly partial struct Title : IEquatable<Title>
+    internal readonly partial struct Title : IEquatable<Title>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="Title"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="Title"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public Title(string value)
         {

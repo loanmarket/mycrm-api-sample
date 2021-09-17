@@ -24,7 +24,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Related = related;
         }
 
+        /// <summary> Gets the self. </summary>
         public string Self { get; }
+        /// <summary> Gets the related. </summary>
         public string Related { get; }
     }
 }

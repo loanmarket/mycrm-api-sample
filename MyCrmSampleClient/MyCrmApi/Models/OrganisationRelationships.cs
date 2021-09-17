@@ -24,7 +24,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             ContactCategories = contactCategories;
         }
 
+        /// <summary> Gets or sets the advisers. </summary>
         public RelationshipsMultipleDocument Advisers { get; set; }
+        /// <summary> Gets or sets the contact categories. </summary>
         public RelationshipsMultipleDocument ContactCategories { get; set; }
     }
 }

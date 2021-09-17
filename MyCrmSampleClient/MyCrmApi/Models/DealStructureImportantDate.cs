@@ -36,8 +36,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Type = type ?? "deal-structure-important-dates";
         }
 
+        /// <summary> Gets or sets the attributes. </summary>
         public DealStructureImportantDateAttributes Attributes { get; set; }
+        /// <summary> Gets or sets the relationships. </summary>
         public DealStructureImportantDateRelationships Relationships { get; set; }
+        /// <summary> Gets the links. </summary>
         public DealStructureImportantDateLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }

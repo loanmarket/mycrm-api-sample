@@ -33,9 +33,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Data = data;
         }
 
+        /// <summary> Gets the links. </summary>
         public RelationshipsMultipleDocumentLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }
+        /// <summary> Gets or sets the data. </summary>
         public IList<ResourceIdentifier> Data { get; set; }
     }
 }

@@ -16,18 +16,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DateType))
-            {
-                writer.WritePropertyName("dateType");
-                writer.WriteStringValue(DateType.Value.ToString());
-            }
             writer.WriteEndObject();
         }
 
         internal static DealStructureImportantDateAttributes DeserializeDealStructureImportantDateAttributes(JsonElement element)
         {
             Optional<DateTimeOffset?> startDate = default;
-            Optional<LoanStructureImportantDateTypes> dateType = default;
+            Optional<DealStructureImportantDateAttributesDateType> dateType = default;
             Optional<DateTimeOffset?> finishDate = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +43,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dateType = new LoanStructureImportantDateTypes(property.Value.GetString());
+                    dateType = new DealStructureImportantDateAttributesDateType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("finishDate"))
