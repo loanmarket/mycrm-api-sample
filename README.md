@@ -35,7 +35,7 @@ Go to the [MyCrmSampleClient](./MyCrmSampleClient) folder and edit the [appsetti
         "Url": "",
         "ClientID": "",
         "ClientSecret": "",
-        "Scopes": "api"
+        "Scopes": ""
     },
     "MyCRM": {
         "Url": "",
@@ -46,7 +46,17 @@ Go to the [MyCrmSampleClient](./MyCrmSampleClient) folder and edit the [appsetti
 
 Then run `dotnet run`
 
-The `AdviserContactId` is solely used during maintenance operations (POST, PATCH, DELETE) and is sent as a `UserId` header. The specified identifier must be a member of the broker organisation corresponding to the entity being managed.
+## Data access
+
+Significant differences between application and user access are:
+- Credentials for an application are not issued for a single user. At a minimum, it is issued for an organisation
+- Only records owned by the organisation/user are accessible. Specifically, records shared with a user/organisation you do have access to by a user/organisation that you can't access will not be accessible
+
+The nominated `AdviserContactId` is sent as the `UserId` header with each request.
+
+- During maintenance operations (POST, PATCH, DELETE) they will be treated as the creator/last modified user of the record. For leads as an example, this will result in the lead being allocated to them.
+- In most GET operations the `UserId` header has no impact
+- In some search operations it may limit responses to those linked to the user
 
 ## Understanding Scopes
 
@@ -55,9 +65,11 @@ The `AdviserContactId` is solely used during maintenance operations (POST, PATCH
 Example scopes are:
 
 - `api`: full access to all endpoints
+- `api.read`: read access to all entities by their key (e.g. GET `/jsonapi/contacts/{id}`)
+- `api.seach`: access to query for an entity (e.g. GET `/jsonapi/contacts`)
 - `api.leads`: access to the `/jsonapi/leads` endpoints to create and monitor leads
 - `api.marketing`: access to the `/jsonapi/contact-marketing` endpoints to update marketing consent
 - `api.contacts`: access to the `/jsonapi/contacts` endpoints to manage contacts
-- `api.contacts.read`: access to the GET endpoints under `/jsonapi/contacts`
+- `api.contacts.read`: access to the read endpoints under `/jsonapi/contacts`
 
 You will only be able to access an endpoint if you request an applicable scope, regardless of the scopes available to you.
