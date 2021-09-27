@@ -5568,6 +5568,133 @@
         }
       }
     },
+    "/jsonapi/organisations/{id}": {
+      "get": {
+        "tags": [
+          "Organisations"
+        ],
+        "summary": "Gets a single organisation by id",
+        "description": "Where `id` is the identifier of the organisation. aka OrgId",
+        "operationId": "Organisation_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganisationDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/organisations": {
+      "get": {
+        "tags": [
+          "Organisations"
+        ],
+        "summary": "Gets a collection of organisations",
+        "operationId": "Organisations_Get",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "style": "form",
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "style": "form",
+            "explode": false,
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pagination"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganisationsDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/referrers": {
       "get": {
         "tags": [
@@ -11499,12 +11626,28 @@
             "nullable": true,
             "readOnly": true
           },
+          "myLeadGenActivationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "isMyLeadGenActive": {
+            "type": "boolean",
+            "nullable": true,
+            "readOnly": true
+          },
           "bio": {
             "type": "string",
             "nullable": true,
             "readOnly": true
           },
           "jobTitle": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "Status": {
             "type": "string",
             "nullable": true,
             "readOnly": true
@@ -11540,6 +11683,11 @@
             "readOnly": true
           },
           "calendly": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "myLeadGenerator": {
             "type": "string",
             "nullable": true,
             "readOnly": true
@@ -11836,12 +11984,6 @@
           "organisation": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
-          "apiFamilySocialMedia": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
-          },
-          "apiFamilyLeadsProfile": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
-          },
           "contactGroups": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           }
@@ -11944,24 +12086,6 @@
         },
         "additionalProperties": false
       },
-      "ApiFamilyLeadsProfile": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          },
-          "adviser": {
-            "$ref": "#/components/schemas/Adviser"
-          }
-        },
-        "additionalProperties": false
-      },
       "ApiFamilySocialMedia": {
         "required": [
           "type",
@@ -12008,9 +12132,6 @@
             "type": "string",
             "nullable": true,
             "readOnly": true
-          },
-          "adviser": {
-            "$ref": "#/components/schemas/Adviser"
           }
         },
         "additionalProperties": false
@@ -13054,24 +13175,6 @@
           "contacts"
         ],
         "type": "string"
-      },
-      "CrmContactCategoryUser": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          },
-          "brokerBranding": {
-            "$ref": "#/components/schemas/Organisation"
-          }
-        },
-        "additionalProperties": false
       },
       "Deal": {
         "required": [
@@ -14703,47 +14806,47 @@
         "properties": {
           "settled": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           },
           "lodged": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           },
           "financeClause": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           },
           "notProceeding": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           },
           "approved": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           },
           "preApproved": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           },
           "conditionallyApproved": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           },
           "preApprovedExpiry": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           },
           "estimatedSettled": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           }
         },
@@ -14768,6 +14871,7 @@
           "propertyName": "type",
           "mapping": {
             "contact-address": "#/components/schemas/ContactAddress",
+            "organisation-addresses": "#/components/schemas/OrganisationAddress",
             "high-level-summary": "#/components/schemas/HighLevelSummary",
             "deal-scenario": "#/components/schemas/DealScenario",
             "deal-participants": "#/components/schemas/DealParticipant",
@@ -14780,7 +14884,7 @@
             "deals": "#/components/schemas/Deal",
             "deal-external-references": "#/components/schemas/DealExternalReference",
             "integrations": "#/components/schemas/Integration",
-            "organisation": "#/components/schemas/Organisation",
+            "organisations": "#/components/schemas/Organisation",
             "referrer-organization": "#/components/schemas/ReferrerOrganization",
             "referrer": "#/components/schemas/Referrer",
             "contact-groups": "#/components/schemas/ContactGroup",
@@ -15301,7 +15405,7 @@
         ],
         "properties": {
           "type": {
-            "$ref": "#/components/schemas/OrganisationEntityType"
+            "$ref": "#/components/schemas/OrganisationsEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -15330,11 +15434,182 @@
         },
         "additionalProperties": false
       },
+      "OrganisationAddress": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/OrganisationAddressesEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/OrganisationAddressAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/OrganisationAddressRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrganisationAddressAttributes": {
+        "type": "object",
+        "properties": {
+          "isMailing": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isCustomAddress": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "streetAddress": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "suburb": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "postCode": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "state": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "OrganisationAddressDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/OrganisationAddress"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "OrganisationAddressesDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrganisationAddress"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "OrganisationAddressesEntityType": {
+        "enum": [
+          "organisation-addresses"
+        ],
+        "type": "string"
+      },
+      "OrganisationAddressRelationships": {
+        "type": "object"
+      },
       "OrganisationAttributes": {
         "type": "object",
         "properties": {
-          "email": {
-            "maxLength": 1000,
+          "emailForCommissions": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "primaryBrandColour": {
+            "maxLength": 10,
             "minLength": 0,
             "type": "string",
             "nullable": true,
@@ -15357,6 +15632,53 @@
           "website": {
             "maxLength": 1000,
             "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "companyEmail": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "brandedCategory": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "slug": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "abn": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "acn": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "officeDisplayName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "fax": {
             "type": "string",
             "nullable": true,
             "readOnly": true
@@ -15400,19 +15722,13 @@
           }
         }
       },
-      "OrganisationEntityType": {
-        "enum": [
-          "organisation"
-        ],
-        "type": "string"
-      },
       "OrganisationRelationships": {
         "type": "object",
         "properties": {
           "advisers": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           },
-          "contactCategories": {
+          "addresses": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           }
         }
@@ -15456,6 +15772,12 @@
             "readOnly": true
           }
         }
+      },
+      "OrganisationsEntityType": {
+        "enum": [
+          "organisations"
+        ],
+        "type": "string"
       },
       "Pagination": {
         "type": "object",
@@ -15892,32 +16214,32 @@
           },
           "fixedRateStartDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           },
           "fixedRateEndDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           },
           "interestOnlyStartDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           },
           "interestOnlyEndDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           },
           "repaymentHolidayStartDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           },
           "repaymentHolidayEndDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           }
         },

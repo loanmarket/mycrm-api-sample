@@ -37,7 +37,5 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string YoutubeUrl { get; }
         /// <summary> Gets the twitter url. </summary>
         public string TwitterUrl { get; }
-        /// <summary> Gets the adviser. </summary>
-        public Adviser Adviser { get; }
     }
 }

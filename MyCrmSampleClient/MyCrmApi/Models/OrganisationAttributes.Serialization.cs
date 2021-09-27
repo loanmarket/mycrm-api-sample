@@ -20,20 +20,40 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static OrganisationAttributes DeserializeOrganisationAttributes(JsonElement element)
         {
-            Optional<string> email = default;
+            Optional<string> emailForCommissions = default;
+            Optional<string> primaryBrandColour = default;
             Optional<string> name = default;
             Optional<string> tradingName = default;
             Optional<string> website = default;
+            Optional<string> companyEmail = default;
+            Optional<string> brandedCategory = default;
+            Optional<string> status = default;
+            Optional<string> slug = default;
+            Optional<string> abn = default;
+            Optional<string> acn = default;
+            Optional<string> officeDisplayName = default;
+            Optional<string> phone = default;
+            Optional<string> fax = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("email"))
+                if (property.NameEquals("emailForCommissions"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        email = null;
+                        emailForCommissions = null;
                         continue;
                     }
-                    email = property.Value.GetString();
+                    emailForCommissions = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("primaryBrandColour"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        primaryBrandColour = null;
+                        continue;
+                    }
+                    primaryBrandColour = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -66,8 +86,98 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     website = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("companyEmail"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        companyEmail = null;
+                        continue;
+                    }
+                    companyEmail = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("brandedCategory"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        brandedCategory = null;
+                        continue;
+                    }
+                    brandedCategory = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("status"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        status = null;
+                        continue;
+                    }
+                    status = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("slug"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        slug = null;
+                        continue;
+                    }
+                    slug = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("abn"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        abn = null;
+                        continue;
+                    }
+                    abn = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("acn"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        acn = null;
+                        continue;
+                    }
+                    acn = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("officeDisplayName"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        officeDisplayName = null;
+                        continue;
+                    }
+                    officeDisplayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("phone"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        phone = null;
+                        continue;
+                    }
+                    phone = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fax"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        fax = null;
+                        continue;
+                    }
+                    fax = property.Value.GetString();
+                    continue;
+                }
             }
-            return new OrganisationAttributes(email.Value, name.Value, tradingName.Value, website.Value);
+            return new OrganisationAttributes(emailForCommissions.Value, primaryBrandColour.Value, name.Value, tradingName.Value, website.Value, companyEmail.Value, brandedCategory.Value, status.Value, slug.Value, abn.Value, acn.Value, officeDisplayName.Value, phone.Value, fax.Value);
         }
     }
 }

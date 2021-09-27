@@ -23,8 +23,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<string> googlePlaces = default;
             Optional<DateTimeOffset?> created = default;
+            Optional<DateTimeOffset?> myLeadGenActivationDate = default;
+            Optional<bool?> isMyLeadGenActive = default;
             Optional<string> bio = default;
             Optional<string> jobTitle = default;
+            Optional<string> status = default;
             Optional<string> email = default;
             Optional<string> skype = default;
             Optional<string> facebook = default;
@@ -32,6 +35,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> twitter = default;
             Optional<string> youtubeFeatured = default;
             Optional<string> calendly = default;
+            Optional<string> myLeadGenerator = default;
             Optional<string> youtubeChannel = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,6 +59,26 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     created = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("myLeadGenActivationDate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        myLeadGenActivationDate = null;
+                        continue;
+                    }
+                    myLeadGenActivationDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("isMyLeadGenActive"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        isMyLeadGenActive = null;
+                        continue;
+                    }
+                    isMyLeadGenActive = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("bio"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -73,6 +97,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     jobTitle = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("Status"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        status = null;
+                        continue;
+                    }
+                    status = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("email"))
@@ -145,6 +179,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     calendly = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("myLeadGenerator"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        myLeadGenerator = null;
+                        continue;
+                    }
+                    myLeadGenerator = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("youtubeChannel"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -156,7 +200,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new AdviserAttributes(googlePlaces.Value, Optional.ToNullable(created), bio.Value, jobTitle.Value, email.Value, skype.Value, facebook.Value, linkedIn.Value, twitter.Value, youtubeFeatured.Value, calendly.Value, youtubeChannel.Value);
+            return new AdviserAttributes(googlePlaces.Value, Optional.ToNullable(created), Optional.ToNullable(myLeadGenActivationDate), Optional.ToNullable(isMyLeadGenActive), bio.Value, jobTitle.Value, status.Value, email.Value, skype.Value, facebook.Value, linkedIn.Value, twitter.Value, youtubeFeatured.Value, calendly.Value, myLeadGenerator.Value, youtubeChannel.Value);
         }
     }
 }

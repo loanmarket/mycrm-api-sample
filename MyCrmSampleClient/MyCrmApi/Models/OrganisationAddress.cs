@@ -10,38 +10,38 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    /// <summary> The Organisation. </summary>
-    public partial class Organisation : IncludedResource
+    /// <summary> The OrganisationAddress. </summary>
+    public partial class OrganisationAddress : IncludedResource
     {
-        /// <summary> Initializes a new instance of Organisation. </summary>
-        public Organisation()
+        /// <summary> Initializes a new instance of OrganisationAddress. </summary>
+        public OrganisationAddress()
         {
             Meta = new ChangeTrackingDictionary<string, object>();
-            Type = "organisations";
+            Type = "organisation-addresses";
         }
 
-        /// <summary> Initializes a new instance of Organisation. </summary>
+        /// <summary> Initializes a new instance of OrganisationAddress. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="attributes"></param>
-        /// <param name="relationships"></param>
+        /// <param name="relationships"> Any object. </param>
         /// <param name="links"></param>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        internal Organisation(string type, string id, OrganisationAttributes attributes, OrganisationRelationships relationships, OrganisationLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
+        internal OrganisationAddress(string type, string id, OrganisationAddressAttributes attributes, object relationships, OrganisationAddressLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
         {
             Attributes = attributes;
             Relationships = relationships;
             Links = links;
             Meta = meta;
-            Type = type ?? "organisations";
+            Type = type ?? "organisation-addresses";
         }
 
         /// <summary> Gets or sets the attributes. </summary>
-        public OrganisationAttributes Attributes { get; set; }
-        /// <summary> Gets or sets the relationships. </summary>
-        public OrganisationRelationships Relationships { get; set; }
+        public OrganisationAddressAttributes Attributes { get; set; }
+        /// <summary> Any object. </summary>
+        public object Relationships { get; set; }
         /// <summary> Gets the links. </summary>
-        public OrganisationLinks Links { get; }
+        public OrganisationAddressLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }
     }

@@ -56,7 +56,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     case "high-level-summary": return HighLevelSummary.DeserializeHighLevelSummary(element);
                     case "integrations": return Integration.DeserializeIntegration(element);
                     case "leads": return Lead.DeserializeLead(element);
-                    case "organisation": return Organisation.DeserializeOrganisation(element);
+                    case "organisation-addresses": return OrganisationAddress.DeserializeOrganisationAddress(element);
+                    case "organisations": return Organisation.DeserializeOrganisation(element);
                     case "referrer": return Referrer.DeserializeReferrer(element);
                     case "referrer-organization": return ReferrerOrganization.DeserializeReferrerOrganization(element);
                     case "advisers": return Adviser.DeserializeAdviser(element);

@@ -12,13 +12,13 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    /// <summary> The OrganisationsDocument. </summary>
-    public partial class OrganisationsDocument
+    /// <summary> The OrganisationAddressesDocument. </summary>
+    internal partial class OrganisationAddressesDocument
     {
-        /// <summary> Initializes a new instance of OrganisationsDocument. </summary>
+        /// <summary> Initializes a new instance of OrganisationAddressesDocument. </summary>
         /// <param name="data"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        internal OrganisationsDocument(IEnumerable<Organisation> data)
+        internal OrganisationAddressesDocument(IEnumerable<OrganisationAddress> data)
         {
             if (data == null)
             {
@@ -31,29 +31,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Included = new ChangeTrackingList<IncludedResource>();
         }
 
-        /// <summary> Initializes a new instance of OrganisationsDocument. </summary>
-        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
-        /// <param name="links"></param>
-        /// <param name="data"></param>
-        /// <param name="included"></param>
-        internal OrganisationsDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, OrganisationsDocumentLinks links, IReadOnlyList<Organisation> data, IReadOnlyList<IncludedResource> included)
-        {
-            Meta = meta;
-            JsonApi = jsonApi;
-            Links = links;
-            Data = data;
-            Included = included;
-        }
-
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> JsonApi { get; }
         /// <summary> Gets the links. </summary>
-        public OrganisationsDocumentLinks Links { get; }
+        public OrganisationAddressesDocumentLinks Links { get; }
         /// <summary> Gets the data. </summary>
-        public IReadOnlyList<Organisation> Data { get; }
+        public IReadOnlyList<OrganisationAddress> Data { get; }
         /// <summary> Gets the included. </summary>
         public IReadOnlyList<IncludedResource> Included { get; }
     }

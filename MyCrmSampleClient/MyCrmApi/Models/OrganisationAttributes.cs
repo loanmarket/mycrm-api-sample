@@ -16,25 +16,65 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of OrganisationAttributes. </summary>
-        /// <param name="email"></param>
+        /// <param name="emailForCommissions"></param>
+        /// <param name="primaryBrandColour"></param>
         /// <param name="name"></param>
         /// <param name="tradingName"></param>
         /// <param name="website"></param>
-        internal OrganisationAttributes(string email, string name, string tradingName, string website)
+        /// <param name="companyEmail"></param>
+        /// <param name="brandedCategory"></param>
+        /// <param name="status"></param>
+        /// <param name="slug"></param>
+        /// <param name="abn"></param>
+        /// <param name="acn"></param>
+        /// <param name="officeDisplayName"></param>
+        /// <param name="phone"></param>
+        /// <param name="fax"></param>
+        internal OrganisationAttributes(string emailForCommissions, string primaryBrandColour, string name, string tradingName, string website, string companyEmail, string brandedCategory, string status, string slug, string abn, string acn, string officeDisplayName, string phone, string fax)
         {
-            Email = email;
+            EmailForCommissions = emailForCommissions;
+            PrimaryBrandColour = primaryBrandColour;
             Name = name;
             TradingName = tradingName;
             Website = website;
+            CompanyEmail = companyEmail;
+            BrandedCategory = brandedCategory;
+            Status = status;
+            Slug = slug;
+            Abn = abn;
+            Acn = acn;
+            OfficeDisplayName = officeDisplayName;
+            Phone = phone;
+            Fax = fax;
         }
 
-        /// <summary> Gets the email. </summary>
-        public string Email { get; }
+        /// <summary> Gets the email for commissions. </summary>
+        public string EmailForCommissions { get; }
+        /// <summary> Gets the primary brand colour. </summary>
+        public string PrimaryBrandColour { get; }
         /// <summary> Gets the name. </summary>
         public string Name { get; }
         /// <summary> Gets the trading name. </summary>
         public string TradingName { get; }
         /// <summary> Gets the website. </summary>
         public string Website { get; }
+        /// <summary> Gets the company email. </summary>
+        public string CompanyEmail { get; }
+        /// <summary> Gets the branded category. </summary>
+        public string BrandedCategory { get; }
+        /// <summary> Gets the status. </summary>
+        public string Status { get; }
+        /// <summary> Gets the slug. </summary>
+        public string Slug { get; }
+        /// <summary> Gets the abn. </summary>
+        public string Abn { get; }
+        /// <summary> Gets the acn. </summary>
+        public string Acn { get; }
+        /// <summary> Gets the office display name. </summary>
+        public string OfficeDisplayName { get; }
+        /// <summary> Gets the phone. </summary>
+        public string Phone { get; }
+        /// <summary> Gets the fax. </summary>
+        public string Fax { get; }
     }
 }

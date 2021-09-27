@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    /// <summary> The OrganisationDocument. </summary>
-    public partial class OrganisationDocument
+    /// <summary> The OrganisationAddressDocument. </summary>
+    internal partial class OrganisationAddressDocument
     {
-        /// <summary> Initializes a new instance of OrganisationDocument. </summary>
+        /// <summary> Initializes a new instance of OrganisationAddressDocument. </summary>
         /// <param name="data"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        internal OrganisationDocument(Organisation data)
+        internal OrganisationAddressDocument(OrganisationAddress data)
         {
             if (data == null)
             {
@@ -30,29 +30,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Included = new ChangeTrackingList<IncludedResource>();
         }
 
-        /// <summary> Initializes a new instance of OrganisationDocument. </summary>
-        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
-        /// <param name="links"></param>
-        /// <param name="data"></param>
-        /// <param name="included"></param>
-        internal OrganisationDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, OrganisationDocumentLinks links, Organisation data, IReadOnlyList<IncludedResource> included)
-        {
-            Meta = meta;
-            JsonApi = jsonApi;
-            Links = links;
-            Data = data;
-            Included = included;
-        }
-
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> JsonApi { get; }
         /// <summary> Gets the links. </summary>
-        public OrganisationDocumentLinks Links { get; }
+        public OrganisationAddressDocumentLinks Links { get; }
         /// <summary> Gets the data. </summary>
-        public Organisation Data { get; }
+        public OrganisationAddress Data { get; }
         /// <summary> Gets the included. </summary>
         public IReadOnlyList<IncludedResource> Included { get; }
     }

@@ -21,7 +21,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 if (Settled != null)
                 {
                     writer.WritePropertyName("settled");
-                    writer.WriteStringValue(Settled.Value, "O");
+                    writer.WriteStringValue(Settled.Value, "D");
                 }
                 else
                 {
@@ -33,7 +33,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 if (Lodged != null)
                 {
                     writer.WritePropertyName("lodged");
-                    writer.WriteStringValue(Lodged.Value, "O");
+                    writer.WriteStringValue(Lodged.Value, "D");
                 }
                 else
                 {
@@ -45,7 +45,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 if (FinanceClause != null)
                 {
                     writer.WritePropertyName("financeClause");
-                    writer.WriteStringValue(FinanceClause.Value, "O");
+                    writer.WriteStringValue(FinanceClause.Value, "D");
                 }
                 else
                 {
@@ -57,7 +57,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 if (NotProceeding != null)
                 {
                     writer.WritePropertyName("notProceeding");
-                    writer.WriteStringValue(NotProceeding.Value, "O");
+                    writer.WriteStringValue(NotProceeding.Value, "D");
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 if (Approved != null)
                 {
                     writer.WritePropertyName("approved");
-                    writer.WriteStringValue(Approved.Value, "O");
+                    writer.WriteStringValue(Approved.Value, "D");
                 }
                 else
                 {
@@ -81,7 +81,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 if (PreApproved != null)
                 {
                     writer.WritePropertyName("preApproved");
-                    writer.WriteStringValue(PreApproved.Value, "O");
+                    writer.WriteStringValue(PreApproved.Value, "D");
                 }
                 else
                 {
@@ -93,7 +93,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 if (ConditionallyApproved != null)
                 {
                     writer.WritePropertyName("conditionallyApproved");
-                    writer.WriteStringValue(ConditionallyApproved.Value, "O");
+                    writer.WriteStringValue(ConditionallyApproved.Value, "D");
                 }
                 else
                 {
@@ -105,7 +105,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 if (PreApprovedExpiry != null)
                 {
                     writer.WritePropertyName("preApprovedExpiry");
-                    writer.WriteStringValue(PreApprovedExpiry.Value, "O");
+                    writer.WriteStringValue(PreApprovedExpiry.Value, "D");
                 }
                 else
                 {
@@ -117,7 +117,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 if (EstimatedSettled != null)
                 {
                     writer.WritePropertyName("estimatedSettled");
-                    writer.WriteStringValue(EstimatedSettled.Value, "O");
+                    writer.WriteStringValue(EstimatedSettled.Value, "D");
                 }
                 else
                 {
@@ -147,7 +147,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         settled = null;
                         continue;
                     }
-                    settled = property.Value.GetDateTimeOffset("O");
+                    settled = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("lodged"))
@@ -157,7 +157,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         lodged = null;
                         continue;
                     }
-                    lodged = property.Value.GetDateTimeOffset("O");
+                    lodged = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("financeClause"))
@@ -167,7 +167,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         financeClause = null;
                         continue;
                     }
-                    financeClause = property.Value.GetDateTimeOffset("O");
+                    financeClause = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("notProceeding"))
@@ -177,7 +177,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         notProceeding = null;
                         continue;
                     }
-                    notProceeding = property.Value.GetDateTimeOffset("O");
+                    notProceeding = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("approved"))
@@ -187,7 +187,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         approved = null;
                         continue;
                     }
-                    approved = property.Value.GetDateTimeOffset("O");
+                    approved = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("preApproved"))
@@ -197,7 +197,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         preApproved = null;
                         continue;
                     }
-                    preApproved = property.Value.GetDateTimeOffset("O");
+                    preApproved = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("conditionallyApproved"))
@@ -207,7 +207,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         conditionallyApproved = null;
                         continue;
                     }
-                    conditionallyApproved = property.Value.GetDateTimeOffset("O");
+                    conditionallyApproved = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("preApprovedExpiry"))
@@ -217,7 +217,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         preApprovedExpiry = null;
                         continue;
                     }
-                    preApprovedExpiry = property.Value.GetDateTimeOffset("O");
+                    preApprovedExpiry = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("estimatedSettled"))
@@ -227,7 +227,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         estimatedSettled = null;
                         continue;
                     }
-                    estimatedSettled = property.Value.GetDateTimeOffset("O");
+                    estimatedSettled = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
             }

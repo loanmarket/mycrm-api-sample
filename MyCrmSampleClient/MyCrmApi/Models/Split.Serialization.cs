@@ -107,7 +107,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         fixedRateStartDate = null;
                         continue;
                     }
-                    fixedRateStartDate = property.Value.GetDateTimeOffset("O");
+                    fixedRateStartDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("fixedRateEndDate"))
@@ -117,7 +117,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         fixedRateEndDate = null;
                         continue;
                     }
-                    fixedRateEndDate = property.Value.GetDateTimeOffset("O");
+                    fixedRateEndDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("interestOnlyStartDate"))
@@ -127,7 +127,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         interestOnlyStartDate = null;
                         continue;
                     }
-                    interestOnlyStartDate = property.Value.GetDateTimeOffset("O");
+                    interestOnlyStartDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("interestOnlyEndDate"))
@@ -137,7 +137,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         interestOnlyEndDate = null;
                         continue;
                     }
-                    interestOnlyEndDate = property.Value.GetDateTimeOffset("O");
+                    interestOnlyEndDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("repaymentHolidayStartDate"))
@@ -147,7 +147,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         repaymentHolidayStartDate = null;
                         continue;
                     }
-                    repaymentHolidayStartDate = property.Value.GetDateTimeOffset("O");
+                    repaymentHolidayStartDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("repaymentHolidayEndDate"))
@@ -157,7 +157,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         repaymentHolidayEndDate = null;
                         continue;
                     }
-                    repaymentHolidayEndDate = property.Value.GetDateTimeOffset("O");
+                    repaymentHolidayEndDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
             }

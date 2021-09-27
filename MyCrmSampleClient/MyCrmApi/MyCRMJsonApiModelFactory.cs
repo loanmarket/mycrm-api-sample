@@ -62,8 +62,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of AdviserAttributes. </summary>
         /// <param name="googlePlaces"></param>
         /// <param name="created"></param>
+        /// <param name="myLeadGenActivationDate"></param>
+        /// <param name="isMyLeadGenActive"></param>
         /// <param name="bio"></param>
         /// <param name="jobTitle"></param>
+        /// <param name="status"></param>
         /// <param name="email"></param>
         /// <param name="skype"></param>
         /// <param name="facebook"></param>
@@ -71,11 +74,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="twitter"></param>
         /// <param name="youtubeFeatured"></param>
         /// <param name="calendly"></param>
+        /// <param name="myLeadGenerator"></param>
         /// <param name="youtubeChannel"></param>
         /// <returns> A new <see cref="Models.AdviserAttributes"/> instance for mocking. </returns>
-        public static AdviserAttributes AdviserAttributes(string googlePlaces = null, DateTimeOffset? created = null, string bio = null, string jobTitle = null, string email = null, string skype = null, string facebook = null, string linkedIn = null, string twitter = null, string youtubeFeatured = null, string calendly = null, string youtubeChannel = null)
+        public static AdviserAttributes AdviserAttributes(string googlePlaces = null, DateTimeOffset? created = null, DateTimeOffset? myLeadGenActivationDate = null, bool? isMyLeadGenActive = null, string bio = null, string jobTitle = null, string status = null, string email = null, string skype = null, string facebook = null, string linkedIn = null, string twitter = null, string youtubeFeatured = null, string calendly = null, string myLeadGenerator = null, string youtubeChannel = null)
         {
-            return new AdviserAttributes(googlePlaces, created, bio, jobTitle, email, skype, facebook, linkedIn, twitter, youtubeFeatured, calendly, youtubeChannel);
+            return new AdviserAttributes(googlePlaces, created, myLeadGenActivationDate, isMyLeadGenActive, bio, jobTitle, status, email, skype, facebook, linkedIn, twitter, youtubeFeatured, calendly, myLeadGenerator, youtubeChannel);
         }
 
         /// <summary> Initializes a new instance of RelationshipsSingleDocument. </summary>
@@ -830,6 +834,75 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             return new DealNoteDocument(meta, jsonApi, links, data, included?.ToList());
         }
 
+        /// <summary> Initializes a new instance of OrganisationDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.OrganisationDocument"/> instance for mocking. </returns>
+        public static OrganisationDocument OrganisationDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, OrganisationDocumentLinks links = null, Organisation data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            included ??= new List<IncludedResource>();
+
+            return new OrganisationDocument(meta, jsonApi, links, data, included?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of Organisation. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"></param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <returns> A new <see cref="Models.Organisation"/> instance for mocking. </returns>
+        public static Organisation Organisation(string type = null, string id = null, OrganisationAttributes attributes = null, OrganisationRelationships relationships = null, OrganisationLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        {
+            meta ??= new Dictionary<string, object>();
+
+            return new Organisation(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of OrganisationAttributes. </summary>
+        /// <param name="emailForCommissions"></param>
+        /// <param name="primaryBrandColour"></param>
+        /// <param name="name"></param>
+        /// <param name="tradingName"></param>
+        /// <param name="website"></param>
+        /// <param name="companyEmail"></param>
+        /// <param name="brandedCategory"></param>
+        /// <param name="status"></param>
+        /// <param name="slug"></param>
+        /// <param name="abn"></param>
+        /// <param name="acn"></param>
+        /// <param name="officeDisplayName"></param>
+        /// <param name="phone"></param>
+        /// <param name="fax"></param>
+        /// <returns> A new <see cref="Models.OrganisationAttributes"/> instance for mocking. </returns>
+        public static OrganisationAttributes OrganisationAttributes(string emailForCommissions = null, string primaryBrandColour = null, string name = null, string tradingName = null, string website = null, string companyEmail = null, string brandedCategory = null, string status = null, string slug = null, string abn = null, string acn = null, string officeDisplayName = null, string phone = null, string fax = null)
+        {
+            return new OrganisationAttributes(emailForCommissions, primaryBrandColour, name, tradingName, website, companyEmail, brandedCategory, status, slug, abn, acn, officeDisplayName, phone, fax);
+        }
+
+        /// <summary> Initializes a new instance of OrganisationsDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.OrganisationsDocument"/> instance for mocking. </returns>
+        public static OrganisationsDocument OrganisationsDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, OrganisationsDocumentLinks links = null, IEnumerable<Organisation> data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            data ??= new List<Organisation>();
+            included ??= new List<IncludedResource>();
+
+            return new OrganisationsDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
+        }
+
         /// <summary> Initializes a new instance of ContactGroupReferrersDocument. </summary>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
         /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
@@ -1088,32 +1161,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             return new DealStructureAttributes(fixedRateBeginDate, rateTypePeriodMonths, loanStructureType, interestRate, amount, rateType, paymentAmount, interestOnlyExpiryDate, loanTermYears, fixedRateExpiryDate);
         }
 
-        /// <summary> Initializes a new instance of Organisation. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="attributes"></param>
-        /// <param name="relationships"></param>
-        /// <param name="links"></param>
-        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        /// <returns> A new <see cref="Models.Organisation"/> instance for mocking. </returns>
-        public static Organisation Organisation(string type = null, string id = null, OrganisationAttributes attributes = null, OrganisationRelationships relationships = null, OrganisationLinks links = null, IReadOnlyDictionary<string, object> meta = null)
-        {
-            meta ??= new Dictionary<string, object>();
-
-            return new Organisation(type, id, attributes, relationships, links, meta);
-        }
-
-        /// <summary> Initializes a new instance of OrganisationAttributes. </summary>
-        /// <param name="email"></param>
-        /// <param name="name"></param>
-        /// <param name="tradingName"></param>
-        /// <param name="website"></param>
-        /// <returns> A new <see cref="Models.OrganisationAttributes"/> instance for mocking. </returns>
-        public static OrganisationAttributes OrganisationAttributes(string email = null, string name = null, string tradingName = null, string website = null)
-        {
-            return new OrganisationAttributes(email, name, tradingName, website);
-        }
-
         /// <summary> Initializes a new instance of DealStructureImportantDate. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
@@ -1152,6 +1199,35 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             meta ??= new Dictionary<string, object>();
 
             return new HighLevelSummary(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of OrganisationAddress. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"> Any object. </param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <returns> A new <see cref="Models.OrganisationAddress"/> instance for mocking. </returns>
+        public static OrganisationAddress OrganisationAddress(string type = null, string id = null, OrganisationAddressAttributes attributes = null, object relationships = null, OrganisationAddressLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        {
+            meta ??= new Dictionary<string, object>();
+
+            return new OrganisationAddress(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of OrganisationAddressAttributes. </summary>
+        /// <param name="isMailing"></param>
+        /// <param name="isCustomAddress"></param>
+        /// <param name="streetAddress"></param>
+        /// <param name="country"></param>
+        /// <param name="suburb"></param>
+        /// <param name="postCode"></param>
+        /// <param name="state"></param>
+        /// <returns> A new <see cref="Models.OrganisationAddressAttributes"/> instance for mocking. </returns>
+        public static OrganisationAddressAttributes OrganisationAddressAttributes(bool? isMailing = null, bool? isCustomAddress = null, string streetAddress = null, string country = null, string suburb = null, string postCode = null, string state = null)
+        {
+            return new OrganisationAddressAttributes(isMailing, isCustomAddress, streetAddress, country, suburb, postCode, state);
         }
     }
 }
