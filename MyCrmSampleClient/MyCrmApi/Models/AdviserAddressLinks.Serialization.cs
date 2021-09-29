@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    public partial class ReferrerOrganizationLinks
+    public partial class AdviserAddressLinks
     {
-        internal static ReferrerOrganizationLinks DeserializeReferrerOrganizationLinks(JsonElement element)
+        internal static AdviserAddressLinks DeserializeAdviserAddressLinks(JsonElement element)
         {
             Optional<string> self = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +28,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ReferrerOrganizationLinks(self.Value);
+            return new AdviserAddressLinks(self.Value);
         }
     }
 }

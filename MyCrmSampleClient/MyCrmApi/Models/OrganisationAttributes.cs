@@ -30,7 +30,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="officeDisplayName"></param>
         /// <param name="phone"></param>
         /// <param name="fax"></param>
-        internal OrganisationAttributes(string emailForCommissions, string primaryBrandColour, string name, string tradingName, string website, string companyEmail, string brandedCategory, string status, string slug, string abn, string acn, string officeDisplayName, string phone, string fax)
+        /// <param name="brandLogoUrl"></param>
+        internal OrganisationAttributes(string emailForCommissions, string primaryBrandColour, string name, string tradingName, string website, string companyEmail, string brandedCategory, string status, string slug, string abn, string acn, string officeDisplayName, string phone, string fax, string brandLogoUrl)
         {
             EmailForCommissions = emailForCommissions;
             PrimaryBrandColour = primaryBrandColour;
@@ -46,6 +47,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             OfficeDisplayName = officeDisplayName;
             Phone = phone;
             Fax = fax;
+            BrandLogoUrl = brandLogoUrl;
         }
 
         /// <summary> Gets the email for commissions. </summary>
@@ -76,5 +78,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string Phone { get; }
         /// <summary> Gets the fax. </summary>
         public string Fax { get; }
+        /// <summary> Gets the brand logo url. </summary>
+        public string BrandLogoUrl { get; }
     }
 }

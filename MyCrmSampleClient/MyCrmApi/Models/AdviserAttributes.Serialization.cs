@@ -24,9 +24,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> googlePlaces = default;
             Optional<DateTimeOffset?> created = default;
             Optional<DateTimeOffset?> myLeadGenActivationDate = default;
-            Optional<bool?> isMyLeadGenActive = default;
             Optional<string> bio = default;
             Optional<string> jobTitle = default;
+            Optional<bool?> isMyLeadGenActive = default;
             Optional<string> status = default;
             Optional<string> email = default;
             Optional<string> skype = default;
@@ -36,6 +36,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> youtubeFeatured = default;
             Optional<string> calendly = default;
             Optional<string> myLeadGenerator = default;
+            Optional<string> profilePhotoHeadShot = default;
+            Optional<string> profilePhotoHalfBody = default;
+            Optional<string> profilePhotoFullBody = default;
             Optional<string> youtubeChannel = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,16 +72,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     myLeadGenActivationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isMyLeadGenActive"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        isMyLeadGenActive = null;
-                        continue;
-                    }
-                    isMyLeadGenActive = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("bio"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -99,7 +92,17 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     jobTitle = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Status"))
+                if (property.NameEquals("isMyLeadGenActive"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        isMyLeadGenActive = null;
+                        continue;
+                    }
+                    isMyLeadGenActive = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("status"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,6 +192,36 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     myLeadGenerator = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("profilePhotoHeadShot"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        profilePhotoHeadShot = null;
+                        continue;
+                    }
+                    profilePhotoHeadShot = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("profilePhotoHalfBody"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        profilePhotoHalfBody = null;
+                        continue;
+                    }
+                    profilePhotoHalfBody = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("profilePhotoFullBody"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        profilePhotoFullBody = null;
+                        continue;
+                    }
+                    profilePhotoFullBody = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("youtubeChannel"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -200,7 +233,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new AdviserAttributes(googlePlaces.Value, Optional.ToNullable(created), Optional.ToNullable(myLeadGenActivationDate), Optional.ToNullable(isMyLeadGenActive), bio.Value, jobTitle.Value, status.Value, email.Value, skype.Value, facebook.Value, linkedIn.Value, twitter.Value, youtubeFeatured.Value, calendly.Value, myLeadGenerator.Value, youtubeChannel.Value);
+            return new AdviserAttributes(googlePlaces.Value, Optional.ToNullable(created), Optional.ToNullable(myLeadGenActivationDate), bio.Value, jobTitle.Value, Optional.ToNullable(isMyLeadGenActive), status.Value, email.Value, skype.Value, facebook.Value, linkedIn.Value, twitter.Value, youtubeFeatured.Value, calendly.Value, myLeadGenerator.Value, profilePhotoHeadShot.Value, profilePhotoHalfBody.Value, profilePhotoFullBody.Value, youtubeChannel.Value);
         }
     }
 }

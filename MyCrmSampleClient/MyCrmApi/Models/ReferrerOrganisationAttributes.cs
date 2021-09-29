@@ -7,17 +7,17 @@
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    /// <summary> The ReferrerOrganizationAttributes. </summary>
-    public partial class ReferrerOrganizationAttributes
+    /// <summary> The ReferrerOrganisationAttributes. </summary>
+    public partial class ReferrerOrganisationAttributes
     {
-        /// <summary> Initializes a new instance of ReferrerOrganizationAttributes. </summary>
-        public ReferrerOrganizationAttributes()
+        /// <summary> Initializes a new instance of ReferrerOrganisationAttributes. </summary>
+        public ReferrerOrganisationAttributes()
         {
         }
 
-        /// <summary> Initializes a new instance of ReferrerOrganizationAttributes. </summary>
+        /// <summary> Initializes a new instance of ReferrerOrganisationAttributes. </summary>
         /// <param name="referrerOrgName"></param>
-        internal ReferrerOrganizationAttributes(string referrerOrgName)
+        internal ReferrerOrganisationAttributes(string referrerOrgName)
         {
             ReferrerOrgName = referrerOrgName;
         }

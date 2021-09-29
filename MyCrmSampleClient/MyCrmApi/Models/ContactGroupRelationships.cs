@@ -18,13 +18,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of ContactGroupRelationships. </summary>
         /// <param name="contacts"></param>
         /// <param name="adviser"></param>
-        /// <param name="referrerOrganization"></param>
+        /// <param name="referrerOrganisation"></param>
         /// <param name="referrer"></param>
-        internal ContactGroupRelationships(RelationshipsMultipleDocument contacts, RelationshipsSingleDocument adviser, RelationshipsSingleDocument referrerOrganization, RelationshipsSingleDocument referrer)
+        internal ContactGroupRelationships(RelationshipsMultipleDocument contacts, RelationshipsSingleDocument adviser, RelationshipsSingleDocument referrerOrganisation, RelationshipsSingleDocument referrer)
         {
             Contacts = contacts;
             Adviser = adviser;
-            ReferrerOrganization = referrerOrganization;
+            ReferrerOrganisation = referrerOrganisation;
             Referrer = referrer;
         }
 
@@ -32,8 +32,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public RelationshipsMultipleDocument Contacts { get; set; }
         /// <summary> Gets or sets the adviser. </summary>
         public RelationshipsSingleDocument Adviser { get; set; }
-        /// <summary> Gets or sets the referrer organization. </summary>
-        public RelationshipsSingleDocument ReferrerOrganization { get; set; }
+        /// <summary> Gets or sets the referrer organisation. </summary>
+        public RelationshipsSingleDocument ReferrerOrganisation { get; set; }
         /// <summary> Gets or sets the referrer. </summary>
         public RelationshipsSingleDocument Referrer { get; set; }
     }

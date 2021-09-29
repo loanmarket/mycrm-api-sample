@@ -7,17 +7,17 @@
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    /// <summary> The ReferrerOrganizationRelationships. </summary>
-    public partial class ReferrerOrganizationRelationships
+    /// <summary> The ReferrerOrganisationRelationships. </summary>
+    public partial class ReferrerOrganisationRelationships
     {
-        /// <summary> Initializes a new instance of ReferrerOrganizationRelationships. </summary>
-        public ReferrerOrganizationRelationships()
+        /// <summary> Initializes a new instance of ReferrerOrganisationRelationships. </summary>
+        public ReferrerOrganisationRelationships()
         {
         }
 
-        /// <summary> Initializes a new instance of ReferrerOrganizationRelationships. </summary>
+        /// <summary> Initializes a new instance of ReferrerOrganisationRelationships. </summary>
         /// <param name="contactGroups"></param>
-        internal ReferrerOrganizationRelationships(RelationshipsMultipleDocument contactGroups)
+        internal ReferrerOrganisationRelationships(RelationshipsMultipleDocument contactGroups)
         {
             ContactGroups = contactGroups;
         }

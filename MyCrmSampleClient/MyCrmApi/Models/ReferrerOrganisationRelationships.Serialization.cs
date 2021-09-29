@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    public partial class ReferrerOrganizationRelationships : IUtf8JsonSerializable
+    public partial class ReferrerOrganisationRelationships : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             writer.WriteEndObject();
         }
 
-        internal static ReferrerOrganizationRelationships DeserializeReferrerOrganizationRelationships(JsonElement element)
+        internal static ReferrerOrganisationRelationships DeserializeReferrerOrganisationRelationships(JsonElement element)
         {
             Optional<RelationshipsMultipleDocument> contactGroups = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +39,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ReferrerOrganizationRelationships(contactGroups.Value);
+            return new ReferrerOrganisationRelationships(contactGroups.Value);
         }
     }
 }

@@ -21,9 +21,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="googlePlaces"></param>
         /// <param name="created"></param>
         /// <param name="myLeadGenActivationDate"></param>
-        /// <param name="isMyLeadGenActive"></param>
         /// <param name="bio"></param>
         /// <param name="jobTitle"></param>
+        /// <param name="isMyLeadGenActive"></param>
         /// <param name="status"></param>
         /// <param name="email"></param>
         /// <param name="skype"></param>
@@ -33,15 +33,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="youtubeFeatured"></param>
         /// <param name="calendly"></param>
         /// <param name="myLeadGenerator"></param>
+        /// <param name="profilePhotoHeadShot"></param>
+        /// <param name="profilePhotoHalfBody"></param>
+        /// <param name="profilePhotoFullBody"></param>
         /// <param name="youtubeChannel"></param>
-        internal AdviserAttributes(string googlePlaces, DateTimeOffset? created, DateTimeOffset? myLeadGenActivationDate, bool? isMyLeadGenActive, string bio, string jobTitle, string status, string email, string skype, string facebook, string linkedIn, string twitter, string youtubeFeatured, string calendly, string myLeadGenerator, string youtubeChannel)
+        internal AdviserAttributes(string googlePlaces, DateTimeOffset? created, DateTimeOffset? myLeadGenActivationDate, string bio, string jobTitle, bool? isMyLeadGenActive, string status, string email, string skype, string facebook, string linkedIn, string twitter, string youtubeFeatured, string calendly, string myLeadGenerator, string profilePhotoHeadShot, string profilePhotoHalfBody, string profilePhotoFullBody, string youtubeChannel)
         {
             GooglePlaces = googlePlaces;
             Created = created;
             MyLeadGenActivationDate = myLeadGenActivationDate;
-            IsMyLeadGenActive = isMyLeadGenActive;
             Bio = bio;
             JobTitle = jobTitle;
+            IsMyLeadGenActive = isMyLeadGenActive;
             Status = status;
             Email = email;
             Skype = skype;
@@ -51,6 +54,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             YoutubeFeatured = youtubeFeatured;
             Calendly = calendly;
             MyLeadGenerator = myLeadGenerator;
+            ProfilePhotoHeadShot = profilePhotoHeadShot;
+            ProfilePhotoHalfBody = profilePhotoHalfBody;
+            ProfilePhotoFullBody = profilePhotoFullBody;
             YoutubeChannel = youtubeChannel;
         }
 
@@ -60,12 +66,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public DateTimeOffset? Created { get; }
         /// <summary> Gets the my lead gen activation date. </summary>
         public DateTimeOffset? MyLeadGenActivationDate { get; }
-        /// <summary> Gets the is my lead gen active. </summary>
-        public bool? IsMyLeadGenActive { get; }
         /// <summary> Gets the bio. </summary>
         public string Bio { get; }
         /// <summary> Gets the job title. </summary>
         public string JobTitle { get; }
+        /// <summary> Gets the is my lead gen active. </summary>
+        public bool? IsMyLeadGenActive { get; }
         /// <summary> Gets the status. </summary>
         public string Status { get; }
         /// <summary> Gets the email. </summary>
@@ -84,6 +90,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string Calendly { get; }
         /// <summary> Gets the my lead generator. </summary>
         public string MyLeadGenerator { get; }
+        /// <summary> Gets the profile photo head shot. </summary>
+        public string ProfilePhotoHeadShot { get; }
+        /// <summary> Gets the profile photo half body. </summary>
+        public string ProfilePhotoHalfBody { get; }
+        /// <summary> Gets the profile photo full body. </summary>
+        public string ProfilePhotoFullBody { get; }
         /// <summary> Gets the youtube channel. </summary>
         public string YoutubeChannel { get; }
     }

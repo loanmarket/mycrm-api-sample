@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    public partial class ReferrerOrganization : IUtf8JsonSerializable
+    public partial class AdviserAddress : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,11 +43,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             writer.WriteEndObject();
         }
 
-        internal static ReferrerOrganization DeserializeReferrerOrganization(JsonElement element)
+        internal static AdviserAddress DeserializeAdviserAddress(JsonElement element)
         {
-            Optional<ReferrerOrganizationAttributes> attributes = default;
-            Optional<ReferrerOrganizationRelationships> relationships = default;
-            Optional<ReferrerOrganizationLinks> links = default;
+            Optional<AdviserAddressAttributes> attributes = default;
+            Optional<AdviserAddressRelationships> relationships = default;
+            Optional<AdviserAddressLinks> links = default;
             Optional<IReadOnlyDictionary<string, object>> meta = default;
             string type = default;
             Optional<string> id = default;
@@ -60,7 +60,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    attributes = ReferrerOrganizationAttributes.DeserializeReferrerOrganizationAttributes(property.Value);
+                    attributes = AdviserAddressAttributes.DeserializeAdviserAddressAttributes(property.Value);
                     continue;
                 }
                 if (property.NameEquals("relationships"))
@@ -70,7 +70,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    relationships = ReferrerOrganizationRelationships.DeserializeReferrerOrganizationRelationships(property.Value);
+                    relationships = AdviserAddressRelationships.DeserializeAdviserAddressRelationships(property.Value);
                     continue;
                 }
                 if (property.NameEquals("links"))
@@ -80,7 +80,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    links = ReferrerOrganizationLinks.DeserializeReferrerOrganizationLinks(property.Value);
+                    links = AdviserAddressLinks.DeserializeAdviserAddressLinks(property.Value);
                     continue;
                 }
                 if (property.NameEquals("meta"))
@@ -114,7 +114,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ReferrerOrganization(type, id.Value, attributes.Value, relationships.Value, links.Value, Optional.ToDictionary(meta));
+            return new AdviserAddress(type, id.Value, attributes.Value, relationships.Value, links.Value, Optional.ToDictionary(meta));
         }
     }
 }

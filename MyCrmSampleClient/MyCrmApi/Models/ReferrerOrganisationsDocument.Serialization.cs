@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    public partial class ReferrerOrganizationsDocument
+    public partial class ReferrerOrganisationsDocument
     {
-        internal static ReferrerOrganizationsDocument DeserializeReferrerOrganizationsDocument(JsonElement element)
+        internal static ReferrerOrganisationsDocument DeserializeReferrerOrganisationsDocument(JsonElement element)
         {
             Optional<IReadOnlyDictionary<string, object>> meta = default;
             Optional<IReadOnlyDictionary<string, object>> jsonApi = default;
-            Optional<ReferrerOrganizationsDocumentLinks> links = default;
-            IReadOnlyList<ReferrerOrganization> data = default;
+            Optional<ReferrerOrganisationsDocumentLinks> links = default;
+            IReadOnlyList<ReferrerOrganisation> data = default;
             Optional<IReadOnlyList<IncludedResource>> included = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -59,15 +59,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    links = ReferrerOrganizationsDocumentLinks.DeserializeReferrerOrganizationsDocumentLinks(property.Value);
+                    links = ReferrerOrganisationsDocumentLinks.DeserializeReferrerOrganisationsDocumentLinks(property.Value);
                     continue;
                 }
                 if (property.NameEquals("data"))
                 {
-                    List<ReferrerOrganization> array = new List<ReferrerOrganization>();
+                    List<ReferrerOrganisation> array = new List<ReferrerOrganisation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReferrerOrganization.DeserializeReferrerOrganization(item));
+                        array.Add(ReferrerOrganisation.DeserializeReferrerOrganisation(item));
                     }
                     data = array;
                     continue;
@@ -88,7 +88,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ReferrerOrganizationsDocument(Optional.ToDictionary(meta), Optional.ToDictionary(jsonApi), links.Value, data, Optional.ToList(included));
+            return new ReferrerOrganisationsDocument(Optional.ToDictionary(meta), Optional.ToDictionary(jsonApi), links.Value, data, Optional.ToList(included));
         }
     }
 }

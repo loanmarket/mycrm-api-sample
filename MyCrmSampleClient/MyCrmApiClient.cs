@@ -54,12 +54,14 @@ namespace MyCrmSampleClient
         public IntegrationRelationshipClient IntegrationRelationship { get; }
         public IntegrationsClient Integrations { get; }
         public LeadClient Lead { get; }
+        public OrganisationClient Organisation { get; }
+        public OrganisationsClient Organisations { get; }
 
         public MyCrmApiClient(MyCrmApiClientCredential credential, MyCrmApiClientOptions options)
         {
             Pipeline = options.Build(credential, options);
             ClientDiagnostics = new ClientDiagnostics(options);
-            
+
             Adviser = new AdviserClient(ClientDiagnostics, Pipeline, options.Endpoint);
             AdviserDetail = new AdviserDetailClient(ClientDiagnostics, Pipeline, options.Endpoint);
             AdviserDetailRelated = new AdviserDetailRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
@@ -115,6 +117,8 @@ namespace MyCrmSampleClient
             IntegrationRelationship = new IntegrationRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
             Integrations = new IntegrationsClient(ClientDiagnostics, Pipeline, options.Endpoint);
             Lead = new LeadClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            Organisation = new OrganisationClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            Organisations = new OrganisationsClient(ClientDiagnostics, Pipeline, options.Endpoint);
         }
     }
 }

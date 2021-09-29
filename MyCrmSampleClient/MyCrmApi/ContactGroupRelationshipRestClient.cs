@@ -493,7 +493,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreateGetReferrerOrganizationsRequest(int id)
+        internal HttpMessage CreateGetReferrerOrganisationsRequest(int id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -502,7 +502,7 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/referrerOrganization", false);
+            uri.AppendPath("/relationships/referrerOrganisation", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             return message;
@@ -511,9 +511,9 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RelationshipsSingleDocument>> GetReferrerOrganizationsAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<RelationshipsSingleDocument>> GetReferrerOrganisationsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetReferrerOrganizationsRequest(id);
+            using var message = CreateGetReferrerOrganisationsRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -534,9 +534,9 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RelationshipsSingleDocument> GetReferrerOrganizations(int id, CancellationToken cancellationToken = default)
+        public Response<RelationshipsSingleDocument> GetReferrerOrganisations(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetReferrerOrganizationsRequest(id);
+            using var message = CreateGetReferrerOrganisationsRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -554,7 +554,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreatePostReferrerOrganizationsRequest(int id, RelationshipsSingleDocument body)
+        internal HttpMessage CreatePostReferrerOrganisationsRequest(int id, RelationshipsSingleDocument body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -563,7 +563,7 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/referrerOrganization", false);
+            uri.AppendPath("/relationships/referrerOrganisation", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             if (body != null)
@@ -580,9 +580,9 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PostReferrerOrganizationsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PostReferrerOrganisationsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePostReferrerOrganizationsRequest(id, body);
+            using var message = CreatePostReferrerOrganisationsRequest(id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -599,9 +599,9 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PostReferrerOrganizations(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        public Response PostReferrerOrganisations(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePostReferrerOrganizationsRequest(id, body);
+            using var message = CreatePostReferrerOrganisationsRequest(id, body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -614,7 +614,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreatePatchReferrerOrganizationsRequest(int id, RelationshipsSingleDocument body)
+        internal HttpMessage CreatePatchReferrerOrganisationsRequest(int id, RelationshipsSingleDocument body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -623,7 +623,7 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/referrerOrganization", false);
+            uri.AppendPath("/relationships/referrerOrganisation", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             if (body != null)
@@ -640,9 +640,9 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PatchReferrerOrganizationsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PatchReferrerOrganisationsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePatchReferrerOrganizationsRequest(id, body);
+            using var message = CreatePatchReferrerOrganisationsRequest(id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -659,9 +659,9 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PatchReferrerOrganizations(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        public Response PatchReferrerOrganisations(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePatchReferrerOrganizationsRequest(id, body);
+            using var message = CreatePatchReferrerOrganisationsRequest(id, body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -674,7 +674,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreateDeleteReferrerOrganizationsRequest(int id)
+        internal HttpMessage CreateDeleteReferrerOrganisationsRequest(int id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -683,7 +683,7 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/referrerOrganization", false);
+            uri.AppendPath("/relationships/referrerOrganisation", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             return message;
@@ -692,9 +692,9 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteReferrerOrganizationsAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteReferrerOrganisationsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteReferrerOrganizationsRequest(id);
+            using var message = CreateDeleteReferrerOrganisationsRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -709,9 +709,9 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response DeleteReferrerOrganizations(int id, CancellationToken cancellationToken = default)
+        public Response DeleteReferrerOrganisations(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteReferrerOrganizationsRequest(id);
+            using var message = CreateDeleteReferrerOrganisationsRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

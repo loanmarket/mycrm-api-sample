@@ -16,16 +16,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of ContactGroupReferrerAttributes. </summary>
-        /// <param name="referrerOrganizationName"></param>
+        /// <param name="referrerOrganisationName"></param>
         /// <param name="referrerName"></param>
-        internal ContactGroupReferrerAttributes(string referrerOrganizationName, string referrerName)
+        internal ContactGroupReferrerAttributes(string referrerOrganisationName, string referrerName)
         {
-            ReferrerOrganizationName = referrerOrganizationName;
+            ReferrerOrganisationName = referrerOrganisationName;
             ReferrerName = referrerName;
         }
 
-        /// <summary> Gets the referrer organization name. </summary>
-        public string ReferrerOrganizationName { get; }
+        /// <summary> Gets the referrer organisation name. </summary>
+        public string ReferrerOrganisationName { get; }
         /// <summary> Gets the referrer name. </summary>
         public string ReferrerName { get; }
     }

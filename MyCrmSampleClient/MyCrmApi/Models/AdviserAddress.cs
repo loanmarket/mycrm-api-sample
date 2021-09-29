@@ -10,38 +10,38 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    /// <summary> The ReferrerOrganization. </summary>
-    public partial class ReferrerOrganization : IncludedResource
+    /// <summary> The AdviserAddress. </summary>
+    public partial class AdviserAddress : IncludedResource
     {
-        /// <summary> Initializes a new instance of ReferrerOrganization. </summary>
-        public ReferrerOrganization()
+        /// <summary> Initializes a new instance of AdviserAddress. </summary>
+        public AdviserAddress()
         {
             Meta = new ChangeTrackingDictionary<string, object>();
-            Type = "referrer-organization";
+            Type = "adviser-address";
         }
 
-        /// <summary> Initializes a new instance of ReferrerOrganization. </summary>
+        /// <summary> Initializes a new instance of AdviserAddress. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="attributes"></param>
         /// <param name="relationships"></param>
         /// <param name="links"></param>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        internal ReferrerOrganization(string type, string id, ReferrerOrganizationAttributes attributes, ReferrerOrganizationRelationships relationships, ReferrerOrganizationLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
+        internal AdviserAddress(string type, string id, AdviserAddressAttributes attributes, AdviserAddressRelationships relationships, AdviserAddressLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
         {
             Attributes = attributes;
             Relationships = relationships;
             Links = links;
             Meta = meta;
-            Type = type ?? "referrer-organization";
+            Type = type ?? "adviser-address";
         }
 
         /// <summary> Gets or sets the attributes. </summary>
-        public ReferrerOrganizationAttributes Attributes { get; set; }
+        public AdviserAddressAttributes Attributes { get; set; }
         /// <summary> Gets or sets the relationships. </summary>
-        public ReferrerOrganizationRelationships Relationships { get; set; }
+        public AdviserAddressRelationships Relationships { get; set; }
         /// <summary> Gets the links. </summary>
-        public ReferrerOrganizationLinks Links { get; }
+        public AdviserAddressLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Meta { get; }
     }

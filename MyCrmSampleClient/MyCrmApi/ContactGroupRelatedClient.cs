@@ -112,13 +112,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReferrerOrganizationsDocument>> GetReferrerOrganizationsAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReferrerOrganisationsDocument>> GetReferrerOrganisationsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetReferrerOrganizations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetReferrerOrganisations");
             scope.Start();
             try
             {
-                return await RestClient.GetReferrerOrganizationsAsync(id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetReferrerOrganisationsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -130,13 +130,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReferrerOrganizationsDocument> GetReferrerOrganizations(int id, CancellationToken cancellationToken = default)
+        public virtual Response<ReferrerOrganisationsDocument> GetReferrerOrganisations(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetReferrerOrganizations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetReferrerOrganisations");
             scope.Start();
             try
             {
-                return RestClient.GetReferrerOrganizations(id, cancellationToken);
+                return RestClient.GetReferrerOrganisations(id, cancellationToken);
             }
             catch (Exception e)
             {

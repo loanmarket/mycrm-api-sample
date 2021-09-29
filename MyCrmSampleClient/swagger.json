@@ -6798,14 +6798,14 @@
         }
       }
     },
-    "/jsonapi/contact-groups/{id}/referrerOrganization": {
+    "/jsonapi/contact-groups/{id}/referrerOrganisation": {
       "get": {
         "tags": [
           "ContactGroups"
         ],
-        "summary": "Gets referrerOrganizations via a single related contact group",
+        "summary": "Gets referrerOrganisations via a single related contact group",
         "description": "Where `id` is the identifier of the contact group",
-        "operationId": "ContactGroupRelated_Get_ReferrerOrganizations",
+        "operationId": "ContactGroupRelated_Get_ReferrerOrganisations",
         "parameters": [
           {
             "name": "id",
@@ -6823,7 +6823,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReferrerOrganizationsDocument"
+                  "$ref": "#/components/schemas/ReferrerOrganisationsDocument"
                 }
               }
             }
@@ -6849,7 +6849,7 @@
         ],
         "summary": "Retrieve headers related to the associated GET request",
         "description": "",
-        "operationId": "ContactGroupRelated_Head_ReferrerOrganizations",
+        "operationId": "ContactGroupRelated_Head_ReferrerOrganisations",
         "parameters": [
           {
             "name": "id",
@@ -7182,14 +7182,14 @@
         }
       }
     },
-    "/jsonapi/contact-groups/{id}/relationships/referrerOrganization": {
+    "/jsonapi/contact-groups/{id}/relationships/referrerOrganisation": {
       "get": {
         "tags": [
           "ContactGroups"
         ],
-        "summary": "Gets a referrerOrganizations related to a single contact group",
+        "summary": "Gets a referrerOrganisations related to a single contact group",
         "description": "Where `id` is the identifier of the contact group",
-        "operationId": "ContactGroupRelationship_Get_ReferrerOrganizations",
+        "operationId": "ContactGroupRelationship_Get_ReferrerOrganisations",
         "parameters": [
           {
             "name": "id",
@@ -7233,7 +7233,7 @@
         ],
         "summary": "Retrieve headers related to the associated GET request",
         "description": "",
-        "operationId": "ContactGroupRelationship_Get_Head_ReferrerOrganizations",
+        "operationId": "ContactGroupRelationship_Get_Head_ReferrerOrganisations",
         "parameters": [
           {
             "name": "id",
@@ -7268,9 +7268,9 @@
         "tags": [
           "ContactGroups"
         ],
-        "summary": "Adds referrerOrganizations to a to-many relationship with an existing contact group",
+        "summary": "Adds referrerOrganisations to a to-many relationship with an existing contact group",
         "description": "Where `id` is the identifier of the primary contact group resource",
-        "operationId": "ContactGroupRelationship_Post_ReferrerOrganizations",
+        "operationId": "ContactGroupRelationship_Post_ReferrerOrganisations",
         "parameters": [
           {
             "name": "id",
@@ -7317,9 +7317,9 @@
         "tags": [
           "ContactGroups"
         ],
-        "summary": "Performs a complete replacement of a referrerOrganization relationship on an existing contact group",
+        "summary": "Performs a complete replacement of a referrerOrganisation relationship on an existing contact group",
         "description": "Where `id` is the identifier of the contact group",
-        "operationId": "ContactGroupRelationship_Patch_ReferrerOrganizations",
+        "operationId": "ContactGroupRelationship_Patch_ReferrerOrganisations",
         "parameters": [
           {
             "name": "id",
@@ -7366,9 +7366,9 @@
         "tags": [
           "ContactGroups"
         ],
-        "summary": "Removes a contact group from a to-many relationship with referrerOrganizations",
+        "summary": "Removes a contact group from a to-many relationship with referrerOrganisations",
         "description": "Where `id` is the identifier of the contact group",
-        "operationId": "ContactGroupRelationship_Delete_ReferrerOrganizations",
+        "operationId": "ContactGroupRelationship_Delete_ReferrerOrganisations",
         "parameters": [
           {
             "name": "id",
@@ -11612,6 +11612,179 @@
         },
         "additionalProperties": false
       },
+      "AdviserAddress": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/AdviserAddressEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/AdviserAddressAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/AdviserAddressRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AdviserAddressAttributes": {
+        "type": "object",
+        "properties": {
+          "isMailing": {
+            "type": "boolean",
+            "nullable": true,
+            "readOnly": true
+          },
+          "isBusiness": {
+            "type": "boolean",
+            "nullable": true,
+            "readOnly": true
+          },
+          "streetAddress": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "suburb": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "postCode": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "state": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "AdviserAddressDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/AdviserAddress"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "AdviserAddressEntityType": {
+        "enum": [
+          "adviser-address"
+        ],
+        "type": "string"
+      },
+      "AdviserAddressesDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdviserAddress"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "AdviserAddressRelationships": {
+        "type": "object",
+        "properties": {
+          "adviser": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          }
+        }
+      },
       "AdviserAttributes": {
         "type": "object",
         "properties": {
@@ -11632,11 +11805,6 @@
             "nullable": true,
             "readOnly": true
           },
-          "isMyLeadGenActive": {
-            "type": "boolean",
-            "nullable": true,
-            "readOnly": true
-          },
           "bio": {
             "type": "string",
             "nullable": true,
@@ -11647,7 +11815,12 @@
             "nullable": true,
             "readOnly": true
           },
-          "Status": {
+          "isMyLeadGenActive": {
+            "type": "boolean",
+            "nullable": true,
+            "readOnly": true
+          },
+          "status": {
             "type": "string",
             "nullable": true,
             "readOnly": true
@@ -11689,6 +11862,24 @@
           },
           "myLeadGenerator": {
             "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "profilePhotoHeadShot": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "readOnly": true
+          },
+          "profilePhotoHalfBody": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "readOnly": true
+          },
+          "profilePhotoFullBody": {
+            "type": "string",
+            "format": "uri",
             "nullable": true,
             "readOnly": true
           },
@@ -11983,6 +12174,9 @@
           },
           "organisation": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          },
+          "addresses": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           },
           "contactGroups": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
@@ -12809,7 +13003,7 @@
       "ContactGroupReferrerAttributes": {
         "type": "object",
         "properties": {
-          "referrerOrganizationName": {
+          "referrerOrganisationName": {
             "type": "string",
             "nullable": true,
             "readOnly": true
@@ -12916,7 +13110,7 @@
           "adviser": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
-          "referrerOrganization": {
+          "referrerOrganisation": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
           "referrer": {
@@ -14872,20 +15066,21 @@
           "mapping": {
             "contact-address": "#/components/schemas/ContactAddress",
             "organisation-addresses": "#/components/schemas/OrganisationAddress",
+            "adviser-details": "#/components/schemas/AdviserDetail",
+            "advisers": "#/components/schemas/Adviser",
+            "adviser-address": "#/components/schemas/AdviserAddress",
             "high-level-summary": "#/components/schemas/HighLevelSummary",
             "deal-scenario": "#/components/schemas/DealScenario",
             "deal-participants": "#/components/schemas/DealParticipant",
             "deal-important-dates": "#/components/schemas/DealImportantDate",
             "deal-structure-important-dates": "#/components/schemas/DealStructureImportantDate",
             "deal-structures": "#/components/schemas/DealStructure",
-            "adviser-details": "#/components/schemas/AdviserDetail",
-            "advisers": "#/components/schemas/Adviser",
             "deal-notes": "#/components/schemas/DealNote",
             "deals": "#/components/schemas/Deal",
             "deal-external-references": "#/components/schemas/DealExternalReference",
             "integrations": "#/components/schemas/Integration",
             "organisations": "#/components/schemas/Organisation",
-            "referrer-organization": "#/components/schemas/ReferrerOrganization",
+            "referrer-organisation": "#/components/schemas/ReferrerOrganisation",
             "referrer": "#/components/schemas/Referrer",
             "contact-groups": "#/components/schemas/ContactGroup",
             "contacts": "#/components/schemas/Contact",
@@ -15682,6 +15877,12 @@
             "type": "string",
             "nullable": true,
             "readOnly": true
+          },
+          "brandLogoUrl": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "readOnly": true
           }
         }
       },
@@ -15889,7 +16090,7 @@
         ],
         "type": "string"
       },
-      "ReferrerOrganization": {
+      "ReferrerOrganisation": {
         "required": [
           "type",
           "id"
@@ -15902,7 +16103,7 @@
         ],
         "properties": {
           "type": {
-            "$ref": "#/components/schemas/ReferrerOrganizationEntityType"
+            "$ref": "#/components/schemas/ReferrerOrganisationEntityType"
           },
           "id": {
             "pattern": "^[1-9]\\d*$",
@@ -15910,10 +16111,10 @@
             "readOnly": true
           },
           "attributes": {
-            "$ref": "#/components/schemas/ReferrerOrganizationAttributes"
+            "$ref": "#/components/schemas/ReferrerOrganisationAttributes"
           },
           "relationships": {
-            "$ref": "#/components/schemas/ReferrerOrganizationRelationships"
+            "$ref": "#/components/schemas/ReferrerOrganisationRelationships"
           },
           "links": {
             "allOf": [
@@ -15931,7 +16132,7 @@
         },
         "additionalProperties": false
       },
-      "ReferrerOrganizationAttributes": {
+      "ReferrerOrganisationAttributes": {
         "type": "object",
         "properties": {
           "referrerOrgName": {
@@ -15942,7 +16143,7 @@
           }
         }
       },
-      "ReferrerOrganizationDocument": {
+      "ReferrerOrganisationDocument": {
         "required": [
           "data"
         ],
@@ -15967,7 +16168,7 @@
             "readOnly": true
           },
           "data": {
-            "$ref": "#/components/schemas/ReferrerOrganization"
+            "$ref": "#/components/schemas/ReferrerOrganisation"
           },
           "included": {
             "type": "array",
@@ -15979,13 +16180,13 @@
           }
         }
       },
-      "ReferrerOrganizationEntityType": {
+      "ReferrerOrganisationEntityType": {
         "enum": [
-          "referrer-organization"
+          "referrer-organisation"
         ],
         "type": "string"
       },
-      "ReferrerOrganizationRelationships": {
+      "ReferrerOrganisationRelationships": {
         "type": "object",
         "properties": {
           "contactGroups": {
@@ -15993,7 +16194,7 @@
           }
         }
       },
-      "ReferrerOrganizationsDocument": {
+      "ReferrerOrganisationsDocument": {
         "required": [
           "data"
         ],
@@ -16020,7 +16221,7 @@
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ReferrerOrganization"
+              "$ref": "#/components/schemas/ReferrerOrganisation"
             }
           },
           "included": {

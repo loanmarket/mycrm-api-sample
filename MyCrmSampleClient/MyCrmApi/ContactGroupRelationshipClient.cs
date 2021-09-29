@@ -336,13 +336,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelationshipsSingleDocument>> GetReferrerOrganizationsAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RelationshipsSingleDocument>> GetReferrerOrganisationsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrerOrganizations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrerOrganisations");
             scope.Start();
             try
             {
-                return await RestClient.GetReferrerOrganizationsAsync(id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetReferrerOrganisationsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -354,13 +354,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelationshipsSingleDocument> GetReferrerOrganizations(int id, CancellationToken cancellationToken = default)
+        public virtual Response<RelationshipsSingleDocument> GetReferrerOrganisations(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrerOrganizations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrerOrganisations");
             scope.Start();
             try
             {
-                return RestClient.GetReferrerOrganizations(id, cancellationToken);
+                return RestClient.GetReferrerOrganisations(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -373,13 +373,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostReferrerOrganizationsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PostReferrerOrganisationsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrerOrganizations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrerOrganisations");
             scope.Start();
             try
             {
-                return await RestClient.PostReferrerOrganizationsAsync(id, body, cancellationToken).ConfigureAwait(false);
+                return await RestClient.PostReferrerOrganisationsAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -392,13 +392,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostReferrerOrganizations(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        public virtual Response PostReferrerOrganisations(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrerOrganizations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrerOrganisations");
             scope.Start();
             try
             {
-                return RestClient.PostReferrerOrganizations(id, body, cancellationToken);
+                return RestClient.PostReferrerOrganisations(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -411,13 +411,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PatchReferrerOrganizationsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PatchReferrerOrganisationsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrerOrganizations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrerOrganisations");
             scope.Start();
             try
             {
-                return await RestClient.PatchReferrerOrganizationsAsync(id, body, cancellationToken).ConfigureAwait(false);
+                return await RestClient.PatchReferrerOrganisationsAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -430,13 +430,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <param name="id"> The Integer to use. </param>
         /// <param name="body"> The RelationshipsSingleDocument to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PatchReferrerOrganizations(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        public virtual Response PatchReferrerOrganisations(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrerOrganizations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrerOrganisations");
             scope.Start();
             try
             {
-                return RestClient.PatchReferrerOrganizations(id, body, cancellationToken);
+                return RestClient.PatchReferrerOrganisations(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -448,13 +448,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteReferrerOrganizationsAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteReferrerOrganisationsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrerOrganizations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrerOrganisations");
             scope.Start();
             try
             {
-                return await RestClient.DeleteReferrerOrganizationsAsync(id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteReferrerOrganisationsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -466,13 +466,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteReferrerOrganizations(int id, CancellationToken cancellationToken = default)
+        public virtual Response DeleteReferrerOrganisations(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrerOrganizations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrerOrganisations");
             scope.Start();
             try
             {
-                return RestClient.DeleteReferrerOrganizations(id, cancellationToken);
+                return RestClient.DeleteReferrerOrganisations(id, cancellationToken);
             }
             catch (Exception e)
             {

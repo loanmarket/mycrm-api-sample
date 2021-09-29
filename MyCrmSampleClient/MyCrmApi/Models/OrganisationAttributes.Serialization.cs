@@ -34,6 +34,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> officeDisplayName = default;
             Optional<string> phone = default;
             Optional<string> fax = default;
+            Optional<string> brandLogoUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("emailForCommissions"))
@@ -176,8 +177,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     fax = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("brandLogoUrl"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        brandLogoUrl = null;
+                        continue;
+                    }
+                    brandLogoUrl = property.Value.GetString();
+                    continue;
+                }
             }
-            return new OrganisationAttributes(emailForCommissions.Value, primaryBrandColour.Value, name.Value, tradingName.Value, website.Value, companyEmail.Value, brandedCategory.Value, status.Value, slug.Value, abn.Value, acn.Value, officeDisplayName.Value, phone.Value, fax.Value);
+            return new OrganisationAttributes(emailForCommissions.Value, primaryBrandColour.Value, name.Value, tradingName.Value, website.Value, companyEmail.Value, brandedCategory.Value, status.Value, slug.Value, abn.Value, acn.Value, officeDisplayName.Value, phone.Value, fax.Value, brandLogoUrl.Value);
         }
     }
 }

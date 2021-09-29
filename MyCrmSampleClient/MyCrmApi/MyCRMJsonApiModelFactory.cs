@@ -63,9 +63,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="googlePlaces"></param>
         /// <param name="created"></param>
         /// <param name="myLeadGenActivationDate"></param>
-        /// <param name="isMyLeadGenActive"></param>
         /// <param name="bio"></param>
         /// <param name="jobTitle"></param>
+        /// <param name="isMyLeadGenActive"></param>
         /// <param name="status"></param>
         /// <param name="email"></param>
         /// <param name="skype"></param>
@@ -75,11 +75,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="youtubeFeatured"></param>
         /// <param name="calendly"></param>
         /// <param name="myLeadGenerator"></param>
+        /// <param name="profilePhotoHeadShot"></param>
+        /// <param name="profilePhotoHalfBody"></param>
+        /// <param name="profilePhotoFullBody"></param>
         /// <param name="youtubeChannel"></param>
         /// <returns> A new <see cref="Models.AdviserAttributes"/> instance for mocking. </returns>
-        public static AdviserAttributes AdviserAttributes(string googlePlaces = null, DateTimeOffset? created = null, DateTimeOffset? myLeadGenActivationDate = null, bool? isMyLeadGenActive = null, string bio = null, string jobTitle = null, string status = null, string email = null, string skype = null, string facebook = null, string linkedIn = null, string twitter = null, string youtubeFeatured = null, string calendly = null, string myLeadGenerator = null, string youtubeChannel = null)
+        public static AdviserAttributes AdviserAttributes(string googlePlaces = null, DateTimeOffset? created = null, DateTimeOffset? myLeadGenActivationDate = null, string bio = null, string jobTitle = null, bool? isMyLeadGenActive = null, string status = null, string email = null, string skype = null, string facebook = null, string linkedIn = null, string twitter = null, string youtubeFeatured = null, string calendly = null, string myLeadGenerator = null, string profilePhotoHeadShot = null, string profilePhotoHalfBody = null, string profilePhotoFullBody = null, string youtubeChannel = null)
         {
-            return new AdviserAttributes(googlePlaces, created, myLeadGenActivationDate, isMyLeadGenActive, bio, jobTitle, status, email, skype, facebook, linkedIn, twitter, youtubeFeatured, calendly, myLeadGenerator, youtubeChannel);
+            return new AdviserAttributes(googlePlaces, created, myLeadGenActivationDate, bio, jobTitle, isMyLeadGenActive, status, email, skype, facebook, linkedIn, twitter, youtubeFeatured, calendly, myLeadGenerator, profilePhotoHeadShot, profilePhotoHalfBody, profilePhotoFullBody, youtubeChannel);
         }
 
         /// <summary> Initializes a new instance of RelationshipsSingleDocument. </summary>
@@ -880,10 +883,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="officeDisplayName"></param>
         /// <param name="phone"></param>
         /// <param name="fax"></param>
+        /// <param name="brandLogoUrl"></param>
         /// <returns> A new <see cref="Models.OrganisationAttributes"/> instance for mocking. </returns>
-        public static OrganisationAttributes OrganisationAttributes(string emailForCommissions = null, string primaryBrandColour = null, string name = null, string tradingName = null, string website = null, string companyEmail = null, string brandedCategory = null, string status = null, string slug = null, string abn = null, string acn = null, string officeDisplayName = null, string phone = null, string fax = null)
+        public static OrganisationAttributes OrganisationAttributes(string emailForCommissions = null, string primaryBrandColour = null, string name = null, string tradingName = null, string website = null, string companyEmail = null, string brandedCategory = null, string status = null, string slug = null, string abn = null, string acn = null, string officeDisplayName = null, string phone = null, string fax = null, string brandLogoUrl = null)
         {
-            return new OrganisationAttributes(emailForCommissions, primaryBrandColour, name, tradingName, website, companyEmail, brandedCategory, status, slug, abn, acn, officeDisplayName, phone, fax);
+            return new OrganisationAttributes(emailForCommissions, primaryBrandColour, name, tradingName, website, companyEmail, brandedCategory, status, slug, abn, acn, officeDisplayName, phone, fax, brandLogoUrl);
         }
 
         /// <summary> Initializes a new instance of OrganisationsDocument. </summary>
@@ -936,12 +940,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of ContactGroupReferrerAttributes. </summary>
-        /// <param name="referrerOrganizationName"></param>
+        /// <param name="referrerOrganisationName"></param>
         /// <param name="referrerName"></param>
         /// <returns> A new <see cref="Models.ContactGroupReferrerAttributes"/> instance for mocking. </returns>
-        public static ContactGroupReferrerAttributes ContactGroupReferrerAttributes(string referrerOrganizationName = null, string referrerName = null)
+        public static ContactGroupReferrerAttributes ContactGroupReferrerAttributes(string referrerOrganisationName = null, string referrerName = null)
         {
-            return new ContactGroupReferrerAttributes(referrerOrganizationName, referrerName);
+            return new ContactGroupReferrerAttributes(referrerOrganisationName, referrerName);
         }
 
         /// <summary> Initializes a new instance of ContactGroupReferrerDocument. </summary>
@@ -960,36 +964,36 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             return new ContactGroupReferrerDocument(meta, jsonApi, links, data, included?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReferrerOrganizationsDocument. </summary>
+        /// <summary> Initializes a new instance of ReferrerOrganisationsDocument. </summary>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
         /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
         /// <param name="links"></param>
         /// <param name="data"></param>
         /// <param name="included"></param>
-        /// <returns> A new <see cref="Models.ReferrerOrganizationsDocument"/> instance for mocking. </returns>
-        public static ReferrerOrganizationsDocument ReferrerOrganizationsDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, ReferrerOrganizationsDocumentLinks links = null, IEnumerable<ReferrerOrganization> data = null, IEnumerable<IncludedResource> included = null)
+        /// <returns> A new <see cref="Models.ReferrerOrganisationsDocument"/> instance for mocking. </returns>
+        public static ReferrerOrganisationsDocument ReferrerOrganisationsDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, ReferrerOrganisationsDocumentLinks links = null, IEnumerable<ReferrerOrganisation> data = null, IEnumerable<IncludedResource> included = null)
         {
             meta ??= new Dictionary<string, object>();
             jsonApi ??= new Dictionary<string, object>();
-            data ??= new List<ReferrerOrganization>();
+            data ??= new List<ReferrerOrganisation>();
             included ??= new List<IncludedResource>();
 
-            return new ReferrerOrganizationsDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
+            return new ReferrerOrganisationsDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReferrerOrganization. </summary>
+        /// <summary> Initializes a new instance of ReferrerOrganisation. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="attributes"></param>
         /// <param name="relationships"></param>
         /// <param name="links"></param>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        /// <returns> A new <see cref="Models.ReferrerOrganization"/> instance for mocking. </returns>
-        public static ReferrerOrganization ReferrerOrganization(string type = null, string id = null, ReferrerOrganizationAttributes attributes = null, ReferrerOrganizationRelationships relationships = null, ReferrerOrganizationLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        /// <returns> A new <see cref="Models.ReferrerOrganisation"/> instance for mocking. </returns>
+        public static ReferrerOrganisation ReferrerOrganisation(string type = null, string id = null, ReferrerOrganisationAttributes attributes = null, ReferrerOrganisationRelationships relationships = null, ReferrerOrganisationLinks links = null, IReadOnlyDictionary<string, object> meta = null)
         {
             meta ??= new Dictionary<string, object>();
 
-            return new ReferrerOrganization(type, id, attributes, relationships, links, meta);
+            return new ReferrerOrganisation(type, id, attributes, relationships, links, meta);
         }
 
         /// <summary> Initializes a new instance of ReferrersDocument. </summary>
@@ -1159,6 +1163,35 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public static DealStructureAttributes DealStructureAttributes(DateTimeOffset? fixedRateBeginDate = null, int? rateTypePeriodMonths = null, DealStructureAttributesLoanStructureType? loanStructureType = null, double? interestRate = null, double? amount = null, string rateType = null, double? paymentAmount = null, DateTimeOffset? interestOnlyExpiryDate = null, double? loanTermYears = null, DateTimeOffset? fixedRateExpiryDate = null)
         {
             return new DealStructureAttributes(fixedRateBeginDate, rateTypePeriodMonths, loanStructureType, interestRate, amount, rateType, paymentAmount, interestOnlyExpiryDate, loanTermYears, fixedRateExpiryDate);
+        }
+
+        /// <summary> Initializes a new instance of AdviserAddress. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"></param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <returns> A new <see cref="Models.AdviserAddress"/> instance for mocking. </returns>
+        public static AdviserAddress AdviserAddress(string type = null, string id = null, AdviserAddressAttributes attributes = null, AdviserAddressRelationships relationships = null, AdviserAddressLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        {
+            meta ??= new Dictionary<string, object>();
+
+            return new AdviserAddress(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of AdviserAddressAttributes. </summary>
+        /// <param name="isMailing"></param>
+        /// <param name="isBusiness"></param>
+        /// <param name="streetAddress"></param>
+        /// <param name="country"></param>
+        /// <param name="suburb"></param>
+        /// <param name="postCode"></param>
+        /// <param name="state"></param>
+        /// <returns> A new <see cref="Models.AdviserAddressAttributes"/> instance for mocking. </returns>
+        public static AdviserAddressAttributes AdviserAddressAttributes(bool? isMailing = null, bool? isBusiness = null, string streetAddress = null, string country = null, string suburb = null, string postCode = null, string state = null)
+        {
+            return new AdviserAddressAttributes(isMailing, isBusiness, streetAddress, country, suburb, postCode, state);
         }
 
         /// <summary> Initializes a new instance of DealStructureImportantDate. </summary>

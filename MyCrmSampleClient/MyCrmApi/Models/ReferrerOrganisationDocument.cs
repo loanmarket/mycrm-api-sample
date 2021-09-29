@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    /// <summary> The ReferrerOrganizationDocument. </summary>
-    internal partial class ReferrerOrganizationDocument
+    /// <summary> The ReferrerOrganisationDocument. </summary>
+    internal partial class ReferrerOrganisationDocument
     {
-        /// <summary> Initializes a new instance of ReferrerOrganizationDocument. </summary>
+        /// <summary> Initializes a new instance of ReferrerOrganisationDocument. </summary>
         /// <param name="data"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        internal ReferrerOrganizationDocument(ReferrerOrganization data)
+        internal ReferrerOrganisationDocument(ReferrerOrganisation data)
         {
             if (data == null)
             {
@@ -35,9 +35,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> JsonApi { get; }
         /// <summary> Gets the links. </summary>
-        public ReferrerOrganizationDocumentLinks Links { get; }
+        public ReferrerOrganisationDocumentLinks Links { get; }
         /// <summary> Gets the data. </summary>
-        public ReferrerOrganization Data { get; }
+        public ReferrerOrganisation Data { get; }
         /// <summary> Gets the included. </summary>
         public IReadOnlyList<IncludedResource> Included { get; }
     }

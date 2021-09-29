@@ -38,6 +38,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "adviser-address": return AdviserAddress.DeserializeAdviserAddress(element);
                     case "adviser-details": return AdviserDetail.DeserializeAdviserDetail(element);
                     case "contact-address": return ContactAddress.DeserializeContactAddress(element);
                     case "contact-external-references": return ContactExternalReference.DeserializeContactExternalReference(element);
@@ -59,7 +60,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     case "organisation-addresses": return OrganisationAddress.DeserializeOrganisationAddress(element);
                     case "organisations": return Organisation.DeserializeOrganisation(element);
                     case "referrer": return Referrer.DeserializeReferrer(element);
-                    case "referrer-organization": return ReferrerOrganization.DeserializeReferrerOrganization(element);
+                    case "referrer-organisation": return ReferrerOrganisation.DeserializeReferrerOrganisation(element);
                     case "advisers": return Adviser.DeserializeAdviser(element);
                 }
             }

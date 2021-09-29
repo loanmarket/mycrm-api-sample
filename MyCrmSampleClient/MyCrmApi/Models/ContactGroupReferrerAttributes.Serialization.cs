@@ -20,18 +20,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static ContactGroupReferrerAttributes DeserializeContactGroupReferrerAttributes(JsonElement element)
         {
-            Optional<string> referrerOrganizationName = default;
+            Optional<string> referrerOrganisationName = default;
             Optional<string> referrerName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("referrerOrganizationName"))
+                if (property.NameEquals("referrerOrganisationName"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        referrerOrganizationName = null;
+                        referrerOrganisationName = null;
                         continue;
                     }
-                    referrerOrganizationName = property.Value.GetString();
+                    referrerOrganisationName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("referrerName"))
@@ -45,7 +45,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ContactGroupReferrerAttributes(referrerOrganizationName.Value, referrerName.Value);
+            return new ContactGroupReferrerAttributes(referrerOrganisationName.Value, referrerName.Value);
         }
     }
 }

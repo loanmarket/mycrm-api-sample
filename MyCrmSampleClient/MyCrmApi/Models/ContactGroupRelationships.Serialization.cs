@@ -25,10 +25,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("adviser");
                 writer.WriteObjectValue(Adviser);
             }
-            if (Optional.IsDefined(ReferrerOrganization))
+            if (Optional.IsDefined(ReferrerOrganisation))
             {
-                writer.WritePropertyName("referrerOrganization");
-                writer.WriteObjectValue(ReferrerOrganization);
+                writer.WritePropertyName("referrerOrganisation");
+                writer.WriteObjectValue(ReferrerOrganisation);
             }
             if (Optional.IsDefined(Referrer))
             {
@@ -42,7 +42,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<RelationshipsMultipleDocument> contacts = default;
             Optional<RelationshipsSingleDocument> adviser = default;
-            Optional<RelationshipsSingleDocument> referrerOrganization = default;
+            Optional<RelationshipsSingleDocument> referrerOrganisation = default;
             Optional<RelationshipsSingleDocument> referrer = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -66,14 +66,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     adviser = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
                     continue;
                 }
-                if (property.NameEquals("referrerOrganization"))
+                if (property.NameEquals("referrerOrganisation"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    referrerOrganization = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    referrerOrganisation = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
                     continue;
                 }
                 if (property.NameEquals("referrer"))
@@ -87,7 +87,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ContactGroupRelationships(contacts.Value, adviser.Value, referrerOrganization.Value, referrer.Value);
+            return new ContactGroupRelationships(contacts.Value, adviser.Value, referrerOrganisation.Value, referrer.Value);
         }
     }
 }
