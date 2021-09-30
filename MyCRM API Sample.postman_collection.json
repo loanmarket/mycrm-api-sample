@@ -71,7 +71,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/jsonapi/advisers/:id?include=adviserDetails",
+									"raw": "{{PublicAPI_Url}}/jsonapi/advisers/:id?include=organisation",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
@@ -83,7 +83,49 @@
 									"query": [
 										{
 											"key": "include",
-											"value": "adviserDetails"
+											"value": "organisation"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{lastAdviserId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Last Adviser Agreement Holder",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/jsonapi/advisers/:id?include=agreementHolders.organisation",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"jsonapi",
+										"advisers",
+										":id"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "agreementHolders.organisation"
 										}
 									],
 									"variable": [
