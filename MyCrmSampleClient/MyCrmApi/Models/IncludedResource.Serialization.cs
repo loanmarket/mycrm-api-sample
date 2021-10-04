@@ -40,6 +40,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 {
                     case "adviser-address": return AdviserAddress.DeserializeAdviserAddress(element);
                     case "adviser-details": return AdviserDetail.DeserializeAdviserDetail(element);
+                    case "agreement-holders": return AgreementHolder.DeserializeAgreementHolder(element);
                     case "contact-address": return ContactAddress.DeserializeContactAddress(element);
                     case "contact-external-references": return ContactExternalReference.DeserializeContactExternalReference(element);
                     case "contact-group-referrers": return ContactGroupReferrer.DeserializeContactGroupReferrer(element);

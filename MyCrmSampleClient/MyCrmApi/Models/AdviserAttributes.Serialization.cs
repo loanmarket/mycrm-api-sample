@@ -23,11 +23,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<string> googlePlaces = default;
             Optional<DateTimeOffset?> created = default;
-            Optional<DateTimeOffset?> myLeadGenActivationDate = default;
             Optional<string> bio = default;
             Optional<string> jobTitle = default;
+            Optional<DateTimeOffset?> myLeadGenActivationDate = default;
             Optional<bool?> isMyLeadGenActive = default;
-            Optional<string> status = default;
             Optional<string> email = default;
             Optional<string> skype = default;
             Optional<string> facebook = default;
@@ -36,6 +35,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> youtubeFeatured = default;
             Optional<string> calendly = default;
             Optional<string> myLeadGenerator = default;
+            Optional<string> status = default;
             Optional<string> profilePhotoHeadShot = default;
             Optional<string> profilePhotoHalfBody = default;
             Optional<string> profilePhotoFullBody = default;
@@ -62,16 +62,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     created = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("myLeadGenActivationDate"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        myLeadGenActivationDate = null;
-                        continue;
-                    }
-                    myLeadGenActivationDate = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (property.NameEquals("bio"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -92,6 +82,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     jobTitle = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("myLeadGenActivationDate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        myLeadGenActivationDate = null;
+                        continue;
+                    }
+                    myLeadGenActivationDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (property.NameEquals("isMyLeadGenActive"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -100,16 +100,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     isMyLeadGenActive = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("status"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        status = null;
-                        continue;
-                    }
-                    status = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("email"))
@@ -192,6 +182,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     myLeadGenerator = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("status"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        status = null;
+                        continue;
+                    }
+                    status = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("profilePhotoHeadShot"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -233,7 +233,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new AdviserAttributes(googlePlaces.Value, Optional.ToNullable(created), Optional.ToNullable(myLeadGenActivationDate), bio.Value, jobTitle.Value, Optional.ToNullable(isMyLeadGenActive), status.Value, email.Value, skype.Value, facebook.Value, linkedIn.Value, twitter.Value, youtubeFeatured.Value, calendly.Value, myLeadGenerator.Value, profilePhotoHeadShot.Value, profilePhotoHalfBody.Value, profilePhotoFullBody.Value, youtubeChannel.Value);
+            return new AdviserAttributes(googlePlaces.Value, Optional.ToNullable(created), bio.Value, jobTitle.Value, Optional.ToNullable(myLeadGenActivationDate), Optional.ToNullable(isMyLeadGenActive), email.Value, skype.Value, facebook.Value, linkedIn.Value, twitter.Value, youtubeFeatured.Value, calendly.Value, myLeadGenerator.Value, status.Value, profilePhotoHeadShot.Value, profilePhotoHalfBody.Value, profilePhotoFullBody.Value, youtubeChannel.Value);
         }
     }
 }

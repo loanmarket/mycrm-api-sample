@@ -25,6 +25,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("organisation");
                 writer.WriteObjectValue(Organisation);
             }
+            if (Optional.IsDefined(AgreementHolders))
+            {
+                writer.WritePropertyName("agreementHolders");
+                writer.WriteObjectValue(AgreementHolders);
+            }
             if (Optional.IsDefined(Addresses))
             {
                 writer.WritePropertyName("addresses");
@@ -42,6 +47,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<RelationshipsSingleDocument> adviserDetails = default;
             Optional<RelationshipsSingleDocument> organisation = default;
+            Optional<RelationshipsMultipleDocument> agreementHolders = default;
             Optional<RelationshipsMultipleDocument> addresses = default;
             Optional<RelationshipsMultipleDocument> contactGroups = default;
             foreach (var property in element.EnumerateObject())
@@ -66,6 +72,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     organisation = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
                     continue;
                 }
+                if (property.NameEquals("agreementHolders"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    agreementHolders = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("addresses"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -87,7 +103,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new AdviserRelationships(adviserDetails.Value, organisation.Value, addresses.Value, contactGroups.Value);
+            return new AdviserRelationships(adviserDetails.Value, organisation.Value, agreementHolders.Value, addresses.Value, contactGroups.Value);
         }
     }
 }

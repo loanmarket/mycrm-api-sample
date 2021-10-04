@@ -18,12 +18,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of AdviserRelationships. </summary>
         /// <param name="adviserDetails"></param>
         /// <param name="organisation"></param>
+        /// <param name="agreementHolders"></param>
         /// <param name="addresses"></param>
         /// <param name="contactGroups"></param>
-        internal AdviserRelationships(RelationshipsSingleDocument adviserDetails, RelationshipsSingleDocument organisation, RelationshipsMultipleDocument addresses, RelationshipsMultipleDocument contactGroups)
+        internal AdviserRelationships(RelationshipsSingleDocument adviserDetails, RelationshipsSingleDocument organisation, RelationshipsMultipleDocument agreementHolders, RelationshipsMultipleDocument addresses, RelationshipsMultipleDocument contactGroups)
         {
             AdviserDetails = adviserDetails;
             Organisation = organisation;
+            AgreementHolders = agreementHolders;
             Addresses = addresses;
             ContactGroups = contactGroups;
         }
@@ -32,6 +34,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public RelationshipsSingleDocument AdviserDetails { get; set; }
         /// <summary> Gets or sets the organisation. </summary>
         public RelationshipsSingleDocument Organisation { get; set; }
+        /// <summary> Gets or sets the agreement holders. </summary>
+        public RelationshipsMultipleDocument AgreementHolders { get; set; }
         /// <summary> Gets or sets the addresses. </summary>
         public RelationshipsMultipleDocument Addresses { get; set; }
         /// <summary> Gets or sets the contact groups. </summary>

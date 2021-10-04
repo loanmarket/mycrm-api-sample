@@ -11799,12 +11799,6 @@
             "nullable": true,
             "readOnly": true
           },
-          "myLeadGenActivationDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true,
-            "readOnly": true
-          },
           "bio": {
             "type": "string",
             "nullable": true,
@@ -11815,13 +11809,14 @@
             "nullable": true,
             "readOnly": true
           },
-          "isMyLeadGenActive": {
-            "type": "boolean",
+          "myLeadGenActivationDate": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true,
             "readOnly": true
           },
-          "status": {
-            "type": "string",
+          "isMyLeadGenActive": {
+            "type": "boolean",
             "nullable": true,
             "readOnly": true
           },
@@ -11861,6 +11856,11 @@
             "readOnly": true
           },
           "myLeadGenerator": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "status": {
             "type": "string",
             "nullable": true,
             "readOnly": true
@@ -12175,6 +12175,9 @@
           "organisation": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
+          "agreementHolders": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
           "addresses": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           },
@@ -12226,6 +12229,163 @@
       "AdvisersEntityType": {
         "enum": [
           "advisers"
+        ],
+        "type": "string"
+      },
+      "AgreementHolder": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/AgreementHoldersEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/AgreementHolderAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/AgreementHolderRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AgreementHolderAttributes": {
+        "type": "object",
+        "properties": {
+          "appointmentEntity": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "employmentType": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "entityType": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "AgreementHolderDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/AgreementHolder"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "AgreementHolderRelationships": {
+        "type": "object",
+        "properties": {
+          "organisation": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          }
+        }
+      },
+      "AgreementHoldersDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgreementHolder"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "AgreementHoldersEntityType": {
+        "enum": [
+          "agreement-holders"
         ],
         "type": "string"
       },
@@ -15067,6 +15227,7 @@
             "contact-address": "#/components/schemas/ContactAddress",
             "organisation-addresses": "#/components/schemas/OrganisationAddress",
             "adviser-details": "#/components/schemas/AdviserDetail",
+            "agreement-holders": "#/components/schemas/AgreementHolder",
             "advisers": "#/components/schemas/Adviser",
             "adviser-address": "#/components/schemas/AdviserAddress",
             "high-level-summary": "#/components/schemas/HighLevelSummary",

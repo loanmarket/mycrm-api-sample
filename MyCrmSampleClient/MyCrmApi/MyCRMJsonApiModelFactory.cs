@@ -62,11 +62,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of AdviserAttributes. </summary>
         /// <param name="googlePlaces"></param>
         /// <param name="created"></param>
-        /// <param name="myLeadGenActivationDate"></param>
         /// <param name="bio"></param>
         /// <param name="jobTitle"></param>
+        /// <param name="myLeadGenActivationDate"></param>
         /// <param name="isMyLeadGenActive"></param>
-        /// <param name="status"></param>
         /// <param name="email"></param>
         /// <param name="skype"></param>
         /// <param name="facebook"></param>
@@ -75,14 +74,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="youtubeFeatured"></param>
         /// <param name="calendly"></param>
         /// <param name="myLeadGenerator"></param>
+        /// <param name="status"></param>
         /// <param name="profilePhotoHeadShot"></param>
         /// <param name="profilePhotoHalfBody"></param>
         /// <param name="profilePhotoFullBody"></param>
         /// <param name="youtubeChannel"></param>
         /// <returns> A new <see cref="Models.AdviserAttributes"/> instance for mocking. </returns>
-        public static AdviserAttributes AdviserAttributes(string googlePlaces = null, DateTimeOffset? created = null, DateTimeOffset? myLeadGenActivationDate = null, string bio = null, string jobTitle = null, bool? isMyLeadGenActive = null, string status = null, string email = null, string skype = null, string facebook = null, string linkedIn = null, string twitter = null, string youtubeFeatured = null, string calendly = null, string myLeadGenerator = null, string profilePhotoHeadShot = null, string profilePhotoHalfBody = null, string profilePhotoFullBody = null, string youtubeChannel = null)
+        public static AdviserAttributes AdviserAttributes(string googlePlaces = null, DateTimeOffset? created = null, string bio = null, string jobTitle = null, DateTimeOffset? myLeadGenActivationDate = null, bool? isMyLeadGenActive = null, string email = null, string skype = null, string facebook = null, string linkedIn = null, string twitter = null, string youtubeFeatured = null, string calendly = null, string myLeadGenerator = null, string status = null, string profilePhotoHeadShot = null, string profilePhotoHalfBody = null, string profilePhotoFullBody = null, string youtubeChannel = null)
         {
-            return new AdviserAttributes(googlePlaces, created, myLeadGenActivationDate, bio, jobTitle, isMyLeadGenActive, status, email, skype, facebook, linkedIn, twitter, youtubeFeatured, calendly, myLeadGenerator, profilePhotoHeadShot, profilePhotoHalfBody, profilePhotoFullBody, youtubeChannel);
+            return new AdviserAttributes(googlePlaces, created, bio, jobTitle, myLeadGenActivationDate, isMyLeadGenActive, email, skype, facebook, linkedIn, twitter, youtubeFeatured, calendly, myLeadGenerator, status, profilePhotoHeadShot, profilePhotoHalfBody, profilePhotoFullBody, youtubeChannel);
         }
 
         /// <summary> Initializes a new instance of RelationshipsSingleDocument. </summary>
@@ -1192,6 +1192,31 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public static AdviserAddressAttributes AdviserAddressAttributes(bool? isMailing = null, bool? isBusiness = null, string streetAddress = null, string country = null, string suburb = null, string postCode = null, string state = null)
         {
             return new AdviserAddressAttributes(isMailing, isBusiness, streetAddress, country, suburb, postCode, state);
+        }
+
+        /// <summary> Initializes a new instance of AgreementHolder. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"></param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <returns> A new <see cref="Models.AgreementHolder"/> instance for mocking. </returns>
+        public static AgreementHolder AgreementHolder(string type = null, string id = null, AgreementHolderAttributes attributes = null, AgreementHolderRelationships relationships = null, AgreementHolderLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        {
+            meta ??= new Dictionary<string, object>();
+
+            return new AgreementHolder(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of AgreementHolderAttributes. </summary>
+        /// <param name="appointmentEntity"></param>
+        /// <param name="employmentType"></param>
+        /// <param name="entityType"></param>
+        /// <returns> A new <see cref="Models.AgreementHolderAttributes"/> instance for mocking. </returns>
+        public static AgreementHolderAttributes AgreementHolderAttributes(string appointmentEntity = null, string employmentType = null, string entityType = null)
+        {
+            return new AgreementHolderAttributes(appointmentEntity, employmentType, entityType);
         }
 
         /// <summary> Initializes a new instance of DealStructureImportantDate. </summary>
