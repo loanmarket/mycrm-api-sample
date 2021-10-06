@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "49070bcf-94be-434a-be89-0986d1639c2f",
+		"name": "MyCRM Leads API Sample",
+		"description": "To use this sample it is necessary to populate the `Variables` section with the values supplied to you by Loan Market Group. This will enable the various samples to interact with your broker account in MyCRM. \n\n**NOTE:** If you are looking to replicate the behaviour of these samples, be sure to check the `Pre-request Script` section where the authorization flow is handled.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add Lead",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Add Contact Group\", function () {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.not.have.jsonBody('errors');",
+							"    pm.collectionVariables.set('lastLeadId', pm.response.json().data.id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"type\": \"leads\",\n        \"attributes\": {\n             \"title\": \"Mr\",\n            \"firstName\": \"Fred\",\n            \"preferredName\": null,\n            \"lastName\": \"Flintstone\",\n            \"email\": \"fred@bedrock.com\",\n            \"mobile\": \"0412345678\",\n            \"dateOfBirth\": \"2000-07-29\",\n            \"gender\": \"Male\",\n            \"hasMarketingConsent\": true,\n            \"isGuarantor\": false,\n            \"isDependant\": false,\n            \"isPrimary\": true,\n\n            \"streetAddress\": \"111 Eagle St\",\n            \"suburb\": \"Brisbane\",\n            \"state\": \"Queensland\",\n            \"postCode\": \"4000\",\n            \"country\": \"Australia\",\n            \"addressType\": \"Current\",\n\n            \"noteTitle\": \"About the lead\",\n            \"noteDetails\": \"This is why it happened\",\n\n            \"utmSource\": \"facebook\",\n            \"utmMedium\": \"social\",\n            \"utmCampaign\": \"mycrm-fb\",\n            \"utmTerm\": \"investment\",\n            \"utmContent\": \"lm\",\n            \n            \"sourceSystemUrl\": \"https://www.loanmarket.com.au/brokers/direct/our-team/michael-atherton\"\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PublicAPI_Url}}/jsonapi/leads",
+					"host": [
+						"{{PublicAPI_Url}}"
+					],
+					"path": [
+						"jsonapi",
+						"leads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Lead",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Add Contact Group\", function () {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.not.have.jsonBody('errors');",
+							"    pm.collectionVariables.set('lastLeadId', pm.response.json().data.id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PublicAPI_Url}}/jsonapi/leads/{{lastLeadId}}",
+					"host": [
+						"{{PublicAPI_Url}}"
+					],
+					"path": [
+						"jsonapi",
+						"leads",
+						"{{lastLeadId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{OAuth_Token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Refresh the OAuth token if necessary",
+					"var tokenDate = new Date(2010,1,1);",
+					"",
+					"var tokenTimestamp = pm.variables.get(\"OAuth_Timestamp\");",
+					"if(tokenTimestamp){",
+					"  tokenDate = Date.parse(tokenTimestamp);",
+					"}",
+					"",
+					"var expiresInTime = pm.variables.get(\"ExpiresInTime\");",
+					"if(!expiresInTime){",
+					"    expiresInTime = 300000; // Set default expiration time to 5 minutes",
+					"}",
+					"",
+					"if((new Date() - tokenDate) >= expiresInTime) ",
+					"{",
+					"   pm.sendRequest({",
+					"      url:  pm.variables.get(\"Auth_Url\"), ",
+					"      method: 'POST',",
+					"      header: {",
+					"        'Accept': 'application/json',",
+					"        'Content-Type': 'application/x-www-form-urlencoded',",
+					"        'Authorization': 'Basic ' + btoa(pm.variables.get(\"ClientID\") + ':' + pm.variables.get(\"ClientSecret\"))",
+					"      },",
+					"      body: {",
+					"          mode: 'urlencoded',",
+					"          urlencoded: [",
+					"              { key: \"grant_type\", value: \"client_credentials\" },",
+					"              { key: \"scope\", value: pm.variables.get(\"Scopes\") }",
+					"          ]",
+					"      }",
+					"  }, function (err, res) {",
+					"",
+					"        pm.collectionVariables.set(\"OAuth_Token\", res.json().access_token);",
+					"        pm.collectionVariables.set(\"OAuth_Timestamp\", new Date());",
+					"        ",
+					"        // Set the ExpiresInTime variable to the time given in the response if it exists",
+					"        if(res.json().expires_in){",
+					"            expiresInTime = res.json().expires_in * 1000;",
+					"        }",
+					"        pm.collectionVariables.set(\"ExpiresInTime\", expiresInTime);",
+					"  });",
+					"}",
+					"",
+					"pm.request.headers.add({key: 'accept', value: 'application/vnd.api+json' })",
+					"pm.request.headers.add({key: 'Content-Type', value: 'application/vnd.api+json' })",
+					"pm.request.headers.add({key: 'UserId', value: pm.variables.get(\"AdviserContactId\") })"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Auth_Url",
+			"value": ""
+		},
+		{
+			"key": "ClientID",
+			"value": ""
+		},
+		{
+			"key": "ClientSecret",
+			"value": ""
+		},
+		{
+			"key": "Scopes",
+			"value": "api.leads"
+		},
+		{
+			"key": "AdviserContactId",
+			"value": ""
+		},
+		{
+			"key": "PublicAPI_Url",
+			"value": ""
+		}
+	]
+}
