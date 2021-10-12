@@ -10,6 +10,10 @@ The following information will be required to support your request:
 - The operation(s) you wish to perform (e.g. read contacts)
 - The context of the access. For example, it may be for a broker organisation or based on a subscription agreement
 
+## Reviewing the API
+
+The full OpenAPI specification is available in [MyCrmSampleClient/swagger.json](MyCrmSampleClient/swagger.json) which can preview using [swagger.io](https://editor.swagger.io/?url=https://raw.githubusercontent.com/loanmarket/mycrm-api-sample/main/MyCrmSampleClient/swagger.json).
+
 ## Using the Postman Collection
 
 The included [Postman Collection](MyCRM%20API%20Sample.postman_collection.json) can be imported into [Postman](https://www.postman.com/) to test the behaviour of the MyCRM API.
