@@ -9,6 +9,7 @@ Customers and partners wishing to access the api will need to request credential
 The following information will be required to support your request:
 - The operation(s) you wish to perform (e.g. read contacts)
 - The context of the access. For example, it may be for a broker organisation or based on a subscription agreement
+- If you intend to use real-time updates from MyCRM via webhooks
 
 ## Reviewing the API
 
@@ -70,10 +71,30 @@ Example scopes are:
 
 - `api`: full access to all endpoints
 - `api.read`: read access to all entities by their key (e.g. GET `/jsonapi/contacts/{id}`)
-- `api.seach`: access to query for an entity (e.g. GET `/jsonapi/contacts`)
+- `api.search`: access to query for any entity (e.g. GET `/jsonapi/contacts`)
 - `api.leads`: access to the `/jsonapi/leads` endpoints to create and monitor leads
 - `api.marketing`: access to the `/jsonapi/contact-marketing` endpoints to update marketing consent
 - `api.contacts`: access to the `/jsonapi/contacts` endpoints to manage contacts
-- `api.contacts.read`: access to the read endpoints under `/jsonapi/contacts`
+- `api.contacts.read`: access to read contact details via the GET `/jsonapi/contacts/{id}` endpoint
 
 You will only be able to access an endpoint if you request an applicable scope, regardless of the scopes available to you.
+
+## Real-time Updates via Webhooks
+
+[Webhooks](https://en.wikipedia.org/wiki/Webhook) are a common method of loose integration between web accessible systems. MyCRM supports webhooks for some scenarios, including organisation and advisor changes. Once configured, MyCRM will contact your web endpoint sending a JSON body similar to:
+
+```json
+{
+  "action": "updated",
+  "resource": {
+    "type": "organisations",
+    "id": 1123,
+    "url": "https://api.mycrm/jsonapi/organisations/1123"
+  },
+  "webhook": {
+    "name": "Example Organisation Webhook"
+  }
+}
+```
+
+On successful receipt your system should respond with HTTP status `200 OK`. If the callback fails we will retry a number of times over a short period before finally failing the notification.
