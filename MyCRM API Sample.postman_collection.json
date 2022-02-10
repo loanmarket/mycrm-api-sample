@@ -864,7 +864,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"contact-groups\",\n    \"id\": {{lastContactGroupId}},\n    \"attributes\": {\n        \"name\": \"Stone Patch\",\n        \"utmSource\": \"facebook\",\n        \"utmMedium\": \"social\",\n        \"utmTerm\": \"investment\",\n        \"utmContent\": \"lm\",\n        \"utmCampaign\": \"mycrm-fb\",\n        \"referrerId\": null,\n        \"referrerOrgId\": null,\n        \"referrerOrgName\": null,\n        \"referrerName\": null\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contact-groups\",\n    \"id\": \"{{lastContactGroupId}}\",\n    \"attributes\": {\n        \"name\": \"Stone Patch\",\n        \"utmSource\": \"facebook\",\n        \"utmMedium\": \"social\",\n        \"utmTerm\": \"investment\",\n        \"utmContent\": \"lm\",\n        \"utmCampaign\": \"mycrm-fb\",\n        \"referrerId\": null,\n        \"referrerOrgId\": null,\n        \"referrerOrgName\": null,\n        \"referrerName\": null\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1197,7 +1197,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\",\n    \"id\": {{lastContactId}},\n    \"attributes\": {\n      \"middleName\": \"Howard\",\n      \"mobile\": \"040{{lastContactGroupId}}\",\n      \"email\": \"patched-{{lastContactGroupId}}@email.com\",\n      \"dateOfBirth\": \"1943-05-13\",\n      \"marketingConsent\": true\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\",\n    \"id\": \"{{lastContactId}}\",\n    \"attributes\": {\n      \"middleName\": \"Howard\",\n      \"mobile\": \"040{{lastContactGroupId}}\",\n      \"email\": \"patched-{{lastContactGroupId}}@email.com\",\n      \"dateOfBirth\": \"1943-05-13\",\n      \"marketingConsent\": true\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1225,7 +1225,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"contact-marketing\",\n    \"id\": {{lastContactId}},\n    \"attributes\": {\n      \"hasMarketingConsent\": false\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contact-marketing\",\n    \"id\": \"{{lastContactId}}\",\n    \"attributes\": {\n      \"hasMarketingConsent\": false\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1673,7 +1673,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"deals\",\n    \"id\": {{lastDealId}},\n    \"attributes\": {\n      \"name\": \"Home loan re 2 Stone {{lastContactId}}\"\n    }\n  }\n}"
+							"raw": "{\n  \"data\": {\n    \"type\": \"deals\",\n    \"id\": \"{{lastDealId}}\",\n    \"attributes\": {\n      \"name\": \"Home loan re 2 Stone {{lastContactId}}\"\n    }\n  }\n}"
 						},
 						"url": {
 							"raw": "{{PublicAPI_Url}}/jsonapi/deals/:id",
@@ -1723,7 +1723,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"data\": {\n        \"type\": \"deal-notes\",\n        \"attributes\": {\n            \"title\": \"A note on the last deal\",\n            \"detail\": \"These are some deal note details\"\n        },\n        \"relationships\": {\n            \"deal\": {\n                \"data\": {\n                    \"type\": \"deals\",\n                    \"id\": {{lastDealId}}\n                }\n            }\n        }\n    }\n}",
+							"raw": "{\n    \"data\": {\n        \"type\": \"deal-notes\",\n        \"attributes\": {\n            \"title\": \"A note on the last deal\",\n            \"detail\": \"These are some deal note details\"\n        },\n        \"relationships\": {\n            \"deal\": {\n                \"data\": {\n                    \"type\": \"deals\",\n                    \"id\": \"{{lastDealId}}\"\n                }\n            }\n        }\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1761,7 +1761,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"data\": {\n        \"type\": \"deal-notes\",\n        \"id\": {{lastDealNoteId}},\n        \"attributes\": {\n            \"title\": \"Title update for deal note {{lastDealNoteId}}\",\n            \"detail\": \"Body update for deal note {{lastDealNoteId}}\"\n        }\n    }\n}",
+							"raw": "{\n    \"data\": {\n        \"type\": \"deal-notes\",\n        \"id\": \"{{lastDealNoteId}}\",\n        \"attributes\": {\n            \"title\": \"Title update for deal note {{lastDealNoteId}}\",\n            \"detail\": \"Body update for deal note {{lastDealNoteId}}\"\n        }\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
