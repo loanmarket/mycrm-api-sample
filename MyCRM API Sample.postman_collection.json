@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "99fe3a59-4bcb-471f-830d-7a6c51e451e6",
+		"_postman_id": "fdeae959-4acb-4b2e-9cb3-4b98d7869a37",
 		"name": "MyCRM API Sample",
 		"description": "To use this sample it is necessary to populate the `Variables` section with the values supplied to you by Loan Market Group. This will enable the various samples to interact with your broker account in MyCRM. \n\n**NOTE:** If you are looking to replicate the behaviour of these samples, be sure to check the `Pre-request Script` section where the authorization flow is handled.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -283,7 +283,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "{{lastContactId}}"
+									"value": "{{lastAdviserId}}"
 								}
 							]
 						}
@@ -435,7 +435,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{PublicAPI_Url}}/jsonapi/contact-groups?sort=-id&include=referrer,referrerOrganization",
+									"raw": "{{PublicAPI_Url}}/jsonapi/contact-groups?sort=-id&include=referrer,referrerOrganisation",
 									"host": [
 										"{{PublicAPI_Url}}"
 									],
@@ -450,7 +450,7 @@
 										},
 										{
 											"key": "include",
-											"value": "referrer,referrerOrganization"
+											"value": "referrer,referrerOrganisation"
 										}
 									]
 								}
@@ -934,7 +934,7 @@
 					"name": "Relationships",
 					"item": [
 						{
-							"name": "Get Last Contact include Addresses",
+							"name": "Get Last Contact Addresses",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -952,6 +952,37 @@
 										{
 											"key": "include",
 											"value": "contactAddress"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{lastContactId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Last Contact Financials",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/jsonapi/contacts/:id?include=ownership,ownership.asset,ownership.liability,ownership.income,ownership.expense",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"jsonapi",
+										"contacts",
+										":id"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "ownership,ownership.asset,ownership.liability,ownership.income,ownership.expense"
 										}
 									],
 									"variable": [
@@ -1025,7 +1056,7 @@
 					"name": "Field Selection",
 					"item": [
 						{
-							"name": "Get Contacts Email",
+							"name": "Get Contacts Email and Consent",
 							"event": [
 								{
 									"listen": "test",
@@ -1599,82 +1630,10 @@
 					"response": []
 				},
 				{
-					"name": "Add Deal",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Add Deal\", function () {",
-									"    pm.response.to.have.status(201);",
-									"    pm.response.to.be.json;",
-									"    pm.response.to.not.have.jsonBody('errors');",
-									"    pm.collectionVariables.set('lastDealId', pm.response.json().data.id);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"deals\",\n    \"attributes\": {\n      \"dealType\": \"Residential\",\n      \"name\": \"Home Loan 1 for the Stones\"\n    },\n    \"relationships\": {\n      \"contacts\": {\n          \"data\": [\n              { \"type\": \"contacts\", \"id\": \"{{lastContactId}}\" }\n          ]\n      }\n    }\n  }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{PublicAPI_Url}}/jsonapi/deals",
-							"host": [
-								"{{PublicAPI_Url}}"
-							],
-							"path": [
-								"jsonapi",
-								"deals"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Get Last Deal",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{PublicAPI_Url}}/jsonapi/deals/:id",
-							"host": [
-								"{{PublicAPI_Url}}"
-							],
-							"path": [
-								"jsonapi",
-								"deals",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "{{lastDealId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Deal",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"deals\",\n    \"id\": \"{{lastDealId}}\",\n    \"attributes\": {\n      \"name\": \"Home loan re 2 Stone {{lastContactId}}\"\n    }\n  }\n}"
-						},
 						"url": {
 							"raw": "{{PublicAPI_Url}}/jsonapi/deals/:id",
 							"host": [
@@ -1838,12 +1797,28 @@
 				},
 				{
 					"name": "Add Integration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Save Last Integration\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    pm.collectionVariables.set('lastIntegrationId', pm.response.json().data.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"integrations\",\n    \"attributes\": {\n      \"name\": \"Dynamics - UAT\",\n      \"description\": \"Testing Clarendon Dynamics Integration in UAT\"\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"integrations\",\n    \"attributes\": {\n      \"name\": \"Testing\",\n      \"description\": \"Testing Integration\"\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1860,6 +1835,14 @@
 								"integrations"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Integration",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
@@ -1894,12 +1877,28 @@
 				},
 				{
 					"name": "Add Deal External Ref",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Add Deal External Ref\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    pm.collectionVariables.set('lastDealExternalRefId', pm.response.json().data.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"deal-external-references\",\n    \"attributes\": {\n      \"externalReference\": \"freddyloan123abc\"\n    },\n    \"relationships\": {\n      \"deal\": {\n          \"data\": {\n              \"type\": \"deals\",\n              \"id\": \"<set to deal Id>\"\n          }\n      },\n      \"integration\": {\n          \"data\": {\n              \"type\": \"integrations\",\n              \"id\": \"<set to integration Id>\"\n          }\n      }\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"deal-external-references\",\n    \"attributes\": {\n      \"externalReference\": \"freddyloan123abc\"\n    },\n    \"relationships\": {\n      \"deal\": {\n          \"data\": {\n              \"type\": \"deals\",\n              \"id\": \"{{lastDealId}}\"\n          }\n      },\n      \"integration\": {\n          \"data\": {\n              \"type\": \"integrations\",\n              \"id\": \"{{lastIntegrationId}}\"\n          }\n      }\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1925,14 +1924,20 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/jsonapi/deal-external-references/1",
+							"raw": "{{PublicAPI_Url}}/jsonapi/deal-external-references/:id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
 								"jsonapi",
 								"deal-external-references",
-								"1"
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastDealExternalRefId}}"
+								}
 							]
 						}
 					},
@@ -1969,12 +1974,28 @@
 				},
 				{
 					"name": "Add Contact External Ref",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Add Contact External Ref\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.not.have.jsonBody('errors');",
+									"    pm.collectionVariables.set('lastContactExternalRefId', pm.response.json().data.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"contact-external-references\",\n    \"attributes\": {\n      \"externalReference\": \"freddy123\"\n    },\n    \"relationships\": {\n      \"contact\": {\n        \"data\" : { \n          \"type\": \"contacts\", \n          \"id\": \"<set to contact Id>\"\n        }\n      },\n      \"integration\": {\n        \"data\": {\n          \"type\": \"integrations\",\n          \"id\": \"<set to integration Id>\"\n        }\n      }\n    }\n  }\n}",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contact-external-references\",\n    \"attributes\": {\n      \"externalReference\": \"freddy{{lastIntegrationId}}\"\n    },\n    \"relationships\": {\n      \"contact\": {\n        \"data\" : { \n          \"type\": \"contacts\", \n          \"id\": \"{{lastContactId}}\"\n        }\n      },\n      \"integration\": {\n        \"data\": {\n          \"type\": \"integrations\",\n          \"id\": \"{{lastIntegrationId}}\"\n        }\n      }\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2000,14 +2021,20 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{PublicAPI_Url}}/jsonapi/contact-external-references/1",
+							"raw": "{{PublicAPI_Url}}/jsonapi/contact-external-references/:id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
 								"jsonapi",
 								"contact-external-references",
-								"1"
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastContactExternalRefId}}"
+								}
 							]
 						}
 					},
@@ -2048,11 +2075,11 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Add Contact Group\", function () {",
+									"pm.test(\"Add Lead\", function () {",
 									"    pm.response.to.have.status(201);",
 									"    pm.response.to.be.json;",
 									"    pm.response.to.not.have.jsonBody('errors');",
-									"    pm.collectionVariables.set('lastLeadId', pm.response.json().data.id);",
+									"    pm.collectionVariables.set('lastDealId', pm.response.json().data.id);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2085,18 +2112,13 @@
 					"response": []
 				},
 				{
-					"name": "Get Lead",
+					"name": "Get Last Lead",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Add Contact Group\", function () {",
-									"    pm.response.to.have.status(201);",
-									"    pm.response.to.be.json;",
-									"    pm.response.to.not.have.jsonBody('errors');",
-									"    pm.collectionVariables.set('lastLeadId', pm.response.json().data.id);",
-									"});"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -2118,14 +2140,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{PublicAPI_Url}}/jsonapi/leads/{{lastLeadId}}",
+							"raw": "{{PublicAPI_Url}}/jsonapi/leads/:id",
 							"host": [
 								"{{PublicAPI_Url}}"
 							],
 							"path": [
 								"jsonapi",
 								"leads",
-								"{{lastLeadId}}"
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{lastDealId}}"
+								}
 							]
 						}
 					},
