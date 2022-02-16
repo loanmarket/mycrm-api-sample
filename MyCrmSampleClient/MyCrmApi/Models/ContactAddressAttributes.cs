@@ -21,16 +21,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="updated"></param>
         /// <param name="created"></param>
         /// <param name="addressType"></param>
+        /// <param name="formattedAddress"></param>
         /// <param name="streetAddress"></param>
         /// <param name="country"></param>
         /// <param name="suburb"></param>
         /// <param name="postCode"></param>
         /// <param name="state"></param>
-        internal ContactAddressAttributes(DateTimeOffset? updated, DateTimeOffset? created, ContactAddressAttributesAddressType? addressType, string streetAddress, string country, string suburb, string postCode, string state)
+        internal ContactAddressAttributes(DateTimeOffset? updated, DateTimeOffset? created, ContactAddressAttributesAddressType? addressType, string formattedAddress, string streetAddress, string country, string suburb, string postCode, string state)
         {
             Updated = updated;
             Created = created;
             AddressType = addressType;
+            FormattedAddress = formattedAddress;
             StreetAddress = streetAddress;
             Country = country;
             Suburb = suburb;
@@ -44,6 +46,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public DateTimeOffset? Created { get; }
         /// <summary> Gets or sets the address type. </summary>
         public ContactAddressAttributesAddressType? AddressType { get; set; }
+        /// <summary> Gets the formatted address. </summary>
+        public string FormattedAddress { get; }
         /// <summary> Gets the street address. </summary>
         public string StreetAddress { get; }
         /// <summary> Gets the country. </summary>

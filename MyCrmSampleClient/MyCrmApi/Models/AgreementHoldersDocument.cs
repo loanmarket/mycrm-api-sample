@@ -13,7 +13,7 @@ using Azure.Core;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The AgreementHoldersDocument. </summary>
-    internal partial class AgreementHoldersDocument
+    public partial class AgreementHoldersDocument
     {
         /// <summary> Initializes a new instance of AgreementHoldersDocument. </summary>
         /// <param name="data"></param>
@@ -29,6 +29,21 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             JsonApi = new ChangeTrackingDictionary<string, object>();
             Data = data.ToList();
             Included = new ChangeTrackingList<IncludedResource>();
+        }
+
+        /// <summary> Initializes a new instance of AgreementHoldersDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        internal AgreementHoldersDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, AgreementHoldersDocumentLinks links, IReadOnlyList<AgreementHolder> data, IReadOnlyList<IncludedResource> included)
+        {
+            Meta = meta;
+            JsonApi = jsonApi;
+            Links = links;
+            Data = data;
+            Included = included;
         }
 
         /// <summary> Dictionary of &lt;any&gt;. </summary>

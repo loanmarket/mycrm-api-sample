@@ -13,7 +13,7 @@ The following information will be required to support your request:
 
 ## Reviewing the API
 
-The full OpenAPI specification is available in [MyCrmSampleClient/swagger.json](MyCrmSampleClient/swagger.json) which can preview using [swagger.io](https://editor.swagger.io/?url=https://raw.githubusercontent.com/loanmarket/mycrm-api-sample/main/MyCrmSampleClient/swagger.json).
+You can review our [API specification online](https://api-docs.mycrm.io/) or the full OpenAPI document is available in [MyCrmSampleClient/swagger.json](MyCrmSampleClient/swagger.json).
 
 ## Using the Postman Collection
 

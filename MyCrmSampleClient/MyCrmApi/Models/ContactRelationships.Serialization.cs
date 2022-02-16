@@ -20,6 +20,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("contactGroup");
                 writer.WriteObjectValue(ContactGroup);
             }
+            if (Optional.IsDefined(Ownership))
+            {
+                writer.WritePropertyName("ownership");
+                writer.WriteObjectValue(Ownership);
+            }
             if (Optional.IsDefined(ExternalReferences))
             {
                 writer.WritePropertyName("externalReferences");
@@ -41,6 +46,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         internal static ContactRelationships DeserializeContactRelationships(JsonElement element)
         {
             Optional<RelationshipsSingleDocument> contactGroup = default;
+            Optional<RelationshipsMultipleDocument> ownership = default;
             Optional<RelationshipsMultipleDocument> externalReferences = default;
             Optional<RelationshipsMultipleDocument> deals = default;
             Optional<RelationshipsMultipleDocument> contactAddress = default;
@@ -54,6 +60,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     contactGroup = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("ownership"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    ownership = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
                     continue;
                 }
                 if (property.NameEquals("externalReferences"))
@@ -87,7 +103,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ContactRelationships(contactGroup.Value, externalReferences.Value, deals.Value, contactAddress.Value);
+            return new ContactRelationships(contactGroup.Value, ownership.Value, externalReferences.Value, deals.Value, contactAddress.Value);
         }
     }
 }

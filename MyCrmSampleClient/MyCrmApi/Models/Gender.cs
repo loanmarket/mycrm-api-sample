@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The Gender. </summary>
-    internal readonly partial struct Gender : IEquatable<Gender>
+    public readonly partial struct Gender : IEquatable<Gender>
     {
         private readonly string _value;
 

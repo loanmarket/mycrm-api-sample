@@ -27,18 +27,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("dealType");
                 writer.WriteStringValue(DealType.Value.ToString());
             }
-            if (Optional.IsDefined(Name))
-            {
-                if (Name != null)
-                {
-                    writer.WritePropertyName("name");
-                    writer.WriteStringValue(Name);
-                }
-                else
-                {
-                    writer.WriteNull("name");
-                }
-            }
             if (Optional.IsDefined(Opportunity))
             {
                 writer.WritePropertyName("opportunity");

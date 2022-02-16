@@ -38,7 +38,7 @@ namespace MyCrmSampleClient.MyCrmApi
             _pipeline = pipeline;
         }
 
-        /// <summary> Gets adviser details for a collection of advisers. </summary>
+        /// <summary> Gets a collection of adviser details. </summary>
         /// <param name="filter"> The ArrayOfString to use. </param>
         /// <param name="sort"> The ArrayOfString to use. </param>
         /// <param name="page"> The Pagination to use. </param>
@@ -59,7 +59,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> Gets adviser details for a collection of advisers. </summary>
+        /// <summary> Gets a collection of adviser details. </summary>
         /// <param name="filter"> The ArrayOfString to use. </param>
         /// <param name="sort"> The ArrayOfString to use. </param>
         /// <param name="page"> The Pagination to use. </param>

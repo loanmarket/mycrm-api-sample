@@ -12,7 +12,7 @@ using Azure.Core;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The ReferrerDocument. </summary>
-    internal partial class ReferrerDocument
+    public partial class ReferrerDocument
     {
         /// <summary> Initializes a new instance of ReferrerDocument. </summary>
         /// <param name="data"></param>
@@ -28,6 +28,21 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             JsonApi = new ChangeTrackingDictionary<string, object>();
             Data = data;
             Included = new ChangeTrackingList<IncludedResource>();
+        }
+
+        /// <summary> Initializes a new instance of ReferrerDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        internal ReferrerDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, ReferrerDocumentLinks links, Referrer data, IReadOnlyList<IncludedResource> included)
+        {
+            Meta = meta;
+            JsonApi = jsonApi;
+            Links = links;
+            Data = data;
+            Included = included;
         }
 
         /// <summary> Dictionary of &lt;any&gt;. </summary>

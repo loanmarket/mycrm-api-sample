@@ -18,4 +18,5 @@ directive:
     where: $.paths.*.get.parameters[?(@.name === "page" && @.style === "deepObject")]
     transform: |
       $.style = "form";
+      $.explode = false;
     reason: deepObject is not supported by autorest yet for parameters

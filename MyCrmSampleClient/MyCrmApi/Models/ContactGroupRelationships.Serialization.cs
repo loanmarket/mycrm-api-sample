@@ -15,6 +15,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Businesses))
+            {
+                writer.WritePropertyName("businesses");
+                writer.WriteObjectValue(Businesses);
+            }
             if (Optional.IsDefined(Contacts))
             {
                 writer.WritePropertyName("contacts");
@@ -40,12 +45,23 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static ContactGroupRelationships DeserializeContactGroupRelationships(JsonElement element)
         {
+            Optional<RelationshipsMultipleDocument> businesses = default;
             Optional<RelationshipsMultipleDocument> contacts = default;
             Optional<RelationshipsSingleDocument> adviser = default;
             Optional<RelationshipsSingleDocument> referrerOrganisation = default;
             Optional<RelationshipsSingleDocument> referrer = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("businesses"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    businesses = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("contacts"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -87,7 +103,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ContactGroupRelationships(contacts.Value, adviser.Value, referrerOrganisation.Value, referrer.Value);
+            return new ContactGroupRelationships(businesses.Value, contacts.Value, adviser.Value, referrerOrganisation.Value, referrer.Value);
         }
     }
 }

@@ -307,6 +307,30 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("sourceSystemUrl");
                 }
             }
+            if (Optional.IsDefined(SourceId))
+            {
+                if (SourceId != null)
+                {
+                    writer.WritePropertyName("sourceId");
+                    writer.WriteNumberValue(SourceId.Value);
+                }
+                else
+                {
+                    writer.WriteNull("sourceId");
+                }
+            }
+            if (Optional.IsDefined(SourceCategoryId))
+            {
+                if (SourceCategoryId != null)
+                {
+                    writer.WritePropertyName("sourceCategoryId");
+                    writer.WriteNumberValue(SourceCategoryId.Value);
+                }
+                else
+                {
+                    writer.WriteNull("sourceCategoryId");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -338,6 +362,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> utmTerm = default;
             Optional<string> utmContent = default;
             Optional<string> sourceSystemUrl = default;
+            Optional<int?> sourceId = default;
+            Optional<int?> sourceCategoryId = default;
             Optional<string> customStatusName = default;
             Optional<LeadAttributesDealStatus> dealStatus = default;
             foreach (var property in element.EnumerateObject())
@@ -602,6 +628,26 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     sourceSystemUrl = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("sourceId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sourceId = null;
+                        continue;
+                    }
+                    sourceId = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("sourceCategoryId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sourceCategoryId = null;
+                        continue;
+                    }
+                    sourceCategoryId = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("customStatusName"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -623,7 +669,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new LeadAttributes(Optional.ToNullable(dateOfBirth), Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), streetAddress.Value, suburb.Value, state.Value, postCode.Value, country.Value, Optional.ToNullable(addressType), noteTitle.Value, noteDetails.Value, utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, sourceSystemUrl.Value, customStatusName.Value, Optional.ToNullable(dealStatus));
+            return new LeadAttributes(Optional.ToNullable(dateOfBirth), Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), streetAddress.Value, suburb.Value, state.Value, postCode.Value, country.Value, Optional.ToNullable(addressType), noteTitle.Value, noteDetails.Value, utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, sourceSystemUrl.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), customStatusName.Value, Optional.ToNullable(dealStatus));
         }
     }
 }

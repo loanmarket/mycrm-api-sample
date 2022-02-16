@@ -77,6 +77,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("utmCampaign");
                 }
             }
+            if (Optional.IsDefined(ContactType))
+            {
+                writer.WritePropertyName("contactType");
+                writer.WriteStringValue(ContactType.Value.ToString());
+            }
             if (Optional.IsDefined(Notes))
             {
                 if (Notes != null)
@@ -102,7 +107,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> utmContent = default;
             Optional<string> utmCampaign = default;
             Optional<IReadOnlyList<string>> categories = default;
+            Optional<ContactGroupAttributesContactType> contactType = default;
             Optional<string> notes = default;
+            Optional<string> enquirySourceCategory = default;
+            Optional<string> enquirySource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("updated"))
@@ -190,6 +198,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     categories = array;
                     continue;
                 }
+                if (property.NameEquals("contactType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    contactType = new ContactGroupAttributesContactType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("notes"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -200,8 +218,28 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     notes = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("enquirySourceCategory"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        enquirySourceCategory = null;
+                        continue;
+                    }
+                    enquirySourceCategory = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("enquirySource"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        enquirySource = null;
+                        continue;
+                    }
+                    enquirySource = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ContactGroupAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), utmSource.Value, utmMedium.Value, utmTerm.Value, utmContent.Value, utmCampaign.Value, Optional.ToList(categories), notes.Value);
+            return new ContactGroupAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), utmSource.Value, utmMedium.Value, utmTerm.Value, utmContent.Value, utmCampaign.Value, Optional.ToList(categories), Optional.ToNullable(contactType), notes.Value, enquirySourceCategory.Value, enquirySource.Value);
         }
     }
 }

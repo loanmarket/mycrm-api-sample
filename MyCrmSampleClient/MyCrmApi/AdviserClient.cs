@@ -37,7 +37,7 @@ namespace MyCrmSampleClient.MyCrmApi
             _pipeline = pipeline;
         }
 
-        /// <summary> Where `id` is the identifier of the adviser. aka MyCrm family_id. </summary>
+        /// <summary> Where `id` is the identifier of the adviser. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AdviserDocument>> GetAsync(int id, CancellationToken cancellationToken = default)
@@ -55,7 +55,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        /// <summary> Where `id` is the identifier of the adviser. aka MyCrm family_id. </summary>
+        /// <summary> Where `id` is the identifier of the adviser. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AdviserDocument> Get(int id, CancellationToken cancellationToken = default)

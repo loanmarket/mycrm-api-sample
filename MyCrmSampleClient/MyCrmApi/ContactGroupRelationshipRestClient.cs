@@ -18,9 +18,11 @@ namespace MyCrmSampleClient.MyCrmApi
 {
     internal partial class ContactGroupRelationshipRestClient
     {
-        private Uri endpoint;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ContactGroupRelationshipRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -28,9 +30,239 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <param name="endpoint"> server parameter. </param>
         public ContactGroupRelationshipRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            this.endpoint = endpoint ?? new Uri("");
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("");
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+        }
+
+        internal HttpMessage CreateGetBusinessesRequest(int id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contact-groups/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/businesses", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<RelationshipsMultipleDocument>> GetBusinessesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetBusinessesRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RelationshipsMultipleDocument value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<RelationshipsMultipleDocument> GetBusinesses(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetBusinessesRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RelationshipsMultipleDocument value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePostBusinessesRequest(int id, RelationshipsMultipleDocument body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contact-groups/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/businesses", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            if (body != null)
+            {
+                request.Headers.Add("Content-Type", "application/vnd.api+json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> PostBusinessesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePostBusinessesRequest(id, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response PostBusinesses(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePostBusinessesRequest(id, body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePatchBusinessesRequest(int id, RelationshipsMultipleDocument body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contact-groups/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/businesses", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            if (body != null)
+            {
+                request.Headers.Add("Content-Type", "application/vnd.api+json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> PatchBusinessesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePatchBusinessesRequest(id, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response PatchBusinesses(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePatchBusinessesRequest(id, body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteBusinessesRequest(int id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contact-groups/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/businesses", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> DeleteBusinessesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteBusinessesRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the contact group. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response DeleteBusinesses(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteBusinessesRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                case 401:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateGetContactsRequest(int id)
@@ -39,7 +271,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/contacts", false);
@@ -67,7 +299,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -90,7 +322,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -100,7 +332,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/contacts", false);
@@ -131,7 +363,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -150,7 +382,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -160,7 +392,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/contacts", false);
@@ -191,7 +423,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -210,7 +442,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -220,7 +452,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/contacts", false);
@@ -242,7 +474,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -259,7 +491,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -269,7 +501,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/adviser", false);
@@ -297,7 +529,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -320,7 +552,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -330,7 +562,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/adviser", false);
@@ -361,7 +593,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -380,7 +612,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -390,7 +622,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/adviser", false);
@@ -421,7 +653,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -440,7 +672,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -450,7 +682,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/adviser", false);
@@ -472,7 +704,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -489,7 +721,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -499,7 +731,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/referrerOrganisation", false);
@@ -527,7 +759,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -550,7 +782,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -560,7 +792,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/referrerOrganisation", false);
@@ -591,7 +823,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -610,7 +842,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -620,7 +852,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/referrerOrganisation", false);
@@ -651,7 +883,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -670,7 +902,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -680,7 +912,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/referrerOrganisation", false);
@@ -702,7 +934,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -719,7 +951,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -729,7 +961,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/referrer", false);
@@ -757,7 +989,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -780,7 +1012,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -790,7 +1022,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/referrer", false);
@@ -821,7 +1053,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -840,7 +1072,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -850,7 +1082,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/referrer", false);
@@ -881,7 +1113,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -900,7 +1132,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -910,7 +1142,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/referrer", false);
@@ -932,7 +1164,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -949,7 +1181,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

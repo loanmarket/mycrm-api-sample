@@ -29,6 +29,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<DateTimeOffset?> updated = default;
             Optional<DateTimeOffset?> created = default;
             Optional<ContactAddressAttributesAddressType> addressType = default;
+            Optional<string> formattedAddress = default;
             Optional<string> streetAddress = default;
             Optional<string> country = default;
             Optional<string> suburb = default;
@@ -64,6 +65,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     addressType = new ContactAddressAttributesAddressType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("formattedAddress"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        formattedAddress = null;
+                        continue;
+                    }
+                    formattedAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("streetAddress"))
@@ -117,7 +128,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ContactAddressAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), Optional.ToNullable(addressType), streetAddress.Value, country.Value, suburb.Value, postCode.Value, state.Value);
+            return new ContactAddressAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), Optional.ToNullable(addressType), formattedAddress.Value, streetAddress.Value, country.Value, suburb.Value, postCode.Value, state.Value);
         }
     }
 }

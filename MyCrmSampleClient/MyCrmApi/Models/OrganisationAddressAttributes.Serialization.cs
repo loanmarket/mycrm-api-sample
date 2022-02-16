@@ -46,6 +46,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<bool?> isMailing = default;
             Optional<bool?> isCustomAddress = default;
+            Optional<string> formattedAddress = default;
             Optional<string> streetAddress = default;
             Optional<string> country = default;
             Optional<string> suburb = default;
@@ -71,6 +72,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     isCustomAddress = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("formattedAddress"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        formattedAddress = null;
+                        continue;
+                    }
+                    formattedAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("streetAddress"))
@@ -124,7 +135,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new OrganisationAddressAttributes(Optional.ToNullable(isMailing), Optional.ToNullable(isCustomAddress), streetAddress.Value, country.Value, suburb.Value, postCode.Value, state.Value);
+            return new OrganisationAddressAttributes(Optional.ToNullable(isMailing), Optional.ToNullable(isCustomAddress), formattedAddress.Value, streetAddress.Value, country.Value, suburb.Value, postCode.Value, state.Value);
         }
     }
 }

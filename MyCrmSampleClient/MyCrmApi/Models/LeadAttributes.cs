@@ -44,9 +44,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="utmTerm"></param>
         /// <param name="utmContent"></param>
         /// <param name="sourceSystemUrl"></param>
+        /// <param name="sourceId"></param>
+        /// <param name="sourceCategoryId"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
-        internal LeadAttributes(DateTimeOffset? dateOfBirth, LeadAttributesTitle? title, string firstName, string preferredName, string lastName, string email, string mobile, LeadAttributesGender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, LeadAttributesAddressType? addressType, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, string customStatusName, LeadAttributesDealStatus? dealStatus)
+        internal LeadAttributes(DateTimeOffset? dateOfBirth, LeadAttributesTitle? title, string firstName, string preferredName, string lastName, string email, string mobile, LeadAttributesGender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, LeadAttributesAddressType? addressType, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, int? sourceId, int? sourceCategoryId, string customStatusName, LeadAttributesDealStatus? dealStatus)
         {
             DateOfBirth = dateOfBirth;
             Title = title;
@@ -74,6 +76,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             UtmTerm = utmTerm;
             UtmContent = utmContent;
             SourceSystemUrl = sourceSystemUrl;
+            SourceId = sourceId;
+            SourceCategoryId = sourceCategoryId;
             CustomStatusName = customStatusName;
             DealStatus = dealStatus;
         }
@@ -130,6 +134,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string UtmContent { get; set; }
         /// <summary> Gets or sets the source system url. </summary>
         public string SourceSystemUrl { get; set; }
+        /// <summary> Gets or sets the source id. </summary>
+        public int? SourceId { get; set; }
+        /// <summary> Gets or sets the source category id. </summary>
+        public int? SourceCategoryId { get; set; }
         /// <summary> Gets the custom status name. </summary>
         public string CustomStatusName { get; }
         /// <summary> Gets the deal status. </summary>

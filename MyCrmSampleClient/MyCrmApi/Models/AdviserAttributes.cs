@@ -20,9 +20,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of AdviserAttributes. </summary>
         /// <param name="googlePlaces"></param>
         /// <param name="created"></param>
+        /// <param name="myLeadGenActivationDate"></param>
         /// <param name="bio"></param>
         /// <param name="jobTitle"></param>
-        /// <param name="myLeadGenActivationDate"></param>
         /// <param name="isMyLeadGenActive"></param>
         /// <param name="email"></param>
         /// <param name="skype"></param>
@@ -30,6 +30,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="linkedIn"></param>
         /// <param name="twitter"></param>
         /// <param name="youtubeFeatured"></param>
+        /// <param name="instagram"></param>
         /// <param name="calendly"></param>
         /// <param name="myLeadGenerator"></param>
         /// <param name="status"></param>
@@ -37,13 +38,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="profilePhotoHalfBody"></param>
         /// <param name="profilePhotoFullBody"></param>
         /// <param name="youtubeChannel"></param>
-        internal AdviserAttributes(string googlePlaces, DateTimeOffset? created, string bio, string jobTitle, DateTimeOffset? myLeadGenActivationDate, bool? isMyLeadGenActive, string email, string skype, string facebook, string linkedIn, string twitter, string youtubeFeatured, string calendly, string myLeadGenerator, string status, string profilePhotoHeadShot, string profilePhotoHalfBody, string profilePhotoFullBody, string youtubeChannel)
+        internal AdviserAttributes(string googlePlaces, DateTimeOffset? created, DateTimeOffset? myLeadGenActivationDate, string bio, string jobTitle, bool? isMyLeadGenActive, string email, string skype, string facebook, string linkedIn, string twitter, string youtubeFeatured, string instagram, string calendly, string myLeadGenerator, string status, string profilePhotoHeadShot, string profilePhotoHalfBody, string profilePhotoFullBody, string youtubeChannel)
         {
             GooglePlaces = googlePlaces;
             Created = created;
+            MyLeadGenActivationDate = myLeadGenActivationDate;
             Bio = bio;
             JobTitle = jobTitle;
-            MyLeadGenActivationDate = myLeadGenActivationDate;
             IsMyLeadGenActive = isMyLeadGenActive;
             Email = email;
             Skype = skype;
@@ -51,6 +52,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             LinkedIn = linkedIn;
             Twitter = twitter;
             YoutubeFeatured = youtubeFeatured;
+            Instagram = instagram;
             Calendly = calendly;
             MyLeadGenerator = myLeadGenerator;
             Status = status;
@@ -64,12 +66,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string GooglePlaces { get; }
         /// <summary> Gets the created. </summary>
         public DateTimeOffset? Created { get; }
+        /// <summary> Gets the my lead gen activation date. </summary>
+        public DateTimeOffset? MyLeadGenActivationDate { get; }
         /// <summary> Gets the bio. </summary>
         public string Bio { get; }
         /// <summary> Gets the job title. </summary>
         public string JobTitle { get; }
-        /// <summary> Gets the my lead gen activation date. </summary>
-        public DateTimeOffset? MyLeadGenActivationDate { get; }
         /// <summary> Gets the is my lead gen active. </summary>
         public bool? IsMyLeadGenActive { get; }
         /// <summary> Gets the email. </summary>
@@ -84,6 +86,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string Twitter { get; }
         /// <summary> Gets the youtube featured. </summary>
         public string YoutubeFeatured { get; }
+        /// <summary> Gets the instagram. </summary>
+        public string Instagram { get; }
         /// <summary> Gets the calendly. </summary>
         public string Calendly { get; }
         /// <summary> Gets the my lead generator. </summary>
