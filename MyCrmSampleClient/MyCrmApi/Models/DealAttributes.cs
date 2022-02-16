@@ -59,8 +59,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string CustomStatusName { get; }
         /// <summary> Gets or sets the deal type. </summary>
         public DealAttributesDealType? DealType { get; set; }
-        /// <summary> Gets or sets the name. </summary>
-        public string Name { get; set; }
+        /// <summary> Gets the name. </summary>
+        public string Name { get; }
         /// <summary> Gets the deal status. </summary>
         public DealAttributesDealStatus? DealStatus { get; }
         /// <summary> Gets or sets the opportunity. </summary>

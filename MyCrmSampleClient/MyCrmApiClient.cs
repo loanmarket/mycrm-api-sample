@@ -15,17 +15,31 @@ namespace MyCrmSampleClient
         public AdviserDetailRelatedClient AdviserDetailRelated { get; }
         public AdviserDetailRelationshipClient AdviserDetailRelationship { get; }
         public AdviserDetailsClient AdviserDetails { get; }
+        public AdviserRelatedClient AdviserRelated { get; }
+        public AdviserRelationshipClient AdviserRelationship { get; }
         public AdvisersClient Advisers { get; }
+        public AssetCategoriesClient AssetCategories { get; }
+        public AssetCategoryClient AssetCategory { get; }
+        public AssetCategoryRelatedClient AssetCategoryRelated { get; }
+        public AssetCategoryRelationshipClient AssetCategoryRelationship { get; }
+        public AssetClient Asset { get; }
+        public AssetRelatedClient AssetRelated { get; }
+        public AssetRelationshipClient AssetRelationship { get; }
+        public AssetSubTypeClient AssetSubType { get; }
+        public AssetSubTypeRelatedClient AssetSubTypeRelated { get; }
+        public AssetSubTypeRelationshipClient AssetSubTypeRelationship { get; }
+        public AssetSubTypesClient AssetSubTypes { get; }
+        public AssetTypeClient AssetType { get; }
+        public AssetTypeRelatedClient AssetTypeRelated { get; }
+        public AssetTypeRelationshipClient AssetTypeRelationship { get; }
+        public AssetTypesClient AssetTypes { get; }
+        public AssetsClient Assets { get; }
         public ContactClient Contact { get; }
         public ContactExternalReferenceClient ContactExternalReference { get; }
         public ContactExternalReferenceRelatedClient ContactExternalReferenceRelated { get; }
         public ContactExternalReferenceRelationshipClient ContactExternalReferenceRelationship { get; }
         public ContactExternalReferencesClient ContactExternalReferences { get; }
         public ContactGroupClient ContactGroup { get; }
-        public ContactGroupReferrerClient ContactGroupReferrer { get; }
-        public ContactGroupReferrerRelatedClient ContactGroupReferrerRelated { get; }
-        public ContactGroupReferrerRelationshipClient ContactGroupReferrerRelationship { get; }
-        public ContactGroupReferrersClient ContactGroupReferrers { get; }
         public ContactGroupRelatedClient ContactGroupRelated { get; }
         public ContactGroupRelationshipClient ContactGroupRelationship { get; }
         public ContactGroupsClient ContactGroups { get; }
@@ -49,13 +63,56 @@ namespace MyCrmSampleClient
         public DealRelatedClient DealRelated { get; }
         public DealRelationshipClient DealRelationship { get; }
         public DealsClient Deals { get; }
+        public ExpenseCategoriesClient ExpenseCategories { get; }
+        public ExpenseCategoryClient ExpenseCategory { get; }
+        public ExpenseCategoryRelatedClient ExpenseCategoryRelated { get; }
+        public ExpenseCategoryRelationshipClient ExpenseCategoryRelationship { get; }
+        public ExpenseClient Expense { get; }
+        public ExpenseRelatedClient ExpenseRelated { get; }
+        public ExpenseRelationshipClient ExpenseRelationship { get; }
+        public ExpenseTypeClient ExpenseType { get; }
+        public ExpenseTypeRelatedClient ExpenseTypeRelated { get; }
+        public ExpenseTypeRelationshipClient ExpenseTypeRelationship { get; }
+        public ExpenseTypesClient ExpenseTypes { get; }
+        public ExpensesClient Expenses { get; }
+        public IncomeCategoriesClient IncomeCategories { get; }
+        public IncomeCategoryClient IncomeCategory { get; }
+        public IncomeCategoryRelatedClient IncomeCategoryRelated { get; }
+        public IncomeCategoryRelationshipClient IncomeCategoryRelationship { get; }
+        public IncomeClient Income { get; }
+        public IncomeRelatedClient IncomeRelated { get; }
+        public IncomeRelationshipClient IncomeRelationship { get; }
+        public IncomeTypeClient IncomeType { get; }
+        public IncomeTypeRelatedClient IncomeTypeRelated { get; }
+        public IncomeTypeRelationshipClient IncomeTypeRelationship { get; }
+        public IncomeTypesClient IncomeTypes { get; }
+        public IncomesClient Incomes { get; }
         public IntegrationClient Integration { get; }
         public IntegrationRelatedClient IntegrationRelated { get; }
         public IntegrationRelationshipClient IntegrationRelationship { get; }
         public IntegrationsClient Integrations { get; }
         public LeadClient Lead { get; }
+        public LiabilitiesClient Liabilities { get; }
+        public LiabilityCategoriesClient LiabilityCategories { get; }
+        public LiabilityCategoryClient LiabilityCategory { get; }
+        public LiabilityCategoryRelatedClient LiabilityCategoryRelated { get; }
+        public LiabilityCategoryRelationshipClient LiabilityCategoryRelationship { get; }
+        public LiabilityClient Liability { get; }
+        public LiabilityRelatedClient LiabilityRelated { get; }
+        public LiabilityRelationshipClient LiabilityRelationship { get; }
+        public LiabilityTypeClient LiabilityType { get; }
+        public LiabilityTypeRelatedClient LiabilityTypeRelated { get; }
+        public LiabilityTypeRelationshipClient LiabilityTypeRelationship { get; }
+        public LiabilityTypesClient LiabilityTypes { get; }
         public OrganisationClient Organisation { get; }
+        public OrganisationRelatedClient OrganisationRelated { get; }
+        public OrganisationRelationshipClient OrganisationRelationship { get; }
         public OrganisationsClient Organisations { get; }
+        public ReferrerClient Referrer { get; }
+        public ReferrerRelatedClient ReferrerRelated { get; }
+        public ReferrerRelationshipClient ReferrerRelationship { get; }
+        public ReferrersClient Referrers { get; }
+        public StructuredLeadClient StructuredLead { get; }
 
         public MyCrmApiClient(MyCrmApiClientCredential credential, MyCrmApiClientOptions options)
         {
@@ -65,29 +122,35 @@ namespace MyCrmSampleClient
             Adviser = new AdviserClient(ClientDiagnostics, Pipeline, options.Endpoint);
             AdviserDetail = new AdviserDetailClient(ClientDiagnostics, Pipeline, options.Endpoint);
             AdviserDetailRelated = new AdviserDetailRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            AdviserDetailRelationship =
-                new AdviserDetailRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AdviserDetailRelationship = new AdviserDetailRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
             AdviserDetails = new AdviserDetailsClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AdviserRelated = new AdviserRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AdviserRelationship = new AdviserRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
             Advisers = new AdvisersClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AssetCategories = new AssetCategoriesClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AssetCategory = new AssetCategoryClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AssetCategoryRelated = new AssetCategoryRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AssetCategoryRelationship = new AssetCategoryRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            Asset = new AssetClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AssetRelated = new AssetRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AssetRelationship = new AssetRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AssetSubType = new AssetSubTypeClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AssetSubTypeRelated = new AssetSubTypeRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AssetSubTypeRelationship = new AssetSubTypeRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AssetSubTypes = new AssetSubTypesClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AssetType = new AssetTypeClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AssetTypeRelated = new AssetTypeRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AssetTypeRelationship = new AssetTypeRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            AssetTypes = new AssetTypesClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            Assets = new AssetsClient(ClientDiagnostics, Pipeline, options.Endpoint);
             Contact = new ContactClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            ContactExternalReference =
-                new ContactExternalReferenceClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            ContactExternalReferenceRelated =
-                new ContactExternalReferenceRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            ContactExternalReferenceRelationship =
-                new ContactExternalReferenceRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            ContactExternalReferences =
-                new ContactExternalReferencesClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ContactExternalReference = new ContactExternalReferenceClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ContactExternalReferenceRelated = new ContactExternalReferenceRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ContactExternalReferenceRelationship = new ContactExternalReferenceRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ContactExternalReferences = new ContactExternalReferencesClient(ClientDiagnostics, Pipeline, options.Endpoint);
             ContactGroup = new ContactGroupClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            ContactGroupReferrer = new ContactGroupReferrerClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            ContactGroupReferrerRelated =
-                new ContactGroupReferrerRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            ContactGroupReferrerRelationship =
-                new ContactGroupReferrerRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            ContactGroupReferrers = new ContactGroupReferrersClient(ClientDiagnostics, Pipeline, options.Endpoint);
             ContactGroupRelated = new ContactGroupRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            ContactGroupRelationship =
-                new ContactGroupRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ContactGroupRelationship = new ContactGroupRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
             ContactGroups = new ContactGroupsClient(ClientDiagnostics, Pipeline, options.Endpoint);
             ContactMarketing = new ContactMarketingClient(ClientDiagnostics, Pipeline, options.Endpoint);
             ContactRelated = new ContactRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
@@ -95,10 +158,8 @@ namespace MyCrmSampleClient
             Contacts = new ContactsClient(ClientDiagnostics, Pipeline, options.Endpoint);
             Deal = new DealClient(ClientDiagnostics, Pipeline, options.Endpoint);
             DealExternalReference = new DealExternalReferenceClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            DealExternalReferenceRelated =
-                new DealExternalReferenceRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            DealExternalReferenceRelationship =
-                new DealExternalReferenceRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            DealExternalReferenceRelated = new DealExternalReferenceRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            DealExternalReferenceRelationship = new DealExternalReferenceRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
             DealExternalReferences = new DealExternalReferencesClient(ClientDiagnostics, Pipeline, options.Endpoint);
             DealNote = new DealNoteClient(ClientDiagnostics, Pipeline, options.Endpoint);
             DealNoteRelated = new DealNoteRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
@@ -106,19 +167,61 @@ namespace MyCrmSampleClient
             DealNotes = new DealNotesClient(ClientDiagnostics, Pipeline, options.Endpoint);
             DealParticipant = new DealParticipantClient(ClientDiagnostics, Pipeline, options.Endpoint);
             DealParticipantRelated = new DealParticipantRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
-            DealParticipantRelationship =
-                new DealParticipantRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            DealParticipantRelationship = new DealParticipantRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
             DealParticipants = new DealParticipantsClient(ClientDiagnostics, Pipeline, options.Endpoint);
             DealRelated = new DealRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
             DealRelationship = new DealRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
             Deals = new DealsClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ExpenseCategories = new ExpenseCategoriesClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ExpenseCategory = new ExpenseCategoryClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ExpenseCategoryRelated = new ExpenseCategoryRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ExpenseCategoryRelationship = new ExpenseCategoryRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            Expense = new ExpenseClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ExpenseRelated = new ExpenseRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ExpenseRelationship = new ExpenseRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ExpenseType = new ExpenseTypeClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ExpenseTypeRelated = new ExpenseTypeRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ExpenseTypeRelationship = new ExpenseTypeRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ExpenseTypes = new ExpenseTypesClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            Expenses = new ExpensesClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            IncomeCategories = new IncomeCategoriesClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            IncomeCategory = new IncomeCategoryClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            IncomeCategoryRelated = new IncomeCategoryRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            IncomeCategoryRelationship = new IncomeCategoryRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            Income = new IncomeClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            IncomeRelated = new IncomeRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            IncomeRelationship = new IncomeRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            IncomeType = new IncomeTypeClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            IncomeTypeRelated = new IncomeTypeRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            IncomeTypeRelationship = new IncomeTypeRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            IncomeTypes = new IncomeTypesClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            Incomes = new IncomesClient(ClientDiagnostics, Pipeline, options.Endpoint);
             Integration = new IntegrationClient(ClientDiagnostics, Pipeline, options.Endpoint);
             IntegrationRelated = new IntegrationRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
             IntegrationRelationship = new IntegrationRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
             Integrations = new IntegrationsClient(ClientDiagnostics, Pipeline, options.Endpoint);
             Lead = new LeadClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            Liabilities = new LiabilitiesClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            LiabilityCategories = new LiabilityCategoriesClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            LiabilityCategory = new LiabilityCategoryClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            LiabilityCategoryRelated = new LiabilityCategoryRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            LiabilityCategoryRelationship = new LiabilityCategoryRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            Liability = new LiabilityClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            LiabilityRelated = new LiabilityRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            LiabilityRelationship = new LiabilityRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            LiabilityType = new LiabilityTypeClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            LiabilityTypeRelated = new LiabilityTypeRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            LiabilityTypeRelationship = new LiabilityTypeRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            LiabilityTypes = new LiabilityTypesClient(ClientDiagnostics, Pipeline, options.Endpoint);
             Organisation = new OrganisationClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            OrganisationRelated = new OrganisationRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            OrganisationRelationship = new OrganisationRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
             Organisations = new OrganisationsClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            Referrer = new ReferrerClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ReferrerRelated = new ReferrerRelatedClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            ReferrerRelationship = new ReferrerRelationshipClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            Referrers = new ReferrersClient(ClientDiagnostics, Pipeline, options.Endpoint);
+            StructuredLead = new StructuredLeadClient(ClientDiagnostics, Pipeline, options.Endpoint);
         }
     }
 }

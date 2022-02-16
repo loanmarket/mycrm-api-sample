@@ -188,6 +188,154 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetOwnersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetOwners");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetOwnersAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the contact. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetOwners(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetOwners");
+            scope.Start();
+            try
+            {
+                return RestClient.GetOwners(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the primary contact resource. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostOwnersAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostOwners");
+            scope.Start();
+            try
+            {
+                return await RestClient.PostOwnersAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the primary contact resource. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostOwners(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostOwners");
+            scope.Start();
+            try
+            {
+                return RestClient.PostOwners(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the contact. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchOwnersAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchOwners");
+            scope.Start();
+            try
+            {
+                return await RestClient.PatchOwnersAsync(id, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the contact. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchOwners(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchOwners");
+            scope.Start();
+            try
+            {
+                return RestClient.PatchOwners(id, body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the contact. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteOwnersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteOwners");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteOwnersAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the contact. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteOwners(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteOwners");
+            scope.Start();
+            try
+            {
+                return RestClient.DeleteOwners(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the contact. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RelationshipsMultipleDocument>> GetContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetContactExternalReferences");

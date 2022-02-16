@@ -20,12 +20,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("highLevelSummary");
                 writer.WriteObjectValue(HighLevelSummary);
             }
+            if (Optional.IsDefined(Deal))
+            {
+                writer.WritePropertyName("deal");
+                writer.WriteObjectValue(Deal);
+            }
             writer.WriteEndObject();
         }
 
         internal static DealScenarioRelationships DeserializeDealScenarioRelationships(JsonElement element)
         {
             Optional<RelationshipsSingleDocument> highLevelSummary = default;
+            Optional<RelationshipsSingleDocument> deal = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("highLevelSummary"))
@@ -38,8 +44,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     highLevelSummary = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
                     continue;
                 }
+                if (property.NameEquals("deal"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    deal = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    continue;
+                }
             }
-            return new DealScenarioRelationships(highLevelSummary.Value);
+            return new DealScenarioRelationships(highLevelSummary.Value, deal.Value);
         }
     }
 }

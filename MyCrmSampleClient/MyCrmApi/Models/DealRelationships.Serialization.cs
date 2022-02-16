@@ -20,6 +20,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("dealScenario");
                 writer.WriteObjectValue(DealScenario);
             }
+            if (Optional.IsDefined(ImportantDates))
+            {
+                writer.WritePropertyName("importantDates");
+                writer.WriteObjectValue(ImportantDates);
+            }
             if (Optional.IsDefined(Participants))
             {
                 writer.WritePropertyName("participants");
@@ -40,11 +45,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("contacts");
                 writer.WriteObjectValue(Contacts);
             }
-            if (Optional.IsDefined(ImportantDates))
-            {
-                writer.WritePropertyName("importantDates");
-                writer.WriteObjectValue(ImportantDates);
-            }
             if (Optional.IsDefined(Adviser))
             {
                 writer.WritePropertyName("adviser");
@@ -61,11 +61,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         internal static DealRelationships DeserializeDealRelationships(JsonElement element)
         {
             Optional<RelationshipsSingleDocument> dealScenario = default;
+            Optional<RelationshipsMultipleDocument> importantDates = default;
             Optional<RelationshipsMultipleDocument> participants = default;
             Optional<RelationshipsMultipleDocument> externalReferences = default;
             Optional<RelationshipsMultipleDocument> dealStructures = default;
             Optional<DealRelationshipsContacts> contacts = default;
-            Optional<RelationshipsMultipleDocument> importantDates = default;
             Optional<RelationshipsSingleDocument> adviser = default;
             Optional<RelationshipsMultipleDocument> dealNotes = default;
             foreach (var property in element.EnumerateObject())
@@ -78,6 +78,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     dealScenario = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("importantDates"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    importantDates = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
                     continue;
                 }
                 if (property.NameEquals("participants"))
@@ -120,16 +130,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     contacts = DealRelationshipsContacts.DeserializeDealRelationshipsContacts(property.Value);
                     continue;
                 }
-                if (property.NameEquals("importantDates"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    importantDates = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("adviser"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -151,7 +151,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new DealRelationships(dealScenario.Value, participants.Value, externalReferences.Value, dealStructures.Value, contacts.Value, importantDates.Value, adviser.Value, dealNotes.Value);
+            return new DealRelationships(dealScenario.Value, importantDates.Value, participants.Value, externalReferences.Value, dealStructures.Value, contacts.Value, adviser.Value, dealNotes.Value);
         }
     }
 }

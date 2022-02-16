@@ -19,9 +19,11 @@ namespace MyCrmSampleClient.MyCrmApi
 {
     internal partial class AdviserDetailsRestClient
     {
-        private Uri endpoint;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of AdviserDetailsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -29,8 +31,8 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <param name="endpoint"> server parameter. </param>
         public AdviserDetailsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            this.endpoint = endpoint ?? new Uri("");
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("");
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
@@ -40,7 +42,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/adviser-details", false);
             if (filter != null)
             {
@@ -63,7 +65,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> Gets adviser details for a collection of advisers. </summary>
+        /// <summary> Gets a collection of adviser details. </summary>
         /// <param name="filter"> The ArrayOfString to use. </param>
         /// <param name="sort"> The ArrayOfString to use. </param>
         /// <param name="page"> The Pagination to use. </param>
@@ -85,11 +87,11 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((AdviserDetailsDocument)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Gets adviser details for a collection of advisers. </summary>
+        /// <summary> Gets a collection of adviser details. </summary>
         /// <param name="filter"> The ArrayOfString to use. </param>
         /// <param name="sort"> The ArrayOfString to use. </param>
         /// <param name="page"> The Pagination to use. </param>
@@ -111,7 +113,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((AdviserDetailsDocument)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

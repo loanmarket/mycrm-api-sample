@@ -41,9 +41,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     case "adviser-address": return AdviserAddress.DeserializeAdviserAddress(element);
                     case "adviser-details": return AdviserDetail.DeserializeAdviserDetail(element);
                     case "agreement-holders": return AgreementHolder.DeserializeAgreementHolder(element);
+                    case "asset-categories": return AssetCategory.DeserializeAssetCategory(element);
+                    case "asset-sub-types": return AssetSubType.DeserializeAssetSubType(element);
+                    case "asset-types": return AssetType.DeserializeAssetType(element);
+                    case "assets": return Asset.DeserializeAsset(element);
+                    case "business": return Business.DeserializeBusiness(element);
                     case "contact-address": return ContactAddress.DeserializeContactAddress(element);
                     case "contact-external-references": return ContactExternalReference.DeserializeContactExternalReference(element);
-                    case "contact-group-referrers": return ContactGroupReferrer.DeserializeContactGroupReferrer(element);
                     case "contact-groups": return ContactGroup.DeserializeContactGroup(element);
                     case "contact-marketing": return ContactMarketing.DeserializeContactMarketing(element);
                     case "contacts": return Contact.DeserializeContact(element);
@@ -55,13 +59,26 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     case "deal-structure-important-dates": return DealStructureImportantDate.DeserializeDealStructureImportantDate(element);
                     case "deal-structures": return DealStructure.DeserializeDealStructure(element);
                     case "deals": return Deal.DeserializeDeal(element);
+                    case "expense-categories": return ExpenseCategory.DeserializeExpenseCategory(element);
+                    case "expense-types": return ExpenseType.DeserializeExpenseType(element);
+                    case "expenses": return Expense.DeserializeExpense(element);
+                    case "financial-address": return FinancialAddress.DeserializeFinancialAddress(element);
+                    case "financials": return Financial.DeserializeFinancial(element);
                     case "high-level-summary": return HighLevelSummary.DeserializeHighLevelSummary(element);
+                    case "income-categories": return IncomeCategory.DeserializeIncomeCategory(element);
+                    case "income-types": return IncomeType.DeserializeIncomeType(element);
+                    case "incomes": return Income.DeserializeIncome(element);
                     case "integrations": return Integration.DeserializeIntegration(element);
                     case "leads": return Lead.DeserializeLead(element);
+                    case "liabilities": return Liability.DeserializeLiability(element);
+                    case "liability-categories": return LiabilityCategory.DeserializeLiabilityCategory(element);
+                    case "liability-types": return LiabilityType.DeserializeLiabilityType(element);
                     case "organisation-addresses": return OrganisationAddress.DeserializeOrganisationAddress(element);
                     case "organisations": return Organisation.DeserializeOrganisation(element);
+                    case "owners": return Owner.DeserializeOwner(element);
                     case "referrer": return Referrer.DeserializeReferrer(element);
                     case "referrer-organisation": return ReferrerOrganisation.DeserializeReferrerOrganisation(element);
+                    case "structured-leads": return StructuredLead.DeserializeStructuredLead(element);
                     case "advisers": return Adviser.DeserializeAdviser(element);
                 }
             }

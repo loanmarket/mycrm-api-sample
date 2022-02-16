@@ -29,8 +29,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="utmContent"></param>
         /// <param name="utmCampaign"></param>
         /// <param name="categories"></param>
+        /// <param name="contactType"></param>
         /// <param name="notes"></param>
-        internal ContactGroupAttributes(DateTimeOffset? updated, DateTimeOffset? created, string utmSource, string utmMedium, string utmTerm, string utmContent, string utmCampaign, IReadOnlyList<string> categories, string notes)
+        /// <param name="enquirySourceCategory"></param>
+        /// <param name="enquirySource"></param>
+        internal ContactGroupAttributes(DateTimeOffset? updated, DateTimeOffset? created, string utmSource, string utmMedium, string utmTerm, string utmContent, string utmCampaign, IReadOnlyList<string> categories, ContactGroupAttributesContactType? contactType, string notes, string enquirySourceCategory, string enquirySource)
         {
             Updated = updated;
             Created = created;
@@ -40,7 +43,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             UtmContent = utmContent;
             UtmCampaign = utmCampaign;
             Categories = categories;
+            ContactType = contactType;
             Notes = notes;
+            EnquirySourceCategory = enquirySourceCategory;
+            EnquirySource = enquirySource;
         }
 
         /// <summary> Gets the updated. </summary>
@@ -59,7 +65,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string UtmCampaign { get; set; }
         /// <summary> Gets the categories. </summary>
         public IReadOnlyList<string> Categories { get; }
+        /// <summary> Gets or sets the contact type. </summary>
+        public ContactGroupAttributesContactType? ContactType { get; set; }
         /// <summary> Gets or sets the notes. </summary>
         public string Notes { get; set; }
+        /// <summary> Gets the enquiry source category. </summary>
+        public string EnquirySourceCategory { get; }
+        /// <summary> Gets the enquiry source. </summary>
+        public string EnquirySource { get; }
     }
 }

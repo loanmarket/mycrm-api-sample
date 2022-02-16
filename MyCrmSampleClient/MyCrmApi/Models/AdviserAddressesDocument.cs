@@ -13,7 +13,7 @@ using Azure.Core;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The AdviserAddressesDocument. </summary>
-    internal partial class AdviserAddressesDocument
+    public partial class AdviserAddressesDocument
     {
         /// <summary> Initializes a new instance of AdviserAddressesDocument. </summary>
         /// <param name="data"></param>
@@ -29,6 +29,21 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             JsonApi = new ChangeTrackingDictionary<string, object>();
             Data = data.ToList();
             Included = new ChangeTrackingList<IncludedResource>();
+        }
+
+        /// <summary> Initializes a new instance of AdviserAddressesDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        internal AdviserAddressesDocument(IReadOnlyDictionary<string, object> meta, IReadOnlyDictionary<string, object> jsonApi, AdviserAddressesDocumentLinks links, IReadOnlyList<AdviserAddress> data, IReadOnlyList<IncludedResource> included)
+        {
+            Meta = meta;
+            JsonApi = jsonApi;
+            Links = links;
+            Data = data;
+            Included = included;
         }
 
         /// <summary> Dictionary of &lt;any&gt;. </summary>

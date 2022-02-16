@@ -18,9 +18,11 @@ namespace MyCrmSampleClient.MyCrmApi
 {
     internal partial class DealNoteRelationshipRestClient
     {
-        private Uri endpoint;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of DealNoteRelationshipRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -28,8 +30,8 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <param name="endpoint"> server parameter. </param>
         public DealNoteRelationshipRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            this.endpoint = endpoint ?? new Uri("");
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("");
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
@@ -39,7 +41,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/deal-notes/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/deal", false);
@@ -67,7 +69,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -90,7 +92,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -100,7 +102,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/deal-notes/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/deal", false);
@@ -131,7 +133,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -150,7 +152,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -160,7 +162,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/deal-notes/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/deal", false);
@@ -191,7 +193,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -210,7 +212,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -220,7 +222,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/deal-notes/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/deal", false);
@@ -242,7 +244,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -259,7 +261,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

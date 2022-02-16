@@ -18,9 +18,11 @@ namespace MyCrmSampleClient.MyCrmApi
 {
     internal partial class DealParticipantRelationshipRestClient
     {
-        private Uri endpoint;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of DealParticipantRelationshipRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -28,8 +30,8 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <param name="endpoint"> server parameter. </param>
         public DealParticipantRelationshipRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            this.endpoint = endpoint ?? new Uri("");
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("");
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
@@ -39,7 +41,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/deal-participants/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/contact", false);
@@ -67,7 +69,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -90,176 +92,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreatePostContactsRequest(int id, RelationshipsSingleDocument body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jsonapi/deal-participants/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/contact", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/vnd.api+json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
-            return message;
-        }
-
-        /// <summary> Where `id` is the identifier of the primary participants in a deal resource. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PostContactsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreatePostContactsRequest(id, body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the primary participants in a deal resource. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PostContacts(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreatePostContactsRequest(id, body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreatePatchContactsRequest(int id, RelationshipsSingleDocument body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jsonapi/deal-participants/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/contact", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/vnd.api+json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
-            return message;
-        }
-
-        /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PatchContactsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreatePatchContactsRequest(id, body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PatchContacts(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreatePatchContactsRequest(id, body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateDeleteContactsRequest(int id)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jsonapi/deal-participants/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/contact", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteContactsAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateDeleteContactsRequest(id);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response DeleteContacts(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateDeleteContactsRequest(id);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -269,7 +102,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/deal-participants/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/deal", false);
@@ -297,7 +130,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -320,176 +153,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreatePostDealsRequest(int id, RelationshipsSingleDocument body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jsonapi/deal-participants/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/deal", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/vnd.api+json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
-            return message;
-        }
-
-        /// <summary> Where `id` is the identifier of the primary participants in a deal resource. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PostDealsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreatePostDealsRequest(id, body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the primary participants in a deal resource. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PostDeals(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreatePostDealsRequest(id, body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreatePatchDealsRequest(int id, RelationshipsSingleDocument body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jsonapi/deal-participants/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/deal", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/vnd.api+json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
-            return message;
-        }
-
-        /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PatchDealsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreatePatchDealsRequest(id, body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PatchDeals(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreatePatchDealsRequest(id, body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateDeleteDealsRequest(int id)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jsonapi/deal-participants/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/deal", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteDealsAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateDeleteDealsRequest(id);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response DeleteDeals(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateDeleteDealsRequest(id);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 204:
-                case 401:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

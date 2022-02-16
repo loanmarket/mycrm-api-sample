@@ -18,9 +18,11 @@ namespace MyCrmSampleClient.MyCrmApi
 {
     internal partial class AdviserRestClient
     {
-        private Uri endpoint;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of AdviserRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -28,8 +30,8 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <param name="endpoint"> server parameter. </param>
         public AdviserRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            this.endpoint = endpoint ?? new Uri("");
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("");
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
@@ -39,7 +41,7 @@ namespace MyCrmSampleClient.MyCrmApi
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/advisers/", false);
             uri.AppendPath(id, true);
             request.Uri = uri;
@@ -47,7 +49,7 @@ namespace MyCrmSampleClient.MyCrmApi
             return message;
         }
 
-        /// <summary> Where `id` is the identifier of the adviser. aka MyCrm family_id. </summary>
+        /// <summary> Where `id` is the identifier of the adviser. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<AdviserDocument>> GetAsync(int id, CancellationToken cancellationToken = default)
@@ -66,11 +68,11 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((AdviserDocument)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Where `id` is the identifier of the adviser. aka MyCrm family_id. </summary>
+        /// <summary> Where `id` is the identifier of the adviser. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<AdviserDocument> Get(int id, CancellationToken cancellationToken = default)
@@ -89,7 +91,7 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 401:
                     return Response.FromValue((AdviserDocument)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

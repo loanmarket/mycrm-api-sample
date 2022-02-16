@@ -23,9 +23,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<string> googlePlaces = default;
             Optional<DateTimeOffset?> created = default;
+            Optional<DateTimeOffset?> myLeadGenActivationDate = default;
             Optional<string> bio = default;
             Optional<string> jobTitle = default;
-            Optional<DateTimeOffset?> myLeadGenActivationDate = default;
             Optional<bool?> isMyLeadGenActive = default;
             Optional<string> email = default;
             Optional<string> skype = default;
@@ -33,6 +33,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> linkedIn = default;
             Optional<string> twitter = default;
             Optional<string> youtubeFeatured = default;
+            Optional<string> instagram = default;
             Optional<string> calendly = default;
             Optional<string> myLeadGenerator = default;
             Optional<string> status = default;
@@ -62,6 +63,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     created = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("myLeadGenActivationDate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        myLeadGenActivationDate = null;
+                        continue;
+                    }
+                    myLeadGenActivationDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (property.NameEquals("bio"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -80,16 +91,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     jobTitle = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("myLeadGenActivationDate"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        myLeadGenActivationDate = null;
-                        continue;
-                    }
-                    myLeadGenActivationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("isMyLeadGenActive"))
@@ -160,6 +161,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     youtubeFeatured = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("instagram"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        instagram = null;
+                        continue;
+                    }
+                    instagram = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("calendly"))
@@ -233,7 +244,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new AdviserAttributes(googlePlaces.Value, Optional.ToNullable(created), bio.Value, jobTitle.Value, Optional.ToNullable(myLeadGenActivationDate), Optional.ToNullable(isMyLeadGenActive), email.Value, skype.Value, facebook.Value, linkedIn.Value, twitter.Value, youtubeFeatured.Value, calendly.Value, myLeadGenerator.Value, status.Value, profilePhotoHeadShot.Value, profilePhotoHalfBody.Value, profilePhotoFullBody.Value, youtubeChannel.Value);
+            return new AdviserAttributes(googlePlaces.Value, Optional.ToNullable(created), Optional.ToNullable(myLeadGenActivationDate), bio.Value, jobTitle.Value, Optional.ToNullable(isMyLeadGenActive), email.Value, skype.Value, facebook.Value, linkedIn.Value, twitter.Value, youtubeFeatured.Value, instagram.Value, calendly.Value, myLeadGenerator.Value, status.Value, profilePhotoHeadShot.Value, profilePhotoHalfBody.Value, profilePhotoFullBody.Value, youtubeChannel.Value);
         }
     }
 }

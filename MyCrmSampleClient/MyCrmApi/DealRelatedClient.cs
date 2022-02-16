@@ -76,6 +76,42 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DealImportantDatesDocument>> GetDealImportantDatesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealImportantDates");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetDealImportantDatesAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the deal. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DealImportantDatesDocument> GetDealImportantDates(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealImportantDates");
+            scope.Start();
+            try
+            {
+                return RestClient.GetDealImportantDates(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the deal. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DealParticipantsDocument>> GetDealParticipantsAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealParticipants");
@@ -173,42 +209,6 @@ namespace MyCrmSampleClient.MyCrmApi
             try
             {
                 return RestClient.GetContacts(id, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the deal. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DealImportantDatesDocument>> GetDealImportantDatesAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealImportantDates");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetDealImportantDatesAsync(id, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the deal. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DealImportantDatesDocument> GetDealImportantDates(int id, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealImportantDates");
-            scope.Start();
-            try
-            {
-                return RestClient.GetDealImportantDates(id, cancellationToken);
             }
             catch (Exception e)
             {
