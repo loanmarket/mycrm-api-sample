@@ -81,7 +81,7 @@ You will only be able to access an endpoint if you request an applicable scope, 
 
 ## Real-time Updates via Webhooks
 
-[Webhooks](https://en.wikipedia.org/wiki/Webhook) are a common method of loose integration between web accessible systems. MyCRM supports webhooks for some scenarios, including organisation and advisor changes. Once configured, MyCRM will contact your web endpoint sending a JSON body similar to:
+[Webhooks](https://en.wikipedia.org/wiki/Webhook) are a common method of loose integration between web accessible systems. MyCRM supports webhooks for some scenarios, including organisation and advisor changes. Once configured, MyCRM will `POST` to your web endpoint sending a JSON body similar to:
 
 ```json
 {

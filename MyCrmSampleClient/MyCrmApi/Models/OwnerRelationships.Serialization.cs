@@ -25,11 +25,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("business");
                 writer.WriteObjectValue(Business);
             }
-            if (Optional.IsDefined(Financial))
-            {
-                writer.WritePropertyName("financial");
-                writer.WriteObjectValue(Financial);
-            }
             if (Optional.IsDefined(Asset))
             {
                 writer.WritePropertyName("asset");
@@ -57,7 +52,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<RelationshipsSingleDocument> contact = default;
             Optional<RelationshipsSingleDocument> business = default;
-            Optional<RelationshipsSingleDocument> financial = default;
             Optional<RelationshipsSingleDocument> asset = default;
             Optional<RelationshipsSingleDocument> expense = default;
             Optional<RelationshipsSingleDocument> liability = default;
@@ -82,16 +76,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     business = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("financial"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    financial = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
                     continue;
                 }
                 if (property.NameEquals("asset"))
@@ -135,7 +119,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new OwnerRelationships(contact.Value, business.Value, financial.Value, asset.Value, expense.Value, liability.Value, income.Value);
+            return new OwnerRelationships(contact.Value, business.Value, asset.Value, expense.Value, liability.Value, income.Value);
         }
     }
 }

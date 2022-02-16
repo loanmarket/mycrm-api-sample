@@ -18177,9 +18177,6 @@
           "ownership": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           },
-          "financial": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
-          },
           "addresses": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           }
@@ -21392,9 +21389,6 @@
         "properties": {
           "ownership": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-          },
-          "financial": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
         }
       },
@@ -22504,9 +22498,6 @@
           },
           "ownership": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-          },
-          "financial": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
         }
       },
@@ -23803,9 +23794,6 @@
           },
           "ownership": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-          },
-          "financial": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
         }
       },
@@ -24516,9 +24504,6 @@
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
           "business": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
-          },
-          "financial": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
           "asset": {

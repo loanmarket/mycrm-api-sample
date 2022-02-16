@@ -18,16 +18,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of OwnerRelationships. </summary>
         /// <param name="contact"></param>
         /// <param name="business"></param>
-        /// <param name="financial"></param>
         /// <param name="asset"></param>
         /// <param name="expense"></param>
         /// <param name="liability"></param>
         /// <param name="income"></param>
-        internal OwnerRelationships(RelationshipsSingleDocument contact, RelationshipsSingleDocument business, RelationshipsSingleDocument financial, RelationshipsSingleDocument asset, RelationshipsSingleDocument expense, RelationshipsSingleDocument liability, RelationshipsSingleDocument income)
+        internal OwnerRelationships(RelationshipsSingleDocument contact, RelationshipsSingleDocument business, RelationshipsSingleDocument asset, RelationshipsSingleDocument expense, RelationshipsSingleDocument liability, RelationshipsSingleDocument income)
         {
             Contact = contact;
             Business = business;
-            Financial = financial;
             Asset = asset;
             Expense = expense;
             Liability = liability;
@@ -38,8 +36,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public RelationshipsSingleDocument Contact { get; set; }
         /// <summary> Gets or sets the business. </summary>
         public RelationshipsSingleDocument Business { get; set; }
-        /// <summary> Gets or sets the financial. </summary>
-        public RelationshipsSingleDocument Financial { get; set; }
         /// <summary> Gets or sets the asset. </summary>
         public RelationshipsSingleDocument Asset { get; set; }
         /// <summary> Gets or sets the expense. </summary>

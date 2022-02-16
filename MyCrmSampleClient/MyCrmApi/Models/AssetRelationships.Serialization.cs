@@ -20,11 +20,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("ownership");
                 writer.WriteObjectValue(Ownership);
             }
-            if (Optional.IsDefined(Financial))
-            {
-                writer.WritePropertyName("financial");
-                writer.WriteObjectValue(Financial);
-            }
             if (Optional.IsDefined(Addresses))
             {
                 writer.WritePropertyName("addresses");
@@ -36,7 +31,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         internal static AssetRelationships DeserializeAssetRelationships(JsonElement element)
         {
             Optional<RelationshipsMultipleDocument> ownership = default;
-            Optional<RelationshipsSingleDocument> financial = default;
             Optional<RelationshipsMultipleDocument> addresses = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,16 +44,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     ownership = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
                     continue;
                 }
-                if (property.NameEquals("financial"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    financial = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("addresses"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -71,7 +55,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new AssetRelationships(ownership.Value, financial.Value, addresses.Value);
+            return new AssetRelationships(ownership.Value, addresses.Value);
         }
     }
 }
