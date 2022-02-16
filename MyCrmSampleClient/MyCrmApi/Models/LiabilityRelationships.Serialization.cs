@@ -25,11 +25,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("ownership");
                 writer.WriteObjectValue(Ownership);
             }
-            if (Optional.IsDefined(Financial))
-            {
-                writer.WritePropertyName("financial");
-                writer.WriteObjectValue(Financial);
-            }
             writer.WriteEndObject();
         }
 
@@ -37,7 +32,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<RelationshipsSingleDocument> linkedAsset = default;
             Optional<RelationshipsMultipleDocument> ownership = default;
-            Optional<RelationshipsSingleDocument> financial = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedAsset"))
@@ -60,18 +54,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     ownership = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
                     continue;
                 }
-                if (property.NameEquals("financial"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    financial = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
-                    continue;
-                }
             }
-            return new LiabilityRelationships(linkedAsset.Value, ownership.Value, financial.Value);
+            return new LiabilityRelationships(linkedAsset.Value, ownership.Value);
         }
     }
 }

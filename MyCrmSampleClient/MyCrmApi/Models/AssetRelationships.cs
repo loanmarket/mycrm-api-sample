@@ -17,19 +17,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Initializes a new instance of AssetRelationships. </summary>
         /// <param name="ownership"></param>
-        /// <param name="financial"></param>
         /// <param name="addresses"></param>
-        internal AssetRelationships(RelationshipsMultipleDocument ownership, RelationshipsSingleDocument financial, RelationshipsMultipleDocument addresses)
+        internal AssetRelationships(RelationshipsMultipleDocument ownership, RelationshipsMultipleDocument addresses)
         {
             Ownership = ownership;
-            Financial = financial;
             Addresses = addresses;
         }
 
         /// <summary> Gets or sets the ownership. </summary>
         public RelationshipsMultipleDocument Ownership { get; set; }
-        /// <summary> Gets or sets the financial. </summary>
-        public RelationshipsSingleDocument Financial { get; set; }
         /// <summary> Gets or sets the addresses. </summary>
         public RelationshipsMultipleDocument Addresses { get; set; }
     }
