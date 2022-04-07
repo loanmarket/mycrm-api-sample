@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "fdeae959-4acb-4b2e-9cb3-4b98d7869a37",
+		"_postman_id": "df55cc58-e28d-4836-bb5d-c6ae866b3233",
 		"name": "MyCRM API Sample",
 		"description": "To use this sample it is necessary to populate the `Variables` section with the values supplied to you by Loan Market Group. This will enable the various samples to interact with your broker account in MyCRM. \n\n**NOTE:** If you are looking to replicate the behaviour of these samples, be sure to check the `Pre-request Script` section where the authorization flow is handled.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -2154,6 +2154,164 @@
 									"key": "id",
 									"value": "{{lastDealId}}"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Structured Leads",
+			"item": [
+				{
+					"name": "Add Structured Lead",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"type\": \"structured-leads\",\r\n    \"attributes\": {\r\n      \"contacts\": [\r\n        {\r\n          \"lid\": \"Fred\",\r\n          \"title\": \"Mr\",\r\n          \"firstName\": \"Fred\",\r\n          \"preferredName\": \"Fred\",\r\n          \"lastName\": \"Flintstone\",\r\n          \"email\": \"fred@bedrock.com\",\r\n          \"mobile\": \"0412345678\",\r\n          \"homePhone\": \"0734912214\",\r\n          \"dateOfBirth\": \"1995-07-29\",\r\n          \"gender\": \"Male\",\r\n          \"hasMarketingConsent\": true,\r\n          \"isGuarantor\": false,\r\n          \"isDependant\": false,\r\n          \"isPrimary\": true,\r\n          \"addresses\": [\r\n            {\r\n              \"lid\": \"FredsAddress\"\r\n            }\r\n          ],\r\n          \"employments\": [\r\n            {\r\n              \"lid\": \"FredsEmployment\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"lid\": \"Wilma\",\r\n          \"title\": \"Mrs\",\r\n          \"firstName\": \"Wilma\",\r\n          \"preferredName\": \"Wilma\",\r\n          \"lastName\": \"Flintstone\",\r\n          \"email\": \"wilma@bedrock.com\",\r\n          \"mobile\": \"0412345673\",\r\n          \"homePhone\": \"0734912214\",\r\n          \"dateOfBirth\": \"1995-03-29\",\r\n          \"gender\": \"Female\",\r\n          \"hasMarketingConsent\": true,\r\n          \"isGuarantor\": false,\r\n          \"isDependant\": false,\r\n          \"isPrimary\": false,\r\n          \"addresses\": [\r\n            {\r\n              \"lid\": \"FredsAddress\"\r\n            }\r\n          ]\r\n        }\r\n      ],\r\n      \"addresses\": [\r\n        {\r\n          \"lid\": \"FredsAddress\",\r\n          \"formattedAddress\": \"6 Homestead Heights, Hallidays Point New South Wales 2430, Australia\",\r\n          \"streetAddress\": \"6 Homestead Heights\",\r\n          \"suburb\": \"Hallidays Point\",\r\n          \"state\": \"New South Wales\",\r\n          \"postCode\": \"2430\",\r\n          \"country\": \"Australia\",\r\n          \"addressType\": \"Current\"\r\n        },\r\n        {\r\n          \"lid\": \"FredsWorkAddress\",\r\n          \"formattedAddress\": \"23 King Street, Sydney New South Wales 2000, Australia\",\r\n          \"streetAddress\": \"23 King Street\",\r\n          \"suburb\": \"Sydney\",\r\n          \"state\": \"New South Wales\",\r\n          \"postCode\": \"2000\",\r\n          \"country\": \"Australia\",\r\n          \"addressType\": \"Current\"\r\n        }\r\n      ],\r\n      \"assets\": [\r\n        {\r\n          \"lid\": \"FlintstoneHome\",\r\n          \"assetTypeId\": 1,\r\n          \"value\": 1000000.0,\r\n          \"propertyZoningId\": 2,\r\n          \"propertyTypeId\": 13,\r\n          \"propertyPrimaryPurpose\": \"PurchaseOwnerOccupied\",\r\n          \"address\": {\r\n            \"lid\": \"FredsAddress\"\r\n          },\r\n          \"ownership\": [\r\n            {\r\n              \"lid\": \"Fred\"\r\n            },\r\n            {\r\n                \"lid\": \"Wilma\"\r\n            }\r\n          ]\r\n        }\r\n      ],\r\n      \"expenses\": [\r\n        {\r\n          \"expenseTypeId\": 2,\r\n          \"description\": \"Family Car Lease\",\r\n          \"value\": 100,\r\n          \"frequency\": \"Monthly\",\r\n          \"ownership\": [\r\n            {\r\n              \"lid\": \"Fred\"\r\n            }\r\n          ]\r\n        }\r\n      ],\r\n      \"incomes\": [\r\n        {\r\n          \"incomeTypeId\": 19,\r\n          \"description\": \"string\",\r\n          \"value\": 50000,\r\n          \"frequency\": \"Yearly\",\r\n          \"incomeVerification\": \"CurrentPayslips\",\r\n          \"ownership\": [\r\n            {\r\n              \"lid\": \"Fred\"\r\n            }\r\n          ],\r\n          \"employment\": {\r\n            \"lid\": \"FredsEmployment\"\r\n          }\r\n        }\r\n      ],\r\n      \"liabilities\": [\r\n        {\r\n          \"liabilityTypeId\": 21,\r\n          \"value\": 20000,\r\n          \"repayments\": 1500,\r\n          \"repaymentFrequency\": \"Weekly\",\r\n          \"interestRate\": 1.50,\r\n          \"interestTaxDeductible\": true,\r\n          \"loanTerm\": 24,\r\n          \"loanRepaymentType\": \"InterestOnly\",\r\n          \"mortgagePriority\": \"First\",\r\n          \"asset\": {\r\n            \"lid\": \"FlintstoneHome\"\r\n           },\r\n           \"ownership\": [\r\n            {\r\n              \"lid\": \"Fred\"\r\n            }\r\n          ]\r\n        }\r\n      ],\r\n      \"employments\": [\r\n        {\r\n          \"lid\": \"FredsEmployment\",\r\n          \"employmentStatus\": \"PrimaryEmployment\",\r\n          \"employmentType\": \"PAYG\",\r\n          \"dateStarted\": \"2022-04-07\",\r\n          \"employmentRoleName\": \"Clark\",\r\n          \"employmentBasis\": \"FullTime\",\r\n          \"isProbation\": false,\r\n          \"businessNumber\": \"123456789\",\r\n          \"employerName\": \"Best & Less\",\r\n          \"employerContactTitle\": \"Mr\",\r\n          \"employerContactFirstName\": \"Barney Rubble\",\r\n          \"employerContactLastName\": \"Rubble\",\r\n          \"employerType\": \"Private\",\r\n          \"employerPhone\": \"0733332222\",\r\n          \"address\": {\r\n            \"lid\": \"FredsWorkAddress\"\r\n          }\r\n        }\r\n      ],\r\n      \"utmSource\": \"facebook\",\r\n      \"utmMedium\": \"social\",\r\n      \"utmCampaign\": \"mycrm-fb\",\r\n      \"utmTerm\": \"investment\",\r\n      \"utmContent\": \"lm\",\r\n      \"sourceSystemUrl\": \"https://www.loanmarket.com.au/brokers/direct/our-team/fred-flintstone\",\r\n      \"noteTitle\": \"About the lead (note title)\",\r\n      \"noteDetails\": \"This is why it happened\"\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/structured-leads",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"structured-leads"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Asset Types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/asset-types",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"asset-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Asset Sub Types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/asset-sub-types",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"asset-sub-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Expense Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/expense-types",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"expense-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Income Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/income-types",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"income-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Liability Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/liability-categories",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"liability-categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Liability Types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/liability-types",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"liability-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Property Types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PublicAPI_Url}}/jsonapi/property-types",
+							"host": [
+								"{{PublicAPI_Url}}"
+							],
+							"path": [
+								"jsonapi",
+								"property-types"
 							]
 						}
 					},
