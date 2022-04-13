@@ -76,6 +76,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     case "organisation-addresses": return OrganisationAddress.DeserializeOrganisationAddress(element);
                     case "organisations": return Organisation.DeserializeOrganisation(element);
                     case "owners": return Owner.DeserializeOwner(element);
+                    case "property-types": return PropertyType.DeserializePropertyType(element);
                     case "referrer": return Referrer.DeserializeReferrer(element);
                     case "referrer-organisation": return ReferrerOrganisation.DeserializeReferrerOrganisation(element);
                     case "structured-leads": return StructuredLead.DeserializeStructuredLead(element);

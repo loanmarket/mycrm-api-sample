@@ -16,7 +16,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of LeadExpense. </summary>
         public LeadExpense()
         {
-            Ownership = new ChangeTrackingList<LeadOwnership>();
+            Ownership = new ChangeTrackingList<LeadContactReference>();
         }
 
         /// <summary> Initializes a new instance of LeadExpense. </summary>
@@ -26,7 +26,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="value"></param>
         /// <param name="frequency"></param>
         /// <param name="ownership"></param>
-        internal LeadExpense(string lid, int? expenseTypeId, string description, double? value, Frequency? frequency, IList<LeadOwnership> ownership)
+        internal LeadExpense(string lid, int? expenseTypeId, string description, double? value, Frequency? frequency, IList<LeadContactReference> ownership)
         {
             Lid = lid;
             ExpenseTypeId = expenseTypeId;
@@ -47,6 +47,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Gets or sets the frequency. </summary>
         public Frequency? Frequency { get; set; }
         /// <summary> Gets or sets the ownership. </summary>
-        public IList<LeadOwnership> Ownership { get; set; }
+        public IList<LeadContactReference> Ownership { get; set; }
     }
 }

@@ -30,6 +30,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("deals");
                 writer.WriteObjectValue(Deals);
             }
+            if (Optional.IsDefined(Employments))
+            {
+                writer.WritePropertyName("employments");
+                writer.WriteObjectValue(Employments);
+            }
             writer.WriteEndObject();
         }
 
@@ -38,6 +43,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<RelationshipsSingleDocument> contactGroup = default;
             Optional<RelationshipsMultipleDocument> ownership = default;
             Optional<RelationshipsMultipleDocument> deals = default;
+            Optional<RelationshipsMultipleDocument> employments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contactGroup"))
@@ -70,8 +76,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     deals = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
                     continue;
                 }
+                if (property.NameEquals("employments"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    employments = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
+                    continue;
+                }
             }
-            return new BusinessRelationships(contactGroup.Value, ownership.Value, deals.Value);
+            return new BusinessRelationships(contactGroup.Value, ownership.Value, deals.Value, employments.Value);
         }
     }
 }

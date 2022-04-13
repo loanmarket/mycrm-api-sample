@@ -23,6 +23,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="myLeadGenActivationDate"></param>
         /// <param name="bio"></param>
         /// <param name="jobTitle"></param>
+        /// <param name="website"></param>
         /// <param name="isMyLeadGenActive"></param>
         /// <param name="email"></param>
         /// <param name="skype"></param>
@@ -37,14 +38,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="profilePhotoHeadShot"></param>
         /// <param name="profilePhotoHalfBody"></param>
         /// <param name="profilePhotoFullBody"></param>
+        /// <param name="countryCode"></param>
         /// <param name="youtubeChannel"></param>
-        internal AdviserAttributes(string googlePlaces, DateTimeOffset? created, DateTimeOffset? myLeadGenActivationDate, string bio, string jobTitle, bool? isMyLeadGenActive, string email, string skype, string facebook, string linkedIn, string twitter, string youtubeFeatured, string instagram, string calendly, string myLeadGenerator, string status, string profilePhotoHeadShot, string profilePhotoHalfBody, string profilePhotoFullBody, string youtubeChannel)
+        internal AdviserAttributes(string googlePlaces, DateTimeOffset? created, DateTimeOffset? myLeadGenActivationDate, string bio, string jobTitle, string website, bool? isMyLeadGenActive, string email, string skype, string facebook, string linkedIn, string twitter, string youtubeFeatured, string instagram, string calendly, string myLeadGenerator, string status, string profilePhotoHeadShot, string profilePhotoHalfBody, string profilePhotoFullBody, AdviserAttributesCountryCode? countryCode, string youtubeChannel)
         {
             GooglePlaces = googlePlaces;
             Created = created;
             MyLeadGenActivationDate = myLeadGenActivationDate;
             Bio = bio;
             JobTitle = jobTitle;
+            Website = website;
             IsMyLeadGenActive = isMyLeadGenActive;
             Email = email;
             Skype = skype;
@@ -59,6 +62,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             ProfilePhotoHeadShot = profilePhotoHeadShot;
             ProfilePhotoHalfBody = profilePhotoHalfBody;
             ProfilePhotoFullBody = profilePhotoFullBody;
+            CountryCode = countryCode;
             YoutubeChannel = youtubeChannel;
         }
 
@@ -72,6 +76,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string Bio { get; }
         /// <summary> Gets the job title. </summary>
         public string JobTitle { get; }
+        /// <summary> Gets the website. </summary>
+        public string Website { get; }
         /// <summary> Gets the is my lead gen active. </summary>
         public bool? IsMyLeadGenActive { get; }
         /// <summary> Gets the email. </summary>
@@ -100,6 +106,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string ProfilePhotoHalfBody { get; }
         /// <summary> Gets the profile photo full body. </summary>
         public string ProfilePhotoFullBody { get; }
+        /// <summary> Gets the country code. </summary>
+        public AdviserAttributesCountryCode? CountryCode { get; }
         /// <summary> Gets the youtube channel. </summary>
         public string YoutubeChannel { get; }
     }

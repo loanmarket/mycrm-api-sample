@@ -16,77 +16,81 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of LeadAsset. </summary>
         public LeadAsset()
         {
-            Ownership = new ChangeTrackingList<LeadOwnership>();
+            Ownership = new ChangeTrackingList<LeadContactReference>();
         }
 
         /// <summary> Initializes a new instance of LeadAsset. </summary>
         /// <param name="lid"></param>
-        /// <param name="description"></param>
-        /// <param name="value"></param>
-        /// <param name="accountName"></param>
-        /// <param name="accountNumber"></param>
-        /// <param name="bsb"></param>
-        /// <param name="vehicleMake"></param>
-        /// <param name="vehicleYear"></param>
-        /// <param name="propertyType"></param>
-        /// <param name="isRentalIncome"></param>
-        /// <param name="isExistingMortgages"></param>
-        /// <param name="isAccountDetailsKnown"></param>
-        /// <param name="institution"></param>
         /// <param name="assetTypeId"></param>
         /// <param name="assetSubTypeId"></param>
+        /// <param name="description"></param>
+        /// <param name="value"></param>
+        /// <param name="institution"></param>
+        /// <param name="accountName"></param>
+        /// <param name="bsb"></param>
+        /// <param name="accountNumber"></param>
+        /// <param name="vehicleMake"></param>
+        /// <param name="vehicleYear"></param>
+        /// <param name="propertyZoningId"></param>
+        /// <param name="propertyTypeId"></param>
+        /// <param name="propertyPrimaryPurpose"></param>
+        /// <param name="valueBasis"></param>
+        /// <param name="address"></param>
         /// <param name="ownership"></param>
-        internal LeadAsset(string lid, string description, double? value, string accountName, string accountNumber, string bsb, string vehicleMake, int? vehicleYear, AddressPropertyType? propertyType, bool? isRentalIncome, bool? isExistingMortgages, bool? isAccountDetailsKnown, string institution, int? assetTypeId, int? assetSubTypeId, IList<LeadOwnership> ownership)
+        internal LeadAsset(string lid, int? assetTypeId, int? assetSubTypeId, string description, double? value, string institution, string accountName, string bsb, string accountNumber, string vehicleMake, int? vehicleYear, int? propertyZoningId, int? propertyTypeId, PropertyPrimaryPurpose? propertyPrimaryPurpose, PropertyValueEstimatedBasis? valueBasis, LeadAddressReference address, IList<LeadContactReference> ownership)
         {
             Lid = lid;
-            Description = description;
-            Value = value;
-            AccountName = accountName;
-            AccountNumber = accountNumber;
-            Bsb = bsb;
-            VehicleMake = vehicleMake;
-            VehicleYear = vehicleYear;
-            PropertyType = propertyType;
-            IsRentalIncome = isRentalIncome;
-            IsExistingMortgages = isExistingMortgages;
-            IsAccountDetailsKnown = isAccountDetailsKnown;
-            Institution = institution;
             AssetTypeId = assetTypeId;
             AssetSubTypeId = assetSubTypeId;
+            Description = description;
+            Value = value;
+            Institution = institution;
+            AccountName = accountName;
+            Bsb = bsb;
+            AccountNumber = accountNumber;
+            VehicleMake = vehicleMake;
+            VehicleYear = vehicleYear;
+            PropertyZoningId = propertyZoningId;
+            PropertyTypeId = propertyTypeId;
+            PropertyPrimaryPurpose = propertyPrimaryPurpose;
+            ValueBasis = valueBasis;
+            Address = address;
             Ownership = ownership;
         }
 
         /// <summary> Gets or sets the lid. </summary>
         public string Lid { get; set; }
-        /// <summary> Gets or sets the description. </summary>
-        public string Description { get; set; }
-        /// <summary> Gets or sets the value. </summary>
-        public double? Value { get; set; }
-        /// <summary> Gets or sets the account name. </summary>
-        public string AccountName { get; set; }
-        /// <summary> Gets or sets the account number. </summary>
-        public string AccountNumber { get; set; }
-        /// <summary> Gets or sets the bsb. </summary>
-        public string Bsb { get; set; }
-        /// <summary> Gets or sets the vehicle make. </summary>
-        public string VehicleMake { get; set; }
-        /// <summary> Gets or sets the vehicle year. </summary>
-        public int? VehicleYear { get; set; }
-        /// <summary> Gets or sets the property type. </summary>
-        public AddressPropertyType? PropertyType { get; set; }
-        /// <summary> Gets or sets the is rental income. </summary>
-        public bool? IsRentalIncome { get; set; }
-        /// <summary> Gets or sets the is existing mortgages. </summary>
-        public bool? IsExistingMortgages { get; set; }
-        /// <summary> Gets or sets the is account details known. </summary>
-        public bool? IsAccountDetailsKnown { get; set; }
-        /// <summary> Gets or sets the institution. </summary>
-        public string Institution { get; set; }
         /// <summary> Gets or sets the asset type id. </summary>
         public int? AssetTypeId { get; set; }
         /// <summary> Gets or sets the asset sub type id. </summary>
         public int? AssetSubTypeId { get; set; }
+        /// <summary> Gets or sets the description. </summary>
+        public string Description { get; set; }
+        /// <summary> Gets or sets the value. </summary>
+        public double? Value { get; set; }
+        /// <summary> Gets or sets the institution. </summary>
+        public string Institution { get; set; }
+        /// <summary> Gets or sets the account name. </summary>
+        public string AccountName { get; set; }
+        /// <summary> Gets or sets the bsb. </summary>
+        public string Bsb { get; set; }
+        /// <summary> Gets or sets the account number. </summary>
+        public string AccountNumber { get; set; }
+        /// <summary> Gets or sets the vehicle make. </summary>
+        public string VehicleMake { get; set; }
+        /// <summary> Gets or sets the vehicle year. </summary>
+        public int? VehicleYear { get; set; }
+        /// <summary> Gets or sets the property zoning id. </summary>
+        public int? PropertyZoningId { get; set; }
+        /// <summary> Gets or sets the property type id. </summary>
+        public int? PropertyTypeId { get; set; }
+        /// <summary> Gets or sets the property primary purpose. </summary>
+        public PropertyPrimaryPurpose? PropertyPrimaryPurpose { get; set; }
+        /// <summary> Gets or sets the value basis. </summary>
+        public PropertyValueEstimatedBasis? ValueBasis { get; set; }
+        /// <summary> Gets or sets the address. </summary>
+        public LeadAddressReference Address { get; set; }
         /// <summary> Gets or sets the ownership. </summary>
-        public IList<LeadOwnership> Ownership { get; set; }
+        public IList<LeadContactReference> Ownership { get; set; }
     }
 }

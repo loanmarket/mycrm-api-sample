@@ -20,6 +20,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Addresses = new ChangeTrackingList<LeadAddress>();
             Assets = new ChangeTrackingList<LeadAsset>();
             Expenses = new ChangeTrackingList<LeadExpense>();
+            Incomes = new ChangeTrackingList<LeadIncome>();
+            Liabilities = new ChangeTrackingList<LeadLiability>();
+            Employments = new ChangeTrackingList<LeadEmployment>();
         }
 
         /// <summary> Initializes a new instance of StructuredLeadAttributes. </summary>
@@ -27,6 +30,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="addresses"></param>
         /// <param name="assets"></param>
         /// <param name="expenses"></param>
+        /// <param name="incomes"></param>
+        /// <param name="liabilities"></param>
+        /// <param name="employments"></param>
         /// <param name="utmSource"></param>
         /// <param name="utmMedium"></param>
         /// <param name="utmCampaign"></param>
@@ -39,12 +45,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="noteDetails"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
-        internal StructuredLeadAttributes(IList<LeadContact> contacts, IList<LeadAddress> addresses, IList<LeadAsset> assets, IList<LeadExpense> expenses, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, int? sourceId, int? sourceCategoryId, string sourceSystemUrl, string noteTitle, string noteDetails, string customStatusName, StructuredLeadAttributesDealStatus? dealStatus)
+        internal StructuredLeadAttributes(IList<LeadContact> contacts, IList<LeadAddress> addresses, IList<LeadAsset> assets, IList<LeadExpense> expenses, IList<LeadIncome> incomes, IList<LeadLiability> liabilities, IList<LeadEmployment> employments, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, int? sourceId, int? sourceCategoryId, string sourceSystemUrl, string noteTitle, string noteDetails, string customStatusName, StructuredLeadAttributesDealStatus? dealStatus)
         {
             Contacts = contacts;
             Addresses = addresses;
             Assets = assets;
             Expenses = expenses;
+            Incomes = incomes;
+            Liabilities = liabilities;
+            Employments = employments;
             UtmSource = utmSource;
             UtmMedium = utmMedium;
             UtmCampaign = utmCampaign;
@@ -67,6 +76,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public IList<LeadAsset> Assets { get; set; }
         /// <summary> Gets or sets the expenses. </summary>
         public IList<LeadExpense> Expenses { get; set; }
+        /// <summary> Gets or sets the incomes. </summary>
+        public IList<LeadIncome> Incomes { get; set; }
+        /// <summary> Gets or sets the liabilities. </summary>
+        public IList<LeadLiability> Liabilities { get; set; }
+        /// <summary> Gets or sets the employments. </summary>
+        public IList<LeadEmployment> Employments { get; set; }
         /// <summary> Gets or sets the utm source. </summary>
         public string UtmSource { get; set; }
         /// <summary> Gets or sets the utm medium. </summary>

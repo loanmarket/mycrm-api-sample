@@ -35,6 +35,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("deals");
                 writer.WriteObjectValue(Deals);
             }
+            if (Optional.IsDefined(Employments))
+            {
+                writer.WritePropertyName("employments");
+                writer.WriteObjectValue(Employments);
+            }
             if (Optional.IsDefined(ContactAddress))
             {
                 writer.WritePropertyName("contactAddress");
@@ -49,6 +54,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<RelationshipsMultipleDocument> ownership = default;
             Optional<RelationshipsMultipleDocument> externalReferences = default;
             Optional<RelationshipsMultipleDocument> deals = default;
+            Optional<RelationshipsMultipleDocument> employments = default;
             Optional<RelationshipsMultipleDocument> contactAddress = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -92,6 +98,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     deals = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
                     continue;
                 }
+                if (property.NameEquals("employments"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    employments = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("contactAddress"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -103,7 +119,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ContactRelationships(contactGroup.Value, ownership.Value, externalReferences.Value, deals.Value, contactAddress.Value);
+            return new ContactRelationships(contactGroup.Value, ownership.Value, externalReferences.Value, deals.Value, employments.Value, contactAddress.Value);
         }
     }
 }

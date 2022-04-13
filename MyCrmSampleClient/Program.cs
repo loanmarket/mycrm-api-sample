@@ -36,7 +36,8 @@ namespace MyCrmSampleClient
                     LastName = "Flinstone",
                     PreferredName = "Freddy",
                     Mobile = "0400123456",
-                    Email = "freddy.flintstone@outlook.com"
+                    Email = "freddy.flintstone@outlook.com",
+                    Gender = ContactAttributesGender.Male 
                 };
                 
                 var authClient = new AuthClient();

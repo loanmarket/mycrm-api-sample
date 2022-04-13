@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "MyCRM JsonApi",
+    "title": "MyCRM API",
     "version": "v1"
   },
   "paths": {
@@ -10399,6 +10399,386 @@
         }
       }
     },
+    "/jsonapi/property-types": {
+      "get": {
+        "tags": [
+          "PropertyTypes"
+        ],
+        "summary": "Gets a collection of property types",
+        "operationId": "PropertyTypes_Get",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "style": "form",
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "style": "form",
+            "explode": false,
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pagination"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PropertyTypesDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "PropertyTypes"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "PropertyTypes_Head",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/property-types/{id}": {
+      "get": {
+        "tags": [
+          "PropertyTypes"
+        ],
+        "summary": "Gets a single property type by id",
+        "description": "Where `id` is the identifier of the property type",
+        "operationId": "PropertyType_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PropertyTypeDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "PropertyTypes"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "PropertyType_Head",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/property-types/{id}/{relationshipName}": {
+      "get": {
+        "tags": [
+          "PropertyTypes"
+        ],
+        "summary": "Gets {{{RelationshipNames}}} via a single related property type",
+        "description": "Where `id` is the identifier of the property type",
+        "operationId": "PropertyTypeRelated_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "relationshipName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": { }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "PropertyTypes"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "PropertyTypeRelated_Head",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "relationshipName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/property-types/{id}/relationships/{relationshipName}": {
+      "get": {
+        "tags": [
+          "PropertyTypes"
+        ],
+        "summary": "Gets a {{{RelationshipNames}}} related to a single property type",
+        "description": "Where `id` is the identifier of the property type",
+        "operationId": "PropertyTypeRelationship_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "relationshipName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": { }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "PropertyTypes"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "PropertyTypeRelationship_Get_Head",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "relationshipName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/referrers": {
       "get": {
         "tags": [
@@ -16785,85 +17165,6 @@
         },
         "additionalProperties": false
       },
-      "AddressPropertyType": {
-        "enum": [
-          "AptUnitFlat",
-          "BedsitterBachelor",
-          "BoardingHouse",
-          "CombiShopResidence",
-          "Commercial",
-          "CompanyTitleUnit",
-          "ConvertedCommercialProperty",
-          "ConvertedIndustrialProperty",
-          "ConvertedMotelUnits",
-          "ConvertedProperty",
-          "DisplayHome",
-          "Duplex",
-          "FullyDetachedHouse",
-          "GovtRentalGuarantee",
-          "HobbyFarm",
-          "HolidayHome",
-          "HolidayRental",
-          "Industrial",
-          "InnerCityApartment",
-          "KitHome",
-          "LicencedBuilderHouseConstruction",
-          "LuxuryHouse",
-          "LuxuryOther",
-          "MultipleOnTitle",
-          "NewStrataTitleUnit",
-          "NursingHome",
-          "OwnerBuilderHouseConstruction",
-          "PropertyDevelopment",
-          "RelocatableHome",
-          "RentalGuarantee",
-          "ResortUnit",
-          "RetirementUnit",
-          "SemiDetachedHouse",
-          "ServicedApt",
-          "SingleBedroomLess50m2",
-          "Snowlease",
-          "StrataTitleUnit",
-          "StudentAccommodation",
-          "StudioWarehouseApt",
-          "Terrace",
-          "Timeshare",
-          "Townhouse",
-          "TransportableHome",
-          "UnitStudentAccom",
-          "VacantLand2",
-          "Villa",
-          "WarehouseConversion",
-          "ProfChambers",
-          "Offices",
-          "Factory",
-          "Warehouse",
-          "VacantLand",
-          "RetirementVillage",
-          "NonSpecialisedCommercial",
-          "ResidentialCommercial",
-          "Other",
-          "Item8HectaresOrLess",
-          "Over8LessThan40Hectares",
-          "Over40Hectares",
-          "NonSpecialisedIndustrial",
-          "LightIndustrial",
-          "Other2",
-          "AttachedUnit",
-          "Guarantee",
-          "LandOnly",
-          "Lifestyle",
-          "ResidentialLeasehold",
-          "StdResidential",
-          "MaoriLand",
-          "CrossLease"
-        ],
-        "type": "string",
-        "x-ms-enum": {
-          "name": "AddressPropertyType",
-          "modelAsString": true
-        }
-      },
       "AddressType": {
         "enum": [
           "CurrentAddress",
@@ -17128,6 +17429,11 @@
             "nullable": true,
             "readOnly": true
           },
+          "website": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
           "isMyLeadGenActive": {
             "type": "boolean",
             "nullable": true,
@@ -17201,6 +17507,15 @@
             "nullable": true,
             "readOnly": true
           },
+          "countryCode": {
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CountryCode"
+              }
+            ],
+            "readOnly": true
+          },
           "youtubeChannel": {
             "type": "string",
             "nullable": true,
@@ -17253,11 +17568,13 @@
       "AdviserDetailAttributes": {
         "type": "object",
         "properties": {
-          "description": {
-            "maxLength": 2000,
-            "minLength": 0,
+          "gender": {
             "type": "string",
-            "nullable": true
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/GenderCode"
+              }
+            ]
           },
           "placeOfBirth": {
             "maxLength": 100,
@@ -17353,6 +17670,12 @@
             "format": "date-time",
             "nullable": true,
             "readOnly": true
+          },
+          "description": {
+            "maxLength": 2000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -17754,6 +18077,30 @@
           },
           "adviser": {
             "$ref": "#/components/schemas/Adviser"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiClientEntityEmployment": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "business": {
+            "$ref": "#/components/schemas/Business"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "contact": {
+            "$ref": "#/components/schemas/Contact"
           }
         },
         "additionalProperties": false
@@ -18716,6 +19063,9 @@
           },
           "deals": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
+          "employments": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           }
         }
       },
@@ -19008,11 +19358,37 @@
             "type": "string",
             "nullable": true
           },
+          "homePhone": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "businessPhone": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "email": {
             "maxLength": 100,
             "minLength": 0,
             "type": "string",
             "nullable": true
+          },
+          "secondaryEmail": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "gender": {
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/GenderCode"
+              }
+            ]
           },
           "updated": {
             "type": "string",
@@ -19028,6 +19404,19 @@
             "type": "string",
             "format": "date",
             "nullable": true
+          },
+          "isPrimary": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ContactRole"
+              }
+            ],
+            "readOnly": true
           }
         }
       },
@@ -19594,9 +19983,24 @@
           "deals": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           },
+          "employments": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
           "contactAddress": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           }
+        }
+      },
+      "ContactRole": {
+        "enum": [
+          "Adult",
+          "Child",
+          "Other"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ContactRole",
+          "modelAsString": true
         }
       },
       "ContactsDocument": {
@@ -19658,6 +20062,18 @@
         "type": "string",
         "x-ms-enum": {
           "name": "ContactType",
+          "modelAsString": true
+        }
+      },
+      "CountryCode": {
+        "enum": [
+          "NZ",
+          "AU",
+          "ID"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "CountryCode",
           "modelAsString": true
         }
       },
@@ -20154,7 +20570,7 @@
         "type": "object",
         "properties": {
           "title": {
-            "maxLength": 200,
+            "maxLength": 2000,
             "minLength": 0,
             "type": "string",
             "nullable": true
@@ -21018,6 +21434,58 @@
         "type": "string",
         "x-ms-enum": {
           "name": "DealType",
+          "modelAsString": true
+        }
+      },
+      "EmployerType": {
+        "enum": [
+          "Private",
+          "Public"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "EmployerType",
+          "modelAsString": true
+        }
+      },
+      "EmploymentBasis": {
+        "enum": [
+          "FullTime",
+          "PartTime",
+          "Contract",
+          "Temporary",
+          "Casual"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "EmploymentBasis",
+          "modelAsString": true
+        }
+      },
+      "EmploymentStatus": {
+        "enum": [
+          "PrimaryEmployment",
+          "SecondaryEmployment",
+          "PreviousEmployment"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "EmploymentStatus",
+          "modelAsString": true
+        }
+      },
+      "EmploymentType": {
+        "enum": [
+          "PAYG",
+          "SelfEmployed",
+          "Unemployed",
+          "Retired",
+          "HomeDuties",
+          "Student"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "EmploymentType",
           "modelAsString": true
         }
       },
@@ -21925,6 +22393,18 @@
           "modelAsString": true
         }
       },
+      "GenderCode": {
+        "enum": [
+          "Male",
+          "Female",
+          "Undisclosed"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "GenderCode",
+          "modelAsString": true
+        }
+      },
       "HighLevelSummariesDocument": {
         "required": [
           "data"
@@ -22025,6 +22505,11 @@
             "minLength": 0,
             "type": "string",
             "nullable": true
+          },
+          "loanPurpose": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
           }
         }
       },
@@ -22185,6 +22670,7 @@
             "deal-structure-important-dates": "#/components/schemas/DealStructureImportantDate",
             "deal-structures": "#/components/schemas/DealStructure",
             "expenses": "#/components/schemas/Expense",
+            "property-types": "#/components/schemas/PropertyType",
             "financial-address": "#/components/schemas/FinancialAddress",
             "assets": "#/components/schemas/Asset",
             "financials": "#/components/schemas/Financial",
@@ -22692,6 +23178,26 @@
         ],
         "type": "string"
       },
+      "IncomeVerificationEnum": {
+        "enum": [
+          "CurrentPayslips",
+          "CurrentGroupCertificate",
+          "CurrentPersonalTaxReturn",
+          "PreviousYearPersonalTaxReturn",
+          "NoticeOfAssessment",
+          "CurrentCompanyTaxReturn",
+          "PreviousCompanyTaxReturn",
+          "LetterFromEmployer",
+          "EmploymentContract",
+          "BankAccountStatement",
+          "Other"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "IncomeVerificationEnum",
+          "modelAsString": true
+        }
+      },
       "Integration": {
         "required": [
           "type",
@@ -22904,31 +23410,55 @@
             "nullable": true
           },
           "formattedAddress": {
+            "maxLength": 500,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "streetAddress": {
+            "maxLength": 500,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "suburb": {
+            "maxLength": 500,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "state": {
+            "maxLength": 500,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "postCode": {
+            "maxLength": 4,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "country": {
+            "maxLength": 500,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "addressType": {
             "$ref": "#/components/schemas/ClientAddressType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LeadAddressReference": {
+        "required": [
+          "lid"
+        ],
+        "type": "object",
+        "properties": {
+          "lid": {
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -22940,7 +23470,19 @@
             "type": "string",
             "nullable": true
           },
+          "assetTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "assetSubTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "description": {
+            "maxLength": 500,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -22949,19 +23491,25 @@
             "format": "double",
             "nullable": true
           },
+          "institution": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "accountName": {
             "maxLength": 200,
             "minLength": 0,
             "type": "string",
             "nullable": true
           },
-          "accountNumber": {
+          "bsb": {
             "maxLength": 50,
             "minLength": 0,
             "type": "string",
             "nullable": true
           },
-          "bsb": {
+          "accountNumber": {
             "maxLength": 50,
             "minLength": 0,
             "type": "string",
@@ -22978,43 +23526,43 @@
             "format": "int32",
             "nullable": true
           },
-          "propertyType": {
-            "$ref": "#/components/schemas/AddressPropertyType"
-          },
-          "isRentalIncome": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "isExistingMortgages": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "isAccountDetailsKnown": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "institution": {
-            "maxLength": 1000,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "assetTypeId": {
+          "propertyZoningId": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "assetSubTypeId": {
+          "propertyTypeId": {
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "propertyPrimaryPurpose": {
+            "$ref": "#/components/schemas/PropertyPrimaryPurpose"
+          },
+          "valueBasis": {
+            "$ref": "#/components/schemas/PropertyValueEstimatedBasis"
+          },
+          "address": {
+            "$ref": "#/components/schemas/LeadAddressReference"
           },
           "ownership": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/LeadOwnership"
+              "$ref": "#/components/schemas/LeadContactReference"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LeadAssetReference": {
+        "required": [
+          "lid"
+        ],
+        "type": "object",
+        "properties": {
+          "lid": {
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -23204,22 +23752,44 @@
             "$ref": "#/components/schemas/Title"
           },
           "firstName": {
+            "maxLength": 100,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "preferredName": {
+            "maxLength": 100,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "lastName": {
+            "maxLength": 100,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "email": {
+            "maxLength": 100,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "mobile": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "homePhone": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "businessPhone": {
+            "maxLength": 100,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -23255,9 +23825,28 @@
           "addresses": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/LeadAddress"
+              "$ref": "#/components/schemas/LeadAddressReference"
             },
             "nullable": true
+          },
+          "employments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LeadEmploymentReference"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LeadContactReference": {
+        "required": [
+          "lid"
+        ],
+        "type": "object",
+        "properties": {
+          "lid": {
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -23299,6 +23888,112 @@
           }
         }
       },
+      "LeadEmployment": {
+        "type": "object",
+        "properties": {
+          "lid": {
+            "type": "string",
+            "nullable": true
+          },
+          "employmentStatus": {
+            "$ref": "#/components/schemas/EmploymentStatus"
+          },
+          "employmentType": {
+            "$ref": "#/components/schemas/EmploymentType"
+          },
+          "dateStartedAsString": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "dateStarted": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateEndedAsString": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "dateEnded": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "employmentRoleName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "employmentBasis": {
+            "$ref": "#/components/schemas/EmploymentBasis"
+          },
+          "isProbation": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "businessNumber": {
+            "maxLength": 80,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "companyNumber": {
+            "maxLength": 80,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "employerName": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "employerContactTitle": {
+            "$ref": "#/components/schemas/Title"
+          },
+          "employerContactFirstName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "employerContactLastName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "employerType": {
+            "$ref": "#/components/schemas/EmployerType"
+          },
+          "employerPhone": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "$ref": "#/components/schemas/LeadAddressReference"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LeadEmploymentReference": {
+        "required": [
+          "lid"
+        ],
+        "type": "object",
+        "properties": {
+          "lid": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
       "LeadExpense": {
         "type": "object",
         "properties": {
@@ -23328,26 +24023,146 @@
           "ownership": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/LeadOwnership"
+              "$ref": "#/components/schemas/LeadContactReference"
             },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "LeadOwnership": {
+      "LeadIncome": {
         "type": "object",
         "properties": {
           "lid": {
             "type": "string",
             "nullable": true
           },
-          "contact": {
-            "$ref": "#/components/schemas/LeadContact"
+          "incomeTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
-          "ownershipPercentage": {
+          "description": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
             "type": "number",
             "format": "double",
+            "nullable": true
+          },
+          "frequency": {
+            "$ref": "#/components/schemas/Frequency"
+          },
+          "incomeVerification": {
+            "$ref": "#/components/schemas/IncomeVerificationEnum"
+          },
+          "ownership": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LeadContactReference"
+            },
+            "nullable": true
+          },
+          "asset": {
+            "$ref": "#/components/schemas/LeadAssetReference"
+          },
+          "employment": {
+            "$ref": "#/components/schemas/LeadEmploymentReference"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LeadLiability": {
+        "type": "object",
+        "properties": {
+          "lid": {
+            "type": "string",
+            "nullable": true
+          },
+          "liabilityTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "accountName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "bsb": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "accountNumber": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "limit": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "repayments": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "repaymentFrequency": {
+            "$ref": "#/components/schemas/Frequency"
+          },
+          "interestRate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "interestTaxDeductible": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "creditorName": {
+            "maxLength": 250,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "loanTerm": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "loanRepaymentType": {
+            "$ref": "#/components/schemas/LiabilityRepaymentType"
+          },
+          "mortgagePriority": {
+            "$ref": "#/components/schemas/MortgagePriority"
+          },
+          "asset": {
+            "$ref": "#/components/schemas/LeadAssetReference"
+          },
+          "ownership": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LeadContactReference"
+            },
             "nullable": true
           }
         },
@@ -23977,6 +24792,18 @@
           "modelAsString": true
         }
       },
+      "MortgagePriority": {
+        "enum": [
+          "First",
+          "Second",
+          "Third"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "MortgagePriority",
+          "modelAsString": true
+        }
+      },
       "Opportunity": {
         "type": "object",
         "properties": {
@@ -23991,6 +24818,10 @@
             "nullable": true
           },
           "summaryNotes": {
+            "type": "string",
+            "nullable": true
+          },
+          "loanPurpose": {
             "type": "string",
             "nullable": true
           }
@@ -24580,6 +25411,186 @@
         },
         "additionalProperties": false
       },
+      "PropertyPrimaryPurpose": {
+        "enum": [
+          "PurchaseOwnerOccupied",
+          "PurchaseInvestment"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "PropertyPrimaryPurpose",
+          "modelAsString": true
+        }
+      },
+      "PropertyType": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/PropertyTypesEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/PropertyTypeAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/PropertyTypeRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PropertyTypeAttributes": {
+        "type": "object",
+        "properties": {
+          "propertyZoningType": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "name": {
+            "maxLength": 2000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "propertyZoningTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "PropertyTypeDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/PropertyType"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "PropertyTypeRelationships": {
+        "type": "object"
+      },
+      "PropertyTypesDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PropertyType"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "PropertyTypesEntityType": {
+        "enum": [
+          "property-types"
+        ],
+        "type": "string"
+      },
+      "PropertyValueEstimatedBasis": {
+        "enum": [
+          "ApplicantEstimate",
+          "CertifiedValuation",
+          "ActualValue"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "PropertyValueEstimatedBasis",
+          "modelAsString": true
+        }
+      },
+      "PropertyZoningTypesEntityType": {
+        "enum": [
+          "property-zoning-types"
+        ],
+        "type": "string"
+      },
       "Referrer": {
         "required": [
           "type",
@@ -25105,6 +26116,30 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/LeadExpense"
+            },
+            "nullable": true,
+            "writeOnly": true
+          },
+          "incomes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LeadIncome"
+            },
+            "nullable": true,
+            "writeOnly": true
+          },
+          "liabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LeadLiability"
+            },
+            "nullable": true,
+            "writeOnly": true
+          },
+          "employments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LeadEmployment"
             },
             "nullable": true,
             "writeOnly": true

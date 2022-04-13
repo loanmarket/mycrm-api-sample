@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> The LiabilityRepaymentType. </summary>
-    internal readonly partial struct LiabilityRepaymentType : IEquatable<LiabilityRepaymentType>
+    public readonly partial struct LiabilityRepaymentType : IEquatable<LiabilityRepaymentType>
     {
         private readonly string _value;
 

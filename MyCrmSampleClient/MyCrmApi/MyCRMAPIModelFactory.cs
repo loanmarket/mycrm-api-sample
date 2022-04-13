@@ -12,7 +12,7 @@ using System.Linq;
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class MyCRMJsonApiModelFactory
+    public static partial class MyCRMAPIModelFactory
     {
         /// <summary> Initializes a new instance of AdvisersDocument. </summary>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
@@ -66,6 +66,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="myLeadGenActivationDate"></param>
         /// <param name="bio"></param>
         /// <param name="jobTitle"></param>
+        /// <param name="website"></param>
         /// <param name="isMyLeadGenActive"></param>
         /// <param name="email"></param>
         /// <param name="skype"></param>
@@ -80,11 +81,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="profilePhotoHeadShot"></param>
         /// <param name="profilePhotoHalfBody"></param>
         /// <param name="profilePhotoFullBody"></param>
+        /// <param name="countryCode"></param>
         /// <param name="youtubeChannel"></param>
         /// <returns> A new <see cref="Models.AdviserAttributes"/> instance for mocking. </returns>
-        public static AdviserAttributes AdviserAttributes(string googlePlaces = null, DateTimeOffset? created = null, DateTimeOffset? myLeadGenActivationDate = null, string bio = null, string jobTitle = null, bool? isMyLeadGenActive = null, string email = null, string skype = null, string facebook = null, string linkedIn = null, string twitter = null, string youtubeFeatured = null, string instagram = null, string calendly = null, string myLeadGenerator = null, string status = null, string profilePhotoHeadShot = null, string profilePhotoHalfBody = null, string profilePhotoFullBody = null, string youtubeChannel = null)
+        public static AdviserAttributes AdviserAttributes(string googlePlaces = null, DateTimeOffset? created = null, DateTimeOffset? myLeadGenActivationDate = null, string bio = null, string jobTitle = null, string website = null, bool? isMyLeadGenActive = null, string email = null, string skype = null, string facebook = null, string linkedIn = null, string twitter = null, string youtubeFeatured = null, string instagram = null, string calendly = null, string myLeadGenerator = null, string status = null, string profilePhotoHeadShot = null, string profilePhotoHalfBody = null, string profilePhotoFullBody = null, AdviserAttributesCountryCode? countryCode = null, string youtubeChannel = null)
         {
-            return new AdviserAttributes(googlePlaces, created, myLeadGenActivationDate, bio, jobTitle, isMyLeadGenActive, email, skype, facebook, linkedIn, twitter, youtubeFeatured, instagram, calendly, myLeadGenerator, status, profilePhotoHeadShot, profilePhotoHalfBody, profilePhotoFullBody, youtubeChannel);
+            return new AdviserAttributes(googlePlaces, created, myLeadGenActivationDate, bio, jobTitle, website, isMyLeadGenActive, email, skype, facebook, linkedIn, twitter, youtubeFeatured, instagram, calendly, myLeadGenerator, status, profilePhotoHeadShot, profilePhotoHalfBody, profilePhotoFullBody, countryCode, youtubeChannel);
         }
 
         /// <summary> Initializes a new instance of RelationshipsSingleDocument. </summary>
@@ -178,7 +180,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of AdviserDetailAttributes. </summary>
-        /// <param name="description"></param>
+        /// <param name="gender"></param>
         /// <param name="placeOfBirth"></param>
         /// <param name="title"></param>
         /// <param name="firstName"></param>
@@ -195,10 +197,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="dateOfBirth"></param>
         /// <param name="updated"></param>
         /// <param name="created"></param>
+        /// <param name="description"></param>
         /// <returns> A new <see cref="Models.AdviserDetailAttributes"/> instance for mocking. </returns>
-        public static AdviserDetailAttributes AdviserDetailAttributes(string description = null, string placeOfBirth = null, string title = null, string firstName = null, string middleName = null, string lastName = null, string preferredName = null, string homePhone = null, string businessPhone = null, string mobilePhone = null, string email = null, string birthCountry = null, string fax = null, string workEmail = null, DateTimeOffset? dateOfBirth = null, DateTimeOffset? updated = null, DateTimeOffset? created = null)
+        public static AdviserDetailAttributes AdviserDetailAttributes(AdviserDetailAttributesGender? gender = null, string placeOfBirth = null, string title = null, string firstName = null, string middleName = null, string lastName = null, string preferredName = null, string homePhone = null, string businessPhone = null, string mobilePhone = null, string email = null, string birthCountry = null, string fax = null, string workEmail = null, DateTimeOffset? dateOfBirth = null, DateTimeOffset? updated = null, DateTimeOffset? created = null, string description = null)
         {
-            return new AdviserDetailAttributes(description, placeOfBirth, title, firstName, middleName, lastName, preferredName, homePhone, businessPhone, mobilePhone, email, birthCountry, fax, workEmail, dateOfBirth, updated, created);
+            return new AdviserDetailAttributes(gender, placeOfBirth, title, firstName, middleName, lastName, preferredName, homePhone, businessPhone, mobilePhone, email, birthCountry, fax, workEmail, dateOfBirth, updated, created, description);
         }
 
         /// <summary> Initializes a new instance of AdviserDetailDocument. </summary>
@@ -434,14 +437,20 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="middleName"></param>
         /// <param name="lastName"></param>
         /// <param name="preferredName"></param>
+        /// <param name="homePhone"></param>
+        /// <param name="businessPhone"></param>
         /// <param name="email"></param>
+        /// <param name="secondaryEmail"></param>
+        /// <param name="gender"></param>
         /// <param name="updated"></param>
         /// <param name="hasMarketingConsent"></param>
         /// <param name="dateOfBirth"></param>
+        /// <param name="isPrimary"></param>
+        /// <param name="role"></param>
         /// <returns> A new <see cref="Models.ContactAttributes"/> instance for mocking. </returns>
-        public static ContactAttributes ContactAttributes(DateTimeOffset? created = null, string mobile = null, string title = null, string firstName = null, string middleName = null, string lastName = null, string preferredName = null, string email = null, DateTimeOffset? updated = null, bool? hasMarketingConsent = null, DateTimeOffset? dateOfBirth = null)
+        public static ContactAttributes ContactAttributes(DateTimeOffset? created = null, string mobile = null, string title = null, string firstName = null, string middleName = null, string lastName = null, string preferredName = null, string homePhone = null, string businessPhone = null, string email = null, string secondaryEmail = null, ContactAttributesGender? gender = null, DateTimeOffset? updated = null, bool? hasMarketingConsent = null, DateTimeOffset? dateOfBirth = null, bool? isPrimary = null, ContactAttributesRole? role = null)
         {
-            return new ContactAttributes(created, mobile, title, firstName, middleName, lastName, preferredName, email, updated, hasMarketingConsent, dateOfBirth);
+            return new ContactAttributes(created, mobile, title, firstName, middleName, lastName, preferredName, homePhone, businessPhone, email, secondaryEmail, gender, updated, hasMarketingConsent, dateOfBirth, isPrimary, role);
         }
 
         /// <summary> Initializes a new instance of AssetSubTypesDocument. </summary>
@@ -1839,6 +1848,64 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             return new OrganisationDocument(meta, jsonApi, links, data, included?.ToList());
         }
 
+        /// <summary> Initializes a new instance of PropertyTypesDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.PropertyTypesDocument"/> instance for mocking. </returns>
+        public static PropertyTypesDocument PropertyTypesDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, PropertyTypesDocumentLinks links = null, IEnumerable<PropertyType> data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            data ??= new List<PropertyType>();
+            included ??= new List<IncludedResource>();
+
+            return new PropertyTypesDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of PropertyType. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"> Any object. </param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <returns> A new <see cref="Models.PropertyType"/> instance for mocking. </returns>
+        public static PropertyType PropertyType(string type = null, string id = null, PropertyTypeAttributes attributes = null, object relationships = null, PropertyTypeLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        {
+            meta ??= new Dictionary<string, object>();
+
+            return new PropertyType(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of PropertyTypeAttributes. </summary>
+        /// <param name="propertyZoningType"></param>
+        /// <param name="name"></param>
+        /// <param name="propertyZoningTypeId"></param>
+        /// <returns> A new <see cref="Models.PropertyTypeAttributes"/> instance for mocking. </returns>
+        public static PropertyTypeAttributes PropertyTypeAttributes(string propertyZoningType = null, string name = null, int? propertyZoningTypeId = null)
+        {
+            return new PropertyTypeAttributes(propertyZoningType, name, propertyZoningTypeId);
+        }
+
+        /// <summary> Initializes a new instance of PropertyTypeDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.PropertyTypeDocument"/> instance for mocking. </returns>
+        public static PropertyTypeDocument PropertyTypeDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, PropertyTypeDocumentLinks links = null, PropertyType data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            included ??= new List<IncludedResource>();
+
+            return new PropertyTypeDocument(meta, jsonApi, links, data, included?.ToList());
+        }
+
         /// <summary> Initializes a new instance of ReferrersDocument. </summary>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
         /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
@@ -1923,6 +1990,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="addresses"></param>
         /// <param name="assets"></param>
         /// <param name="expenses"></param>
+        /// <param name="incomes"></param>
+        /// <param name="liabilities"></param>
+        /// <param name="employments"></param>
         /// <param name="utmSource"></param>
         /// <param name="utmMedium"></param>
         /// <param name="utmCampaign"></param>
@@ -1936,14 +2006,17 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
         /// <returns> A new <see cref="Models.StructuredLeadAttributes"/> instance for mocking. </returns>
-        public static StructuredLeadAttributes StructuredLeadAttributes(IEnumerable<LeadContact> contacts = null, IEnumerable<LeadAddress> addresses = null, IEnumerable<LeadAsset> assets = null, IEnumerable<LeadExpense> expenses = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, int? sourceId = null, int? sourceCategoryId = null, string sourceSystemUrl = null, string noteTitle = null, string noteDetails = null, string customStatusName = null, StructuredLeadAttributesDealStatus? dealStatus = null)
+        public static StructuredLeadAttributes StructuredLeadAttributes(IEnumerable<LeadContact> contacts = null, IEnumerable<LeadAddress> addresses = null, IEnumerable<LeadAsset> assets = null, IEnumerable<LeadExpense> expenses = null, IEnumerable<LeadIncome> incomes = null, IEnumerable<LeadLiability> liabilities = null, IEnumerable<LeadEmployment> employments = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, int? sourceId = null, int? sourceCategoryId = null, string sourceSystemUrl = null, string noteTitle = null, string noteDetails = null, string customStatusName = null, StructuredLeadAttributesDealStatus? dealStatus = null)
         {
             contacts ??= new List<LeadContact>();
             addresses ??= new List<LeadAddress>();
             assets ??= new List<LeadAsset>();
             expenses ??= new List<LeadExpense>();
+            incomes ??= new List<LeadIncome>();
+            liabilities ??= new List<LeadLiability>();
+            employments ??= new List<LeadEmployment>();
 
-            return new StructuredLeadAttributes(contacts?.ToList(), addresses?.ToList(), assets?.ToList(), expenses?.ToList(), utmSource, utmMedium, utmCampaign, utmTerm, utmContent, sourceId, sourceCategoryId, sourceSystemUrl, noteTitle, noteDetails, customStatusName, dealStatus);
+            return new StructuredLeadAttributes(contacts?.ToList(), addresses?.ToList(), assets?.ToList(), expenses?.ToList(), incomes?.ToList(), liabilities?.ToList(), employments?.ToList(), utmSource, utmMedium, utmCampaign, utmTerm, utmContent, sourceId, sourceCategoryId, sourceSystemUrl, noteTitle, noteDetails, customStatusName, dealStatus);
         }
 
         /// <summary> Initializes a new instance of AgreementHoldersDocument. </summary>
@@ -2303,6 +2376,17 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             meta ??= new Dictionary<string, object>();
 
             return new HighLevelSummary(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of HighLevelSummaryAttributes. </summary>
+        /// <param name="proposedLoanAmount"></param>
+        /// <param name="securityAmount"></param>
+        /// <param name="summaryNotes"></param>
+        /// <param name="loanPurpose"></param>
+        /// <returns> A new <see cref="Models.HighLevelSummaryAttributes"/> instance for mocking. </returns>
+        public static HighLevelSummaryAttributes HighLevelSummaryAttributes(double? proposedLoanAmount = null, double? securityAmount = null, string summaryNotes = null, string loanPurpose = null)
+        {
+            return new HighLevelSummaryAttributes(proposedLoanAmount, securityAmount, summaryNotes, loanPurpose);
         }
     }
 }

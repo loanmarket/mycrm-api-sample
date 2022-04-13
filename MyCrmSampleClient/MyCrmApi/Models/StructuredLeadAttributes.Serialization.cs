@@ -84,6 +84,57 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("expenses");
                 }
             }
+            if (Optional.IsCollectionDefined(Incomes))
+            {
+                if (Incomes != null)
+                {
+                    writer.WritePropertyName("incomes");
+                    writer.WriteStartArray();
+                    foreach (var item in Incomes)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("incomes");
+                }
+            }
+            if (Optional.IsCollectionDefined(Liabilities))
+            {
+                if (Liabilities != null)
+                {
+                    writer.WritePropertyName("liabilities");
+                    writer.WriteStartArray();
+                    foreach (var item in Liabilities)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("liabilities");
+                }
+            }
+            if (Optional.IsCollectionDefined(Employments))
+            {
+                if (Employments != null)
+                {
+                    writer.WritePropertyName("employments");
+                    writer.WriteStartArray();
+                    foreach (var item in Employments)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("employments");
+                }
+            }
             if (Optional.IsDefined(UtmSource))
             {
                 if (UtmSource != null)
@@ -213,6 +264,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<IList<LeadAddress>> addresses = default;
             Optional<IList<LeadAsset>> assets = default;
             Optional<IList<LeadExpense>> expenses = default;
+            Optional<IList<LeadIncome>> incomes = default;
+            Optional<IList<LeadLiability>> liabilities = default;
+            Optional<IList<LeadEmployment>> employments = default;
             Optional<string> utmSource = default;
             Optional<string> utmMedium = default;
             Optional<string> utmCampaign = default;
@@ -285,6 +339,51 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         array.Add(LeadExpense.DeserializeLeadExpense(item));
                     }
                     expenses = array;
+                    continue;
+                }
+                if (property.NameEquals("incomes"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        incomes = null;
+                        continue;
+                    }
+                    List<LeadIncome> array = new List<LeadIncome>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LeadIncome.DeserializeLeadIncome(item));
+                    }
+                    incomes = array;
+                    continue;
+                }
+                if (property.NameEquals("liabilities"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        liabilities = null;
+                        continue;
+                    }
+                    List<LeadLiability> array = new List<LeadLiability>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LeadLiability.DeserializeLeadLiability(item));
+                    }
+                    liabilities = array;
+                    continue;
+                }
+                if (property.NameEquals("employments"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        employments = null;
+                        continue;
+                    }
+                    List<LeadEmployment> array = new List<LeadEmployment>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LeadEmployment.DeserializeLeadEmployment(item));
+                    }
+                    employments = array;
                     continue;
                 }
                 if (property.NameEquals("utmSource"))
@@ -408,7 +507,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new StructuredLeadAttributes(Optional.ToList(contacts), Optional.ToList(addresses), Optional.ToList(assets), Optional.ToList(expenses), utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceSystemUrl.Value, noteTitle.Value, noteDetails.Value, customStatusName.Value, Optional.ToNullable(dealStatus));
+            return new StructuredLeadAttributes(Optional.ToList(contacts), Optional.ToList(addresses), Optional.ToList(assets), Optional.ToList(expenses), Optional.ToList(incomes), Optional.ToList(liabilities), Optional.ToList(employments), utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceSystemUrl.Value, noteTitle.Value, noteDetails.Value, customStatusName.Value, Optional.ToNullable(dealStatus));
         }
     }
 }

@@ -28,6 +28,30 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("lid");
                 }
             }
+            if (Optional.IsDefined(AssetTypeId))
+            {
+                if (AssetTypeId != null)
+                {
+                    writer.WritePropertyName("assetTypeId");
+                    writer.WriteNumberValue(AssetTypeId.Value);
+                }
+                else
+                {
+                    writer.WriteNull("assetTypeId");
+                }
+            }
+            if (Optional.IsDefined(AssetSubTypeId))
+            {
+                if (AssetSubTypeId != null)
+                {
+                    writer.WritePropertyName("assetSubTypeId");
+                    writer.WriteNumberValue(AssetSubTypeId.Value);
+                }
+                else
+                {
+                    writer.WriteNull("assetSubTypeId");
+                }
+            }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -52,6 +76,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("value");
                 }
             }
+            if (Optional.IsDefined(Institution))
+            {
+                if (Institution != null)
+                {
+                    writer.WritePropertyName("institution");
+                    writer.WriteStringValue(Institution);
+                }
+                else
+                {
+                    writer.WriteNull("institution");
+                }
+            }
             if (Optional.IsDefined(AccountName))
             {
                 if (AccountName != null)
@@ -64,18 +100,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("accountName");
                 }
             }
-            if (Optional.IsDefined(AccountNumber))
-            {
-                if (AccountNumber != null)
-                {
-                    writer.WritePropertyName("accountNumber");
-                    writer.WriteStringValue(AccountNumber);
-                }
-                else
-                {
-                    writer.WriteNull("accountNumber");
-                }
-            }
             if (Optional.IsDefined(Bsb))
             {
                 if (Bsb != null)
@@ -86,6 +110,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 else
                 {
                     writer.WriteNull("bsb");
+                }
+            }
+            if (Optional.IsDefined(AccountNumber))
+            {
+                if (AccountNumber != null)
+                {
+                    writer.WritePropertyName("accountNumber");
+                    writer.WriteStringValue(AccountNumber);
+                }
+                else
+                {
+                    writer.WriteNull("accountNumber");
                 }
             }
             if (Optional.IsDefined(VehicleMake))
@@ -112,82 +148,44 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("vehicleYear");
                 }
             }
-            if (Optional.IsDefined(PropertyType))
+            if (Optional.IsDefined(PropertyZoningId))
             {
-                writer.WritePropertyName("propertyType");
-                writer.WriteStringValue(PropertyType.Value.ToString());
-            }
-            if (Optional.IsDefined(IsRentalIncome))
-            {
-                if (IsRentalIncome != null)
+                if (PropertyZoningId != null)
                 {
-                    writer.WritePropertyName("isRentalIncome");
-                    writer.WriteBooleanValue(IsRentalIncome.Value);
+                    writer.WritePropertyName("propertyZoningId");
+                    writer.WriteNumberValue(PropertyZoningId.Value);
                 }
                 else
                 {
-                    writer.WriteNull("isRentalIncome");
+                    writer.WriteNull("propertyZoningId");
                 }
             }
-            if (Optional.IsDefined(IsExistingMortgages))
+            if (Optional.IsDefined(PropertyTypeId))
             {
-                if (IsExistingMortgages != null)
+                if (PropertyTypeId != null)
                 {
-                    writer.WritePropertyName("isExistingMortgages");
-                    writer.WriteBooleanValue(IsExistingMortgages.Value);
+                    writer.WritePropertyName("propertyTypeId");
+                    writer.WriteNumberValue(PropertyTypeId.Value);
                 }
                 else
                 {
-                    writer.WriteNull("isExistingMortgages");
+                    writer.WriteNull("propertyTypeId");
                 }
             }
-            if (Optional.IsDefined(IsAccountDetailsKnown))
+            if (Optional.IsDefined(PropertyPrimaryPurpose))
             {
-                if (IsAccountDetailsKnown != null)
-                {
-                    writer.WritePropertyName("isAccountDetailsKnown");
-                    writer.WriteBooleanValue(IsAccountDetailsKnown.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isAccountDetailsKnown");
-                }
+                writer.WritePropertyName("propertyPrimaryPurpose");
+                writer.WriteStringValue(PropertyPrimaryPurpose.Value.ToString());
             }
-            if (Optional.IsDefined(Institution))
+            if (Optional.IsDefined(ValueBasis))
             {
-                if (Institution != null)
-                {
-                    writer.WritePropertyName("institution");
-                    writer.WriteStringValue(Institution);
-                }
-                else
-                {
-                    writer.WriteNull("institution");
-                }
+                writer.WritePropertyName("valueBasis");
+                writer.WriteStringValue(ValueBasis.Value.ToString());
             }
-            if (Optional.IsDefined(AssetTypeId))
+            if (Optional.IsDefined(Address))
             {
-                if (AssetTypeId != null)
-                {
-                    writer.WritePropertyName("assetTypeId");
-                    writer.WriteNumberValue(AssetTypeId.Value);
-                }
-                else
-                {
-                    writer.WriteNull("assetTypeId");
-                }
-            }
-            if (Optional.IsDefined(AssetSubTypeId))
-            {
-                if (AssetSubTypeId != null)
-                {
-                    writer.WritePropertyName("assetSubTypeId");
-                    writer.WriteNumberValue(AssetSubTypeId.Value);
-                }
-                else
-                {
-                    writer.WriteNull("assetSubTypeId");
-                }
+                writer.WritePropertyName("address");
+                writer.WriteObjectValue(Address);
             }
             if (Optional.IsCollectionDefined(Ownership))
             {
@@ -212,21 +210,22 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         internal static LeadAsset DeserializeLeadAsset(JsonElement element)
         {
             Optional<string> lid = default;
-            Optional<string> description = default;
-            Optional<double?> value = default;
-            Optional<string> accountName = default;
-            Optional<string> accountNumber = default;
-            Optional<string> bsb = default;
-            Optional<string> vehicleMake = default;
-            Optional<int?> vehicleYear = default;
-            Optional<AddressPropertyType> propertyType = default;
-            Optional<bool?> isRentalIncome = default;
-            Optional<bool?> isExistingMortgages = default;
-            Optional<bool?> isAccountDetailsKnown = default;
-            Optional<string> institution = default;
             Optional<int?> assetTypeId = default;
             Optional<int?> assetSubTypeId = default;
-            Optional<IList<LeadOwnership>> ownership = default;
+            Optional<string> description = default;
+            Optional<double?> value = default;
+            Optional<string> institution = default;
+            Optional<string> accountName = default;
+            Optional<string> bsb = default;
+            Optional<string> accountNumber = default;
+            Optional<string> vehicleMake = default;
+            Optional<int?> vehicleYear = default;
+            Optional<int?> propertyZoningId = default;
+            Optional<int?> propertyTypeId = default;
+            Optional<PropertyPrimaryPurpose> propertyPrimaryPurpose = default;
+            Optional<PropertyValueEstimatedBasis> valueBasis = default;
+            Optional<LeadAddressReference> address = default;
+            Optional<IList<LeadContactReference>> ownership = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lid"))
@@ -237,126 +236,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     lid = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("value"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        value = null;
-                        continue;
-                    }
-                    value = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("accountName"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        accountName = null;
-                        continue;
-                    }
-                    accountName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("accountNumber"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        accountNumber = null;
-                        continue;
-                    }
-                    accountNumber = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("bsb"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        bsb = null;
-                        continue;
-                    }
-                    bsb = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("vehicleMake"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        vehicleMake = null;
-                        continue;
-                    }
-                    vehicleMake = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("vehicleYear"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        vehicleYear = null;
-                        continue;
-                    }
-                    vehicleYear = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("propertyType"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    propertyType = new AddressPropertyType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("isRentalIncome"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        isRentalIncome = null;
-                        continue;
-                    }
-                    isRentalIncome = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("isExistingMortgages"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        isExistingMortgages = null;
-                        continue;
-                    }
-                    isExistingMortgages = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("isAccountDetailsKnown"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        isAccountDetailsKnown = null;
-                        continue;
-                    }
-                    isAccountDetailsKnown = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("institution"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        institution = null;
-                        continue;
-                    }
-                    institution = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("assetTypeId"))
@@ -379,6 +258,136 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     assetSubTypeId = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("description"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("value"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        value = null;
+                        continue;
+                    }
+                    value = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("institution"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        institution = null;
+                        continue;
+                    }
+                    institution = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("accountName"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        accountName = null;
+                        continue;
+                    }
+                    accountName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("bsb"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        bsb = null;
+                        continue;
+                    }
+                    bsb = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("accountNumber"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        accountNumber = null;
+                        continue;
+                    }
+                    accountNumber = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("vehicleMake"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        vehicleMake = null;
+                        continue;
+                    }
+                    vehicleMake = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("vehicleYear"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        vehicleYear = null;
+                        continue;
+                    }
+                    vehicleYear = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("propertyZoningId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        propertyZoningId = null;
+                        continue;
+                    }
+                    propertyZoningId = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("propertyTypeId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        propertyTypeId = null;
+                        continue;
+                    }
+                    propertyTypeId = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("propertyPrimaryPurpose"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    propertyPrimaryPurpose = new PropertyPrimaryPurpose(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("valueBasis"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    valueBasis = new PropertyValueEstimatedBasis(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("address"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    address = LeadAddressReference.DeserializeLeadAddressReference(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("ownership"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -386,16 +395,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         ownership = null;
                         continue;
                     }
-                    List<LeadOwnership> array = new List<LeadOwnership>();
+                    List<LeadContactReference> array = new List<LeadContactReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LeadOwnership.DeserializeLeadOwnership(item));
+                        array.Add(LeadContactReference.DeserializeLeadContactReference(item));
                     }
                     ownership = array;
                     continue;
                 }
             }
-            return new LeadAsset(lid.Value, description.Value, Optional.ToNullable(value), accountName.Value, accountNumber.Value, bsb.Value, vehicleMake.Value, Optional.ToNullable(vehicleYear), Optional.ToNullable(propertyType), Optional.ToNullable(isRentalIncome), Optional.ToNullable(isExistingMortgages), Optional.ToNullable(isAccountDetailsKnown), institution.Value, Optional.ToNullable(assetTypeId), Optional.ToNullable(assetSubTypeId), Optional.ToList(ownership));
+            return new LeadAsset(lid.Value, Optional.ToNullable(assetTypeId), Optional.ToNullable(assetSubTypeId), description.Value, Optional.ToNullable(value), institution.Value, accountName.Value, bsb.Value, accountNumber.Value, vehicleMake.Value, Optional.ToNullable(vehicleYear), Optional.ToNullable(propertyZoningId), Optional.ToNullable(propertyTypeId), Optional.ToNullable(propertyPrimaryPurpose), Optional.ToNullable(valueBasis), address.Value, Optional.ToList(ownership));
         }
     }
 }

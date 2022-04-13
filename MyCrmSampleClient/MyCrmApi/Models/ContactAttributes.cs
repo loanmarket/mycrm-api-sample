@@ -25,11 +25,17 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="middleName"></param>
         /// <param name="lastName"></param>
         /// <param name="preferredName"></param>
+        /// <param name="homePhone"></param>
+        /// <param name="businessPhone"></param>
         /// <param name="email"></param>
+        /// <param name="secondaryEmail"></param>
+        /// <param name="gender"></param>
         /// <param name="updated"></param>
         /// <param name="hasMarketingConsent"></param>
         /// <param name="dateOfBirth"></param>
-        internal ContactAttributes(DateTimeOffset? created, string mobile, string title, string firstName, string middleName, string lastName, string preferredName, string email, DateTimeOffset? updated, bool? hasMarketingConsent, DateTimeOffset? dateOfBirth)
+        /// <param name="isPrimary"></param>
+        /// <param name="role"></param>
+        internal ContactAttributes(DateTimeOffset? created, string mobile, string title, string firstName, string middleName, string lastName, string preferredName, string homePhone, string businessPhone, string email, string secondaryEmail, ContactAttributesGender? gender, DateTimeOffset? updated, bool? hasMarketingConsent, DateTimeOffset? dateOfBirth, bool? isPrimary, ContactAttributesRole? role)
         {
             Created = created;
             Mobile = mobile;
@@ -38,10 +44,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             MiddleName = middleName;
             LastName = lastName;
             PreferredName = preferredName;
+            HomePhone = homePhone;
+            BusinessPhone = businessPhone;
             Email = email;
+            SecondaryEmail = secondaryEmail;
+            Gender = gender;
             Updated = updated;
             HasMarketingConsent = hasMarketingConsent;
             DateOfBirth = dateOfBirth;
+            IsPrimary = isPrimary;
+            Role = role;
         }
 
         /// <summary> Gets the created. </summary>
@@ -58,13 +70,25 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string LastName { get; set; }
         /// <summary> Gets or sets the preferred name. </summary>
         public string PreferredName { get; set; }
+        /// <summary> Gets or sets the home phone. </summary>
+        public string HomePhone { get; set; }
+        /// <summary> Gets or sets the business phone. </summary>
+        public string BusinessPhone { get; set; }
         /// <summary> Gets or sets the email. </summary>
         public string Email { get; set; }
+        /// <summary> Gets or sets the secondary email. </summary>
+        public string SecondaryEmail { get; set; }
+        /// <summary> Gets or sets the gender. </summary>
+        public ContactAttributesGender? Gender { get; set; }
         /// <summary> Gets the updated. </summary>
         public DateTimeOffset? Updated { get; }
         /// <summary> Gets or sets the has marketing consent. </summary>
         public bool? HasMarketingConsent { get; set; }
         /// <summary> Gets or sets the date of birth. </summary>
         public DateTimeOffset? DateOfBirth { get; set; }
+        /// <summary> Gets or sets the is primary. </summary>
+        public bool? IsPrimary { get; set; }
+        /// <summary> Gets the role. </summary>
+        public ContactAttributesRole? Role { get; }
     }
 }
