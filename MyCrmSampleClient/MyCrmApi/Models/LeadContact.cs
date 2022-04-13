@@ -17,7 +17,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of LeadContact. </summary>
         public LeadContact()
         {
-            Addresses = new ChangeTrackingList<LeadAddress>();
+            Addresses = new ChangeTrackingList<LeadAddressReference>();
+            Employments = new ChangeTrackingList<LeadEmploymentReference>();
         }
 
         /// <summary> Initializes a new instance of LeadContact. </summary>
@@ -28,6 +29,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="lastName"></param>
         /// <param name="email"></param>
         /// <param name="mobile"></param>
+        /// <param name="homePhone"></param>
+        /// <param name="businessPhone"></param>
         /// <param name="dateOfBirthAsString"></param>
         /// <param name="dateOfBirth"></param>
         /// <param name="gender"></param>
@@ -36,7 +39,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="isDependant"></param>
         /// <param name="isPrimary"></param>
         /// <param name="addresses"></param>
-        internal LeadContact(string lid, Title? title, string firstName, string preferredName, string lastName, string email, string mobile, DateTimeOffset? dateOfBirthAsString, DateTimeOffset? dateOfBirth, Gender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, IList<LeadAddress> addresses)
+        /// <param name="employments"></param>
+        internal LeadContact(string lid, Title? title, string firstName, string preferredName, string lastName, string email, string mobile, string homePhone, string businessPhone, DateTimeOffset? dateOfBirthAsString, DateTimeOffset? dateOfBirth, Gender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, IList<LeadAddressReference> addresses, IList<LeadEmploymentReference> employments)
         {
             Lid = lid;
             Title = title;
@@ -45,6 +49,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             LastName = lastName;
             Email = email;
             Mobile = mobile;
+            HomePhone = homePhone;
+            BusinessPhone = businessPhone;
             DateOfBirthAsString = dateOfBirthAsString;
             DateOfBirth = dateOfBirth;
             Gender = gender;
@@ -53,6 +59,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             IsDependant = isDependant;
             IsPrimary = isPrimary;
             Addresses = addresses;
+            Employments = employments;
         }
 
         /// <summary> Gets or sets the lid. </summary>
@@ -69,6 +76,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string Email { get; set; }
         /// <summary> Gets or sets the mobile. </summary>
         public string Mobile { get; set; }
+        /// <summary> Gets or sets the home phone. </summary>
+        public string HomePhone { get; set; }
+        /// <summary> Gets or sets the business phone. </summary>
+        public string BusinessPhone { get; set; }
         /// <summary> Gets or sets the date of birth as string. </summary>
         public DateTimeOffset? DateOfBirthAsString { get; set; }
         /// <summary> Gets or sets the date of birth. </summary>
@@ -84,6 +95,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Gets or sets the is primary. </summary>
         public bool? IsPrimary { get; set; }
         /// <summary> Gets or sets the addresses. </summary>
-        public IList<LeadAddress> Addresses { get; set; }
+        public IList<LeadAddressReference> Addresses { get; set; }
+        /// <summary> Gets or sets the employments. </summary>
+        public IList<LeadEmploymentReference> Employments { get; set; }
     }
 }

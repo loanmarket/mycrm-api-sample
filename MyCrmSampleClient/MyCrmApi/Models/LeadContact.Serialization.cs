@@ -94,6 +94,30 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("mobile");
                 }
             }
+            if (Optional.IsDefined(HomePhone))
+            {
+                if (HomePhone != null)
+                {
+                    writer.WritePropertyName("homePhone");
+                    writer.WriteStringValue(HomePhone);
+                }
+                else
+                {
+                    writer.WriteNull("homePhone");
+                }
+            }
+            if (Optional.IsDefined(BusinessPhone))
+            {
+                if (BusinessPhone != null)
+                {
+                    writer.WritePropertyName("businessPhone");
+                    writer.WriteStringValue(BusinessPhone);
+                }
+                else
+                {
+                    writer.WriteNull("businessPhone");
+                }
+            }
             if (Optional.IsDefined(DateOfBirthAsString))
             {
                 if (DateOfBirthAsString != null)
@@ -188,6 +212,23 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("addresses");
                 }
             }
+            if (Optional.IsCollectionDefined(Employments))
+            {
+                if (Employments != null)
+                {
+                    writer.WritePropertyName("employments");
+                    writer.WriteStartArray();
+                    foreach (var item in Employments)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("employments");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -200,6 +241,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> lastName = default;
             Optional<string> email = default;
             Optional<string> mobile = default;
+            Optional<string> homePhone = default;
+            Optional<string> businessPhone = default;
             Optional<DateTimeOffset?> dateOfBirthAsString = default;
             Optional<DateTimeOffset?> dateOfBirth = default;
             Optional<Gender> gender = default;
@@ -207,7 +250,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<bool?> isGuarantor = default;
             Optional<bool?> isDependant = default;
             Optional<bool?> isPrimary = default;
-            Optional<IList<LeadAddress>> addresses = default;
+            Optional<IList<LeadAddressReference>> addresses = default;
+            Optional<IList<LeadEmploymentReference>> employments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lid"))
@@ -278,6 +322,26 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     mobile = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("homePhone"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        homePhone = null;
+                        continue;
+                    }
+                    homePhone = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("businessPhone"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        businessPhone = null;
+                        continue;
+                    }
+                    businessPhone = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dateOfBirthAsString"))
@@ -357,16 +421,31 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         addresses = null;
                         continue;
                     }
-                    List<LeadAddress> array = new List<LeadAddress>();
+                    List<LeadAddressReference> array = new List<LeadAddressReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LeadAddress.DeserializeLeadAddress(item));
+                        array.Add(LeadAddressReference.DeserializeLeadAddressReference(item));
                     }
                     addresses = array;
                     continue;
                 }
+                if (property.NameEquals("employments"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        employments = null;
+                        continue;
+                    }
+                    List<LeadEmploymentReference> array = new List<LeadEmploymentReference>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LeadEmploymentReference.DeserializeLeadEmploymentReference(item));
+                    }
+                    employments = array;
+                    continue;
+                }
             }
-            return new LeadContact(lid.Value, Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(dateOfBirthAsString), Optional.ToNullable(dateOfBirth), Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), Optional.ToList(addresses));
+            return new LeadContact(lid.Value, Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, homePhone.Value, businessPhone.Value, Optional.ToNullable(dateOfBirthAsString), Optional.ToNullable(dateOfBirth), Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), Optional.ToList(addresses), Optional.ToList(employments));
         }
     }
 }

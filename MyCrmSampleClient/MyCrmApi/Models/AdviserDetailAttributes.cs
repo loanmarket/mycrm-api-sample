@@ -18,7 +18,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of AdviserDetailAttributes. </summary>
-        /// <param name="description"></param>
+        /// <param name="gender"></param>
         /// <param name="placeOfBirth"></param>
         /// <param name="title"></param>
         /// <param name="firstName"></param>
@@ -35,9 +35,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="dateOfBirth"></param>
         /// <param name="updated"></param>
         /// <param name="created"></param>
-        internal AdviserDetailAttributes(string description, string placeOfBirth, string title, string firstName, string middleName, string lastName, string preferredName, string homePhone, string businessPhone, string mobilePhone, string email, string birthCountry, string fax, string workEmail, DateTimeOffset? dateOfBirth, DateTimeOffset? updated, DateTimeOffset? created)
+        /// <param name="description"></param>
+        internal AdviserDetailAttributes(AdviserDetailAttributesGender? gender, string placeOfBirth, string title, string firstName, string middleName, string lastName, string preferredName, string homePhone, string businessPhone, string mobilePhone, string email, string birthCountry, string fax, string workEmail, DateTimeOffset? dateOfBirth, DateTimeOffset? updated, DateTimeOffset? created, string description)
         {
-            Description = description;
+            Gender = gender;
             PlaceOfBirth = placeOfBirth;
             Title = title;
             FirstName = firstName;
@@ -54,10 +55,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             DateOfBirth = dateOfBirth;
             Updated = updated;
             Created = created;
+            Description = description;
         }
 
-        /// <summary> Gets or sets the description. </summary>
-        public string Description { get; set; }
+        /// <summary> Gets or sets the gender. </summary>
+        public AdviserDetailAttributesGender? Gender { get; set; }
         /// <summary> Gets or sets the place of birth. </summary>
         public string PlaceOfBirth { get; set; }
         /// <summary> Gets or sets the title. </summary>
@@ -90,5 +92,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public DateTimeOffset? Updated { get; }
         /// <summary> Gets the created. </summary>
         public DateTimeOffset? Created { get; }
+        /// <summary> Gets or sets the description. </summary>
+        public string Description { get; set; }
     }
 }

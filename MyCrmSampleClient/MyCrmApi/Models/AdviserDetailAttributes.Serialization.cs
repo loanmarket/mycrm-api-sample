@@ -16,17 +16,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(Gender))
             {
-                if (Description != null)
-                {
-                    writer.WritePropertyName("description");
-                    writer.WriteStringValue(Description);
-                }
-                else
-                {
-                    writer.WriteNull("description");
-                }
+                writer.WritePropertyName("gender");
+                writer.WriteStringValue(Gender.Value.ToString());
             }
             if (Optional.IsDefined(PlaceOfBirth))
             {
@@ -196,12 +189,24 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("dateOfBirth");
                 }
             }
+            if (Optional.IsDefined(Description))
+            {
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description");
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description");
+                }
+            }
             writer.WriteEndObject();
         }
 
         internal static AdviserDetailAttributes DeserializeAdviserDetailAttributes(JsonElement element)
         {
-            Optional<string> description = default;
+            Optional<AdviserDetailAttributesGender> gender = default;
             Optional<string> placeOfBirth = default;
             Optional<string> title = default;
             Optional<string> firstName = default;
@@ -218,16 +223,17 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<DateTimeOffset?> dateOfBirth = default;
             Optional<DateTimeOffset?> updated = default;
             Optional<DateTimeOffset?> created = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("gender"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        description = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    description = property.Value.GetString();
+                    gender = new AdviserDetailAttributesGender(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("placeOfBirth"))
@@ -390,8 +396,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     created = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("description"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AdviserDetailAttributes(description.Value, placeOfBirth.Value, title.Value, firstName.Value, middleName.Value, lastName.Value, preferredName.Value, homePhone.Value, businessPhone.Value, mobilePhone.Value, email.Value, birthCountry.Value, fax.Value, workEmail.Value, Optional.ToNullable(dateOfBirth), Optional.ToNullable(updated), Optional.ToNullable(created));
+            return new AdviserDetailAttributes(Optional.ToNullable(gender), placeOfBirth.Value, title.Value, firstName.Value, middleName.Value, lastName.Value, preferredName.Value, homePhone.Value, businessPhone.Value, mobilePhone.Value, email.Value, birthCountry.Value, fax.Value, workEmail.Value, Optional.ToNullable(dateOfBirth), Optional.ToNullable(updated), Optional.ToNullable(created), description.Value);
         }
     }
 }

@@ -96,7 +96,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> description = default;
             Optional<double?> value = default;
             Optional<Frequency> frequency = default;
-            Optional<IList<LeadOwnership>> ownership = default;
+            Optional<IList<LeadContactReference>> ownership = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lid"))
@@ -156,10 +156,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         ownership = null;
                         continue;
                     }
-                    List<LeadOwnership> array = new List<LeadOwnership>();
+                    List<LeadContactReference> array = new List<LeadContactReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LeadOwnership.DeserializeLeadOwnership(item));
+                        array.Add(LeadContactReference.DeserializeLeadContactReference(item));
                     }
                     ownership = array;
                     continue;

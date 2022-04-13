@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi
 {
-    /// <summary> Client options for MyCRMJsonApiClient. </summary>
-    public partial class MyCRMJsonApiClientOptions : ClientOptions
+    /// <summary> Client options for MyCRMAPIClient. </summary>
+    public partial class MyCRMAPIClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.Vv1;
 
@@ -24,8 +24,8 @@ namespace MyCrmSampleClient.MyCrmApi
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of MyCRMJsonApiClientOptions. </summary>
-        public MyCRMJsonApiClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of MyCRMAPIClientOptions. </summary>
+        public MyCRMAPIClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
