@@ -6,20 +6,24 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using MyCrmSampleClient.MyCrmApi.Models;
 
 namespace MyCrmSampleClient.MyCrmApi
 {
     /// <summary> The AssetRelationship service client. </summary>
     public partial class AssetRelationshipClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal AssetRelationshipRestClient RestClient { get; }
+        private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of AssetRelationshipClient for mocking. </summary>
         protected AssetRelationshipClient()
@@ -27,27 +31,70 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Initializes a new instance of AssetRelationshipClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
-        internal AssetRelationshipClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
+        /// <param name="options"> The options for configuring the client. </param>
+        public AssetRelationshipClient(Uri endpoint = null, MyCRMAPIClientOptions options = null)
         {
-            RestClient = new AssetRelationshipRestClient(clientDiagnostics, pipeline, endpoint);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            endpoint ??= new Uri("");
+            options ??= new MyCRMAPIClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
         }
 
         /// <summary> Where `id` is the identifier of the asset. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelationshipsMultipleDocument>> GetOwnersAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetOwnersAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("AssetRelationshipClient.GetOwners");
+            using var scope = ClientDiagnostics.CreateScope("AssetRelationshipClient.GetOwners");
             scope.Start();
             try
             {
-                return await RestClient.GetOwnersAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetOwnersRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -58,14 +105,56 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the asset. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelationshipsMultipleDocument> GetOwners(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetOwners(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("AssetRelationshipClient.GetOwners");
+            using var scope = ClientDiagnostics.CreateScope("AssetRelationshipClient.GetOwners");
             scope.Start();
             try
             {
-                return RestClient.GetOwners(id, cancellationToken);
+                using HttpMessage message = CreateGetOwnersRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -76,14 +165,56 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the asset. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelationshipsMultipleDocument>> GetFinancialAddressesAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetFinancialAddressesAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("AssetRelationshipClient.GetFinancialAddresses");
+            using var scope = ClientDiagnostics.CreateScope("AssetRelationshipClient.GetFinancialAddresses");
             scope.Start();
             try
             {
-                return await RestClient.GetFinancialAddressesAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetFinancialAddressesRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -94,14 +225,56 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the asset. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelationshipsMultipleDocument> GetFinancialAddresses(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetFinancialAddresses(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("AssetRelationshipClient.GetFinancialAddresses");
+            using var scope = ClientDiagnostics.CreateScope("AssetRelationshipClient.GetFinancialAddresses");
             scope.Start();
             try
             {
-                return RestClient.GetFinancialAddresses(id, cancellationToken);
+                using HttpMessage message = CreateGetFinancialAddressesRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -109,5 +282,38 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
+
+        internal HttpMessage CreateGetOwnersRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/assets/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/ownership", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetFinancialAddressesRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/assets/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/addresses", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        private static ResponseClassifier _responseClassifier200401;
+        private static ResponseClassifier ResponseClassifier200401 => _responseClassifier200401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 401 });
     }
 }

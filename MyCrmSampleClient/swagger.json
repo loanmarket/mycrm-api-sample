@@ -20570,7 +20570,7 @@
         "type": "object",
         "properties": {
           "title": {
-            "maxLength": 2000,
+            "maxLength": 200,
             "minLength": 0,
             "type": "string",
             "nullable": true
@@ -23451,18 +23451,6 @@
         },
         "additionalProperties": false
       },
-      "LeadAddressReference": {
-        "required": [
-          "lid"
-        ],
-        "type": "object",
-        "properties": {
-          "lid": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
       "LeadAsset": {
         "type": "object",
         "properties": {
@@ -23543,26 +23531,14 @@
             "$ref": "#/components/schemas/PropertyValueEstimatedBasis"
           },
           "address": {
-            "$ref": "#/components/schemas/LeadAddressReference"
+            "$ref": "#/components/schemas/LeadAddress"
           },
           "ownership": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/LeadContactReference"
+              "$ref": "#/components/schemas/LeadContact"
             },
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "LeadAssetReference": {
-        "required": [
-          "lid"
-        ],
-        "type": "object",
-        "properties": {
-          "lid": {
-            "type": "string"
           }
         },
         "additionalProperties": false
@@ -23825,28 +23801,16 @@
           "addresses": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/LeadAddressReference"
+              "$ref": "#/components/schemas/LeadAddress"
             },
             "nullable": true
           },
           "employments": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/LeadEmploymentReference"
+              "$ref": "#/components/schemas/LeadEmployment"
             },
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "LeadContactReference": {
-        "required": [
-          "lid"
-        ],
-        "type": "object",
-        "properties": {
-          "lid": {
-            "type": "string"
           }
         },
         "additionalProperties": false
@@ -23977,19 +23941,7 @@
             "nullable": true
           },
           "address": {
-            "$ref": "#/components/schemas/LeadAddressReference"
-          }
-        },
-        "additionalProperties": false
-      },
-      "LeadEmploymentReference": {
-        "required": [
-          "lid"
-        ],
-        "type": "object",
-        "properties": {
-          "lid": {
-            "type": "string"
+            "$ref": "#/components/schemas/LeadAddress"
           }
         },
         "additionalProperties": false
@@ -24023,7 +23975,7 @@
           "ownership": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/LeadContactReference"
+              "$ref": "#/components/schemas/LeadContact"
             },
             "nullable": true
           }
@@ -24062,15 +24014,15 @@
           "ownership": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/LeadContactReference"
+              "$ref": "#/components/schemas/LeadContact"
             },
             "nullable": true
           },
           "asset": {
-            "$ref": "#/components/schemas/LeadAssetReference"
+            "$ref": "#/components/schemas/LeadAsset"
           },
           "employment": {
-            "$ref": "#/components/schemas/LeadEmploymentReference"
+            "$ref": "#/components/schemas/LeadEmployment"
           }
         },
         "additionalProperties": false
@@ -24156,12 +24108,12 @@
             "$ref": "#/components/schemas/MortgagePriority"
           },
           "asset": {
-            "$ref": "#/components/schemas/LeadAssetReference"
+            "$ref": "#/components/schemas/LeadAsset"
           },
           "ownership": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/LeadContactReference"
+              "$ref": "#/components/schemas/LeadContact"
             },
             "nullable": true
           }

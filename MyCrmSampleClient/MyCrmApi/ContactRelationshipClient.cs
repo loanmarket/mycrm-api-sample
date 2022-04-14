@@ -6,20 +6,24 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using MyCrmSampleClient.MyCrmApi.Models;
 
 namespace MyCrmSampleClient.MyCrmApi
 {
     /// <summary> The ContactRelationship service client. </summary>
     public partial class ContactRelationshipClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal ContactRelationshipRestClient RestClient { get; }
+        private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of ContactRelationshipClient for mocking. </summary>
         protected ContactRelationshipClient()
@@ -27,27 +31,68 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Initializes a new instance of ContactRelationshipClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
-        internal ContactRelationshipClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
+        /// <param name="options"> The options for configuring the client. </param>
+        public ContactRelationshipClient(Uri endpoint = null, MyCRMAPIClientOptions options = null)
         {
-            RestClient = new ContactRelationshipRestClient(clientDiagnostics, pipeline, endpoint);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            endpoint ??= new Uri("");
+            options ??= new MyCRMAPIClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
         }
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelationshipsSingleDocument>> GetContactGroupsAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: {
+        ///     type: string,
+        ///     id: string
+        ///   }
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetContactGroupsAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetContactGroups");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.GetContactGroups");
             scope.Start();
             try
             {
-                return await RestClient.GetContactGroupsAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetContactGroupsRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -58,14 +103,54 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelationshipsSingleDocument> GetContactGroups(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: {
+        ///     type: string,
+        ///     id: string
+        ///   }
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetContactGroups(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetContactGroups");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.GetContactGroups");
             scope.Start();
             try
             {
-                return RestClient.GetContactGroups(id, cancellationToken);
+                using HttpMessage message = CreateGetContactGroupsRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -76,15 +161,55 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostContactGroupsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: {
+        ///     type: string (required),
+        ///     id: string
+        ///   } (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> PostContactGroupsAsync(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostContactGroups");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PostContactGroups");
             scope.Start();
             try
             {
-                return await RestClient.PostContactGroupsAsync(id, body, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreatePostContactGroupsRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -95,15 +220,55 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostContactGroups(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: {
+        ///     type: string (required),
+        ///     id: string
+        ///   } (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response PostContactGroups(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostContactGroups");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PostContactGroups");
             scope.Start();
             try
             {
-                return RestClient.PostContactGroups(id, body, cancellationToken);
+                using HttpMessage message = CreatePostContactGroupsRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -114,15 +279,55 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PatchContactGroupsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: {
+        ///     type: string (required),
+        ///     id: string
+        ///   } (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> PatchContactGroupsAsync(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactGroups");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactGroups");
             scope.Start();
             try
             {
-                return await RestClient.PatchContactGroupsAsync(id, body, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreatePatchContactGroupsRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -133,15 +338,55 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PatchContactGroups(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: {
+        ///     type: string (required),
+        ///     id: string
+        ///   } (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response PatchContactGroups(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactGroups");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactGroups");
             scope.Start();
             try
             {
-                return RestClient.PatchContactGroups(id, body, cancellationToken);
+                using HttpMessage message = CreatePatchContactGroupsRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -152,14 +397,41 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteContactGroupsAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> DeleteContactGroupsAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactGroups");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactGroups");
             scope.Start();
             try
             {
-                return await RestClient.DeleteContactGroupsAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteContactGroupsRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -170,14 +442,41 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteContactGroups(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response DeleteContactGroups(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactGroups");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactGroups");
             scope.Start();
             try
             {
-                return RestClient.DeleteContactGroups(id, cancellationToken);
+                using HttpMessage message = CreateDeleteContactGroupsRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -188,14 +487,56 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelationshipsMultipleDocument>> GetOwnersAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetOwnersAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetOwners");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.GetOwners");
             scope.Start();
             try
             {
-                return await RestClient.GetOwnersAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetOwnersRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -206,14 +547,56 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelationshipsMultipleDocument> GetOwners(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetOwners(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetOwners");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.GetOwners");
             scope.Start();
             try
             {
-                return RestClient.GetOwners(id, cancellationToken);
+                using HttpMessage message = CreateGetOwnersRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -224,15 +607,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostOwnersAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> PostOwnersAsync(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostOwners");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PostOwners");
             scope.Start();
             try
             {
-                return await RestClient.PostOwnersAsync(id, body, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreatePostOwnersRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -243,15 +668,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostOwners(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response PostOwners(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostOwners");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PostOwners");
             scope.Start();
             try
             {
-                return RestClient.PostOwners(id, body, cancellationToken);
+                using HttpMessage message = CreatePostOwnersRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -262,15 +729,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PatchOwnersAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> PatchOwnersAsync(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchOwners");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PatchOwners");
             scope.Start();
             try
             {
-                return await RestClient.PatchOwnersAsync(id, body, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreatePatchOwnersRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -281,15 +790,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PatchOwners(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response PatchOwners(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchOwners");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PatchOwners");
             scope.Start();
             try
             {
-                return RestClient.PatchOwners(id, body, cancellationToken);
+                using HttpMessage message = CreatePatchOwnersRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -300,14 +851,41 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteOwnersAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> DeleteOwnersAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteOwners");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.DeleteOwners");
             scope.Start();
             try
             {
-                return await RestClient.DeleteOwnersAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteOwnersRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -318,14 +896,41 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteOwners(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response DeleteOwners(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteOwners");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.DeleteOwners");
             scope.Start();
             try
             {
-                return RestClient.DeleteOwners(id, cancellationToken);
+                using HttpMessage message = CreateDeleteOwnersRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -336,14 +941,56 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelationshipsMultipleDocument>> GetContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetContactExternalReferencesAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetContactExternalReferences");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.GetContactExternalReferences");
             scope.Start();
             try
             {
-                return await RestClient.GetContactExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetContactExternalReferencesRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -354,14 +1001,56 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelationshipsMultipleDocument> GetContactExternalReferences(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetContactExternalReferences(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetContactExternalReferences");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.GetContactExternalReferences");
             scope.Start();
             try
             {
-                return RestClient.GetContactExternalReferences(id, cancellationToken);
+                using HttpMessage message = CreateGetContactExternalReferencesRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -372,15 +1061,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostContactExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> PostContactExternalReferencesAsync(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostContactExternalReferences");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PostContactExternalReferences");
             scope.Start();
             try
             {
-                return await RestClient.PostContactExternalReferencesAsync(id, body, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreatePostContactExternalReferencesRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -391,15 +1122,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostContactExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response PostContactExternalReferences(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostContactExternalReferences");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PostContactExternalReferences");
             scope.Start();
             try
             {
-                return RestClient.PostContactExternalReferences(id, body, cancellationToken);
+                using HttpMessage message = CreatePostContactExternalReferencesRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -410,15 +1183,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PatchContactExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> PatchContactExternalReferencesAsync(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactExternalReferences");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactExternalReferences");
             scope.Start();
             try
             {
-                return await RestClient.PatchContactExternalReferencesAsync(id, body, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreatePatchContactExternalReferencesRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -429,15 +1244,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PatchContactExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response PatchContactExternalReferences(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactExternalReferences");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactExternalReferences");
             scope.Start();
             try
             {
-                return RestClient.PatchContactExternalReferences(id, body, cancellationToken);
+                using HttpMessage message = CreatePatchContactExternalReferencesRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -448,14 +1305,41 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> DeleteContactExternalReferencesAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactExternalReferences");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactExternalReferences");
             scope.Start();
             try
             {
-                return await RestClient.DeleteContactExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteContactExternalReferencesRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -466,14 +1350,41 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteContactExternalReferences(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response DeleteContactExternalReferences(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactExternalReferences");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactExternalReferences");
             scope.Start();
             try
             {
-                return RestClient.DeleteContactExternalReferences(id, cancellationToken);
+                using HttpMessage message = CreateDeleteContactExternalReferencesRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -484,14 +1395,56 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelationshipsMultipleDocument>> GetDealParticipantsAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetDealParticipantsAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetDealParticipants");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.GetDealParticipants");
             scope.Start();
             try
             {
-                return await RestClient.GetDealParticipantsAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetDealParticipantsRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -502,14 +1455,56 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelationshipsMultipleDocument> GetDealParticipants(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetDealParticipants(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetDealParticipants");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.GetDealParticipants");
             scope.Start();
             try
             {
-                return RestClient.GetDealParticipants(id, cancellationToken);
+                using HttpMessage message = CreateGetDealParticipantsRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -520,15 +1515,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostDealParticipantsAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> PostDealParticipantsAsync(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostDealParticipants");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PostDealParticipants");
             scope.Start();
             try
             {
-                return await RestClient.PostDealParticipantsAsync(id, body, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreatePostDealParticipantsRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -539,15 +1576,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostDealParticipants(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response PostDealParticipants(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostDealParticipants");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PostDealParticipants");
             scope.Start();
             try
             {
-                return RestClient.PostDealParticipants(id, body, cancellationToken);
+                using HttpMessage message = CreatePostDealParticipantsRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -558,15 +1637,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PatchDealParticipantsAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> PatchDealParticipantsAsync(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchDealParticipants");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PatchDealParticipants");
             scope.Start();
             try
             {
-                return await RestClient.PatchDealParticipantsAsync(id, body, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreatePatchDealParticipantsRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -577,15 +1698,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PatchDealParticipants(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response PatchDealParticipants(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchDealParticipants");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PatchDealParticipants");
             scope.Start();
             try
             {
-                return RestClient.PatchDealParticipants(id, body, cancellationToken);
+                using HttpMessage message = CreatePatchDealParticipantsRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -596,14 +1759,41 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteDealParticipantsAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> DeleteDealParticipantsAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteDealParticipants");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.DeleteDealParticipants");
             scope.Start();
             try
             {
-                return await RestClient.DeleteDealParticipantsAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteDealParticipantsRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -614,14 +1804,41 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteDealParticipants(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response DeleteDealParticipants(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteDealParticipants");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.DeleteDealParticipants");
             scope.Start();
             try
             {
-                return RestClient.DeleteDealParticipants(id, cancellationToken);
+                using HttpMessage message = CreateDeleteDealParticipantsRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -632,14 +1849,56 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelationshipsMultipleDocument>> GetContactAddressesAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetContactAddressesAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetContactAddresses");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.GetContactAddresses");
             scope.Start();
             try
             {
-                return await RestClient.GetContactAddressesAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetContactAddressesRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -650,14 +1909,56 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelationshipsMultipleDocument> GetContactAddresses(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetContactAddresses(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.GetContactAddresses");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.GetContactAddresses");
             scope.Start();
             try
             {
-                return RestClient.GetContactAddresses(id, cancellationToken);
+                using HttpMessage message = CreateGetContactAddressesRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -668,15 +1969,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostContactAddressesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> PostContactAddressesAsync(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostContactAddresses");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PostContactAddresses");
             scope.Start();
             try
             {
-                return await RestClient.PostContactAddressesAsync(id, body, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreatePostContactAddressesRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -687,15 +2030,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostContactAddresses(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response PostContactAddresses(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PostContactAddresses");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PostContactAddresses");
             scope.Start();
             try
             {
-                return RestClient.PostContactAddresses(id, body, cancellationToken);
+                using HttpMessage message = CreatePostContactAddressesRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -706,15 +2091,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PatchContactAddressesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> PatchContactAddressesAsync(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactAddresses");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactAddresses");
             scope.Start();
             try
             {
-                return await RestClient.PatchContactAddressesAsync(id, body, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreatePatchContactAddressesRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -725,15 +2152,57 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PatchContactAddresses(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ] (required)
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response PatchContactAddresses(int id, RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactAddresses");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.PatchContactAddresses");
             scope.Start();
             try
             {
-                return RestClient.PatchContactAddresses(id, body, cancellationToken);
+                using HttpMessage message = CreatePatchContactAddressesRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -744,14 +2213,41 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteContactAddressesAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> DeleteContactAddressesAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactAddresses");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactAddresses");
             scope.Start();
             try
             {
-                return await RestClient.DeleteContactAddressesAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteContactAddressesRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -762,14 +2258,41 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteContactAddresses(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string
+        ///       },
+        ///       meta: {
+        ///         data: Dictionary&lt;string, object&gt;
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response DeleteContactAddresses(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactAddresses");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelationshipClient.DeleteContactAddresses");
             scope.Start();
             try
             {
-                return RestClient.DeleteContactAddresses(id, cancellationToken);
+                using HttpMessage message = CreateDeleteContactAddressesRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -777,5 +2300,332 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
+
+        internal HttpMessage CreateGetContactGroupsRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/contactGroup", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreatePostContactGroupsRequest(int id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/contactGroup", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            request.Headers.Add("Content-Type", "application/vnd.api+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreatePatchContactGroupsRequest(int id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/contactGroup", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            request.Headers.Add("Content-Type", "application/vnd.api+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteContactGroupsRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/contactGroup", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetOwnersRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/ownership", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreatePostOwnersRequest(int id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/ownership", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            request.Headers.Add("Content-Type", "application/vnd.api+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreatePatchOwnersRequest(int id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/ownership", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            request.Headers.Add("Content-Type", "application/vnd.api+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteOwnersRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/ownership", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetContactExternalReferencesRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/externalReferences", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreatePostContactExternalReferencesRequest(int id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/externalReferences", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            request.Headers.Add("Content-Type", "application/vnd.api+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreatePatchContactExternalReferencesRequest(int id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/externalReferences", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            request.Headers.Add("Content-Type", "application/vnd.api+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteContactExternalReferencesRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/externalReferences", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDealParticipantsRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/deals", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreatePostDealParticipantsRequest(int id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/deals", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            request.Headers.Add("Content-Type", "application/vnd.api+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreatePatchDealParticipantsRequest(int id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/deals", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            request.Headers.Add("Content-Type", "application/vnd.api+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteDealParticipantsRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/deals", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetContactAddressesRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/contactAddress", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreatePostContactAddressesRequest(int id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/contactAddress", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            request.Headers.Add("Content-Type", "application/vnd.api+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreatePatchContactAddressesRequest(int id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/contactAddress", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            request.Headers.Add("Content-Type", "application/vnd.api+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteContactAddressesRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204401);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/contactAddress", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        private static ResponseClassifier _responseClassifier200401;
+        private static ResponseClassifier ResponseClassifier200401 => _responseClassifier200401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 401 });
+        private static ResponseClassifier _responseClassifier200204401;
+        private static ResponseClassifier ResponseClassifier200204401 => _responseClassifier200204401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204, 401 });
+        private static ResponseClassifier _responseClassifier204401;
+        private static ResponseClassifier ResponseClassifier204401 => _responseClassifier204401 ??= new StatusCodeClassifier(stackalloc ushort[] { 204, 401 });
     }
 }
