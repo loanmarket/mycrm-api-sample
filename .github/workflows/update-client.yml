@@ -39,7 +39,7 @@ jobs:
           npm install -g autorest
 
       - name: Build client
-        working-directory: ./mycrm-api-sample
+        working-directory: ./mycrm-api-sample/MyCrmSampleClient
         run: |
           set -euo pipefail
           autorest autorest.yml --input-file=swagger.json
