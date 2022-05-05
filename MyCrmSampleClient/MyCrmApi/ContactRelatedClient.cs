@@ -6,20 +6,24 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using MyCrmSampleClient.MyCrmApi.Models;
 
 namespace MyCrmSampleClient.MyCrmApi
 {
     /// <summary> The ContactRelated service client. </summary>
     public partial class ContactRelatedClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal ContactRelatedRestClient RestClient { get; }
+        private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of ContactRelatedClient for mocking. </summary>
         protected ContactRelatedClient()
@@ -27,27 +31,137 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Initializes a new instance of ContactRelatedClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
-        internal ContactRelatedClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
+        /// <param name="options"> The options for configuring the client. </param>
+        public ContactRelatedClient(Uri endpoint = null, MyCRMAPIClientOptions options = null)
         {
-            RestClient = new ContactRelatedRestClient(clientDiagnostics, pipeline, endpoint);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            endpoint ??= new Uri("");
+            options ??= new MyCRMAPIClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
         }
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContactGroupsDocument>> GetContactGroupsAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;contact-groups&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         updated: string (ISO 8601 Format),
+        ///         created: string (ISO 8601 Format),
+        ///         utmSource: string,
+        ///         utmMedium: string,
+        ///         utmTerm: string,
+        ///         utmContent: string,
+        ///         utmCampaign: string,
+        ///         categories: [string],
+        ///         contactType: &quot;Lead&quot; | &quot;Application&quot; | &quot;ExistingClient&quot; | &quot;ProfessionalPartner&quot; | &quot;PreviousClient&quot; | &quot;Opportunity&quot; | &quot;NewClient&quot;,
+        ///         notes: string,
+        ///         enquirySourceCategory: string,
+        ///         enquirySource: string
+        ///       },
+        ///       relationships: {
+        ///         businesses: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: [
+        ///             {
+        ///               type: string,
+        ///               id: string
+        ///             }
+        ///           ]
+        ///         },
+        ///         contacts: RelationshipsMultipleDocument,
+        ///         adviser: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: ResourceIdentifier
+        ///         },
+        ///         referrerOrganisation: RelationshipsSingleDocument,
+        ///         referrer: RelationshipsSingleDocument
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetContactGroupsAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetContactGroups");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelatedClient.GetContactGroups");
             scope.Start();
             try
             {
-                return await RestClient.GetContactGroupsAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetContactGroupsRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -58,14 +172,123 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContactGroupsDocument> GetContactGroups(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;contact-groups&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         updated: string (ISO 8601 Format),
+        ///         created: string (ISO 8601 Format),
+        ///         utmSource: string,
+        ///         utmMedium: string,
+        ///         utmTerm: string,
+        ///         utmContent: string,
+        ///         utmCampaign: string,
+        ///         categories: [string],
+        ///         contactType: &quot;Lead&quot; | &quot;Application&quot; | &quot;ExistingClient&quot; | &quot;ProfessionalPartner&quot; | &quot;PreviousClient&quot; | &quot;Opportunity&quot; | &quot;NewClient&quot;,
+        ///         notes: string,
+        ///         enquirySourceCategory: string,
+        ///         enquirySource: string
+        ///       },
+        ///       relationships: {
+        ///         businesses: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: [
+        ///             {
+        ///               type: string,
+        ///               id: string
+        ///             }
+        ///           ]
+        ///         },
+        ///         contacts: RelationshipsMultipleDocument,
+        ///         adviser: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: ResourceIdentifier
+        ///         },
+        ///         referrerOrganisation: RelationshipsSingleDocument,
+        ///         referrer: RelationshipsSingleDocument
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetContactGroups(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetContactGroups");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelatedClient.GetContactGroups");
             scope.Start();
             try
             {
-                return RestClient.GetContactGroups(id, cancellationToken);
+                using HttpMessage message = CreateGetContactGroupsRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -76,14 +299,106 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OwnersDocument>> GetOwnersAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;owners&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         updated: string (ISO 8601 Format),
+        ///         created: string (ISO 8601 Format),
+        ///         ownershipPercentage: number
+        ///       },
+        ///       relationships: {
+        ///         contact: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: {
+        ///             type: string,
+        ///             id: string
+        ///           }
+        ///         },
+        ///         business: RelationshipsSingleDocument,
+        ///         asset: RelationshipsSingleDocument,
+        ///         expense: RelationshipsSingleDocument,
+        ///         liability: RelationshipsSingleDocument,
+        ///         income: RelationshipsSingleDocument
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetOwnersAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetOwners");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelatedClient.GetOwners");
             scope.Start();
             try
             {
-                return await RestClient.GetOwnersAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetOwnersRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -94,14 +409,106 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OwnersDocument> GetOwners(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;owners&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         updated: string (ISO 8601 Format),
+        ///         created: string (ISO 8601 Format),
+        ///         ownershipPercentage: number
+        ///       },
+        ///       relationships: {
+        ///         contact: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: {
+        ///             type: string,
+        ///             id: string
+        ///           }
+        ///         },
+        ///         business: RelationshipsSingleDocument,
+        ///         asset: RelationshipsSingleDocument,
+        ///         expense: RelationshipsSingleDocument,
+        ///         liability: RelationshipsSingleDocument,
+        ///         income: RelationshipsSingleDocument
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetOwners(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetOwners");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelatedClient.GetOwners");
             scope.Start();
             try
             {
-                return RestClient.GetOwners(id, cancellationToken);
+                using HttpMessage message = CreateGetOwnersRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -112,14 +519,100 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContactExternalReferencesDocument>> GetContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;contact-external-references&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         externalReference: string
+        ///       },
+        ///       relationships: {
+        ///         integration: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: {
+        ///             type: string,
+        ///             id: string
+        ///           }
+        ///         },
+        ///         contact: RelationshipsSingleDocument
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetContactExternalReferencesAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetContactExternalReferences");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelatedClient.GetContactExternalReferences");
             scope.Start();
             try
             {
-                return await RestClient.GetContactExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetContactExternalReferencesRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -130,14 +623,100 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContactExternalReferencesDocument> GetContactExternalReferences(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;contact-external-references&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         externalReference: string
+        ///       },
+        ///       relationships: {
+        ///         integration: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: {
+        ///             type: string,
+        ///             id: string
+        ///           }
+        ///         },
+        ///         contact: RelationshipsSingleDocument
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetContactExternalReferences(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetContactExternalReferences");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelatedClient.GetContactExternalReferences");
             scope.Start();
             try
             {
-                return RestClient.GetContactExternalReferences(id, cancellationToken);
+                using HttpMessage message = CreateGetContactExternalReferencesRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -148,14 +727,104 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DealParticipantsDocument>> GetDealParticipantsAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;deal-participants&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         updated: string (ISO 8601 Format),
+        ///         created: string (ISO 8601 Format),
+        ///         isApplicant: boolean,
+        ///         isDependent: boolean,
+        ///         isGuarantor: boolean
+        ///       },
+        ///       relationships: {
+        ///         contact: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: {
+        ///             type: string,
+        ///             id: string
+        ///           }
+        ///         },
+        ///         deal: RelationshipsSingleDocument
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetDealParticipantsAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetDealParticipants");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelatedClient.GetDealParticipants");
             scope.Start();
             try
             {
-                return await RestClient.GetDealParticipantsAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetDealParticipantsRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -166,14 +835,104 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DealParticipantsDocument> GetDealParticipants(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;deal-participants&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         updated: string (ISO 8601 Format),
+        ///         created: string (ISO 8601 Format),
+        ///         isApplicant: boolean,
+        ///         isDependent: boolean,
+        ///         isGuarantor: boolean
+        ///       },
+        ///       relationships: {
+        ///         contact: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: {
+        ///             type: string,
+        ///             id: string
+        ///           }
+        ///         },
+        ///         deal: RelationshipsSingleDocument
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetDealParticipants(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetDealParticipants");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelatedClient.GetDealParticipants");
             scope.Start();
             try
             {
-                return RestClient.GetDealParticipants(id, cancellationToken);
+                using HttpMessage message = CreateGetDealParticipantsRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -184,14 +943,109 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContactAddressesDocument>> GetContactAddressesAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;contact-address&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         updated: string (ISO 8601 Format),
+        ///         created: string (ISO 8601 Format),
+        ///         addressType: &quot;CurrentAddress&quot; | &quot;PostalAddress&quot; | &quot;PostSettlementAddress&quot; | &quot;PreviousAddress&quot; | &quot;Other&quot;,
+        ///         formattedAddress: string,
+        ///         streetAddress: string,
+        ///         country: string,
+        ///         suburb: string,
+        ///         postCode: string,
+        ///         state: string
+        ///       },
+        ///       relationships: {
+        ///         contacts: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: [
+        ///             {
+        ///               type: string,
+        ///               id: string
+        ///             }
+        ///           ]
+        ///         }
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetContactAddressesAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetContactAddresses");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelatedClient.GetContactAddresses");
             scope.Start();
             try
             {
-                return await RestClient.GetContactAddressesAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetContactAddressesRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -202,14 +1056,109 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContactAddressesDocument> GetContactAddresses(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;contact-address&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         updated: string (ISO 8601 Format),
+        ///         created: string (ISO 8601 Format),
+        ///         addressType: &quot;CurrentAddress&quot; | &quot;PostalAddress&quot; | &quot;PostSettlementAddress&quot; | &quot;PreviousAddress&quot; | &quot;Other&quot;,
+        ///         formattedAddress: string,
+        ///         streetAddress: string,
+        ///         country: string,
+        ///         suburb: string,
+        ///         postCode: string,
+        ///         state: string
+        ///       },
+        ///       relationships: {
+        ///         contacts: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: [
+        ///             {
+        ///               type: string,
+        ///               id: string
+        ///             }
+        ///           ]
+        ///         }
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetContactAddresses(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactRelatedClient.GetContactAddresses");
+            using var scope = ClientDiagnostics.CreateScope("ContactRelatedClient.GetContactAddresses");
             scope.Start();
             try
             {
-                return RestClient.GetContactAddresses(id, cancellationToken);
+                using HttpMessage message = CreateGetContactAddressesRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -217,5 +1166,83 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
+
+        internal HttpMessage CreateGetContactGroupsRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/contactGroup", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetOwnersRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/ownership", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetContactExternalReferencesRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/externalReferences", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDealParticipantsRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/deals", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetContactAddressesRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contacts/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/contactAddress", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        private static ResponseClassifier _responseClassifier200401;
+        private static ResponseClassifier ResponseClassifier200401 => _responseClassifier200401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 401 });
     }
 }

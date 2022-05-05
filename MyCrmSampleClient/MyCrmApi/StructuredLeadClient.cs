@@ -6,20 +6,24 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using MyCrmSampleClient.MyCrmApi.Models;
 
 namespace MyCrmSampleClient.MyCrmApi
 {
     /// <summary> The StructuredLead service client. </summary>
     public partial class StructuredLeadClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal StructuredLeadRestClient RestClient { get; }
+        private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of StructuredLeadClient for mocking. </summary>
         protected StructuredLeadClient()
@@ -27,27 +31,430 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Initializes a new instance of StructuredLeadClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
-        internal StructuredLeadClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
+        /// <param name="options"> The options for configuring the client. </param>
+        public StructuredLeadClient(Uri endpoint = null, MyCRMAPIClientOptions options = null)
         {
-            RestClient = new StructuredLeadRestClient(clientDiagnostics, pipeline, endpoint);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            endpoint ??= new Uri("");
+            options ??= new MyCRMAPIClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
         }
 
         /// <summary> Creates a structured lead, including contact and deal attributes. </summary>
-        /// <param name="body"> The StructuredLeadDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StructuredLeadDocument>> PostAsync(StructuredLeadDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: {
+        ///     type: string (required),
+        ///     id: string,
+        ///     type: &quot;structured-leads&quot; (required),
+        ///     id: string (required),
+        ///     attributes: {
+        ///       contacts: [
+        ///         {
+        ///           lid: string,
+        ///           title: &quot;Mr&quot; | &quot;Mrs&quot; | &quot;Ms&quot; | &quot;Miss&quot; | &quot;Master&quot; | &quot;Dr&quot;,
+        ///           firstName: string,
+        ///           preferredName: string,
+        ///           lastName: string,
+        ///           email: string,
+        ///           mobile: string,
+        ///           homePhone: string,
+        ///           businessPhone: string,
+        ///           dateOfBirthAsString: LeadContactDateOfBirthAsString,
+        ///           dateOfBirth: string (ISO 8601 Format),
+        ///           gender: &quot;Male&quot; | &quot;Female&quot; | &quot;Undisclosed&quot;,
+        ///           hasMarketingConsent: boolean,
+        ///           isGuarantor: boolean,
+        ///           isDependant: boolean,
+        ///           isPrimary: boolean,
+        ///           addresses: [
+        ///             {
+        ///               lid: string (required)
+        ///             }
+        ///           ],
+        ///           employments: [
+        ///             {
+        ///               lid: string (required)
+        ///             }
+        ///           ]
+        ///         }
+        ///       ],
+        ///       addresses: [
+        ///         {
+        ///           lid: string,
+        ///           formattedAddress: string,
+        ///           streetAddress: string,
+        ///           suburb: string,
+        ///           state: string,
+        ///           postCode: string,
+        ///           country: string,
+        ///           addressType: &quot;Current&quot; | &quot;Postal&quot; | &quot;PostSettlement&quot; | &quot;Previous&quot; | &quot;Other&quot;
+        ///         }
+        ///       ],
+        ///       assets: [
+        ///         {
+        ///           lid: string,
+        ///           assetTypeId: number,
+        ///           assetSubTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           institution: string,
+        ///           accountName: string,
+        ///           bsb: string,
+        ///           accountNumber: string,
+        ///           vehicleMake: string,
+        ///           vehicleYear: number,
+        ///           propertyZoningId: number,
+        ///           propertyTypeId: number,
+        ///           propertyPrimaryPurpose: &quot;PurchaseOwnerOccupied&quot; | &quot;PurchaseInvestment&quot;,
+        ///           valueBasis: &quot;ApplicantEstimate&quot; | &quot;CertifiedValuation&quot; | &quot;ActualValue&quot;,
+        ///           address: LeadAddressReference,
+        ///           ownership: [
+        ///             {
+        ///               lid: string (required)
+        ///             }
+        ///           ]
+        ///         }
+        ///       ],
+        ///       expenses: [
+        ///         {
+        ///           lid: string,
+        ///           expenseTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           frequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           ownership: [LeadContactReference]
+        ///         }
+        ///       ],
+        ///       incomes: [
+        ///         {
+        ///           lid: string,
+        ///           incomeTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           frequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           incomeVerification: &quot;CurrentPayslips&quot; | &quot;CurrentGroupCertificate&quot; | &quot;CurrentPersonalTaxReturn&quot; | &quot;PreviousYearPersonalTaxReturn&quot; | &quot;NoticeOfAssessment&quot; | &quot;CurrentCompanyTaxReturn&quot; | &quot;PreviousCompanyTaxReturn&quot; | &quot;LetterFromEmployer&quot; | &quot;EmploymentContract&quot; | &quot;BankAccountStatement&quot; | &quot;Other&quot;,
+        ///           ownership: [LeadContactReference],
+        ///           asset: {
+        ///             lid: string (required)
+        ///           },
+        ///           employment: LeadEmploymentReference
+        ///         }
+        ///       ],
+        ///       liabilities: [
+        ///         {
+        ///           lid: string,
+        ///           liabilityTypeId: number,
+        ///           description: string,
+        ///           accountName: string,
+        ///           bsb: string,
+        ///           accountNumber: string,
+        ///           value: number,
+        ///           limit: number,
+        ///           repayments: number,
+        ///           repaymentFrequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           interestRate: number,
+        ///           interestTaxDeductible: boolean,
+        ///           creditorName: string,
+        ///           loanTerm: number,
+        ///           loanRepaymentType: &quot;InterestOnly&quot; | &quot;PrincipalInterest&quot;,
+        ///           mortgagePriority: &quot;First&quot; | &quot;Second&quot; | &quot;Third&quot;,
+        ///           asset: LeadAssetReference,
+        ///           ownership: [LeadContactReference]
+        ///         }
+        ///       ],
+        ///       employments: [
+        ///         {
+        ///           lid: string,
+        ///           employmentStatus: &quot;PrimaryEmployment&quot; | &quot;SecondaryEmployment&quot; | &quot;PreviousEmployment&quot;,
+        ///           employmentType: &quot;PAYG&quot; | &quot;SelfEmployed&quot; | &quot;Unemployed&quot; | &quot;Retired&quot; | &quot;HomeDuties&quot; | &quot;Student&quot;,
+        ///           dateStartedAsString: LeadEmploymentDateStartedAsString,
+        ///           dateStarted: string (ISO 8601 Format),
+        ///           dateEndedAsString: LeadEmploymentDateEndedAsString,
+        ///           dateEnded: string (ISO 8601 Format),
+        ///           employmentRoleName: string,
+        ///           employmentBasis: &quot;FullTime&quot; | &quot;PartTime&quot; | &quot;Contract&quot; | &quot;Temporary&quot; | &quot;Casual&quot;,
+        ///           isProbation: boolean,
+        ///           businessNumber: string,
+        ///           companyNumber: string,
+        ///           employerName: string,
+        ///           employerContactTitle: &quot;Mr&quot; | &quot;Mrs&quot; | &quot;Ms&quot; | &quot;Miss&quot; | &quot;Master&quot; | &quot;Dr&quot;,
+        ///           employerContactFirstName: string,
+        ///           employerContactLastName: string,
+        ///           employerType: &quot;Private&quot; | &quot;Public&quot;,
+        ///           employerPhone: string,
+        ///           address: LeadAddressReference
+        ///         }
+        ///       ],
+        ///       utmSource: string,
+        ///       utmMedium: string,
+        ///       utmCampaign: string,
+        ///       utmTerm: string,
+        ///       utmContent: string,
+        ///       sourceId: number,
+        ///       sourceCategoryId: number,
+        ///       sourceSystemUrl: string,
+        ///       noteTitle: string,
+        ///       noteDetails: string,
+        ///       customStatusName: string,
+        ///       dealStatus: &quot;NewLeads&quot; | &quot;Researching&quot; | &quot;PreApproved&quot; | &quot;ConditionallyApproved&quot; | &quot;UnconditionallyApproved&quot; | &quot;Lodged&quot; | &quot;InProgress&quot; | &quot;PendingSettlement&quot; | &quot;Varied&quot; | &quot;Repaid&quot; | &quot;Withdrawn&quot; | &quot;Cancelled&quot; | &quot;Settled&quot;
+        ///     },
+        ///     relationships: AnyObject,
+        ///     links: {
+        ///       self: string
+        ///     },
+        ///     meta: Dictionary&lt;string, object&gt;
+        ///   } (required),
+        ///   included: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: {
+        ///     type: string,
+        ///     id: string,
+        ///     type: &quot;structured-leads&quot;,
+        ///     id: string,
+        ///     attributes: {
+        ///       contacts: [
+        ///         {
+        ///           lid: string,
+        ///           title: &quot;Mr&quot; | &quot;Mrs&quot; | &quot;Ms&quot; | &quot;Miss&quot; | &quot;Master&quot; | &quot;Dr&quot;,
+        ///           firstName: string,
+        ///           preferredName: string,
+        ///           lastName: string,
+        ///           email: string,
+        ///           mobile: string,
+        ///           homePhone: string,
+        ///           businessPhone: string,
+        ///           dateOfBirthAsString: LeadContactDateOfBirthAsString,
+        ///           dateOfBirth: string (ISO 8601 Format),
+        ///           gender: &quot;Male&quot; | &quot;Female&quot; | &quot;Undisclosed&quot;,
+        ///           hasMarketingConsent: boolean,
+        ///           isGuarantor: boolean,
+        ///           isDependant: boolean,
+        ///           isPrimary: boolean,
+        ///           addresses: [
+        ///             {
+        ///               lid: string
+        ///             }
+        ///           ],
+        ///           employments: [
+        ///             {
+        ///               lid: string
+        ///             }
+        ///           ]
+        ///         }
+        ///       ],
+        ///       addresses: [
+        ///         {
+        ///           lid: string,
+        ///           formattedAddress: string,
+        ///           streetAddress: string,
+        ///           suburb: string,
+        ///           state: string,
+        ///           postCode: string,
+        ///           country: string,
+        ///           addressType: &quot;Current&quot; | &quot;Postal&quot; | &quot;PostSettlement&quot; | &quot;Previous&quot; | &quot;Other&quot;
+        ///         }
+        ///       ],
+        ///       assets: [
+        ///         {
+        ///           lid: string,
+        ///           assetTypeId: number,
+        ///           assetSubTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           institution: string,
+        ///           accountName: string,
+        ///           bsb: string,
+        ///           accountNumber: string,
+        ///           vehicleMake: string,
+        ///           vehicleYear: number,
+        ///           propertyZoningId: number,
+        ///           propertyTypeId: number,
+        ///           propertyPrimaryPurpose: &quot;PurchaseOwnerOccupied&quot; | &quot;PurchaseInvestment&quot;,
+        ///           valueBasis: &quot;ApplicantEstimate&quot; | &quot;CertifiedValuation&quot; | &quot;ActualValue&quot;,
+        ///           address: LeadAddressReference,
+        ///           ownership: [
+        ///             {
+        ///               lid: string
+        ///             }
+        ///           ]
+        ///         }
+        ///       ],
+        ///       expenses: [
+        ///         {
+        ///           lid: string,
+        ///           expenseTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           frequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           ownership: [LeadContactReference]
+        ///         }
+        ///       ],
+        ///       incomes: [
+        ///         {
+        ///           lid: string,
+        ///           incomeTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           frequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           incomeVerification: &quot;CurrentPayslips&quot; | &quot;CurrentGroupCertificate&quot; | &quot;CurrentPersonalTaxReturn&quot; | &quot;PreviousYearPersonalTaxReturn&quot; | &quot;NoticeOfAssessment&quot; | &quot;CurrentCompanyTaxReturn&quot; | &quot;PreviousCompanyTaxReturn&quot; | &quot;LetterFromEmployer&quot; | &quot;EmploymentContract&quot; | &quot;BankAccountStatement&quot; | &quot;Other&quot;,
+        ///           ownership: [LeadContactReference],
+        ///           asset: {
+        ///             lid: string
+        ///           },
+        ///           employment: LeadEmploymentReference
+        ///         }
+        ///       ],
+        ///       liabilities: [
+        ///         {
+        ///           lid: string,
+        ///           liabilityTypeId: number,
+        ///           description: string,
+        ///           accountName: string,
+        ///           bsb: string,
+        ///           accountNumber: string,
+        ///           value: number,
+        ///           limit: number,
+        ///           repayments: number,
+        ///           repaymentFrequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           interestRate: number,
+        ///           interestTaxDeductible: boolean,
+        ///           creditorName: string,
+        ///           loanTerm: number,
+        ///           loanRepaymentType: &quot;InterestOnly&quot; | &quot;PrincipalInterest&quot;,
+        ///           mortgagePriority: &quot;First&quot; | &quot;Second&quot; | &quot;Third&quot;,
+        ///           asset: LeadAssetReference,
+        ///           ownership: [LeadContactReference]
+        ///         }
+        ///       ],
+        ///       employments: [
+        ///         {
+        ///           lid: string,
+        ///           employmentStatus: &quot;PrimaryEmployment&quot; | &quot;SecondaryEmployment&quot; | &quot;PreviousEmployment&quot;,
+        ///           employmentType: &quot;PAYG&quot; | &quot;SelfEmployed&quot; | &quot;Unemployed&quot; | &quot;Retired&quot; | &quot;HomeDuties&quot; | &quot;Student&quot;,
+        ///           dateStartedAsString: LeadEmploymentDateStartedAsString,
+        ///           dateStarted: string (ISO 8601 Format),
+        ///           dateEndedAsString: LeadEmploymentDateEndedAsString,
+        ///           dateEnded: string (ISO 8601 Format),
+        ///           employmentRoleName: string,
+        ///           employmentBasis: &quot;FullTime&quot; | &quot;PartTime&quot; | &quot;Contract&quot; | &quot;Temporary&quot; | &quot;Casual&quot;,
+        ///           isProbation: boolean,
+        ///           businessNumber: string,
+        ///           companyNumber: string,
+        ///           employerName: string,
+        ///           employerContactTitle: &quot;Mr&quot; | &quot;Mrs&quot; | &quot;Ms&quot; | &quot;Miss&quot; | &quot;Master&quot; | &quot;Dr&quot;,
+        ///           employerContactFirstName: string,
+        ///           employerContactLastName: string,
+        ///           employerType: &quot;Private&quot; | &quot;Public&quot;,
+        ///           employerPhone: string,
+        ///           address: LeadAddressReference
+        ///         }
+        ///       ],
+        ///       utmSource: string,
+        ///       utmMedium: string,
+        ///       utmCampaign: string,
+        ///       utmTerm: string,
+        ///       utmContent: string,
+        ///       sourceId: number,
+        ///       sourceCategoryId: number,
+        ///       sourceSystemUrl: string,
+        ///       noteTitle: string,
+        ///       noteDetails: string,
+        ///       customStatusName: string,
+        ///       dealStatus: &quot;NewLeads&quot; | &quot;Researching&quot; | &quot;PreApproved&quot; | &quot;ConditionallyApproved&quot; | &quot;UnconditionallyApproved&quot; | &quot;Lodged&quot; | &quot;InProgress&quot; | &quot;PendingSettlement&quot; | &quot;Varied&quot; | &quot;Repaid&quot; | &quot;Withdrawn&quot; | &quot;Cancelled&quot; | &quot;Settled&quot;
+        ///     },
+        ///     relationships: AnyObject,
+        ///     links: {
+        ///       self: string
+        ///     },
+        ///     meta: Dictionary&lt;string, object&gt;
+        ///   },
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> PostAsync(RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("StructuredLeadClient.Post");
+            using var scope = ClientDiagnostics.CreateScope("StructuredLeadClient.Post");
             scope.Start();
             try
             {
-                return await RestClient.PostAsync(body, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreatePostRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -57,15 +464,417 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Creates a structured lead, including contact and deal attributes. </summary>
-        /// <param name="body"> The StructuredLeadDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StructuredLeadDocument> Post(StructuredLeadDocument body = null, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: {
+        ///     type: string (required),
+        ///     id: string,
+        ///     type: &quot;structured-leads&quot; (required),
+        ///     id: string (required),
+        ///     attributes: {
+        ///       contacts: [
+        ///         {
+        ///           lid: string,
+        ///           title: &quot;Mr&quot; | &quot;Mrs&quot; | &quot;Ms&quot; | &quot;Miss&quot; | &quot;Master&quot; | &quot;Dr&quot;,
+        ///           firstName: string,
+        ///           preferredName: string,
+        ///           lastName: string,
+        ///           email: string,
+        ///           mobile: string,
+        ///           homePhone: string,
+        ///           businessPhone: string,
+        ///           dateOfBirthAsString: LeadContactDateOfBirthAsString,
+        ///           dateOfBirth: string (ISO 8601 Format),
+        ///           gender: &quot;Male&quot; | &quot;Female&quot; | &quot;Undisclosed&quot;,
+        ///           hasMarketingConsent: boolean,
+        ///           isGuarantor: boolean,
+        ///           isDependant: boolean,
+        ///           isPrimary: boolean,
+        ///           addresses: [
+        ///             {
+        ///               lid: string (required)
+        ///             }
+        ///           ],
+        ///           employments: [
+        ///             {
+        ///               lid: string (required)
+        ///             }
+        ///           ]
+        ///         }
+        ///       ],
+        ///       addresses: [
+        ///         {
+        ///           lid: string,
+        ///           formattedAddress: string,
+        ///           streetAddress: string,
+        ///           suburb: string,
+        ///           state: string,
+        ///           postCode: string,
+        ///           country: string,
+        ///           addressType: &quot;Current&quot; | &quot;Postal&quot; | &quot;PostSettlement&quot; | &quot;Previous&quot; | &quot;Other&quot;
+        ///         }
+        ///       ],
+        ///       assets: [
+        ///         {
+        ///           lid: string,
+        ///           assetTypeId: number,
+        ///           assetSubTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           institution: string,
+        ///           accountName: string,
+        ///           bsb: string,
+        ///           accountNumber: string,
+        ///           vehicleMake: string,
+        ///           vehicleYear: number,
+        ///           propertyZoningId: number,
+        ///           propertyTypeId: number,
+        ///           propertyPrimaryPurpose: &quot;PurchaseOwnerOccupied&quot; | &quot;PurchaseInvestment&quot;,
+        ///           valueBasis: &quot;ApplicantEstimate&quot; | &quot;CertifiedValuation&quot; | &quot;ActualValue&quot;,
+        ///           address: LeadAddressReference,
+        ///           ownership: [
+        ///             {
+        ///               lid: string (required)
+        ///             }
+        ///           ]
+        ///         }
+        ///       ],
+        ///       expenses: [
+        ///         {
+        ///           lid: string,
+        ///           expenseTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           frequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           ownership: [LeadContactReference]
+        ///         }
+        ///       ],
+        ///       incomes: [
+        ///         {
+        ///           lid: string,
+        ///           incomeTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           frequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           incomeVerification: &quot;CurrentPayslips&quot; | &quot;CurrentGroupCertificate&quot; | &quot;CurrentPersonalTaxReturn&quot; | &quot;PreviousYearPersonalTaxReturn&quot; | &quot;NoticeOfAssessment&quot; | &quot;CurrentCompanyTaxReturn&quot; | &quot;PreviousCompanyTaxReturn&quot; | &quot;LetterFromEmployer&quot; | &quot;EmploymentContract&quot; | &quot;BankAccountStatement&quot; | &quot;Other&quot;,
+        ///           ownership: [LeadContactReference],
+        ///           asset: {
+        ///             lid: string (required)
+        ///           },
+        ///           employment: LeadEmploymentReference
+        ///         }
+        ///       ],
+        ///       liabilities: [
+        ///         {
+        ///           lid: string,
+        ///           liabilityTypeId: number,
+        ///           description: string,
+        ///           accountName: string,
+        ///           bsb: string,
+        ///           accountNumber: string,
+        ///           value: number,
+        ///           limit: number,
+        ///           repayments: number,
+        ///           repaymentFrequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           interestRate: number,
+        ///           interestTaxDeductible: boolean,
+        ///           creditorName: string,
+        ///           loanTerm: number,
+        ///           loanRepaymentType: &quot;InterestOnly&quot; | &quot;PrincipalInterest&quot;,
+        ///           mortgagePriority: &quot;First&quot; | &quot;Second&quot; | &quot;Third&quot;,
+        ///           asset: LeadAssetReference,
+        ///           ownership: [LeadContactReference]
+        ///         }
+        ///       ],
+        ///       employments: [
+        ///         {
+        ///           lid: string,
+        ///           employmentStatus: &quot;PrimaryEmployment&quot; | &quot;SecondaryEmployment&quot; | &quot;PreviousEmployment&quot;,
+        ///           employmentType: &quot;PAYG&quot; | &quot;SelfEmployed&quot; | &quot;Unemployed&quot; | &quot;Retired&quot; | &quot;HomeDuties&quot; | &quot;Student&quot;,
+        ///           dateStartedAsString: LeadEmploymentDateStartedAsString,
+        ///           dateStarted: string (ISO 8601 Format),
+        ///           dateEndedAsString: LeadEmploymentDateEndedAsString,
+        ///           dateEnded: string (ISO 8601 Format),
+        ///           employmentRoleName: string,
+        ///           employmentBasis: &quot;FullTime&quot; | &quot;PartTime&quot; | &quot;Contract&quot; | &quot;Temporary&quot; | &quot;Casual&quot;,
+        ///           isProbation: boolean,
+        ///           businessNumber: string,
+        ///           companyNumber: string,
+        ///           employerName: string,
+        ///           employerContactTitle: &quot;Mr&quot; | &quot;Mrs&quot; | &quot;Ms&quot; | &quot;Miss&quot; | &quot;Master&quot; | &quot;Dr&quot;,
+        ///           employerContactFirstName: string,
+        ///           employerContactLastName: string,
+        ///           employerType: &quot;Private&quot; | &quot;Public&quot;,
+        ///           employerPhone: string,
+        ///           address: LeadAddressReference
+        ///         }
+        ///       ],
+        ///       utmSource: string,
+        ///       utmMedium: string,
+        ///       utmCampaign: string,
+        ///       utmTerm: string,
+        ///       utmContent: string,
+        ///       sourceId: number,
+        ///       sourceCategoryId: number,
+        ///       sourceSystemUrl: string,
+        ///       noteTitle: string,
+        ///       noteDetails: string,
+        ///       customStatusName: string,
+        ///       dealStatus: &quot;NewLeads&quot; | &quot;Researching&quot; | &quot;PreApproved&quot; | &quot;ConditionallyApproved&quot; | &quot;UnconditionallyApproved&quot; | &quot;Lodged&quot; | &quot;InProgress&quot; | &quot;PendingSettlement&quot; | &quot;Varied&quot; | &quot;Repaid&quot; | &quot;Withdrawn&quot; | &quot;Cancelled&quot; | &quot;Settled&quot;
+        ///     },
+        ///     relationships: AnyObject,
+        ///     links: {
+        ///       self: string
+        ///     },
+        ///     meta: Dictionary&lt;string, object&gt;
+        ///   } (required),
+        ///   included: [
+        ///     {
+        ///       type: string (required),
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: {
+        ///     type: string,
+        ///     id: string,
+        ///     type: &quot;structured-leads&quot;,
+        ///     id: string,
+        ///     attributes: {
+        ///       contacts: [
+        ///         {
+        ///           lid: string,
+        ///           title: &quot;Mr&quot; | &quot;Mrs&quot; | &quot;Ms&quot; | &quot;Miss&quot; | &quot;Master&quot; | &quot;Dr&quot;,
+        ///           firstName: string,
+        ///           preferredName: string,
+        ///           lastName: string,
+        ///           email: string,
+        ///           mobile: string,
+        ///           homePhone: string,
+        ///           businessPhone: string,
+        ///           dateOfBirthAsString: LeadContactDateOfBirthAsString,
+        ///           dateOfBirth: string (ISO 8601 Format),
+        ///           gender: &quot;Male&quot; | &quot;Female&quot; | &quot;Undisclosed&quot;,
+        ///           hasMarketingConsent: boolean,
+        ///           isGuarantor: boolean,
+        ///           isDependant: boolean,
+        ///           isPrimary: boolean,
+        ///           addresses: [
+        ///             {
+        ///               lid: string
+        ///             }
+        ///           ],
+        ///           employments: [
+        ///             {
+        ///               lid: string
+        ///             }
+        ///           ]
+        ///         }
+        ///       ],
+        ///       addresses: [
+        ///         {
+        ///           lid: string,
+        ///           formattedAddress: string,
+        ///           streetAddress: string,
+        ///           suburb: string,
+        ///           state: string,
+        ///           postCode: string,
+        ///           country: string,
+        ///           addressType: &quot;Current&quot; | &quot;Postal&quot; | &quot;PostSettlement&quot; | &quot;Previous&quot; | &quot;Other&quot;
+        ///         }
+        ///       ],
+        ///       assets: [
+        ///         {
+        ///           lid: string,
+        ///           assetTypeId: number,
+        ///           assetSubTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           institution: string,
+        ///           accountName: string,
+        ///           bsb: string,
+        ///           accountNumber: string,
+        ///           vehicleMake: string,
+        ///           vehicleYear: number,
+        ///           propertyZoningId: number,
+        ///           propertyTypeId: number,
+        ///           propertyPrimaryPurpose: &quot;PurchaseOwnerOccupied&quot; | &quot;PurchaseInvestment&quot;,
+        ///           valueBasis: &quot;ApplicantEstimate&quot; | &quot;CertifiedValuation&quot; | &quot;ActualValue&quot;,
+        ///           address: LeadAddressReference,
+        ///           ownership: [
+        ///             {
+        ///               lid: string
+        ///             }
+        ///           ]
+        ///         }
+        ///       ],
+        ///       expenses: [
+        ///         {
+        ///           lid: string,
+        ///           expenseTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           frequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           ownership: [LeadContactReference]
+        ///         }
+        ///       ],
+        ///       incomes: [
+        ///         {
+        ///           lid: string,
+        ///           incomeTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           frequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           incomeVerification: &quot;CurrentPayslips&quot; | &quot;CurrentGroupCertificate&quot; | &quot;CurrentPersonalTaxReturn&quot; | &quot;PreviousYearPersonalTaxReturn&quot; | &quot;NoticeOfAssessment&quot; | &quot;CurrentCompanyTaxReturn&quot; | &quot;PreviousCompanyTaxReturn&quot; | &quot;LetterFromEmployer&quot; | &quot;EmploymentContract&quot; | &quot;BankAccountStatement&quot; | &quot;Other&quot;,
+        ///           ownership: [LeadContactReference],
+        ///           asset: {
+        ///             lid: string
+        ///           },
+        ///           employment: LeadEmploymentReference
+        ///         }
+        ///       ],
+        ///       liabilities: [
+        ///         {
+        ///           lid: string,
+        ///           liabilityTypeId: number,
+        ///           description: string,
+        ///           accountName: string,
+        ///           bsb: string,
+        ///           accountNumber: string,
+        ///           value: number,
+        ///           limit: number,
+        ///           repayments: number,
+        ///           repaymentFrequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           interestRate: number,
+        ///           interestTaxDeductible: boolean,
+        ///           creditorName: string,
+        ///           loanTerm: number,
+        ///           loanRepaymentType: &quot;InterestOnly&quot; | &quot;PrincipalInterest&quot;,
+        ///           mortgagePriority: &quot;First&quot; | &quot;Second&quot; | &quot;Third&quot;,
+        ///           asset: LeadAssetReference,
+        ///           ownership: [LeadContactReference]
+        ///         }
+        ///       ],
+        ///       employments: [
+        ///         {
+        ///           lid: string,
+        ///           employmentStatus: &quot;PrimaryEmployment&quot; | &quot;SecondaryEmployment&quot; | &quot;PreviousEmployment&quot;,
+        ///           employmentType: &quot;PAYG&quot; | &quot;SelfEmployed&quot; | &quot;Unemployed&quot; | &quot;Retired&quot; | &quot;HomeDuties&quot; | &quot;Student&quot;,
+        ///           dateStartedAsString: LeadEmploymentDateStartedAsString,
+        ///           dateStarted: string (ISO 8601 Format),
+        ///           dateEndedAsString: LeadEmploymentDateEndedAsString,
+        ///           dateEnded: string (ISO 8601 Format),
+        ///           employmentRoleName: string,
+        ///           employmentBasis: &quot;FullTime&quot; | &quot;PartTime&quot; | &quot;Contract&quot; | &quot;Temporary&quot; | &quot;Casual&quot;,
+        ///           isProbation: boolean,
+        ///           businessNumber: string,
+        ///           companyNumber: string,
+        ///           employerName: string,
+        ///           employerContactTitle: &quot;Mr&quot; | &quot;Mrs&quot; | &quot;Ms&quot; | &quot;Miss&quot; | &quot;Master&quot; | &quot;Dr&quot;,
+        ///           employerContactFirstName: string,
+        ///           employerContactLastName: string,
+        ///           employerType: &quot;Private&quot; | &quot;Public&quot;,
+        ///           employerPhone: string,
+        ///           address: LeadAddressReference
+        ///         }
+        ///       ],
+        ///       utmSource: string,
+        ///       utmMedium: string,
+        ///       utmCampaign: string,
+        ///       utmTerm: string,
+        ///       utmContent: string,
+        ///       sourceId: number,
+        ///       sourceCategoryId: number,
+        ///       sourceSystemUrl: string,
+        ///       noteTitle: string,
+        ///       noteDetails: string,
+        ///       customStatusName: string,
+        ///       dealStatus: &quot;NewLeads&quot; | &quot;Researching&quot; | &quot;PreApproved&quot; | &quot;ConditionallyApproved&quot; | &quot;UnconditionallyApproved&quot; | &quot;Lodged&quot; | &quot;InProgress&quot; | &quot;PendingSettlement&quot; | &quot;Varied&quot; | &quot;Repaid&quot; | &quot;Withdrawn&quot; | &quot;Cancelled&quot; | &quot;Settled&quot;
+        ///     },
+        ///     relationships: AnyObject,
+        ///     links: {
+        ///       self: string
+        ///     },
+        ///     meta: Dictionary&lt;string, object&gt;
+        ///   },
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response Post(RequestContent content, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("StructuredLeadClient.Post");
+            using var scope = ClientDiagnostics.CreateScope("StructuredLeadClient.Post");
             scope.Start();
             try
             {
-                return RestClient.Post(body, cancellationToken);
+                using HttpMessage message = CreatePostRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -76,14 +885,233 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the lead. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StructuredLeadDocument>> GetAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: {
+        ///     type: string,
+        ///     id: string,
+        ///     type: &quot;structured-leads&quot;,
+        ///     id: string,
+        ///     attributes: {
+        ///       contacts: [
+        ///         {
+        ///           lid: string,
+        ///           title: &quot;Mr&quot; | &quot;Mrs&quot; | &quot;Ms&quot; | &quot;Miss&quot; | &quot;Master&quot; | &quot;Dr&quot;,
+        ///           firstName: string,
+        ///           preferredName: string,
+        ///           lastName: string,
+        ///           email: string,
+        ///           mobile: string,
+        ///           homePhone: string,
+        ///           businessPhone: string,
+        ///           dateOfBirthAsString: LeadContactDateOfBirthAsString,
+        ///           dateOfBirth: string (ISO 8601 Format),
+        ///           gender: &quot;Male&quot; | &quot;Female&quot; | &quot;Undisclosed&quot;,
+        ///           hasMarketingConsent: boolean,
+        ///           isGuarantor: boolean,
+        ///           isDependant: boolean,
+        ///           isPrimary: boolean,
+        ///           addresses: [
+        ///             {
+        ///               lid: string
+        ///             }
+        ///           ],
+        ///           employments: [
+        ///             {
+        ///               lid: string
+        ///             }
+        ///           ]
+        ///         }
+        ///       ],
+        ///       addresses: [
+        ///         {
+        ///           lid: string,
+        ///           formattedAddress: string,
+        ///           streetAddress: string,
+        ///           suburb: string,
+        ///           state: string,
+        ///           postCode: string,
+        ///           country: string,
+        ///           addressType: &quot;Current&quot; | &quot;Postal&quot; | &quot;PostSettlement&quot; | &quot;Previous&quot; | &quot;Other&quot;
+        ///         }
+        ///       ],
+        ///       assets: [
+        ///         {
+        ///           lid: string,
+        ///           assetTypeId: number,
+        ///           assetSubTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           institution: string,
+        ///           accountName: string,
+        ///           bsb: string,
+        ///           accountNumber: string,
+        ///           vehicleMake: string,
+        ///           vehicleYear: number,
+        ///           propertyZoningId: number,
+        ///           propertyTypeId: number,
+        ///           propertyPrimaryPurpose: &quot;PurchaseOwnerOccupied&quot; | &quot;PurchaseInvestment&quot;,
+        ///           valueBasis: &quot;ApplicantEstimate&quot; | &quot;CertifiedValuation&quot; | &quot;ActualValue&quot;,
+        ///           address: LeadAddressReference,
+        ///           ownership: [
+        ///             {
+        ///               lid: string
+        ///             }
+        ///           ]
+        ///         }
+        ///       ],
+        ///       expenses: [
+        ///         {
+        ///           lid: string,
+        ///           expenseTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           frequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           ownership: [LeadContactReference]
+        ///         }
+        ///       ],
+        ///       incomes: [
+        ///         {
+        ///           lid: string,
+        ///           incomeTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           frequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           incomeVerification: &quot;CurrentPayslips&quot; | &quot;CurrentGroupCertificate&quot; | &quot;CurrentPersonalTaxReturn&quot; | &quot;PreviousYearPersonalTaxReturn&quot; | &quot;NoticeOfAssessment&quot; | &quot;CurrentCompanyTaxReturn&quot; | &quot;PreviousCompanyTaxReturn&quot; | &quot;LetterFromEmployer&quot; | &quot;EmploymentContract&quot; | &quot;BankAccountStatement&quot; | &quot;Other&quot;,
+        ///           ownership: [LeadContactReference],
+        ///           asset: {
+        ///             lid: string
+        ///           },
+        ///           employment: LeadEmploymentReference
+        ///         }
+        ///       ],
+        ///       liabilities: [
+        ///         {
+        ///           lid: string,
+        ///           liabilityTypeId: number,
+        ///           description: string,
+        ///           accountName: string,
+        ///           bsb: string,
+        ///           accountNumber: string,
+        ///           value: number,
+        ///           limit: number,
+        ///           repayments: number,
+        ///           repaymentFrequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           interestRate: number,
+        ///           interestTaxDeductible: boolean,
+        ///           creditorName: string,
+        ///           loanTerm: number,
+        ///           loanRepaymentType: &quot;InterestOnly&quot; | &quot;PrincipalInterest&quot;,
+        ///           mortgagePriority: &quot;First&quot; | &quot;Second&quot; | &quot;Third&quot;,
+        ///           asset: LeadAssetReference,
+        ///           ownership: [LeadContactReference]
+        ///         }
+        ///       ],
+        ///       employments: [
+        ///         {
+        ///           lid: string,
+        ///           employmentStatus: &quot;PrimaryEmployment&quot; | &quot;SecondaryEmployment&quot; | &quot;PreviousEmployment&quot;,
+        ///           employmentType: &quot;PAYG&quot; | &quot;SelfEmployed&quot; | &quot;Unemployed&quot; | &quot;Retired&quot; | &quot;HomeDuties&quot; | &quot;Student&quot;,
+        ///           dateStartedAsString: LeadEmploymentDateStartedAsString,
+        ///           dateStarted: string (ISO 8601 Format),
+        ///           dateEndedAsString: LeadEmploymentDateEndedAsString,
+        ///           dateEnded: string (ISO 8601 Format),
+        ///           employmentRoleName: string,
+        ///           employmentBasis: &quot;FullTime&quot; | &quot;PartTime&quot; | &quot;Contract&quot; | &quot;Temporary&quot; | &quot;Casual&quot;,
+        ///           isProbation: boolean,
+        ///           businessNumber: string,
+        ///           companyNumber: string,
+        ///           employerName: string,
+        ///           employerContactTitle: &quot;Mr&quot; | &quot;Mrs&quot; | &quot;Ms&quot; | &quot;Miss&quot; | &quot;Master&quot; | &quot;Dr&quot;,
+        ///           employerContactFirstName: string,
+        ///           employerContactLastName: string,
+        ///           employerType: &quot;Private&quot; | &quot;Public&quot;,
+        ///           employerPhone: string,
+        ///           address: LeadAddressReference
+        ///         }
+        ///       ],
+        ///       utmSource: string,
+        ///       utmMedium: string,
+        ///       utmCampaign: string,
+        ///       utmTerm: string,
+        ///       utmContent: string,
+        ///       sourceId: number,
+        ///       sourceCategoryId: number,
+        ///       sourceSystemUrl: string,
+        ///       noteTitle: string,
+        ///       noteDetails: string,
+        ///       customStatusName: string,
+        ///       dealStatus: &quot;NewLeads&quot; | &quot;Researching&quot; | &quot;PreApproved&quot; | &quot;ConditionallyApproved&quot; | &quot;UnconditionallyApproved&quot; | &quot;Lodged&quot; | &quot;InProgress&quot; | &quot;PendingSettlement&quot; | &quot;Varied&quot; | &quot;Repaid&quot; | &quot;Withdrawn&quot; | &quot;Cancelled&quot; | &quot;Settled&quot;
+        ///     },
+        ///     relationships: AnyObject,
+        ///     links: {
+        ///       self: string
+        ///     },
+        ///     meta: Dictionary&lt;string, object&gt;
+        ///   },
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetStructuredLeadAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("StructuredLeadClient.Get");
+            using var scope = ClientDiagnostics.CreateScope("StructuredLeadClient.GetStructuredLead");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetStructuredLeadRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -94,14 +1122,233 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the lead. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StructuredLeadDocument> Get(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: {
+        ///     type: string,
+        ///     id: string,
+        ///     type: &quot;structured-leads&quot;,
+        ///     id: string,
+        ///     attributes: {
+        ///       contacts: [
+        ///         {
+        ///           lid: string,
+        ///           title: &quot;Mr&quot; | &quot;Mrs&quot; | &quot;Ms&quot; | &quot;Miss&quot; | &quot;Master&quot; | &quot;Dr&quot;,
+        ///           firstName: string,
+        ///           preferredName: string,
+        ///           lastName: string,
+        ///           email: string,
+        ///           mobile: string,
+        ///           homePhone: string,
+        ///           businessPhone: string,
+        ///           dateOfBirthAsString: LeadContactDateOfBirthAsString,
+        ///           dateOfBirth: string (ISO 8601 Format),
+        ///           gender: &quot;Male&quot; | &quot;Female&quot; | &quot;Undisclosed&quot;,
+        ///           hasMarketingConsent: boolean,
+        ///           isGuarantor: boolean,
+        ///           isDependant: boolean,
+        ///           isPrimary: boolean,
+        ///           addresses: [
+        ///             {
+        ///               lid: string
+        ///             }
+        ///           ],
+        ///           employments: [
+        ///             {
+        ///               lid: string
+        ///             }
+        ///           ]
+        ///         }
+        ///       ],
+        ///       addresses: [
+        ///         {
+        ///           lid: string,
+        ///           formattedAddress: string,
+        ///           streetAddress: string,
+        ///           suburb: string,
+        ///           state: string,
+        ///           postCode: string,
+        ///           country: string,
+        ///           addressType: &quot;Current&quot; | &quot;Postal&quot; | &quot;PostSettlement&quot; | &quot;Previous&quot; | &quot;Other&quot;
+        ///         }
+        ///       ],
+        ///       assets: [
+        ///         {
+        ///           lid: string,
+        ///           assetTypeId: number,
+        ///           assetSubTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           institution: string,
+        ///           accountName: string,
+        ///           bsb: string,
+        ///           accountNumber: string,
+        ///           vehicleMake: string,
+        ///           vehicleYear: number,
+        ///           propertyZoningId: number,
+        ///           propertyTypeId: number,
+        ///           propertyPrimaryPurpose: &quot;PurchaseOwnerOccupied&quot; | &quot;PurchaseInvestment&quot;,
+        ///           valueBasis: &quot;ApplicantEstimate&quot; | &quot;CertifiedValuation&quot; | &quot;ActualValue&quot;,
+        ///           address: LeadAddressReference,
+        ///           ownership: [
+        ///             {
+        ///               lid: string
+        ///             }
+        ///           ]
+        ///         }
+        ///       ],
+        ///       expenses: [
+        ///         {
+        ///           lid: string,
+        ///           expenseTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           frequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           ownership: [LeadContactReference]
+        ///         }
+        ///       ],
+        ///       incomes: [
+        ///         {
+        ///           lid: string,
+        ///           incomeTypeId: number,
+        ///           description: string,
+        ///           value: number,
+        ///           frequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           incomeVerification: &quot;CurrentPayslips&quot; | &quot;CurrentGroupCertificate&quot; | &quot;CurrentPersonalTaxReturn&quot; | &quot;PreviousYearPersonalTaxReturn&quot; | &quot;NoticeOfAssessment&quot; | &quot;CurrentCompanyTaxReturn&quot; | &quot;PreviousCompanyTaxReturn&quot; | &quot;LetterFromEmployer&quot; | &quot;EmploymentContract&quot; | &quot;BankAccountStatement&quot; | &quot;Other&quot;,
+        ///           ownership: [LeadContactReference],
+        ///           asset: {
+        ///             lid: string
+        ///           },
+        ///           employment: LeadEmploymentReference
+        ///         }
+        ///       ],
+        ///       liabilities: [
+        ///         {
+        ///           lid: string,
+        ///           liabilityTypeId: number,
+        ///           description: string,
+        ///           accountName: string,
+        ///           bsb: string,
+        ///           accountNumber: string,
+        ///           value: number,
+        ///           limit: number,
+        ///           repayments: number,
+        ///           repaymentFrequency: &quot;Yearly&quot; | &quot;HalfYearly&quot; | &quot;Quarterly&quot; | &quot;Monthly&quot; | &quot;Fortnightly&quot; | &quot;Weekly&quot; | &quot;HalfMonthly&quot;,
+        ///           interestRate: number,
+        ///           interestTaxDeductible: boolean,
+        ///           creditorName: string,
+        ///           loanTerm: number,
+        ///           loanRepaymentType: &quot;InterestOnly&quot; | &quot;PrincipalInterest&quot;,
+        ///           mortgagePriority: &quot;First&quot; | &quot;Second&quot; | &quot;Third&quot;,
+        ///           asset: LeadAssetReference,
+        ///           ownership: [LeadContactReference]
+        ///         }
+        ///       ],
+        ///       employments: [
+        ///         {
+        ///           lid: string,
+        ///           employmentStatus: &quot;PrimaryEmployment&quot; | &quot;SecondaryEmployment&quot; | &quot;PreviousEmployment&quot;,
+        ///           employmentType: &quot;PAYG&quot; | &quot;SelfEmployed&quot; | &quot;Unemployed&quot; | &quot;Retired&quot; | &quot;HomeDuties&quot; | &quot;Student&quot;,
+        ///           dateStartedAsString: LeadEmploymentDateStartedAsString,
+        ///           dateStarted: string (ISO 8601 Format),
+        ///           dateEndedAsString: LeadEmploymentDateEndedAsString,
+        ///           dateEnded: string (ISO 8601 Format),
+        ///           employmentRoleName: string,
+        ///           employmentBasis: &quot;FullTime&quot; | &quot;PartTime&quot; | &quot;Contract&quot; | &quot;Temporary&quot; | &quot;Casual&quot;,
+        ///           isProbation: boolean,
+        ///           businessNumber: string,
+        ///           companyNumber: string,
+        ///           employerName: string,
+        ///           employerContactTitle: &quot;Mr&quot; | &quot;Mrs&quot; | &quot;Ms&quot; | &quot;Miss&quot; | &quot;Master&quot; | &quot;Dr&quot;,
+        ///           employerContactFirstName: string,
+        ///           employerContactLastName: string,
+        ///           employerType: &quot;Private&quot; | &quot;Public&quot;,
+        ///           employerPhone: string,
+        ///           address: LeadAddressReference
+        ///         }
+        ///       ],
+        ///       utmSource: string,
+        ///       utmMedium: string,
+        ///       utmCampaign: string,
+        ///       utmTerm: string,
+        ///       utmContent: string,
+        ///       sourceId: number,
+        ///       sourceCategoryId: number,
+        ///       sourceSystemUrl: string,
+        ///       noteTitle: string,
+        ///       noteDetails: string,
+        ///       customStatusName: string,
+        ///       dealStatus: &quot;NewLeads&quot; | &quot;Researching&quot; | &quot;PreApproved&quot; | &quot;ConditionallyApproved&quot; | &quot;UnconditionallyApproved&quot; | &quot;Lodged&quot; | &quot;InProgress&quot; | &quot;PendingSettlement&quot; | &quot;Varied&quot; | &quot;Repaid&quot; | &quot;Withdrawn&quot; | &quot;Cancelled&quot; | &quot;Settled&quot;
+        ///     },
+        ///     relationships: AnyObject,
+        ///     links: {
+        ///       self: string
+        ///     },
+        ///     meta: Dictionary&lt;string, object&gt;
+        ///   },
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetStructuredLead(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("StructuredLeadClient.Get");
+            using var scope = ClientDiagnostics.CreateScope("StructuredLeadClient.GetStructuredLead");
             scope.Start();
             try
             {
-                return RestClient.Get(id, cancellationToken);
+                using HttpMessage message = CreateGetStructuredLeadRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -109,5 +1356,39 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
+
+        internal HttpMessage CreatePostRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier201401);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/structured-leads", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            request.Headers.Add("Content-Type", "application/vnd.api+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetStructuredLeadRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/structured-leads/", false);
+            uri.AppendPath(id, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        private static ResponseClassifier _responseClassifier201401;
+        private static ResponseClassifier ResponseClassifier201401 => _responseClassifier201401 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 401 });
+        private static ResponseClassifier _responseClassifier200401;
+        private static ResponseClassifier ResponseClassifier200401 => _responseClassifier200401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 401 });
     }
 }
