@@ -17351,6 +17351,14 @@
         ],
         "type": "string"
       },
+      "AdviserAddressRelationships": {
+        "type": "object",
+        "properties": {
+          "adviser": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          }
+        }
+      },
       "AdviserAddressesDocument": {
         "required": [
           "data"
@@ -17391,14 +17399,6 @@
           }
         }
       },
-      "AdviserAddressRelationships": {
-        "type": "object",
-        "properties": {
-          "adviser": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
-          }
-        }
-      },
       "AdviserAttributes": {
         "type": "object",
         "properties": {
@@ -17419,6 +17419,11 @@
             "nullable": true,
             "readOnly": true
           },
+          "isMyLeadGenActive": {
+            "type": "boolean",
+            "nullable": true,
+            "readOnly": true
+          },
           "bio": {
             "type": "string",
             "nullable": true,
@@ -17434,8 +17439,8 @@
             "nullable": true,
             "readOnly": true
           },
-          "isMyLeadGenActive": {
-            "type": "boolean",
+          "status": {
+            "type": "string",
             "nullable": true,
             "readOnly": true
           },
@@ -17480,11 +17485,6 @@
             "readOnly": true
           },
           "myLeadGenerator": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "status": {
             "type": "string",
             "nullable": true,
             "readOnly": true
@@ -17819,6 +17819,9 @@
           "agreementHolders": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           },
+          "familyFranchisees": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
           "addresses": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           },
@@ -17979,6 +17982,9 @@
       "AgreementHolderRelationships": {
         "type": "object",
         "properties": {
+          "apiFamilyFranchisees": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
           "organisation": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
@@ -18030,27 +18036,6 @@
         ],
         "type": "string"
       },
-      "ApiAddressClientEntity": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          },
-          "contact": {
-            "$ref": "#/components/schemas/Contact"
-          },
-          "addressDetails": {
-            "$ref": "#/components/schemas/ContactAddress"
-          }
-        },
-        "additionalProperties": false
-      },
       "ApiAdviserProfile": {
         "required": [
           "type",
@@ -18101,6 +18086,27 @@
           },
           "contact": {
             "$ref": "#/components/schemas/Contact"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiFamilyFranchisee": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "franchiseeDetails": {
+            "$ref": "#/components/schemas/AgreementHolder"
+          },
+          "family": {
+            "$ref": "#/components/schemas/Adviser"
           }
         },
         "additionalProperties": false
@@ -18529,52 +18535,6 @@
           }
         }
       },
-      "AssetsDocument": {
-        "required": [
-          "data"
-        ],
-        "type": "object",
-        "properties": {
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "jsonApi": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TopLevelLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Asset"
-            }
-          },
-          "included": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncludedResource"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
-        }
-      },
-      "AssetsEntityType": {
-        "enum": [
-          "assets"
-        ],
-        "type": "string"
-      },
       "AssetSubType": {
         "required": [
           "type",
@@ -18855,6 +18815,52 @@
         ],
         "type": "string"
       },
+      "AssetsDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Asset"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "AssetsEntityType": {
+        "enum": [
+          "assets"
+        ],
+        "type": "string"
+      },
       "Business": {
         "required": [
           "type",
@@ -19012,6 +19018,23 @@
         ],
         "type": "string"
       },
+      "BusinessRelationships": {
+        "type": "object",
+        "properties": {
+          "contactGroup": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          },
+          "ownership": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
+          "deals": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
+          "employments": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          }
+        }
+      },
       "BusinessesDocument": {
         "required": [
           "data"
@@ -19049,23 +19072,6 @@
             },
             "nullable": true,
             "readOnly": true
-          }
-        }
-      },
-      "BusinessRelationships": {
-        "type": "object",
-        "properties": {
-          "contactGroup": {
-            "$ref": "#/components/schemas/RelationshipsSingleDocument"
-          },
-          "ownership": {
-            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-          },
-          "deals": {
-            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-          },
-          "employments": {
-            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           }
         }
       },
@@ -19265,6 +19271,14 @@
         ],
         "type": "string"
       },
+      "ContactAddressRelationships": {
+        "type": "object",
+        "properties": {
+          "contacts": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          }
+        }
+      },
       "ContactAddressesDocument": {
         "required": [
           "data"
@@ -19302,14 +19316,6 @@
             },
             "nullable": true,
             "readOnly": true
-          }
-        }
-      },
-      "ContactAddressRelationships": {
-        "type": "object",
-        "properties": {
-          "contactAddress": {
-            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           }
         }
       },
@@ -19396,10 +19402,6 @@
             "nullable": true,
             "readOnly": true
           },
-          "hasMarketingConsent": {
-            "type": "boolean",
-            "nullable": true
-          },
           "dateOfBirth": {
             "type": "string",
             "format": "date",
@@ -19417,6 +19419,10 @@
               }
             ],
             "readOnly": true
+          },
+          "hasMarketingConsent": {
+            "type": "boolean",
+            "nullable": true
           }
         }
       },
@@ -20003,6 +20009,22 @@
           "modelAsString": true
         }
       },
+      "ContactType": {
+        "enum": [
+          "Lead",
+          "Application",
+          "ExistingClient",
+          "ProfessionalPartner",
+          "PreviousClient",
+          "Opportunity",
+          "NewClient"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ContactType",
+          "modelAsString": true
+        }
+      },
       "ContactsDocument": {
         "required": [
           "data"
@@ -20048,22 +20070,6 @@
           "contacts"
         ],
         "type": "string"
-      },
-      "ContactType": {
-        "enum": [
-          "Lead",
-          "Application",
-          "ExistingClient",
-          "ProfessionalPartner",
-          "PreviousClient",
-          "Opportunity",
-          "NewClient"
-        ],
-        "type": "string",
-        "x-ms-enum": {
-          "name": "ContactType",
-          "modelAsString": true
-        }
       },
       "CountryCode": {
         "enum": [
@@ -21013,52 +21019,6 @@
           }
         }
       },
-      "DealsDocument": {
-        "required": [
-          "data"
-        ],
-        "type": "object",
-        "properties": {
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "jsonApi": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TopLevelLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Deal"
-            }
-          },
-          "included": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncludedResource"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
-        }
-      },
-      "DealsEntityType": {
-        "enum": [
-          "deals"
-        ],
-        "type": "string"
-      },
       "DealStructure": {
         "required": [
           "type",
@@ -21437,6 +21397,52 @@
           "modelAsString": true
         }
       },
+      "DealsDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Deal"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "DealsEntityType": {
+        "enum": [
+          "deals"
+        ],
+        "type": "string"
+      },
       "EmployerType": {
         "enum": [
           "Private",
@@ -21489,7 +21495,37 @@
           "modelAsString": true
         }
       },
-      "Error": {
+      "ErrorDocument": {
+        "type": "object",
+        "properties": {
+          "links": {
+            "$ref": "#/components/schemas/TopLevelLinks"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ErrorObject"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ErrorLinks": {
+        "type": "object",
+        "properties": {
+          "about": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ErrorObject": {
         "type": "object",
         "properties": {
           "id": {
@@ -21519,42 +21555,9 @@
             "$ref": "#/components/schemas/ErrorSource"
           },
           "meta": {
-            "$ref": "#/components/schemas/ErrorMeta"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ErrorDocument": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Error"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ErrorLinks": {
-        "type": "object",
-        "properties": {
-          "about": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ErrorMeta": {
-        "type": "object",
-        "properties": {
-          "data": {
             "type": "object",
             "additionalProperties": { },
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -21567,6 +21570,10 @@
             "nullable": true
           },
           "parameter": {
+            "type": "string",
+            "nullable": true
+          },
+          "header": {
             "type": "string",
             "nullable": true
           }
@@ -21860,52 +21867,6 @@
           }
         }
       },
-      "ExpensesDocument": {
-        "required": [
-          "data"
-        ],
-        "type": "object",
-        "properties": {
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "jsonApi": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TopLevelLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Expense"
-            }
-          },
-          "included": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncludedResource"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
-        }
-      },
-      "ExpensesEntityType": {
-        "enum": [
-          "expenses"
-        ],
-        "type": "string"
-      },
       "ExpenseType": {
         "required": [
           "type",
@@ -22048,6 +22009,52 @@
       "ExpenseTypesEntityType": {
         "enum": [
           "expense-types"
+        ],
+        "type": "string"
+      },
+      "ExpensesDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Expense"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "ExpensesEntityType": {
+        "enum": [
+          "expenses"
         ],
         "type": "string"
       },
@@ -22213,6 +22220,9 @@
         ],
         "type": "string"
       },
+      "FinancialAddressRelationships": {
+        "type": "object"
+      },
       "FinancialAddressesDocument": {
         "required": [
           "data"
@@ -22252,9 +22262,6 @@
             "readOnly": true
           }
         }
-      },
-      "FinancialAddressRelationships": {
-        "type": "object"
       },
       "FinancialAttributes": {
         "type": "object"
@@ -22987,52 +22994,6 @@
           }
         }
       },
-      "IncomesDocument": {
-        "required": [
-          "data"
-        ],
-        "type": "object",
-        "properties": {
-          "meta": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "jsonApi": {
-            "type": "object",
-            "additionalProperties": { },
-            "readOnly": true
-          },
-          "links": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TopLevelLinks"
-              }
-            ],
-            "readOnly": true
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Income"
-            }
-          },
-          "included": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IncludedResource"
-            },
-            "nullable": true,
-            "readOnly": true
-          }
-        }
-      },
-      "IncomesEntityType": {
-        "enum": [
-          "incomes"
-        ],
-        "type": "string"
-      },
       "IncomeType": {
         "required": [
           "type",
@@ -23197,6 +23158,52 @@
           "name": "IncomeVerificationEnum",
           "modelAsString": true
         }
+      },
+      "IncomesDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Income"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "IncomesEntityType": {
+        "enum": [
+          "incomes"
+        ],
+        "type": "string"
       },
       "Integration": {
         "required": [
@@ -24992,6 +24999,9 @@
           }
         }
       },
+      "OrganisationAddressRelationships": {
+        "type": "object"
+      },
       "OrganisationAddressesDocument": {
         "required": [
           "data"
@@ -25037,9 +25047,6 @@
           "organisation-addresses"
         ],
         "type": "string"
-      },
-      "OrganisationAddressRelationships": {
-        "type": "object"
       },
       "OrganisationAttributes": {
         "type": "object",
@@ -25893,6 +25900,23 @@
         },
         "additionalProperties": false
       },
+      "RelationshipObject": {
+        "type": "object",
+        "properties": {
+          "links": {
+            "$ref": "#/components/schemas/RelationshipLinks"
+          },
+          "data": {
+            "$ref": "#/components/schemas/SingleOrManyData`1"
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RelationshipsMultipleDocument": {
         "required": [
           "data"
@@ -25970,6 +25994,140 @@
         "properties": {
           "self": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResourceObject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/ResourceObjectAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/ResourceObjectRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResourceObjectAttributes": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "lid": {
+            "type": "string",
+            "nullable": true
+          },
+          "links": {
+            "$ref": "#/components/schemas/ResourceLinks"
+          }
+        }
+      },
+      "ResourceObjectDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/ResourceObject"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "ResourceObjectRelationships": {
+        "type": "object"
+      },
+      "ResourceObjectsDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceObject"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "SingleOrManyData`1": {
+        "type": "object",
+        "properties": {
+          "value": {
             "nullable": true
           }
         },
@@ -26346,7 +26504,7 @@
             "type": "string",
             "nullable": true
           },
-          "describedBy": {
+          "describedby": {
             "type": "string",
             "nullable": true
           },

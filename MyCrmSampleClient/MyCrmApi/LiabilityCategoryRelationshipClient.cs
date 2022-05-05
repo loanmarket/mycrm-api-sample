@@ -6,20 +6,24 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using MyCrmSampleClient.MyCrmApi.Models;
 
 namespace MyCrmSampleClient.MyCrmApi
 {
     /// <summary> The LiabilityCategoryRelationship service client. </summary>
     public partial class LiabilityCategoryRelationshipClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal LiabilityCategoryRelationshipRestClient RestClient { get; }
+        private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of LiabilityCategoryRelationshipClient for mocking. </summary>
         protected LiabilityCategoryRelationshipClient()
@@ -27,27 +31,79 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Initializes a new instance of LiabilityCategoryRelationshipClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
-        internal LiabilityCategoryRelationshipClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
+        /// <param name="options"> The options for configuring the client. </param>
+        public LiabilityCategoryRelationshipClient(Uri endpoint = null, MyCRMAPIClientOptions options = null)
         {
-            RestClient = new LiabilityCategoryRelationshipRestClient(clientDiagnostics, pipeline, endpoint);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            endpoint ??= new Uri("");
+            options ??= new MyCRMAPIClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
         }
 
         /// <summary> Where `id` is the identifier of the liability category. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelationshipsMultipleDocument>> GetLiabilityTypesAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetLiabilityTypesAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("LiabilityCategoryRelationshipClient.GetLiabilityTypes");
+            using var scope = ClientDiagnostics.CreateScope("LiabilityCategoryRelationshipClient.GetLiabilityTypes");
             scope.Start();
             try
             {
-                return await RestClient.GetLiabilityTypesAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetLiabilityTypesRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -58,14 +114,65 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the liability category. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelationshipsMultipleDocument> GetLiabilityTypes(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string
+        ///   },
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetLiabilityTypes(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("LiabilityCategoryRelationshipClient.GetLiabilityTypes");
+            using var scope = ClientDiagnostics.CreateScope("LiabilityCategoryRelationshipClient.GetLiabilityTypes");
             scope.Start();
             try
             {
-                return RestClient.GetLiabilityTypes(id, cancellationToken);
+                using HttpMessage message = CreateGetLiabilityTypesRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -73,5 +180,23 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
+
+        internal HttpMessage CreateGetLiabilityTypesRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/liability-categories/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/liabilityTypes", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        private static ResponseClassifier _responseClassifier200401;
+        private static ResponseClassifier ResponseClassifier200401 => _responseClassifier200401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 401 });
     }
 }

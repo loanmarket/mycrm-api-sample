@@ -6,20 +6,24 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using MyCrmSampleClient.MyCrmApi.Models;
 
 namespace MyCrmSampleClient.MyCrmApi
 {
     /// <summary> The AdviserRelated service client. </summary>
     public partial class AdviserRelatedClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal AdviserRelatedRestClient RestClient { get; }
+        private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of AdviserRelatedClient for mocking. </summary>
         protected AdviserRelatedClient()
@@ -27,27 +31,137 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Initializes a new instance of AdviserRelatedClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
-        internal AdviserRelatedClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
+        /// <param name="options"> The options for configuring the client. </param>
+        public AdviserRelatedClient(Uri endpoint = null, MyCRMAPIClientOptions options = null)
         {
-            RestClient = new AdviserRelatedRestClient(clientDiagnostics, pipeline, endpoint);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            endpoint ??= new Uri("");
+            options ??= new MyCRMAPIClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
         }
 
         /// <summary> Where `id` is the identifier of the adviser. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContactGroupsDocument>> GetContactGroupsAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;contact-groups&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         updated: string (ISO 8601 Format),
+        ///         created: string (ISO 8601 Format),
+        ///         utmSource: string,
+        ///         utmMedium: string,
+        ///         utmTerm: string,
+        ///         utmContent: string,
+        ///         utmCampaign: string,
+        ///         categories: [string],
+        ///         contactType: &quot;Lead&quot; | &quot;Application&quot; | &quot;ExistingClient&quot; | &quot;ProfessionalPartner&quot; | &quot;PreviousClient&quot; | &quot;Opportunity&quot; | &quot;NewClient&quot;,
+        ///         notes: string,
+        ///         enquirySourceCategory: string,
+        ///         enquirySource: string
+        ///       },
+        ///       relationships: {
+        ///         businesses: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: [
+        ///             {
+        ///               type: string,
+        ///               id: string
+        ///             }
+        ///           ]
+        ///         },
+        ///         contacts: RelationshipsMultipleDocument,
+        ///         adviser: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: ResourceIdentifier
+        ///         },
+        ///         referrerOrganisation: RelationshipsSingleDocument,
+        ///         referrer: RelationshipsSingleDocument
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetContactGroupsAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("AdviserRelatedClient.GetContactGroups");
+            using var scope = ClientDiagnostics.CreateScope("AdviserRelatedClient.GetContactGroups");
             scope.Start();
             try
             {
-                return await RestClient.GetContactGroupsAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetContactGroupsRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -58,14 +172,123 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the adviser. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContactGroupsDocument> GetContactGroups(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;contact-groups&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         updated: string (ISO 8601 Format),
+        ///         created: string (ISO 8601 Format),
+        ///         utmSource: string,
+        ///         utmMedium: string,
+        ///         utmTerm: string,
+        ///         utmContent: string,
+        ///         utmCampaign: string,
+        ///         categories: [string],
+        ///         contactType: &quot;Lead&quot; | &quot;Application&quot; | &quot;ExistingClient&quot; | &quot;ProfessionalPartner&quot; | &quot;PreviousClient&quot; | &quot;Opportunity&quot; | &quot;NewClient&quot;,
+        ///         notes: string,
+        ///         enquirySourceCategory: string,
+        ///         enquirySource: string
+        ///       },
+        ///       relationships: {
+        ///         businesses: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: [
+        ///             {
+        ///               type: string,
+        ///               id: string
+        ///             }
+        ///           ]
+        ///         },
+        ///         contacts: RelationshipsMultipleDocument,
+        ///         adviser: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: ResourceIdentifier
+        ///         },
+        ///         referrerOrganisation: RelationshipsSingleDocument,
+        ///         referrer: RelationshipsSingleDocument
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetContactGroups(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("AdviserRelatedClient.GetContactGroups");
+            using var scope = ClientDiagnostics.CreateScope("AdviserRelatedClient.GetContactGroups");
             scope.Start();
             try
             {
-                return RestClient.GetContactGroups(id, cancellationToken);
+                using HttpMessage message = CreateGetContactGroupsRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -76,14 +299,116 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the adviser. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AdviserDetailsDocument>> GetAdviserDetailsAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;adviser-details&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         gender: &quot;Male&quot; | &quot;Female&quot; | &quot;Undisclosed&quot;,
+        ///         placeOfBirth: string,
+        ///         title: string,
+        ///         firstName: string,
+        ///         middleName: string,
+        ///         lastName: string,
+        ///         preferredName: string,
+        ///         homePhone: string,
+        ///         businessPhone: string,
+        ///         mobilePhone: string,
+        ///         email: string,
+        ///         birthCountry: string,
+        ///         fax: string,
+        ///         workEmail: string,
+        ///         dateOfBirth: AdviserDetailAttributesDateOfBirth,
+        ///         updated: string (ISO 8601 Format),
+        ///         created: string (ISO 8601 Format),
+        ///         description: string
+        ///       },
+        ///       relationships: {
+        ///         adviser: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: {
+        ///             type: string,
+        ///             id: string
+        ///           }
+        ///         }
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetAdviserDetailsAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("AdviserRelatedClient.GetAdviserDetails");
+            using var scope = ClientDiagnostics.CreateScope("AdviserRelatedClient.GetAdviserDetails");
             scope.Start();
             try
             {
-                return await RestClient.GetAdviserDetailsAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetAdviserDetailsRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -94,14 +419,116 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the adviser. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AdviserDetailsDocument> GetAdviserDetails(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;adviser-details&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         gender: &quot;Male&quot; | &quot;Female&quot; | &quot;Undisclosed&quot;,
+        ///         placeOfBirth: string,
+        ///         title: string,
+        ///         firstName: string,
+        ///         middleName: string,
+        ///         lastName: string,
+        ///         preferredName: string,
+        ///         homePhone: string,
+        ///         businessPhone: string,
+        ///         mobilePhone: string,
+        ///         email: string,
+        ///         birthCountry: string,
+        ///         fax: string,
+        ///         workEmail: string,
+        ///         dateOfBirth: AdviserDetailAttributesDateOfBirth,
+        ///         updated: string (ISO 8601 Format),
+        ///         created: string (ISO 8601 Format),
+        ///         description: string
+        ///       },
+        ///       relationships: {
+        ///         adviser: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: {
+        ///             type: string,
+        ///             id: string
+        ///           }
+        ///         }
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetAdviserDetails(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("AdviserRelatedClient.GetAdviserDetails");
+            using var scope = ClientDiagnostics.CreateScope("AdviserRelatedClient.GetAdviserDetails");
             scope.Start();
             try
             {
-                return RestClient.GetAdviserDetails(id, cancellationToken);
+                using HttpMessage message = CreateGetAdviserDetailsRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -112,14 +539,116 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the adviser. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OrganisationsDocument>> GetOrganisationsAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;organisations&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         emailForCommissions: string,
+        ///         primaryBrandColour: string,
+        ///         name: string,
+        ///         tradingName: string,
+        ///         website: string,
+        ///         companyEmail: string,
+        ///         brandedCategory: string,
+        ///         status: string,
+        ///         slug: string,
+        ///         businessNumber: string,
+        ///         companyNumber: string,
+        ///         officeDisplayName: string,
+        ///         phone: string,
+        ///         fax: string,
+        ///         brandLogoUrl: string
+        ///       },
+        ///       relationships: {
+        ///         advisers: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: [
+        ///             {
+        ///               type: string,
+        ///               id: string
+        ///             }
+        ///           ]
+        ///         },
+        ///         addresses: RelationshipsMultipleDocument
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetOrganisationsAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("AdviserRelatedClient.GetOrganisations");
+            using var scope = ClientDiagnostics.CreateScope("AdviserRelatedClient.GetOrganisations");
             scope.Start();
             try
             {
-                return await RestClient.GetOrganisationsAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetOrganisationsRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -130,14 +659,116 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the adviser. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OrganisationsDocument> GetOrganisations(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;organisations&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         emailForCommissions: string,
+        ///         primaryBrandColour: string,
+        ///         name: string,
+        ///         tradingName: string,
+        ///         website: string,
+        ///         companyEmail: string,
+        ///         brandedCategory: string,
+        ///         status: string,
+        ///         slug: string,
+        ///         businessNumber: string,
+        ///         companyNumber: string,
+        ///         officeDisplayName: string,
+        ///         phone: string,
+        ///         fax: string,
+        ///         brandLogoUrl: string
+        ///       },
+        ///       relationships: {
+        ///         advisers: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: [
+        ///             {
+        ///               type: string,
+        ///               id: string
+        ///             }
+        ///           ]
+        ///         },
+        ///         addresses: RelationshipsMultipleDocument
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetOrganisations(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("AdviserRelatedClient.GetOrganisations");
+            using var scope = ClientDiagnostics.CreateScope("AdviserRelatedClient.GetOrganisations");
             scope.Start();
             try
             {
-                return RestClient.GetOrganisations(id, cancellationToken);
+                using HttpMessage message = CreateGetOrganisationsRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -148,14 +779,111 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the adviser. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AgreementHoldersDocument>> GetAgreementHoldersAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;agreement-holders&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         appointmentEntity: string,
+        ///         employmentType: string,
+        ///         entityType: string
+        ///       },
+        ///       relationships: {
+        ///         apiFamilyFranchisees: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: [
+        ///             {
+        ///               type: string,
+        ///               id: string
+        ///             }
+        ///           ]
+        ///         },
+        ///         organisation: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: ResourceIdentifier
+        ///         }
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetAgreementHoldersAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("AdviserRelatedClient.GetAgreementHolders");
+            using var scope = ClientDiagnostics.CreateScope("AdviserRelatedClient.GetAgreementHolders");
             scope.Start();
             try
             {
-                return await RestClient.GetAgreementHoldersAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetAgreementHoldersRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -166,14 +894,111 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the adviser. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AgreementHoldersDocument> GetAgreementHolders(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;agreement-holders&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         appointmentEntity: string,
+        ///         employmentType: string,
+        ///         entityType: string
+        ///       },
+        ///       relationships: {
+        ///         apiFamilyFranchisees: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: [
+        ///             {
+        ///               type: string,
+        ///               id: string
+        ///             }
+        ///           ]
+        ///         },
+        ///         organisation: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: ResourceIdentifier
+        ///         }
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetAgreementHolders(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("AdviserRelatedClient.GetAgreementHolders");
+            using var scope = ClientDiagnostics.CreateScope("AdviserRelatedClient.GetAgreementHolders");
             scope.Start();
             try
             {
-                return RestClient.GetAgreementHolders(id, cancellationToken);
+                using HttpMessage message = CreateGetAgreementHoldersRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -184,14 +1009,106 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the adviser. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AdviserAddressesDocument>> GetAdviserAddressesAsync(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;adviser-address&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         isMailing: boolean,
+        ///         isBusiness: boolean,
+        ///         formattedAddress: string,
+        ///         streetAddress: string,
+        ///         country: string,
+        ///         suburb: string,
+        ///         postCode: string,
+        ///         state: string
+        ///       },
+        ///       relationships: {
+        ///         adviser: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: {
+        ///             type: string,
+        ///             id: string
+        ///           }
+        ///         }
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetAdviserAddressesAsync(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("AdviserRelatedClient.GetAdviserAddresses");
+            using var scope = ClientDiagnostics.CreateScope("AdviserRelatedClient.GetAdviserAddresses");
             scope.Start();
             try
             {
-                return await RestClient.GetAdviserAddressesAsync(id, cancellationToken).ConfigureAwait(false);
+                using HttpMessage message = CreateGetAdviserAddressesRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -202,14 +1119,106 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the adviser. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AdviserAddressesDocument> GetAdviserAddresses(int id, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   meta: Dictionary&lt;string, object&gt;,
+        ///   jsonApi: Dictionary&lt;string, object&gt;,
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   data: [
+        ///     {
+        ///       type: string,
+        ///       id: string,
+        ///       type: &quot;adviser-address&quot;,
+        ///       id: string,
+        ///       attributes: {
+        ///         isMailing: boolean,
+        ///         isBusiness: boolean,
+        ///         formattedAddress: string,
+        ///         streetAddress: string,
+        ///         country: string,
+        ///         suburb: string,
+        ///         postCode: string,
+        ///         state: string
+        ///       },
+        ///       relationships: {
+        ///         adviser: {
+        ///           links: {
+        ///             self: string,
+        ///             related: string
+        ///           },
+        ///           meta: Dictionary&lt;string, object&gt;,
+        ///           data: {
+        ///             type: string,
+        ///             id: string
+        ///           }
+        ///         }
+        ///       },
+        ///       links: {
+        ///         self: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ],
+        ///   included: [
+        ///     {
+        ///       type: string,
+        ///       id: string
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   links: {
+        ///     self: string,
+        ///     related: string,
+        ///     describedby: string,
+        ///     first: string,
+        ///     last: string,
+        ///     prev: string,
+        ///     next: string
+        ///   },
+        ///   errors: [
+        ///     {
+        ///       id: string,
+        ///       links: {
+        ///         about: string,
+        ///         type: string
+        ///       },
+        ///       status: string,
+        ///       code: string,
+        ///       title: string,
+        ///       detail: string,
+        ///       source: {
+        ///         pointer: string,
+        ///         parameter: string,
+        ///         header: string
+        ///       },
+        ///       meta: Dictionary&lt;string, object&gt;
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetAdviserAddresses(int id, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("AdviserRelatedClient.GetAdviserAddresses");
+            using var scope = ClientDiagnostics.CreateScope("AdviserRelatedClient.GetAdviserAddresses");
             scope.Start();
             try
             {
-                return RestClient.GetAdviserAddresses(id, cancellationToken);
+                using HttpMessage message = CreateGetAdviserAddressesRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -217,5 +1226,83 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
+
+        internal HttpMessage CreateGetContactGroupsRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/advisers/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/contactGroups", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetAdviserDetailsRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/advisers/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/adviserDetails", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetOrganisationsRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/advisers/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/organisation", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetAgreementHoldersRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/advisers/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/agreementHolders", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetAdviserAddressesRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/advisers/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/addresses", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        private static ResponseClassifier _responseClassifier200401;
+        private static ResponseClassifier ResponseClassifier200401 => _responseClassifier200401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 401 });
     }
 }
