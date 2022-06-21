@@ -6,24 +6,20 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
+using MyCrmSampleClient.MyCrmApi.Models;
 
 namespace MyCrmSampleClient.MyCrmApi
 {
     /// <summary> The ContactExternalReference service client. </summary>
     public partial class ContactExternalReferenceClient
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _endpoint;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        internal ContactExternalReferenceRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of ContactExternalReferenceClient for mocking. </summary>
         protected ContactExternalReferenceClient()
@@ -31,160 +27,27 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Initializes a new instance of ContactExternalReferenceClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public ContactExternalReferenceClient(Uri endpoint = null, MyCRMAPIClientOptions options = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
+        internal ContactExternalReferenceClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            endpoint ??= new Uri("");
-            options ??= new MyCRMAPIClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _endpoint = endpoint;
+            RestClient = new ContactExternalReferenceRestClient(clientDiagnostics, pipeline, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Creates a new contact external reference with attributes, relationships or both. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string,
-        ///     type: &quot;contact-external-references&quot; (required),
-        ///     id: string (required),
-        ///     attributes: {
-        ///       externalReference: string
-        ///     },
-        ///     relationships: {
-        ///       integration: {
-        ///         links: {
-        ///           self: string,
-        ///           related: string
-        ///         },
-        ///         meta: Dictionary&lt;string, object&gt;,
-        ///         data: {
-        ///           type: string (required),
-        ///           id: string
-        ///         } (required)
-        ///       },
-        ///       contact: RelationshipsSingleDocument
-        ///     },
-        ///     links: {
-        ///       self: string
-        ///     },
-        ///     meta: Dictionary&lt;string, object&gt;
-        ///   } (required),
-        ///   included: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: {
-        ///     type: string,
-        ///     id: string,
-        ///     type: &quot;contact-external-references&quot;,
-        ///     id: string,
-        ///     attributes: {
-        ///       externalReference: string
-        ///     },
-        ///     relationships: {
-        ///       integration: {
-        ///         links: {
-        ///           self: string,
-        ///           related: string
-        ///         },
-        ///         meta: Dictionary&lt;string, object&gt;,
-        ///         data: {
-        ///           type: string,
-        ///           id: string
-        ///         }
-        ///       },
-        ///       contact: RelationshipsSingleDocument
-        ///     },
-        ///     links: {
-        ///       self: string
-        ///     },
-        ///     meta: Dictionary&lt;string, object&gt;
-        ///   },
-        ///   included: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PostAsync(RequestContent content, RequestContext context = null)
+        /// <param name="body"> The ContactExternalReferenceDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ContactExternalReferenceDocument>> PostAsync(ContactExternalReferenceDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactExternalReferenceClient.Post");
+            using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceClient.Post");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PostAsync(body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -194,147 +57,15 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Creates a new contact external reference with attributes, relationships or both. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string,
-        ///     type: &quot;contact-external-references&quot; (required),
-        ///     id: string (required),
-        ///     attributes: {
-        ///       externalReference: string
-        ///     },
-        ///     relationships: {
-        ///       integration: {
-        ///         links: {
-        ///           self: string,
-        ///           related: string
-        ///         },
-        ///         meta: Dictionary&lt;string, object&gt;,
-        ///         data: {
-        ///           type: string (required),
-        ///           id: string
-        ///         } (required)
-        ///       },
-        ///       contact: RelationshipsSingleDocument
-        ///     },
-        ///     links: {
-        ///       self: string
-        ///     },
-        ///     meta: Dictionary&lt;string, object&gt;
-        ///   } (required),
-        ///   included: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: {
-        ///     type: string,
-        ///     id: string,
-        ///     type: &quot;contact-external-references&quot;,
-        ///     id: string,
-        ///     attributes: {
-        ///       externalReference: string
-        ///     },
-        ///     relationships: {
-        ///       integration: {
-        ///         links: {
-        ///           self: string,
-        ///           related: string
-        ///         },
-        ///         meta: Dictionary&lt;string, object&gt;,
-        ///         data: {
-        ///           type: string,
-        ///           id: string
-        ///         }
-        ///       },
-        ///       contact: RelationshipsSingleDocument
-        ///     },
-        ///     links: {
-        ///       self: string
-        ///     },
-        ///     meta: Dictionary&lt;string, object&gt;
-        ///   },
-        ///   included: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response Post(RequestContent content, RequestContext context = null)
+        /// <param name="body"> The ContactExternalReferenceDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ContactExternalReferenceDocument> Post(ContactExternalReferenceDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactExternalReferenceClient.Post");
+            using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceClient.Post");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.Post(body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -345,98 +76,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: {
-        ///     type: string,
-        ///     id: string,
-        ///     type: &quot;contact-external-references&quot;,
-        ///     id: string,
-        ///     attributes: {
-        ///       externalReference: string
-        ///     },
-        ///     relationships: {
-        ///       integration: {
-        ///         links: {
-        ///           self: string,
-        ///           related: string
-        ///         },
-        ///         meta: Dictionary&lt;string, object&gt;,
-        ///         data: {
-        ///           type: string,
-        ///           id: string
-        ///         }
-        ///       },
-        ///       contact: RelationshipsSingleDocument
-        ///     },
-        ///     links: {
-        ///       self: string
-        ///     },
-        ///     meta: Dictionary&lt;string, object&gt;
-        ///   },
-        ///   included: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetContactExternalReferenceAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ContactExternalReferenceDocument>> GetAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactExternalReferenceClient.GetContactExternalReference");
+            using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceClient.Get");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetContactExternalReferenceRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -447,98 +94,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: {
-        ///     type: string,
-        ///     id: string,
-        ///     type: &quot;contact-external-references&quot;,
-        ///     id: string,
-        ///     attributes: {
-        ///       externalReference: string
-        ///     },
-        ///     relationships: {
-        ///       integration: {
-        ///         links: {
-        ///           self: string,
-        ///           related: string
-        ///         },
-        ///         meta: Dictionary&lt;string, object&gt;,
-        ///         data: {
-        ///           type: string,
-        ///           id: string
-        ///         }
-        ///       },
-        ///       contact: RelationshipsSingleDocument
-        ///     },
-        ///     links: {
-        ///       self: string
-        ///     },
-        ///     meta: Dictionary&lt;string, object&gt;
-        ///   },
-        ///   included: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetContactExternalReference(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ContactExternalReferenceDocument> Get(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactExternalReferenceClient.GetContactExternalReference");
+            using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceClient.Get");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetContactExternalReferenceRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.Get(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -549,147 +112,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string,
-        ///     type: &quot;contact-external-references&quot; (required),
-        ///     id: string (required),
-        ///     attributes: {
-        ///       externalReference: string
-        ///     },
-        ///     relationships: {
-        ///       integration: {
-        ///         links: {
-        ///           self: string,
-        ///           related: string
-        ///         },
-        ///         meta: Dictionary&lt;string, object&gt;,
-        ///         data: {
-        ///           type: string (required),
-        ///           id: string
-        ///         } (required)
-        ///       },
-        ///       contact: RelationshipsSingleDocument
-        ///     },
-        ///     links: {
-        ///       self: string
-        ///     },
-        ///     meta: Dictionary&lt;string, object&gt;
-        ///   } (required),
-        ///   included: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: {
-        ///     type: string,
-        ///     id: string,
-        ///     type: &quot;contact-external-references&quot;,
-        ///     id: string,
-        ///     attributes: {
-        ///       externalReference: string
-        ///     },
-        ///     relationships: {
-        ///       integration: {
-        ///         links: {
-        ///           self: string,
-        ///           related: string
-        ///         },
-        ///         meta: Dictionary&lt;string, object&gt;,
-        ///         data: {
-        ///           type: string,
-        ///           id: string
-        ///         }
-        ///       },
-        ///       contact: RelationshipsSingleDocument
-        ///     },
-        ///     links: {
-        ///       self: string
-        ///     },
-        ///     meta: Dictionary&lt;string, object&gt;
-        ///   },
-        ///   included: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PatchAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The ContactExternalReferenceDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ContactExternalReferenceDocument>> PatchAsync(int id, ContactExternalReferenceDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactExternalReferenceClient.Patch");
+            using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceClient.Patch");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PatchAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -700,147 +131,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string,
-        ///     type: &quot;contact-external-references&quot; (required),
-        ///     id: string (required),
-        ///     attributes: {
-        ///       externalReference: string
-        ///     },
-        ///     relationships: {
-        ///       integration: {
-        ///         links: {
-        ///           self: string,
-        ///           related: string
-        ///         },
-        ///         meta: Dictionary&lt;string, object&gt;,
-        ///         data: {
-        ///           type: string (required),
-        ///           id: string
-        ///         } (required)
-        ///       },
-        ///       contact: RelationshipsSingleDocument
-        ///     },
-        ///     links: {
-        ///       self: string
-        ///     },
-        ///     meta: Dictionary&lt;string, object&gt;
-        ///   } (required),
-        ///   included: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: {
-        ///     type: string,
-        ///     id: string,
-        ///     type: &quot;contact-external-references&quot;,
-        ///     id: string,
-        ///     attributes: {
-        ///       externalReference: string
-        ///     },
-        ///     relationships: {
-        ///       integration: {
-        ///         links: {
-        ///           self: string,
-        ///           related: string
-        ///         },
-        ///         meta: Dictionary&lt;string, object&gt;,
-        ///         data: {
-        ///           type: string,
-        ///           id: string
-        ///         }
-        ///       },
-        ///       contact: RelationshipsSingleDocument
-        ///     },
-        ///     links: {
-        ///       self: string
-        ///     },
-        ///     meta: Dictionary&lt;string, object&gt;
-        ///   },
-        ///   included: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response Patch(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The ContactExternalReferenceDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ContactExternalReferenceDocument> Patch(int id, ContactExternalReferenceDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactExternalReferenceClient.Patch");
+            using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceClient.Patch");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.Patch(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -851,50 +150,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> DeleteAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactExternalReferenceClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.DeleteAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -905,50 +168,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response Delete(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Delete(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactExternalReferenceClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.Delete(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -956,73 +183,5 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
-
-        internal HttpMessage CreatePostRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier201401);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-external-references", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetContactExternalReferenceRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-external-references/", false);
-            uri.AppendPath(id, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreatePatchRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-external-references/", false);
-            uri.AppendPath(id, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-external-references/", false);
-            uri.AppendPath(id, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        private static ResponseClassifier _responseClassifier201401;
-        private static ResponseClassifier ResponseClassifier201401 => _responseClassifier201401 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 401 });
-        private static ResponseClassifier _responseClassifier200401;
-        private static ResponseClassifier ResponseClassifier200401 => _responseClassifier200401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 401 });
-        private static ResponseClassifier _responseClassifier200204401;
-        private static ResponseClassifier ResponseClassifier200204401 => _responseClassifier200204401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204, 401 });
-        private static ResponseClassifier _responseClassifier204401;
-        private static ResponseClassifier ResponseClassifier204401 => _responseClassifier204401 ??= new StatusCodeClassifier(stackalloc ushort[] { 204, 401 });
     }
 }

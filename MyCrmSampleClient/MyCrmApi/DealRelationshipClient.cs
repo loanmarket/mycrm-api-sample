@@ -6,24 +6,20 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
+using MyCrmSampleClient.MyCrmApi.Models;
 
 namespace MyCrmSampleClient.MyCrmApi
 {
     /// <summary> The DealRelationship service client. </summary>
     public partial class DealRelationshipClient
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _endpoint;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        internal DealRelationshipRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of DealRelationshipClient for mocking. </summary>
         protected DealRelationshipClient()
@@ -31,77 +27,27 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Initializes a new instance of DealRelationshipClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public DealRelationshipClient(Uri endpoint = null, MyCRMAPIClientOptions options = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
+        internal DealRelationshipClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            endpoint ??= new Uri("");
-            options ??= new MyCRMAPIClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _endpoint = endpoint;
+            RestClient = new DealRelationshipRestClient(clientDiagnostics, pipeline, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string,
-        ///     id: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetDealScenariosAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsSingleDocument>> GetDealScenariosAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetDealScenarios");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealScenarios");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealScenariosRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetDealScenariosAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -112,63 +58,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string,
-        ///     id: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetDealScenarios(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsSingleDocument> GetDealScenarios(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetDealScenarios");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealScenarios");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealScenariosRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetDealScenarios(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -179,65 +76,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetDealImportantDatesAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetDealImportantDatesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetDealImportantDates");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealImportantDates");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealImportantDatesRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetDealImportantDatesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -248,65 +94,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetDealImportantDates(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetDealImportantDates(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetDealImportantDates");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealImportantDates");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealImportantDatesRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetDealImportantDates(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -317,65 +112,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetDealParticipantsAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetDealParticipantsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetDealParticipants");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealParticipants");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealParticipantsRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetDealParticipantsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -386,65 +130,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetDealParticipants(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetDealParticipants(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetDealParticipants");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealParticipants");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealParticipantsRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetDealParticipants(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -455,65 +148,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetDealExternalReferencesAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetDealExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealExternalReferencesRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetDealExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -524,65 +166,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetDealExternalReferences(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetDealExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealExternalReferencesRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetDealExternalReferences(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -593,65 +184,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetContactsAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetContacts");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetContacts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetContactsRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetContactsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -662,65 +202,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetContacts(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetContacts(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetContacts");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetContacts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetContactsRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetContacts(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -731,65 +220,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetDealStructuresAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetDealStructuresAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetDealStructures");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealStructures");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealStructuresRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetDealStructuresAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -800,65 +238,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetDealStructures(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetDealStructures(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetDealStructures");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealStructures");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealStructuresRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetDealStructures(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -869,63 +256,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string,
-        ///     id: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetAdvisersAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsSingleDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetAdvisers");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetAdvisers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAdvisersRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetAdvisersAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -936,63 +274,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string,
-        ///     id: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetAdvisers(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsSingleDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetAdvisers");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetAdvisers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAdvisersRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetAdvisers(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1003,65 +292,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetDealNotesAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetDealNotesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetDealNotes");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealNotes");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealNotesRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetDealNotesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1072,65 +310,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetDealNotes(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetDealNotes(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealRelationshipClient.GetDealNotes");
+            using var scope = _clientDiagnostics.CreateScope("DealRelationshipClient.GetDealNotes");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealNotesRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetDealNotes(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1138,128 +325,5 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
-
-        internal HttpMessage CreateGetDealScenariosRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/deals/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/dealScenario", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetDealImportantDatesRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/deals/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/importantDates", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetDealParticipantsRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/deals/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/participants", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetDealExternalReferencesRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/deals/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/externalReferences", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetContactsRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/deals/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/contacts", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetDealStructuresRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/deals/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/dealStructures", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetAdvisersRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/deals/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/adviser", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetDealNotesRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/deals/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/dealNotes", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        private static ResponseClassifier _responseClassifier200401;
-        private static ResponseClassifier ResponseClassifier200401 => _responseClassifier200401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 401 });
     }
 }

@@ -6,9 +6,9 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace MyCrmSampleClient.MyCrmApi
@@ -16,14 +16,9 @@ namespace MyCrmSampleClient.MyCrmApi
     /// <summary> The AssetSubTypeRelated service client. </summary>
     public partial class AssetSubTypeRelatedClient
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _endpoint;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        internal AssetSubTypeRelatedRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of AssetSubTypeRelatedClient for mocking. </summary>
         protected AssetSubTypeRelatedClient()
@@ -31,69 +26,28 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Initializes a new instance of AssetSubTypeRelatedClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public AssetSubTypeRelatedClient(Uri endpoint = null, MyCRMAPIClientOptions options = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
+        internal AssetSubTypeRelatedClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            endpoint ??= new Uri("");
-            options ??= new MyCRMAPIClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _endpoint = endpoint;
+            RestClient = new AssetSubTypeRelatedRestClient(clientDiagnostics, pipeline, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Where `id` is the identifier of the asset sub-type. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="relationshipName"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetAssetSubTypeRelatedAsync(int id, string relationshipName, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> GetAsync(int id, string relationshipName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
-
-            using var scope = ClientDiagnostics.CreateScope("AssetSubTypeRelatedClient.GetAssetSubTypeRelated");
+            using var scope = _clientDiagnostics.CreateScope("AssetSubTypeRelatedClient.Get");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAssetSubTypeRelatedRequest(id, relationshipName, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetAsync(id, relationshipName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -105,54 +59,14 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the asset sub-type. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="relationshipName"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetAssetSubTypeRelated(int id, string relationshipName, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Get(int id, string relationshipName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
-
-            using var scope = ClientDiagnostics.CreateScope("AssetSubTypeRelatedClient.GetAssetSubTypeRelated");
+            using var scope = _clientDiagnostics.CreateScope("AssetSubTypeRelatedClient.Get");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAssetSubTypeRelatedRequest(id, relationshipName, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.Get(id, relationshipName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -160,24 +74,5 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
-
-        internal HttpMessage CreateGetAssetSubTypeRelatedRequest(int id, string relationshipName, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/asset-sub-types/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(relationshipName, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        private static ResponseClassifier _responseClassifier401;
-        private static ResponseClassifier ResponseClassifier401 => _responseClassifier401 ??= new StatusCodeClassifier(stackalloc ushort[] { 401 });
     }
 }

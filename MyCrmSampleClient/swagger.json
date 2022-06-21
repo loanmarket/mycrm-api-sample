@@ -23680,6 +23680,13 @@
             ],
             "writeOnly": true
           },
+          "formattedAddress": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true
+          },
           "noteTitle": {
             "type": "string",
             "nullable": true,

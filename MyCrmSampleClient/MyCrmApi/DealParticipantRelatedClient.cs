@@ -6,24 +6,20 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
+using MyCrmSampleClient.MyCrmApi.Models;
 
 namespace MyCrmSampleClient.MyCrmApi
 {
     /// <summary> The DealParticipantRelated service client. </summary>
     public partial class DealParticipantRelatedClient
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _endpoint;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        internal DealParticipantRelatedRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of DealParticipantRelatedClient for mocking. </summary>
         protected DealParticipantRelatedClient()
@@ -31,141 +27,27 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Initializes a new instance of DealParticipantRelatedClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public DealParticipantRelatedClient(Uri endpoint = null, MyCRMAPIClientOptions options = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
+        internal DealParticipantRelatedClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            endpoint ??= new Uri("");
-            options ??= new MyCRMAPIClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _endpoint = endpoint;
+            RestClient = new DealParticipantRelatedRestClient(clientDiagnostics, pipeline, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string,
-        ///       type: &quot;contacts&quot;,
-        ///       id: string,
-        ///       attributes: {
-        ///         created: string (ISO 8601 Format),
-        ///         mobile: string,
-        ///         title: string,
-        ///         firstName: string,
-        ///         middleName: string,
-        ///         lastName: string,
-        ///         preferredName: string,
-        ///         homePhone: string,
-        ///         businessPhone: string,
-        ///         email: string,
-        ///         secondaryEmail: string,
-        ///         gender: &quot;Male&quot; | &quot;Female&quot; | &quot;Undisclosed&quot;,
-        ///         updated: string (ISO 8601 Format),
-        ///         dateOfBirth: ContactAttributesDateOfBirth,
-        ///         isPrimary: boolean,
-        ///         role: &quot;Adult&quot; | &quot;Child&quot; | &quot;Other&quot;,
-        ///         hasMarketingConsent: boolean
-        ///       },
-        ///       relationships: {
-        ///         contactGroup: {
-        ///           links: {
-        ///             self: string,
-        ///             related: string
-        ///           },
-        ///           meta: Dictionary&lt;string, object&gt;,
-        ///           data: {
-        ///             type: string,
-        ///             id: string
-        ///           }
-        ///         },
-        ///         ownership: {
-        ///           links: {
-        ///             self: string,
-        ///             related: string
-        ///           },
-        ///           meta: Dictionary&lt;string, object&gt;,
-        ///           data: [ResourceIdentifier]
-        ///         },
-        ///         externalReferences: RelationshipsMultipleDocument,
-        ///         deals: RelationshipsMultipleDocument,
-        ///         employments: RelationshipsMultipleDocument,
-        ///         contactAddress: RelationshipsMultipleDocument
-        ///       },
-        ///       links: {
-        ///         self: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ],
-        ///   included: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetContactsAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealParticipantRelatedClient.GetContacts");
+            using var scope = _clientDiagnostics.CreateScope("DealParticipantRelatedClient.GetContacts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetContactsRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetContactsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -176,127 +58,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string,
-        ///       type: &quot;contacts&quot;,
-        ///       id: string,
-        ///       attributes: {
-        ///         created: string (ISO 8601 Format),
-        ///         mobile: string,
-        ///         title: string,
-        ///         firstName: string,
-        ///         middleName: string,
-        ///         lastName: string,
-        ///         preferredName: string,
-        ///         homePhone: string,
-        ///         businessPhone: string,
-        ///         email: string,
-        ///         secondaryEmail: string,
-        ///         gender: &quot;Male&quot; | &quot;Female&quot; | &quot;Undisclosed&quot;,
-        ///         updated: string (ISO 8601 Format),
-        ///         dateOfBirth: ContactAttributesDateOfBirth,
-        ///         isPrimary: boolean,
-        ///         role: &quot;Adult&quot; | &quot;Child&quot; | &quot;Other&quot;,
-        ///         hasMarketingConsent: boolean
-        ///       },
-        ///       relationships: {
-        ///         contactGroup: {
-        ///           links: {
-        ///             self: string,
-        ///             related: string
-        ///           },
-        ///           meta: Dictionary&lt;string, object&gt;,
-        ///           data: {
-        ///             type: string,
-        ///             id: string
-        ///           }
-        ///         },
-        ///         ownership: {
-        ///           links: {
-        ///             self: string,
-        ///             related: string
-        ///           },
-        ///           meta: Dictionary&lt;string, object&gt;,
-        ///           data: [ResourceIdentifier]
-        ///         },
-        ///         externalReferences: RelationshipsMultipleDocument,
-        ///         deals: RelationshipsMultipleDocument,
-        ///         employments: RelationshipsMultipleDocument,
-        ///         contactAddress: RelationshipsMultipleDocument
-        ///       },
-        ///       links: {
-        ///         self: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ],
-        ///   included: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetContacts(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealParticipantRelatedClient.GetContacts");
+            using var scope = _clientDiagnostics.CreateScope("DealParticipantRelatedClient.GetContacts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetContactsRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetContacts(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -307,158 +76,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string,
-        ///       type: &quot;deals&quot;,
-        ///       id: string,
-        ///       attributes: {
-        ///         updated: string (ISO 8601 Format),
-        ///         created: string (ISO 8601 Format),
-        ///         dates: {
-        ///           settled: ImportantDatesSetSettled,
-        ///           lodged: ImportantDatesSetLodged,
-        ///           financeClause: ImportantDatesSetFinanceClause,
-        ///           notProceeding: ImportantDatesSetNotProceeding,
-        ///           approved: ImportantDatesSetApproved,
-        ///           preApproved: ImportantDatesSetPreApproved,
-        ///           conditionallyApproved: ImportantDatesSetConditionallyApproved,
-        ///           preApprovedExpiry: ImportantDatesSetPreApprovedExpiry,
-        ///           estimatedSettled: ImportantDatesSetEstimatedSettled
-        ///         },
-        ///         totalLoanAmount: number,
-        ///         customStatusName: string,
-        ///         dealType: &quot;Residential&quot; | &quot;Commercial&quot; | &quot;SmallBusiness&quot; | &quot;AssetFinance&quot; | &quot;PersonalLoan&quot; | &quot;DepositBond&quot;,
-        ///         name: string,
-        ///         dealStatus: &quot;NewLeads&quot; | &quot;Researching&quot; | &quot;PreApproved&quot; | &quot;ConditionallyApproved&quot; | &quot;UnconditionallyApproved&quot; | &quot;Lodged&quot; | &quot;InProgress&quot; | &quot;PendingSettlement&quot; | &quot;Varied&quot; | &quot;Repaid&quot; | &quot;Withdrawn&quot; | &quot;Cancelled&quot; | &quot;Settled&quot;,
-        ///         opportunity: {
-        ///           proposedLoanAmount: number,
-        ///           securityAmount: number,
-        ///           summaryNotes: string,
-        ///           loanPurpose: string
-        ///         },
-        ///         splits: [
-        ///           {
-        ///             loanTermYears: number,
-        ///             rateType: string,
-        ///             loanStructureType: &quot;PrincipalInterest&quot; | &quot;InterestOnly&quot; | &quot;RevolvingCredit&quot; | &quot;Offset&quot;,
-        ///             amount: number,
-        ///             interestRate: number,
-        ///             rateTypePeriodMonths: number,
-        ///             paymentAmount: number,
-        ///             fixedRateStartDate: SplitFixedRateStartDate,
-        ///             fixedRateEndDate: SplitFixedRateEndDate,
-        ///             interestOnlyStartDate: SplitInterestOnlyStartDate,
-        ///             interestOnlyEndDate: SplitInterestOnlyEndDate,
-        ///             repaymentHolidayStartDate: SplitRepaymentHolidayStartDate,
-        ///             repaymentHolidayEndDate: SplitRepaymentHolidayEndDate
-        ///           }
-        ///         ],
-        ///         lenderName: string
-        ///       },
-        ///       relationships: {
-        ///         dealScenario: {
-        ///           links: {
-        ///             self: string,
-        ///             related: string
-        ///           },
-        ///           meta: Dictionary&lt;string, object&gt;,
-        ///           data: {
-        ///             type: string,
-        ///             id: string
-        ///           }
-        ///         },
-        ///         importantDates: {
-        ///           links: {
-        ///             self: string,
-        ///             related: string
-        ///           },
-        ///           meta: Dictionary&lt;string, object&gt;,
-        ///           data: [ResourceIdentifier]
-        ///         },
-        ///         participants: RelationshipsMultipleDocument,
-        ///         externalReferences: RelationshipsMultipleDocument,
-        ///         dealStructures: RelationshipsMultipleDocument,
-        ///         contacts: {
-        ///           links: RelationshipsMultipleDocumentLinks,
-        ///           meta: Dictionary&lt;string, object&gt;,
-        ///           data: [ResourceIdentifier]
-        ///         },
-        ///         adviser: RelationshipsSingleDocument,
-        ///         dealNotes: RelationshipsMultipleDocument
-        ///       },
-        ///       links: {
-        ///         self: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ],
-        ///   included: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetDealsAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DealsDocument>> GetDealsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealParticipantRelatedClient.GetDeals");
+            using var scope = _clientDiagnostics.CreateScope("DealParticipantRelatedClient.GetDeals");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealsRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetDealsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -469,158 +94,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the participants in a deal. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string,
-        ///       type: &quot;deals&quot;,
-        ///       id: string,
-        ///       attributes: {
-        ///         updated: string (ISO 8601 Format),
-        ///         created: string (ISO 8601 Format),
-        ///         dates: {
-        ///           settled: ImportantDatesSetSettled,
-        ///           lodged: ImportantDatesSetLodged,
-        ///           financeClause: ImportantDatesSetFinanceClause,
-        ///           notProceeding: ImportantDatesSetNotProceeding,
-        ///           approved: ImportantDatesSetApproved,
-        ///           preApproved: ImportantDatesSetPreApproved,
-        ///           conditionallyApproved: ImportantDatesSetConditionallyApproved,
-        ///           preApprovedExpiry: ImportantDatesSetPreApprovedExpiry,
-        ///           estimatedSettled: ImportantDatesSetEstimatedSettled
-        ///         },
-        ///         totalLoanAmount: number,
-        ///         customStatusName: string,
-        ///         dealType: &quot;Residential&quot; | &quot;Commercial&quot; | &quot;SmallBusiness&quot; | &quot;AssetFinance&quot; | &quot;PersonalLoan&quot; | &quot;DepositBond&quot;,
-        ///         name: string,
-        ///         dealStatus: &quot;NewLeads&quot; | &quot;Researching&quot; | &quot;PreApproved&quot; | &quot;ConditionallyApproved&quot; | &quot;UnconditionallyApproved&quot; | &quot;Lodged&quot; | &quot;InProgress&quot; | &quot;PendingSettlement&quot; | &quot;Varied&quot; | &quot;Repaid&quot; | &quot;Withdrawn&quot; | &quot;Cancelled&quot; | &quot;Settled&quot;,
-        ///         opportunity: {
-        ///           proposedLoanAmount: number,
-        ///           securityAmount: number,
-        ///           summaryNotes: string,
-        ///           loanPurpose: string
-        ///         },
-        ///         splits: [
-        ///           {
-        ///             loanTermYears: number,
-        ///             rateType: string,
-        ///             loanStructureType: &quot;PrincipalInterest&quot; | &quot;InterestOnly&quot; | &quot;RevolvingCredit&quot; | &quot;Offset&quot;,
-        ///             amount: number,
-        ///             interestRate: number,
-        ///             rateTypePeriodMonths: number,
-        ///             paymentAmount: number,
-        ///             fixedRateStartDate: SplitFixedRateStartDate,
-        ///             fixedRateEndDate: SplitFixedRateEndDate,
-        ///             interestOnlyStartDate: SplitInterestOnlyStartDate,
-        ///             interestOnlyEndDate: SplitInterestOnlyEndDate,
-        ///             repaymentHolidayStartDate: SplitRepaymentHolidayStartDate,
-        ///             repaymentHolidayEndDate: SplitRepaymentHolidayEndDate
-        ///           }
-        ///         ],
-        ///         lenderName: string
-        ///       },
-        ///       relationships: {
-        ///         dealScenario: {
-        ///           links: {
-        ///             self: string,
-        ///             related: string
-        ///           },
-        ///           meta: Dictionary&lt;string, object&gt;,
-        ///           data: {
-        ///             type: string,
-        ///             id: string
-        ///           }
-        ///         },
-        ///         importantDates: {
-        ///           links: {
-        ///             self: string,
-        ///             related: string
-        ///           },
-        ///           meta: Dictionary&lt;string, object&gt;,
-        ///           data: [ResourceIdentifier]
-        ///         },
-        ///         participants: RelationshipsMultipleDocument,
-        ///         externalReferences: RelationshipsMultipleDocument,
-        ///         dealStructures: RelationshipsMultipleDocument,
-        ///         contacts: {
-        ///           links: RelationshipsMultipleDocumentLinks,
-        ///           meta: Dictionary&lt;string, object&gt;,
-        ///           data: [ResourceIdentifier]
-        ///         },
-        ///         adviser: RelationshipsSingleDocument,
-        ///         dealNotes: RelationshipsMultipleDocument
-        ///       },
-        ///       links: {
-        ///         self: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ],
-        ///   included: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetDeals(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DealsDocument> GetDeals(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("DealParticipantRelatedClient.GetDeals");
+            using var scope = _clientDiagnostics.CreateScope("DealParticipantRelatedClient.GetDeals");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealsRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetDeals(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -628,38 +109,5 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
-
-        internal HttpMessage CreateGetContactsRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/deal-participants/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/contact", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetDealsRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/deal-participants/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/deal", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        private static ResponseClassifier _responseClassifier200401;
-        private static ResponseClassifier ResponseClassifier200401 => _responseClassifier200401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 401 });
     }
 }
