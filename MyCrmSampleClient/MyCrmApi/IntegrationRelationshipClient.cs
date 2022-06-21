@@ -6,24 +6,20 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
+using MyCrmSampleClient.MyCrmApi.Models;
 
 namespace MyCrmSampleClient.MyCrmApi
 {
     /// <summary> The IntegrationRelationship service client. </summary>
     public partial class IntegrationRelationshipClient
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _endpoint;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        internal IntegrationRelationshipRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of IntegrationRelationshipClient for mocking. </summary>
         protected IntegrationRelationshipClient()
@@ -31,79 +27,27 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Initializes a new instance of IntegrationRelationshipClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public IntegrationRelationshipClient(Uri endpoint = null, MyCRMAPIClientOptions options = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
+        internal IntegrationRelationshipClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            endpoint ??= new Uri("");
-            options ??= new MyCRMAPIClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _endpoint = endpoint;
+            RestClient = new IntegrationRelationshipRestClient(clientDiagnostics, pipeline, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Where `id` is the identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetContactExternalReferencesAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.GetContactExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.GetContactExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetContactExternalReferencesRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetContactExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -114,65 +58,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetContactExternalReferences(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetContactExternalReferences(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.GetContactExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.GetContactExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetContactExternalReferencesRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetContactExternalReferences(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -183,66 +76,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary integration resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PostContactExternalReferencesAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostContactExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.PostContactExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PostContactExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostContactExternalReferencesRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PostContactExternalReferencesAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -253,66 +95,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary integration resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PostContactExternalReferences(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostContactExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.PostContactExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PostContactExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostContactExternalReferencesRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.PostContactExternalReferences(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -323,66 +114,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PatchContactExternalReferencesAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchContactExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.PatchContactExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PatchContactExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchContactExternalReferencesRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PatchContactExternalReferencesAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -393,66 +133,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PatchContactExternalReferences(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchContactExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.PatchContactExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PatchContactExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchContactExternalReferencesRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.PatchContactExternalReferences(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -463,50 +152,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> DeleteContactExternalReferencesAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteContactExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.DeleteContactExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.DeleteContactExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteContactExternalReferencesRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.DeleteContactExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -517,50 +170,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response DeleteContactExternalReferences(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteContactExternalReferences(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.DeleteContactExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.DeleteContactExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteContactExternalReferencesRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.DeleteContactExternalReferences(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -571,65 +188,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetDealExternalReferencesAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.GetDealExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.GetDealExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealExternalReferencesRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetDealExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -640,65 +206,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetDealExternalReferences(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetDealExternalReferences(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.GetDealExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.GetDealExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDealExternalReferencesRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetDealExternalReferences(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -709,66 +224,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary integration resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PostDealExternalReferencesAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostDealExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.PostDealExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PostDealExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostDealExternalReferencesRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PostDealExternalReferencesAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -779,66 +243,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary integration resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PostDealExternalReferences(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostDealExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.PostDealExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PostDealExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostDealExternalReferencesRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.PostDealExternalReferences(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -849,66 +262,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PatchDealExternalReferencesAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchDealExternalReferencesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.PatchDealExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PatchDealExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchDealExternalReferencesRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PatchDealExternalReferencesAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -919,66 +281,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PatchDealExternalReferences(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchDealExternalReferences(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.PatchDealExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.PatchDealExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchDealExternalReferencesRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.PatchDealExternalReferences(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -989,50 +300,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> DeleteDealExternalReferencesAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteDealExternalReferencesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.DeleteDealExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.DeleteDealExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteDealExternalReferencesRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.DeleteDealExternalReferencesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1043,50 +318,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response DeleteDealExternalReferences(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteDealExternalReferences(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("IntegrationRelationshipClient.DeleteDealExternalReferences");
+            using var scope = _clientDiagnostics.CreateScope("IntegrationRelationshipClient.DeleteDealExternalReferences");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteDealExternalReferencesRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.DeleteDealExternalReferences(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1094,140 +333,5 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
-
-        internal HttpMessage CreateGetContactExternalReferencesRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/integrations/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/contactExternalReferences", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreatePostContactExternalReferencesRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/integrations/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/contactExternalReferences", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreatePatchContactExternalReferencesRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/integrations/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/contactExternalReferences", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteContactExternalReferencesRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/integrations/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/contactExternalReferences", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetDealExternalReferencesRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/integrations/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/dealExternalReferences", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreatePostDealExternalReferencesRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/integrations/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/dealExternalReferences", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreatePatchDealExternalReferencesRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/integrations/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/dealExternalReferences", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteDealExternalReferencesRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/integrations/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/dealExternalReferences", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        private static ResponseClassifier _responseClassifier200401;
-        private static ResponseClassifier ResponseClassifier200401 => _responseClassifier200401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 401 });
-        private static ResponseClassifier _responseClassifier200204401;
-        private static ResponseClassifier ResponseClassifier200204401 => _responseClassifier200204401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204, 401 });
-        private static ResponseClassifier _responseClassifier204401;
-        private static ResponseClassifier ResponseClassifier204401 => _responseClassifier204401 ??= new StatusCodeClassifier(stackalloc ushort[] { 204, 401 });
     }
 }

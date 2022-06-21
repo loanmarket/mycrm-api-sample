@@ -6,24 +6,20 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
+using MyCrmSampleClient.MyCrmApi.Models;
 
 namespace MyCrmSampleClient.MyCrmApi
 {
     /// <summary> The ContactGroupRelationship service client. </summary>
     public partial class ContactGroupRelationshipClient
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _endpoint;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        internal ContactGroupRelationshipRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of ContactGroupRelationshipClient for mocking. </summary>
         protected ContactGroupRelationshipClient()
@@ -31,79 +27,27 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Initializes a new instance of ContactGroupRelationshipClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public ContactGroupRelationshipClient(Uri endpoint = null, MyCRMAPIClientOptions options = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
+        internal ContactGroupRelationshipClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            endpoint ??= new Uri("");
-            options ??= new MyCRMAPIClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _endpoint = endpoint;
+            RestClient = new ContactGroupRelationshipRestClient(clientDiagnostics, pipeline, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetBusinessesAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetBusinessesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetBusinesses");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetBusinesses");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBusinessesRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetBusinessesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -114,65 +58,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetBusinesses(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetBusinesses(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetBusinesses");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetBusinesses");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBusinessesRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetBusinesses(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -183,66 +76,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PostBusinessesAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostBusinessesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostBusinesses");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostBusinesses");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostBusinessesRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PostBusinessesAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -253,66 +95,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PostBusinesses(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostBusinesses(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostBusinesses");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostBusinesses");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostBusinessesRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.PostBusinesses(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -323,66 +114,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PatchBusinessesAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchBusinessesAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchBusinesses");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchBusinesses");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchBusinessesRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PatchBusinessesAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -393,66 +133,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PatchBusinesses(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchBusinesses(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchBusinesses");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchBusinesses");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchBusinessesRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.PatchBusinesses(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -463,50 +152,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> DeleteBusinessesAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteBusinessesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteBusinesses");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteBusinesses");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteBusinessesRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.DeleteBusinessesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -517,50 +170,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response DeleteBusinesses(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteBusinesses(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteBusinesses");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteBusinesses");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteBusinessesRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.DeleteBusinesses(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -571,65 +188,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetContactsAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetContacts");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetContacts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetContactsRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetContactsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -640,65 +206,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetContacts(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetContacts(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetContacts");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetContacts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetContactsRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetContacts(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -709,66 +224,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PostContactsAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostContactsAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostContacts");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostContacts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostContactsRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PostContactsAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -779,66 +243,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PostContacts(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostContacts(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostContacts");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostContacts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostContactsRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.PostContacts(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -849,66 +262,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PatchContactsAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchContactsAsync(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchContacts");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchContacts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchContactsRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PatchContactsAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -919,66 +281,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: [
-        ///     {
-        ///       type: string (required),
-        ///       id: string
-        ///     }
-        ///   ] (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PatchContacts(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsMultipleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchContacts(int id, RelationshipsMultipleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchContacts");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchContacts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchContactsRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.PatchContacts(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -989,50 +300,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> DeleteContactsAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteContactsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteContacts");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteContacts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteContactsRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.DeleteContactsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1043,50 +318,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response DeleteContacts(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteContacts(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteContacts");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteContacts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteContactsRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.DeleteContacts(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1097,63 +336,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string,
-        ///     id: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetAdvisersAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsSingleDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetAdvisers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetAdvisers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAdvisersRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetAdvisersAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1164,63 +354,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string,
-        ///     id: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetAdvisers(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsSingleDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetAdvisers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetAdvisers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAdvisersRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetAdvisers(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1231,64 +372,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PostAdvisersAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostAdvisersAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostAdvisers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostAdvisers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostAdvisersRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PostAdvisersAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1299,64 +391,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PostAdvisers(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostAdvisers(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostAdvisers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostAdvisers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostAdvisersRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.PostAdvisers(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1367,64 +410,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PatchAdvisersAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchAdvisersAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchAdvisers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchAdvisers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchAdvisersRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PatchAdvisersAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1435,64 +429,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PatchAdvisers(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchAdvisers(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchAdvisers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchAdvisers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchAdvisersRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.PatchAdvisers(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1503,50 +448,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> DeleteAdvisersAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteAdvisersAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteAdvisers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteAdvisers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteAdvisersRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.DeleteAdvisersAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1557,50 +466,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response DeleteAdvisers(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteAdvisers(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteAdvisers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteAdvisers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteAdvisersRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.DeleteAdvisers(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1611,63 +484,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string,
-        ///     id: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetReferrerOrganisationsAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsSingleDocument>> GetReferrerOrganisationsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrerOrganisations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrerOrganisations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetReferrerOrganisationsRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetReferrerOrganisationsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1678,63 +502,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string,
-        ///     id: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetReferrerOrganisations(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsSingleDocument> GetReferrerOrganisations(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrerOrganisations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrerOrganisations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetReferrerOrganisationsRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetReferrerOrganisations(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1745,64 +520,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PostReferrerOrganisationsAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostReferrerOrganisationsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrerOrganisations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrerOrganisations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostReferrerOrganisationsRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PostReferrerOrganisationsAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1813,64 +539,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PostReferrerOrganisations(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostReferrerOrganisations(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrerOrganisations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrerOrganisations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostReferrerOrganisationsRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.PostReferrerOrganisations(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1881,64 +558,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PatchReferrerOrganisationsAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchReferrerOrganisationsAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrerOrganisations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrerOrganisations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchReferrerOrganisationsRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PatchReferrerOrganisationsAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1949,64 +577,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PatchReferrerOrganisations(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchReferrerOrganisations(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrerOrganisations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrerOrganisations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchReferrerOrganisationsRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.PatchReferrerOrganisations(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -2017,50 +596,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> DeleteReferrerOrganisationsAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteReferrerOrganisationsAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrerOrganisations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrerOrganisations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteReferrerOrganisationsRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.DeleteReferrerOrganisationsAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2071,50 +614,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response DeleteReferrerOrganisations(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteReferrerOrganisations(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrerOrganisations");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrerOrganisations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteReferrerOrganisationsRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.DeleteReferrerOrganisations(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -2125,63 +632,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string,
-        ///     id: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetReferrersAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsSingleDocument>> GetReferrersAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetReferrersRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetReferrersAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2192,63 +650,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string,
-        ///     id: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetReferrers(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsSingleDocument> GetReferrers(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.GetReferrers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetReferrersRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.GetReferrers(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -2259,64 +668,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PostReferrersAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PostReferrersAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostReferrersRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PostReferrersAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2327,64 +687,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the primary contact group resource. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PostReferrers(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostReferrers(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PostReferrers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostReferrersRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.PostReferrers(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -2395,64 +706,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> PatchReferrersAsync(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> PatchReferrersAsync(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchReferrersRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.PatchReferrersAsync(id, body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2463,64 +725,15 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string
-        ///   },
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   data: {
-        ///     type: string (required),
-        ///     id: string
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response PatchReferrers(int id, RequestContent content, RequestContext context = null)
+        /// <param name="body"> The RelationshipsSingleDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PatchReferrers(int id, RelationshipsSingleDocument body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.PatchReferrers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePatchReferrersRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.PatchReferrers(id, body, cancellationToken);
             }
             catch (Exception e)
             {
@@ -2531,50 +744,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> DeleteReferrersAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteReferrersAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteReferrersRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.DeleteReferrersAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2585,50 +762,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response DeleteReferrers(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteReferrers(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelationshipClient.DeleteReferrers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteReferrersRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.DeleteReferrers(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -2636,332 +777,5 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
-
-        internal HttpMessage CreateGetBusinessesRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/businesses", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreatePostBusinessesRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/businesses", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreatePatchBusinessesRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/businesses", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteBusinessesRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/businesses", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetContactsRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/contacts", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreatePostContactsRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/contacts", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreatePatchContactsRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/contacts", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteContactsRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/contacts", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetAdvisersRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/adviser", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreatePostAdvisersRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/adviser", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreatePatchAdvisersRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/adviser", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteAdvisersRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/adviser", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetReferrerOrganisationsRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/referrerOrganisation", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreatePostReferrerOrganisationsRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/referrerOrganisation", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreatePatchReferrerOrganisationsRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/referrerOrganisation", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteReferrerOrganisationsRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/referrerOrganisation", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetReferrersRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/referrer", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        internal HttpMessage CreatePostReferrersRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/referrer", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreatePatchReferrersRequest(int id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/referrer", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            request.Headers.Add("Content-Type", "application/vnd.api+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteReferrersRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204401);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-groups/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/referrer", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        private static ResponseClassifier _responseClassifier200401;
-        private static ResponseClassifier ResponseClassifier200401 => _responseClassifier200401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 401 });
-        private static ResponseClassifier _responseClassifier200204401;
-        private static ResponseClassifier ResponseClassifier200204401 => _responseClassifier200204401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204, 401 });
-        private static ResponseClassifier _responseClassifier204401;
-        private static ResponseClassifier ResponseClassifier204401 => _responseClassifier204401 ??= new StatusCodeClassifier(stackalloc ushort[] { 204, 401 });
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi
 {
-    /// <summary> Client options for MyCRMAPI library clients. </summary>
+    /// <summary> Client options for MyCRMAPIClient. </summary>
     public partial class MyCRMAPIClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.Vv1;

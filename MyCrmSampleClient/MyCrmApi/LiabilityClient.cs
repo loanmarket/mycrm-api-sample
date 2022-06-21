@@ -6,24 +6,20 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
+using MyCrmSampleClient.MyCrmApi.Models;
 
 namespace MyCrmSampleClient.MyCrmApi
 {
     /// <summary> The Liability service client. </summary>
     public partial class LiabilityClient
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _endpoint;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        internal LiabilityRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of LiabilityClient for mocking. </summary>
         protected LiabilityClient()
@@ -31,138 +27,27 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Initializes a new instance of LiabilityClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public LiabilityClient(Uri endpoint = null, MyCRMAPIClientOptions options = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
+        internal LiabilityClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            endpoint ??= new Uri("");
-            options ??= new MyCRMAPIClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _endpoint = endpoint;
+            RestClient = new LiabilityRestClient(clientDiagnostics, pipeline, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Where `id` is the identifier of the liabilities. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: {
-        ///     type: string,
-        ///     id: string,
-        ///     type: &quot;liabilities&quot;,
-        ///     id: string,
-        ///     attributes: {
-        ///       created: string (ISO 8601 Format),
-        ///       repayment: number,
-        ///       value: number,
-        ///       limit: number,
-        ///       accountName: string,
-        ///       accountNumber: string,
-        ///       bsb: string,
-        ///       interestTaxDeductible: boolean,
-        ///       interestRate: number,
-        ///       isAccountDetailsKnown: boolean,
-        ///       liabilityTypeId: number,
-        ///       loanTerm: number,
-        ///       repaymentFrequency: string,
-        ///       liabilityCategory: string,
-        ///       liabilityCategoryId: number,
-        ///       liabilityType: string,
-        ///       mortgagePriority: string,
-        ///       updated: string (ISO 8601 Format),
-        ///       creditorName: string,
-        ///       loanRepaymentType: &quot;InterestOnly&quot; | &quot;PrincipalInterest&quot;
-        ///     },
-        ///     relationships: {
-        ///       linkedAsset: {
-        ///         links: {
-        ///           self: string,
-        ///           related: string
-        ///         },
-        ///         meta: Dictionary&lt;string, object&gt;,
-        ///         data: {
-        ///           type: string,
-        ///           id: string
-        ///         }
-        ///       },
-        ///       ownership: {
-        ///         links: {
-        ///           self: string,
-        ///           related: string
-        ///         },
-        ///         meta: Dictionary&lt;string, object&gt;,
-        ///         data: [ResourceIdentifier]
-        ///       }
-        ///     },
-        ///     links: {
-        ///       self: string
-        ///     },
-        ///     meta: Dictionary&lt;string, object&gt;
-        ///   },
-        ///   included: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetLiabilityAsync(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<LiabilityDocument>> GetAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("LiabilityClient.GetLiability");
+            using var scope = _clientDiagnostics.CreateScope("LiabilityClient.Get");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLiabilityRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await RestClient.GetAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -173,124 +58,14 @@ namespace MyCrmSampleClient.MyCrmApi
 
         /// <summary> Where `id` is the identifier of the liabilities. </summary>
         /// <param name="id"> The Integer to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   meta: Dictionary&lt;string, object&gt;,
-        ///   jsonApi: Dictionary&lt;string, object&gt;,
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   data: {
-        ///     type: string,
-        ///     id: string,
-        ///     type: &quot;liabilities&quot;,
-        ///     id: string,
-        ///     attributes: {
-        ///       created: string (ISO 8601 Format),
-        ///       repayment: number,
-        ///       value: number,
-        ///       limit: number,
-        ///       accountName: string,
-        ///       accountNumber: string,
-        ///       bsb: string,
-        ///       interestTaxDeductible: boolean,
-        ///       interestRate: number,
-        ///       isAccountDetailsKnown: boolean,
-        ///       liabilityTypeId: number,
-        ///       loanTerm: number,
-        ///       repaymentFrequency: string,
-        ///       liabilityCategory: string,
-        ///       liabilityCategoryId: number,
-        ///       liabilityType: string,
-        ///       mortgagePriority: string,
-        ///       updated: string (ISO 8601 Format),
-        ///       creditorName: string,
-        ///       loanRepaymentType: &quot;InterestOnly&quot; | &quot;PrincipalInterest&quot;
-        ///     },
-        ///     relationships: {
-        ///       linkedAsset: {
-        ///         links: {
-        ///           self: string,
-        ///           related: string
-        ///         },
-        ///         meta: Dictionary&lt;string, object&gt;,
-        ///         data: {
-        ///           type: string,
-        ///           id: string
-        ///         }
-        ///       },
-        ///       ownership: {
-        ///         links: {
-        ///           self: string,
-        ///           related: string
-        ///         },
-        ///         meta: Dictionary&lt;string, object&gt;,
-        ///         data: [ResourceIdentifier]
-        ///       }
-        ///     },
-        ///     links: {
-        ///       self: string
-        ///     },
-        ///     meta: Dictionary&lt;string, object&gt;
-        ///   },
-        ///   included: [
-        ///     {
-        ///       type: string,
-        ///       id: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   links: {
-        ///     self: string,
-        ///     related: string,
-        ///     describedby: string,
-        ///     first: string,
-        ///     last: string,
-        ///     prev: string,
-        ///     next: string
-        ///   },
-        ///   errors: [
-        ///     {
-        ///       id: string,
-        ///       links: {
-        ///         about: string,
-        ///         type: string
-        ///       },
-        ///       status: string,
-        ///       code: string,
-        ///       title: string,
-        ///       detail: string,
-        ///       source: {
-        ///         pointer: string,
-        ///         parameter: string,
-        ///         header: string
-        ///       },
-        ///       meta: Dictionary&lt;string, object&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetLiability(int id, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<LiabilityDocument> Get(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = ClientDiagnostics.CreateScope("LiabilityClient.GetLiability");
+            using var scope = _clientDiagnostics.CreateScope("LiabilityClient.Get");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLiabilityRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return RestClient.Get(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -298,22 +73,5 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
-
-        internal HttpMessage CreateGetLiabilityRequest(int id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200401);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/liabilities/", false);
-            uri.AppendPath(id, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        private static ResponseClassifier _responseClassifier200401;
-        private static ResponseClassifier ResponseClassifier200401 => _responseClassifier200401 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 401 });
     }
 }
