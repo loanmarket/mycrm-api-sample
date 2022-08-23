@@ -49,7 +49,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="sourceCategoryId"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
-        internal LeadAttributes(DateTimeOffset? dateOfBirth, LeadAttributesTitle? title, string firstName, string preferredName, string lastName, string email, string mobile, LeadAttributesGender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, LeadAttributesAddressType? addressType, string formattedAddress, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, int? sourceId, int? sourceCategoryId, string customStatusName, LeadAttributesDealStatus? dealStatus)
+        /// <param name="sendNotification"></param>
+        internal LeadAttributes(DateTimeOffset? dateOfBirth, LeadAttributesTitle? title, string firstName, string preferredName, string lastName, string email, string mobile, LeadAttributesGender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, LeadAttributesAddressType? addressType, string formattedAddress, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, int? sourceId, int? sourceCategoryId, string customStatusName, LeadAttributesDealStatus? dealStatus, bool? sendNotification)
         {
             DateOfBirth = dateOfBirth;
             Title = title;
@@ -82,6 +83,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             SourceCategoryId = sourceCategoryId;
             CustomStatusName = customStatusName;
             DealStatus = dealStatus;
+            SendNotification = sendNotification;
         }
 
         /// <summary> Gets or sets the date of birth. </summary>
@@ -146,5 +148,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string CustomStatusName { get; }
         /// <summary> Gets the deal status. </summary>
         public LeadAttributesDealStatus? DealStatus { get; }
+        /// <summary> Gets the send notification. </summary>
+        public bool? SendNotification { get; }
     }
 }

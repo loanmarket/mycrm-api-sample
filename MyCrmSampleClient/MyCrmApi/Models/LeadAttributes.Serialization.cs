@@ -379,6 +379,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<int?> sourceCategoryId = default;
             Optional<string> customStatusName = default;
             Optional<LeadAttributesDealStatus> dealStatus = default;
+            Optional<bool> sendNotification = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateOfBirth"))
@@ -691,8 +692,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     dealStatus = new LeadAttributesDealStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("sendNotification"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sendNotification = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new LeadAttributes(Optional.ToNullable(dateOfBirth), Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), streetAddress.Value, suburb.Value, state.Value, postCode.Value, country.Value, Optional.ToNullable(addressType), formattedAddress.Value, noteTitle.Value, noteDetails.Value, utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, sourceSystemUrl.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), customStatusName.Value, Optional.ToNullable(dealStatus));
+            return new LeadAttributes(Optional.ToNullable(dateOfBirth), Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), streetAddress.Value, suburb.Value, state.Value, postCode.Value, country.Value, Optional.ToNullable(addressType), formattedAddress.Value, noteTitle.Value, noteDetails.Value, utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, sourceSystemUrl.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), customStatusName.Value, Optional.ToNullable(dealStatus), Optional.ToNullable(sendNotification));
         }
     }
 }

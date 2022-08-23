@@ -45,7 +45,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="noteDetails"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
-        internal StructuredLeadAttributes(IList<LeadContact> contacts, IList<LeadAddress> addresses, IList<LeadAsset> assets, IList<LeadExpense> expenses, IList<LeadIncome> incomes, IList<LeadLiability> liabilities, IList<LeadEmployment> employments, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, int? sourceId, int? sourceCategoryId, string sourceSystemUrl, string noteTitle, string noteDetails, string customStatusName, StructuredLeadAttributesDealStatus? dealStatus)
+        /// <param name="sendNotification"></param>
+        internal StructuredLeadAttributes(IList<LeadContact> contacts, IList<LeadAddress> addresses, IList<LeadAsset> assets, IList<LeadExpense> expenses, IList<LeadIncome> incomes, IList<LeadLiability> liabilities, IList<LeadEmployment> employments, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, int? sourceId, int? sourceCategoryId, string sourceSystemUrl, string noteTitle, string noteDetails, string customStatusName, StructuredLeadAttributesDealStatus? dealStatus, bool? sendNotification)
         {
             Contacts = contacts;
             Addresses = addresses;
@@ -66,6 +67,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             NoteDetails = noteDetails;
             CustomStatusName = customStatusName;
             DealStatus = dealStatus;
+            SendNotification = sendNotification;
         }
 
         /// <summary> Gets or sets the contacts. </summary>
@@ -106,5 +108,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string CustomStatusName { get; }
         /// <summary> Gets the deal status. </summary>
         public StructuredLeadAttributesDealStatus? DealStatus { get; }
+        /// <summary> Gets the send notification. </summary>
+        public bool? SendNotification { get; }
     }
 }
