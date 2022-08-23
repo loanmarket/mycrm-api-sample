@@ -279,6 +279,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> noteDetails = default;
             Optional<string> customStatusName = default;
             Optional<StructuredLeadAttributesDealStatus> dealStatus = default;
+            Optional<bool> sendNotification = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contacts"))
@@ -506,8 +507,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     dealStatus = new StructuredLeadAttributesDealStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("sendNotification"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sendNotification = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new StructuredLeadAttributes(Optional.ToList(contacts), Optional.ToList(addresses), Optional.ToList(assets), Optional.ToList(expenses), Optional.ToList(incomes), Optional.ToList(liabilities), Optional.ToList(employments), utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceSystemUrl.Value, noteTitle.Value, noteDetails.Value, customStatusName.Value, Optional.ToNullable(dealStatus));
+            return new StructuredLeadAttributes(Optional.ToList(contacts), Optional.ToList(addresses), Optional.ToList(assets), Optional.ToList(expenses), Optional.ToList(incomes), Optional.ToList(liabilities), Optional.ToList(employments), utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceSystemUrl.Value, noteTitle.Value, noteDetails.Value, customStatusName.Value, Optional.ToNullable(dealStatus), Optional.ToNullable(sendNotification));
         }
     }
 }

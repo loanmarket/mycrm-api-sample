@@ -22647,6 +22647,7 @@
         "type": "object",
         "properties": {
           "type": {
+            "minLength": 1,
             "type": "string"
           },
           "id": {
@@ -23465,6 +23466,7 @@
         "type": "object",
         "properties": {
           "lid": {
+            "minLength": 1,
             "type": "string"
           }
         },
@@ -23569,6 +23571,7 @@
         "type": "object",
         "properties": {
           "lid": {
+            "minLength": 1,
             "type": "string"
           }
         },
@@ -23752,6 +23755,10 @@
               }
             ],
             "readOnly": true
+          },
+          "sendNotification": {
+            "type": "boolean",
+            "readOnly": true
           }
         }
       },
@@ -23860,6 +23867,7 @@
         "type": "object",
         "properties": {
           "lid": {
+            "minLength": 1,
             "type": "string"
           }
         },
@@ -24003,6 +24011,7 @@
         "type": "object",
         "properties": {
           "lid": {
+            "minLength": 1,
             "type": "string"
           }
         },
@@ -25985,9 +25994,11 @@
         "type": "object",
         "properties": {
           "type": {
+            "minLength": 1,
             "type": "string"
           },
           "id": {
+            "minLength": 1,
             "type": "string"
           }
         },
@@ -26373,6 +26384,10 @@
                 "$ref": "#/components/schemas/SystemStatus"
               }
             ],
+            "readOnly": true
+          },
+          "sendNotification": {
+            "type": "boolean",
             "readOnly": true
           }
         }
