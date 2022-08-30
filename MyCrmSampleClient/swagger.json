@@ -19704,6 +19704,12 @@
             "nullable": true,
             "readOnly": true
           },
+          "sourceAdditionalDetails": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "contactType": {
             "type": "string",
             "allOf": [
@@ -23742,6 +23748,13 @@
             "nullable": true,
             "writeOnly": true
           },
+          "sourceAdditionalDetails": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true
+          },
           "customStatusName": {
             "type": "string",
             "nullable": true,
@@ -26354,6 +26367,13 @@
           "sourceCategoryId": {
             "type": "integer",
             "format": "int32",
+            "nullable": true,
+            "writeOnly": true
+          },
+          "sourceAdditionalDetails": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
             "nullable": true,
             "writeOnly": true
           },

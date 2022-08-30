@@ -47,10 +47,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="sourceSystemUrl"></param>
         /// <param name="sourceId"></param>
         /// <param name="sourceCategoryId"></param>
+        /// <param name="sourceAdditionalDetails"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
         /// <param name="sendNotification"></param>
-        internal LeadAttributes(DateTimeOffset? dateOfBirth, LeadAttributesTitle? title, string firstName, string preferredName, string lastName, string email, string mobile, LeadAttributesGender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, LeadAttributesAddressType? addressType, string formattedAddress, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, int? sourceId, int? sourceCategoryId, string customStatusName, LeadAttributesDealStatus? dealStatus, bool? sendNotification)
+        internal LeadAttributes(DateTimeOffset? dateOfBirth, LeadAttributesTitle? title, string firstName, string preferredName, string lastName, string email, string mobile, LeadAttributesGender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, LeadAttributesAddressType? addressType, string formattedAddress, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, int? sourceId, int? sourceCategoryId, string sourceAdditionalDetails, string customStatusName, LeadAttributesDealStatus? dealStatus, bool? sendNotification)
         {
             DateOfBirth = dateOfBirth;
             Title = title;
@@ -81,6 +82,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             SourceSystemUrl = sourceSystemUrl;
             SourceId = sourceId;
             SourceCategoryId = sourceCategoryId;
+            SourceAdditionalDetails = sourceAdditionalDetails;
             CustomStatusName = customStatusName;
             DealStatus = dealStatus;
             SendNotification = sendNotification;
@@ -144,6 +146,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public int? SourceId { get; set; }
         /// <summary> Gets or sets the source category id. </summary>
         public int? SourceCategoryId { get; set; }
+        /// <summary> Gets or sets the source additional details. </summary>
+        public string SourceAdditionalDetails { get; set; }
         /// <summary> Gets the custom status name. </summary>
         public string CustomStatusName { get; }
         /// <summary> Gets the deal status. </summary>
