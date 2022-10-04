@@ -40,13 +40,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="utmContent"></param>
         /// <param name="sourceId"></param>
         /// <param name="sourceCategoryId"></param>
+        /// <param name="sourceAdditionalDetails"></param>
         /// <param name="sourceSystemUrl"></param>
         /// <param name="noteTitle"></param>
         /// <param name="noteDetails"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
         /// <param name="sendNotification"></param>
-        internal StructuredLeadAttributes(IList<LeadContact> contacts, IList<LeadAddress> addresses, IList<LeadAsset> assets, IList<LeadExpense> expenses, IList<LeadIncome> incomes, IList<LeadLiability> liabilities, IList<LeadEmployment> employments, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, int? sourceId, int? sourceCategoryId, string sourceSystemUrl, string noteTitle, string noteDetails, string customStatusName, StructuredLeadAttributesDealStatus? dealStatus, bool? sendNotification)
+        internal StructuredLeadAttributes(IList<LeadContact> contacts, IList<LeadAddress> addresses, IList<LeadAsset> assets, IList<LeadExpense> expenses, IList<LeadIncome> incomes, IList<LeadLiability> liabilities, IList<LeadEmployment> employments, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, int? sourceId, int? sourceCategoryId, string sourceAdditionalDetails, string sourceSystemUrl, string noteTitle, string noteDetails, string customStatusName, StructuredLeadAttributesDealStatus? dealStatus, bool? sendNotification)
         {
             Contacts = contacts;
             Addresses = addresses;
@@ -62,6 +63,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             UtmContent = utmContent;
             SourceId = sourceId;
             SourceCategoryId = sourceCategoryId;
+            SourceAdditionalDetails = sourceAdditionalDetails;
             SourceSystemUrl = sourceSystemUrl;
             NoteTitle = noteTitle;
             NoteDetails = noteDetails;
@@ -98,6 +100,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public int? SourceId { get; set; }
         /// <summary> Gets or sets the source category id. </summary>
         public int? SourceCategoryId { get; set; }
+        /// <summary> Gets or sets the source additional details. </summary>
+        public string SourceAdditionalDetails { get; set; }
         /// <summary> Gets or sets the source system url. </summary>
         public string SourceSystemUrl { get; set; }
         /// <summary> Gets or sets the note title. </summary>

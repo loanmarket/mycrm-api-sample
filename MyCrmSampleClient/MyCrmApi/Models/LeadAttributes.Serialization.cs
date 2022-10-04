@@ -343,6 +343,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("sourceCategoryId");
                 }
             }
+            if (Optional.IsDefined(SourceAdditionalDetails))
+            {
+                if (SourceAdditionalDetails != null)
+                {
+                    writer.WritePropertyName("sourceAdditionalDetails");
+                    writer.WriteStringValue(SourceAdditionalDetails);
+                }
+                else
+                {
+                    writer.WriteNull("sourceAdditionalDetails");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -377,6 +389,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> sourceSystemUrl = default;
             Optional<int?> sourceId = default;
             Optional<int?> sourceCategoryId = default;
+            Optional<string> sourceAdditionalDetails = default;
             Optional<string> customStatusName = default;
             Optional<LeadAttributesDealStatus> dealStatus = default;
             Optional<bool> sendNotification = default;
@@ -672,6 +685,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     sourceCategoryId = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("sourceAdditionalDetails"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sourceAdditionalDetails = null;
+                        continue;
+                    }
+                    sourceAdditionalDetails = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("customStatusName"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -703,7 +726,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new LeadAttributes(Optional.ToNullable(dateOfBirth), Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), streetAddress.Value, suburb.Value, state.Value, postCode.Value, country.Value, Optional.ToNullable(addressType), formattedAddress.Value, noteTitle.Value, noteDetails.Value, utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, sourceSystemUrl.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), customStatusName.Value, Optional.ToNullable(dealStatus), Optional.ToNullable(sendNotification));
+            return new LeadAttributes(Optional.ToNullable(dateOfBirth), Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), streetAddress.Value, suburb.Value, state.Value, postCode.Value, country.Value, Optional.ToNullable(addressType), formattedAddress.Value, noteTitle.Value, noteDetails.Value, utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, sourceSystemUrl.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceAdditionalDetails.Value, customStatusName.Value, Optional.ToNullable(dealStatus), Optional.ToNullable(sendNotification));
         }
     }
 }

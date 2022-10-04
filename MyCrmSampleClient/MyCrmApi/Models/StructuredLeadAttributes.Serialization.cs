@@ -219,6 +219,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("sourceCategoryId");
                 }
             }
+            if (Optional.IsDefined(SourceAdditionalDetails))
+            {
+                if (SourceAdditionalDetails != null)
+                {
+                    writer.WritePropertyName("sourceAdditionalDetails");
+                    writer.WriteStringValue(SourceAdditionalDetails);
+                }
+                else
+                {
+                    writer.WriteNull("sourceAdditionalDetails");
+                }
+            }
             if (Optional.IsDefined(SourceSystemUrl))
             {
                 if (SourceSystemUrl != null)
@@ -274,6 +286,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> utmContent = default;
             Optional<int?> sourceId = default;
             Optional<int?> sourceCategoryId = default;
+            Optional<string> sourceAdditionalDetails = default;
             Optional<string> sourceSystemUrl = default;
             Optional<string> noteTitle = default;
             Optional<string> noteDetails = default;
@@ -457,6 +470,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     sourceCategoryId = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("sourceAdditionalDetails"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sourceAdditionalDetails = null;
+                        continue;
+                    }
+                    sourceAdditionalDetails = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("sourceSystemUrl"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -518,7 +541,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new StructuredLeadAttributes(Optional.ToList(contacts), Optional.ToList(addresses), Optional.ToList(assets), Optional.ToList(expenses), Optional.ToList(incomes), Optional.ToList(liabilities), Optional.ToList(employments), utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceSystemUrl.Value, noteTitle.Value, noteDetails.Value, customStatusName.Value, Optional.ToNullable(dealStatus), Optional.ToNullable(sendNotification));
+            return new StructuredLeadAttributes(Optional.ToList(contacts), Optional.ToList(addresses), Optional.ToList(assets), Optional.ToList(expenses), Optional.ToList(incomes), Optional.ToList(liabilities), Optional.ToList(employments), utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceAdditionalDetails.Value, sourceSystemUrl.Value, noteTitle.Value, noteDetails.Value, customStatusName.Value, Optional.ToNullable(dealStatus), Optional.ToNullable(sendNotification));
         }
     }
 }

@@ -29,11 +29,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="utmContent"></param>
         /// <param name="utmCampaign"></param>
         /// <param name="categories"></param>
+        /// <param name="sourceAdditionalDetails"></param>
         /// <param name="contactType"></param>
         /// <param name="notes"></param>
         /// <param name="enquirySourceCategory"></param>
         /// <param name="enquirySource"></param>
-        internal ContactGroupAttributes(DateTimeOffset? updated, DateTimeOffset? created, string utmSource, string utmMedium, string utmTerm, string utmContent, string utmCampaign, IReadOnlyList<string> categories, ContactGroupAttributesContactType? contactType, string notes, string enquirySourceCategory, string enquirySource)
+        internal ContactGroupAttributes(DateTimeOffset? updated, DateTimeOffset? created, string utmSource, string utmMedium, string utmTerm, string utmContent, string utmCampaign, IReadOnlyList<string> categories, string sourceAdditionalDetails, ContactGroupAttributesContactType? contactType, string notes, string enquirySourceCategory, string enquirySource)
         {
             Updated = updated;
             Created = created;
@@ -43,6 +44,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             UtmContent = utmContent;
             UtmCampaign = utmCampaign;
             Categories = categories;
+            SourceAdditionalDetails = sourceAdditionalDetails;
             ContactType = contactType;
             Notes = notes;
             EnquirySourceCategory = enquirySourceCategory;
@@ -65,6 +67,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string UtmCampaign { get; set; }
         /// <summary> Gets the categories. </summary>
         public IReadOnlyList<string> Categories { get; }
+        /// <summary> Gets or sets the source additional details. </summary>
+        public string SourceAdditionalDetails { get; set; }
         /// <summary> Gets or sets the contact type. </summary>
         public ContactGroupAttributesContactType? ContactType { get; set; }
         /// <summary> Gets or sets the notes. </summary>

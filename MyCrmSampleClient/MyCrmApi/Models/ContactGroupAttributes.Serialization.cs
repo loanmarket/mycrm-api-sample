@@ -77,6 +77,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("utmCampaign");
                 }
             }
+            if (Optional.IsDefined(SourceAdditionalDetails))
+            {
+                if (SourceAdditionalDetails != null)
+                {
+                    writer.WritePropertyName("sourceAdditionalDetails");
+                    writer.WriteStringValue(SourceAdditionalDetails);
+                }
+                else
+                {
+                    writer.WriteNull("sourceAdditionalDetails");
+                }
+            }
             if (Optional.IsDefined(ContactType))
             {
                 writer.WritePropertyName("contactType");
@@ -107,6 +119,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> utmContent = default;
             Optional<string> utmCampaign = default;
             Optional<IReadOnlyList<string>> categories = default;
+            Optional<string> sourceAdditionalDetails = default;
             Optional<ContactGroupAttributesContactType> contactType = default;
             Optional<string> notes = default;
             Optional<string> enquirySourceCategory = default;
@@ -198,6 +211,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     categories = array;
                     continue;
                 }
+                if (property.NameEquals("sourceAdditionalDetails"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sourceAdditionalDetails = null;
+                        continue;
+                    }
+                    sourceAdditionalDetails = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("contactType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -239,7 +262,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ContactGroupAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), utmSource.Value, utmMedium.Value, utmTerm.Value, utmContent.Value, utmCampaign.Value, Optional.ToList(categories), Optional.ToNullable(contactType), notes.Value, enquirySourceCategory.Value, enquirySource.Value);
+            return new ContactGroupAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), utmSource.Value, utmMedium.Value, utmTerm.Value, utmContent.Value, utmCampaign.Value, Optional.ToList(categories), sourceAdditionalDetails.Value, Optional.ToNullable(contactType), notes.Value, enquirySourceCategory.Value, enquirySource.Value);
         }
     }
 }

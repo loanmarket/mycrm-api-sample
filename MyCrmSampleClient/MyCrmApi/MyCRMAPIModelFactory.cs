@@ -705,16 +705,17 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="utmContent"></param>
         /// <param name="utmCampaign"></param>
         /// <param name="categories"></param>
+        /// <param name="sourceAdditionalDetails"></param>
         /// <param name="contactType"></param>
         /// <param name="notes"></param>
         /// <param name="enquirySourceCategory"></param>
         /// <param name="enquirySource"></param>
         /// <returns> A new <see cref="Models.ContactGroupAttributes"/> instance for mocking. </returns>
-        public static ContactGroupAttributes ContactGroupAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, string utmSource = null, string utmMedium = null, string utmTerm = null, string utmContent = null, string utmCampaign = null, IEnumerable<string> categories = null, ContactGroupAttributesContactType? contactType = null, string notes = null, string enquirySourceCategory = null, string enquirySource = null)
+        public static ContactGroupAttributes ContactGroupAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, string utmSource = null, string utmMedium = null, string utmTerm = null, string utmContent = null, string utmCampaign = null, IEnumerable<string> categories = null, string sourceAdditionalDetails = null, ContactGroupAttributesContactType? contactType = null, string notes = null, string enquirySourceCategory = null, string enquirySource = null)
         {
             categories ??= new List<string>();
 
-            return new ContactGroupAttributes(updated, created, utmSource, utmMedium, utmTerm, utmContent, utmCampaign, categories?.ToList(), contactType, notes, enquirySourceCategory, enquirySource);
+            return new ContactGroupAttributes(updated, created, utmSource, utmMedium, utmTerm, utmContent, utmCampaign, categories?.ToList(), sourceAdditionalDetails, contactType, notes, enquirySourceCategory, enquirySource);
         }
 
         /// <summary> Initializes a new instance of ContactGroupDocument. </summary>
@@ -1489,13 +1490,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="sourceSystemUrl"></param>
         /// <param name="sourceId"></param>
         /// <param name="sourceCategoryId"></param>
+        /// <param name="sourceAdditionalDetails"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
         /// <param name="sendNotification"></param>
         /// <returns> A new <see cref="Models.LeadAttributes"/> instance for mocking. </returns>
-        public static LeadAttributes LeadAttributes(DateTimeOffset? dateOfBirth = null, LeadAttributesTitle? title = null, string firstName = null, string preferredName = null, string lastName = null, string email = null, string mobile = null, LeadAttributesGender? gender = null, bool? hasMarketingConsent = null, bool? isGuarantor = null, bool? isDependant = null, bool? isPrimary = null, string streetAddress = null, string suburb = null, string state = null, string postCode = null, string country = null, LeadAttributesAddressType? addressType = null, string formattedAddress = null, string noteTitle = null, string noteDetails = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, string sourceSystemUrl = null, int? sourceId = null, int? sourceCategoryId = null, string customStatusName = null, LeadAttributesDealStatus? dealStatus = null, bool? sendNotification = null)
+        public static LeadAttributes LeadAttributes(DateTimeOffset? dateOfBirth = null, LeadAttributesTitle? title = null, string firstName = null, string preferredName = null, string lastName = null, string email = null, string mobile = null, LeadAttributesGender? gender = null, bool? hasMarketingConsent = null, bool? isGuarantor = null, bool? isDependant = null, bool? isPrimary = null, string streetAddress = null, string suburb = null, string state = null, string postCode = null, string country = null, LeadAttributesAddressType? addressType = null, string formattedAddress = null, string noteTitle = null, string noteDetails = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, string sourceSystemUrl = null, int? sourceId = null, int? sourceCategoryId = null, string sourceAdditionalDetails = null, string customStatusName = null, LeadAttributesDealStatus? dealStatus = null, bool? sendNotification = null)
         {
-            return new LeadAttributes(dateOfBirth, title, firstName, preferredName, lastName, email, mobile, gender, hasMarketingConsent, isGuarantor, isDependant, isPrimary, streetAddress, suburb, state, postCode, country, addressType, formattedAddress, noteTitle, noteDetails, utmSource, utmMedium, utmCampaign, utmTerm, utmContent, sourceSystemUrl, sourceId, sourceCategoryId, customStatusName, dealStatus, sendNotification);
+            return new LeadAttributes(dateOfBirth, title, firstName, preferredName, lastName, email, mobile, gender, hasMarketingConsent, isGuarantor, isDependant, isPrimary, streetAddress, suburb, state, postCode, country, addressType, formattedAddress, noteTitle, noteDetails, utmSource, utmMedium, utmCampaign, utmTerm, utmContent, sourceSystemUrl, sourceId, sourceCategoryId, sourceAdditionalDetails, customStatusName, dealStatus, sendNotification);
         }
 
         /// <summary> Initializes a new instance of LiabilitiesDocument. </summary>
@@ -2002,6 +2004,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="utmContent"></param>
         /// <param name="sourceId"></param>
         /// <param name="sourceCategoryId"></param>
+        /// <param name="sourceAdditionalDetails"></param>
         /// <param name="sourceSystemUrl"></param>
         /// <param name="noteTitle"></param>
         /// <param name="noteDetails"></param>
@@ -2009,7 +2012,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="dealStatus"></param>
         /// <param name="sendNotification"></param>
         /// <returns> A new <see cref="Models.StructuredLeadAttributes"/> instance for mocking. </returns>
-        public static StructuredLeadAttributes StructuredLeadAttributes(IEnumerable<LeadContact> contacts = null, IEnumerable<LeadAddress> addresses = null, IEnumerable<LeadAsset> assets = null, IEnumerable<LeadExpense> expenses = null, IEnumerable<LeadIncome> incomes = null, IEnumerable<LeadLiability> liabilities = null, IEnumerable<LeadEmployment> employments = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, int? sourceId = null, int? sourceCategoryId = null, string sourceSystemUrl = null, string noteTitle = null, string noteDetails = null, string customStatusName = null, StructuredLeadAttributesDealStatus? dealStatus = null, bool? sendNotification = null)
+        public static StructuredLeadAttributes StructuredLeadAttributes(IEnumerable<LeadContact> contacts = null, IEnumerable<LeadAddress> addresses = null, IEnumerable<LeadAsset> assets = null, IEnumerable<LeadExpense> expenses = null, IEnumerable<LeadIncome> incomes = null, IEnumerable<LeadLiability> liabilities = null, IEnumerable<LeadEmployment> employments = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, int? sourceId = null, int? sourceCategoryId = null, string sourceAdditionalDetails = null, string sourceSystemUrl = null, string noteTitle = null, string noteDetails = null, string customStatusName = null, StructuredLeadAttributesDealStatus? dealStatus = null, bool? sendNotification = null)
         {
             contacts ??= new List<LeadContact>();
             addresses ??= new List<LeadAddress>();
@@ -2019,7 +2022,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             liabilities ??= new List<LeadLiability>();
             employments ??= new List<LeadEmployment>();
 
-            return new StructuredLeadAttributes(contacts?.ToList(), addresses?.ToList(), assets?.ToList(), expenses?.ToList(), incomes?.ToList(), liabilities?.ToList(), employments?.ToList(), utmSource, utmMedium, utmCampaign, utmTerm, utmContent, sourceId, sourceCategoryId, sourceSystemUrl, noteTitle, noteDetails, customStatusName, dealStatus, sendNotification);
+            return new StructuredLeadAttributes(contacts?.ToList(), addresses?.ToList(), assets?.ToList(), expenses?.ToList(), incomes?.ToList(), liabilities?.ToList(), employments?.ToList(), utmSource, utmMedium, utmCampaign, utmTerm, utmContent, sourceId, sourceCategoryId, sourceAdditionalDetails, sourceSystemUrl, noteTitle, noteDetails, customStatusName, dealStatus, sendNotification);
         }
 
         /// <summary> Initializes a new instance of AgreementHoldersDocument. </summary>
