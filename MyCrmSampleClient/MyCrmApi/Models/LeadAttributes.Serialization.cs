@@ -355,6 +355,40 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("sourceAdditionalDetails");
                 }
             }
+            if (Optional.IsDefined(ExternalReference))
+            {
+                if (ExternalReference != null)
+                {
+                    writer.WritePropertyName("externalReference");
+                    writer.WriteStringValue(ExternalReference);
+                }
+                else
+                {
+                    writer.WriteNull("externalReference");
+                }
+            }
+            if (Optional.IsDefined(ExternalIntegration))
+            {
+                if (ExternalIntegration != null)
+                {
+                    writer.WritePropertyName("externalIntegration");
+                    writer.WriteStringValue(ExternalIntegration);
+                }
+                else
+                {
+                    writer.WriteNull("externalIntegration");
+                }
+            }
+            if (Optional.IsDefined(ExternalIntegrationAllowCreate))
+            {
+                writer.WritePropertyName("externalIntegrationAllowCreate");
+                writer.WriteBooleanValue(ExternalIntegrationAllowCreate.Value);
+            }
+            if (Optional.IsDefined(SendNotification))
+            {
+                writer.WritePropertyName("sendNotification");
+                writer.WriteBooleanValue(SendNotification.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -390,9 +424,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<int?> sourceId = default;
             Optional<int?> sourceCategoryId = default;
             Optional<string> sourceAdditionalDetails = default;
+            Optional<string> externalReference = default;
+            Optional<string> externalIntegration = default;
+            Optional<bool> externalIntegrationAllowCreate = default;
+            Optional<bool> sendNotification = default;
             Optional<string> customStatusName = default;
             Optional<LeadAttributesDealStatus> dealStatus = default;
-            Optional<bool> sendNotification = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateOfBirth"))
@@ -695,6 +732,46 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     sourceAdditionalDetails = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("externalReference"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        externalReference = null;
+                        continue;
+                    }
+                    externalReference = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("externalIntegration"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        externalIntegration = null;
+                        continue;
+                    }
+                    externalIntegration = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("externalIntegrationAllowCreate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    externalIntegrationAllowCreate = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("sendNotification"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sendNotification = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("customStatusName"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -715,18 +792,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     dealStatus = new LeadAttributesDealStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sendNotification"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    sendNotification = property.Value.GetBoolean();
-                    continue;
-                }
             }
-            return new LeadAttributes(Optional.ToNullable(dateOfBirth), Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), streetAddress.Value, suburb.Value, state.Value, postCode.Value, country.Value, Optional.ToNullable(addressType), formattedAddress.Value, noteTitle.Value, noteDetails.Value, utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, sourceSystemUrl.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceAdditionalDetails.Value, customStatusName.Value, Optional.ToNullable(dealStatus), Optional.ToNullable(sendNotification));
+            return new LeadAttributes(Optional.ToNullable(dateOfBirth), Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), streetAddress.Value, suburb.Value, state.Value, postCode.Value, country.Value, Optional.ToNullable(addressType), formattedAddress.Value, noteTitle.Value, noteDetails.Value, utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, sourceSystemUrl.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceAdditionalDetails.Value, externalReference.Value, externalIntegration.Value, Optional.ToNullable(externalIntegrationAllowCreate), Optional.ToNullable(sendNotification), customStatusName.Value, Optional.ToNullable(dealStatus));
         }
     }
 }

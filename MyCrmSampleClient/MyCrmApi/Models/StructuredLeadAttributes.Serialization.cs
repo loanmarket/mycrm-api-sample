@@ -267,6 +267,40 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("noteDetails");
                 }
             }
+            if (Optional.IsDefined(ExternalReference))
+            {
+                if (ExternalReference != null)
+                {
+                    writer.WritePropertyName("externalReference");
+                    writer.WriteStringValue(ExternalReference);
+                }
+                else
+                {
+                    writer.WriteNull("externalReference");
+                }
+            }
+            if (Optional.IsDefined(ExternalIntegration))
+            {
+                if (ExternalIntegration != null)
+                {
+                    writer.WritePropertyName("externalIntegration");
+                    writer.WriteStringValue(ExternalIntegration);
+                }
+                else
+                {
+                    writer.WriteNull("externalIntegration");
+                }
+            }
+            if (Optional.IsDefined(ExternalIntegrationAllowCreate))
+            {
+                writer.WritePropertyName("externalIntegrationAllowCreate");
+                writer.WriteBooleanValue(ExternalIntegrationAllowCreate.Value);
+            }
+            if (Optional.IsDefined(SendNotification))
+            {
+                writer.WritePropertyName("sendNotification");
+                writer.WriteBooleanValue(SendNotification.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -290,9 +324,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> sourceSystemUrl = default;
             Optional<string> noteTitle = default;
             Optional<string> noteDetails = default;
+            Optional<string> externalReference = default;
+            Optional<string> externalIntegration = default;
+            Optional<bool> externalIntegrationAllowCreate = default;
+            Optional<bool> sendNotification = default;
             Optional<string> customStatusName = default;
             Optional<StructuredLeadAttributesDealStatus> dealStatus = default;
-            Optional<bool> sendNotification = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contacts"))
@@ -510,6 +547,46 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     noteDetails = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("externalReference"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        externalReference = null;
+                        continue;
+                    }
+                    externalReference = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("externalIntegration"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        externalIntegration = null;
+                        continue;
+                    }
+                    externalIntegration = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("externalIntegrationAllowCreate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    externalIntegrationAllowCreate = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("sendNotification"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sendNotification = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("customStatusName"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -530,18 +607,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     dealStatus = new StructuredLeadAttributesDealStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sendNotification"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    sendNotification = property.Value.GetBoolean();
-                    continue;
-                }
             }
-            return new StructuredLeadAttributes(Optional.ToList(contacts), Optional.ToList(addresses), Optional.ToList(assets), Optional.ToList(expenses), Optional.ToList(incomes), Optional.ToList(liabilities), Optional.ToList(employments), utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceAdditionalDetails.Value, sourceSystemUrl.Value, noteTitle.Value, noteDetails.Value, customStatusName.Value, Optional.ToNullable(dealStatus), Optional.ToNullable(sendNotification));
+            return new StructuredLeadAttributes(Optional.ToList(contacts), Optional.ToList(addresses), Optional.ToList(assets), Optional.ToList(expenses), Optional.ToList(incomes), Optional.ToList(liabilities), Optional.ToList(employments), utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceAdditionalDetails.Value, sourceSystemUrl.Value, noteTitle.Value, noteDetails.Value, externalReference.Value, externalIntegration.Value, Optional.ToNullable(externalIntegrationAllowCreate), Optional.ToNullable(sendNotification), customStatusName.Value, Optional.ToNullable(dealStatus));
         }
     }
 }
