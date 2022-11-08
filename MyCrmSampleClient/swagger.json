@@ -23755,6 +23755,28 @@
             "nullable": true,
             "writeOnly": true
           },
+          "externalReference": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true
+          },
+          "externalIntegration": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true
+          },
+          "externalIntegrationAllowCreate": {
+            "type": "boolean",
+            "writeOnly": true
+          },
+          "sendNotification": {
+            "type": "boolean",
+            "writeOnly": true
+          },
           "customStatusName": {
             "type": "string",
             "nullable": true,
@@ -23767,10 +23789,6 @@
                 "$ref": "#/components/schemas/SystemStatus"
               }
             ],
-            "readOnly": true
-          },
-          "sendNotification": {
-            "type": "boolean",
             "readOnly": true
           }
         }
@@ -26392,6 +26410,28 @@
             "nullable": true,
             "writeOnly": true
           },
+          "externalReference": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true
+          },
+          "externalIntegration": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true
+          },
+          "externalIntegrationAllowCreate": {
+            "type": "boolean",
+            "writeOnly": true
+          },
+          "sendNotification": {
+            "type": "boolean",
+            "writeOnly": true
+          },
           "customStatusName": {
             "type": "string",
             "nullable": true,
@@ -26404,10 +26444,6 @@
                 "$ref": "#/components/schemas/SystemStatus"
               }
             ],
-            "readOnly": true
-          },
-          "sendNotification": {
-            "type": "boolean",
             "readOnly": true
           }
         }

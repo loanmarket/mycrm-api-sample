@@ -48,10 +48,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="sourceId"></param>
         /// <param name="sourceCategoryId"></param>
         /// <param name="sourceAdditionalDetails"></param>
+        /// <param name="externalReference"></param>
+        /// <param name="externalIntegration"></param>
+        /// <param name="externalIntegrationAllowCreate"></param>
+        /// <param name="sendNotification"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
-        /// <param name="sendNotification"></param>
-        internal LeadAttributes(DateTimeOffset? dateOfBirth, LeadAttributesTitle? title, string firstName, string preferredName, string lastName, string email, string mobile, LeadAttributesGender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, LeadAttributesAddressType? addressType, string formattedAddress, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, int? sourceId, int? sourceCategoryId, string sourceAdditionalDetails, string customStatusName, LeadAttributesDealStatus? dealStatus, bool? sendNotification)
+        internal LeadAttributes(DateTimeOffset? dateOfBirth, LeadAttributesTitle? title, string firstName, string preferredName, string lastName, string email, string mobile, LeadAttributesGender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, LeadAttributesAddressType? addressType, string formattedAddress, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, int? sourceId, int? sourceCategoryId, string sourceAdditionalDetails, string externalReference, string externalIntegration, bool? externalIntegrationAllowCreate, bool? sendNotification, string customStatusName, LeadAttributesDealStatus? dealStatus)
         {
             DateOfBirth = dateOfBirth;
             Title = title;
@@ -83,9 +86,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             SourceId = sourceId;
             SourceCategoryId = sourceCategoryId;
             SourceAdditionalDetails = sourceAdditionalDetails;
+            ExternalReference = externalReference;
+            ExternalIntegration = externalIntegration;
+            ExternalIntegrationAllowCreate = externalIntegrationAllowCreate;
+            SendNotification = sendNotification;
             CustomStatusName = customStatusName;
             DealStatus = dealStatus;
-            SendNotification = sendNotification;
         }
 
         /// <summary> Gets or sets the date of birth. </summary>
@@ -148,11 +154,17 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public int? SourceCategoryId { get; set; }
         /// <summary> Gets or sets the source additional details. </summary>
         public string SourceAdditionalDetails { get; set; }
+        /// <summary> Gets or sets the external reference. </summary>
+        public string ExternalReference { get; set; }
+        /// <summary> Gets or sets the external integration. </summary>
+        public string ExternalIntegration { get; set; }
+        /// <summary> Gets or sets the external integration allow create. </summary>
+        public bool? ExternalIntegrationAllowCreate { get; set; }
+        /// <summary> Gets or sets the send notification. </summary>
+        public bool? SendNotification { get; set; }
         /// <summary> Gets the custom status name. </summary>
         public string CustomStatusName { get; }
         /// <summary> Gets the deal status. </summary>
         public LeadAttributesDealStatus? DealStatus { get; }
-        /// <summary> Gets the send notification. </summary>
-        public bool? SendNotification { get; }
     }
 }
