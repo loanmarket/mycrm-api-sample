@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "49070bcf-94be-434a-be89-0986d1639c2f",
+		"_postman_id": "30d4573f-acc2-46dd-9976-1ce8c036ff30",
 		"name": "MyCRM Leads API Sample",
 		"description": "To use this sample it is necessary to populate the `Variables` section with the values supplied to you by Loan Market Group. This will enable the various samples to interact with your broker account in MyCRM. \n\n**NOTE:** If you are looking to replicate the behaviour of these samples, be sure to check the `Pre-request Script` section where the authorization flow is handled.",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "813965"
 	},
 	"item": [
 		{
@@ -29,7 +30,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"type\": \"leads\",\n        \"attributes\": {\n             \"title\": \"Mr\",\n            \"firstName\": \"Fred\",\n            \"preferredName\": null,\n            \"lastName\": \"Flintstone\",\n            \"email\": \"fred@bedrock.com\",\n            \"mobile\": \"0412345678\",\n            \"dateOfBirth\": \"2000-07-29\",\n            \"gender\": \"Male\",\n            \"hasMarketingConsent\": true,\n            \"isGuarantor\": false,\n            \"isDependant\": false,\n            \"isPrimary\": true,\n\n            \"streetAddress\": \"111 Eagle St\",\n            \"suburb\": \"Brisbane\",\n            \"state\": \"Queensland\",\n            \"postCode\": \"4000\",\n            \"country\": \"Australia\",\n            \"addressType\": \"Current\",\n\n            \"noteTitle\": \"About the lead\",\n            \"noteDetails\": \"This is why it happened\",\n\n            \"utmSource\": \"facebook\",\n            \"utmMedium\": \"social\",\n            \"utmCampaign\": \"mycrm-fb\",\n            \"utmTerm\": \"investment\",\n            \"utmContent\": \"lm\",\n            \n            \"sourceSystemUrl\": \"https://www.loanmarket.com.au/brokers/direct/our-team/michael-atherton\"\n        }\n    }\n}",
+					"raw": "{\n    \"data\": {\n        \"type\": \"leads\",\n        \"attributes\": {\n             \"title\": \"Mr\",\n            \"firstName\": \"Fred\",\n            \"preferredName\": null,\n            \"lastName\": \"Flintstone\",\n            \"email\": \"fred@bedrock.com\",\n            \"mobile\": \"0412345678\",\n            \"dateOfBirth\": \"2000-07-29\",\n            \"gender\": \"Male\",\n            \"hasMarketingConsent\": true,\n            \"isGuarantor\": false,\n            \"isDependant\": false,\n            \"isPrimary\": true,\n\n            \"streetAddress\": \"111 Eagle St\",\n            \"suburb\": \"Brisbane\",\n            \"state\": \"Queensland\",\n            \"postCode\": \"4000\",\n            \"country\": \"Australia\",\n            \"addressType\": \"Current\",\n\n            \"noteTitle\": \"About the lead\",\n            \"noteDetails\": \"This is why it happened\",\n\n            \"utmSource\": \"facebook\",\n            \"utmMedium\": \"social\",\n            \"utmCampaign\": \"mycrm-fb\",\n            \"utmTerm\": \"investment\",\n            \"utmContent\": \"lm\",\n            \n            \"sourceSystemUrl\": \"https://www.loanmarket.com.au/brokers/direct/our-team/michael-atherton\",\n\n            \"externalReference\": \"ABC1234\",\n            \"externalIntegration\": \"MyIntegrationSource\"\n        }\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
