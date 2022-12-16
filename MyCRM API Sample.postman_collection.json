@@ -290,6 +290,43 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Notification of an Adviser update",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\": \"updated\",\n  \"resource\": {\n    \"type\": \"advisers\",\n    \"id\": 1123,\n    \"url\": \"https://api.mycrm/jsonapi/advisers/1123\"\n  },\n  \"webhook\": {\n    \"name\": \"Example Adviser Webhook\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://httpstat.us/200?message=Replace with your webhook endpoint",
+							"protocol": "https",
+							"host": [
+								"httpstat",
+								"us"
+							],
+							"path": [
+								"200"
+							],
+							"query": [
+								{
+									"key": "message",
+									"value": "Replace with your webhook endpoint"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1345,6 +1382,43 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Notification of a Contact update",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\": \"updated\",\n  \"resource\": {\n    \"type\": \"contacts\",\n    \"id\": 1123,\n    \"url\": \"https://api.mycrm/jsonapi/contacts/1123\"\n  },\n  \"webhook\": {\n    \"name\": \"Example Contact Webhook\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://httpstat.us/200?message=Replace with your webhook endpoint",
+							"protocol": "https",
+							"host": [
+								"httpstat",
+								"us"
+							],
+							"path": [
+								"200"
+							],
+							"query": [
+								{
+									"key": "message",
+									"value": "Replace with your webhook endpoint"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1649,6 +1723,43 @@
 								{
 									"key": "id",
 									"value": "{{lastDealId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notification of a Deal update",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\": \"updated\",\n  \"resource\": {\n    \"type\": \"deals\",\n    \"id\": 1123,\n    \"url\": \"https://api.mycrm/jsonapi/deals/1123\"\n  },\n  \"webhook\": {\n    \"name\": \"Example Deal Webhook\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://httpstat.us/200?message=Replace with your webhook endpoint",
+							"protocol": "https",
+							"host": [
+								"httpstat",
+								"us"
+							],
+							"path": [
+								"200"
+							],
+							"query": [
+								{
+									"key": "message",
+									"value": "Replace with your webhook endpoint"
 								}
 							]
 						}
