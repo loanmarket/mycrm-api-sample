@@ -290,6 +290,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Notification of an Adviser update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\": \"updated\",\n  \"resource\": {\n    \"type\": \"advisers\",\n    \"id\": 1123,\n    \"url\": \"https://api.mycrm/jsonapi/advisers/1123\"\n  },\n  \"webhook\": {\n    \"name\": \"Example Adviser Webhook\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://path.to/your/webhook/endpoint",
+							"protocol": "https",
+							"host": [
+								"path",
+								"to"
+							],
+							"path": [
+								"your",
+								"webhook",
+								"endpoint"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1345,6 +1375,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Notification of a Contact update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\": \"updated\",\n  \"resource\": {\n    \"type\": \"contacts\",\n    \"id\": 1123,\n    \"url\": \"https://api.mycrm/jsonapi/contacts/1123\"\n  },\n  \"webhook\": {\n    \"name\": \"Example Contact Webhook\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://path.to/your/webhook/endpoint",
+							"protocol": "https",
+							"host": [
+								"path",
+								"to"
+							],
+							"path": [
+								"your",
+								"webhook",
+								"endpoint"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1650,6 +1710,36 @@
 									"key": "id",
 									"value": "{{lastDealId}}"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notification of a Deal update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\": \"updated\",\n  \"resource\": {\n    \"type\": \"deals\",\n    \"id\": 1123,\n    \"url\": \"https://api.mycrm/jsonapi/deals/1123\"\n  },\n  \"webhook\": {\n    \"name\": \"Example Deal Webhook\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://path.to/your/webhook/endpoint",
+							"protocol": "https",
+							"host": [
+								"path",
+								"to"
+							],
+							"path": [
+								"your",
+								"webhook",
+								"endpoint"
 							]
 						}
 					},
