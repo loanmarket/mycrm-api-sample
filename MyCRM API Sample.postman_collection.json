@@ -306,16 +306,20 @@
 							}
 						},
 						"url": {
-							"raw": "https://path.to/your/webhook/endpoint",
+							"raw": "https://httpstat.us/200?message=Replace with your webhook endpoint",
 							"protocol": "https",
 							"host": [
-								"path",
-								"to"
+								"httpstat",
+								"us"
 							],
 							"path": [
-								"your",
-								"webhook",
-								"endpoint"
+								"200"
+							],
+							"query": [
+								{
+									"key": "message",
+									"value": "Replace with your webhook endpoint"
+								}
 							]
 						}
 					},
@@ -1379,6 +1383,9 @@
 				{
 					"name": "Notification of a Contact update",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -1391,16 +1398,20 @@
 							}
 						},
 						"url": {
-							"raw": "https://path.to/your/webhook/endpoint",
+							"raw": "https://httpstat.us/200?message=Replace with your webhook endpoint",
 							"protocol": "https",
 							"host": [
-								"path",
-								"to"
+								"httpstat",
+								"us"
 							],
 							"path": [
-								"your",
-								"webhook",
-								"endpoint"
+								"200"
+							],
+							"query": [
+								{
+									"key": "message",
+									"value": "Replace with your webhook endpoint"
+								}
 							]
 						}
 					},
@@ -1730,16 +1741,20 @@
 							}
 						},
 						"url": {
-							"raw": "https://path.to/your/webhook/endpoint",
+							"raw": "https://httpstat.us/200?message=Replace with your webhook endpoint",
 							"protocol": "https",
 							"host": [
-								"path",
-								"to"
+								"httpstat",
+								"us"
 							],
 							"path": [
-								"your",
-								"webhook",
-								"endpoint"
+								"200"
+							],
+							"query": [
+								{
+									"key": "message",
+									"value": "Replace with your webhook endpoint"
+								}
 							]
 						}
 					},
