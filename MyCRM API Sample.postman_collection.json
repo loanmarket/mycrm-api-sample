@@ -294,6 +294,9 @@
 				{
 					"name": "Notification of an Adviser update",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -1729,6 +1732,9 @@
 				{
 					"name": "Notification of a Deal update",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
