@@ -1967,6 +1967,47 @@
 			"name": "Deal External Refs",
 			"item": [
 				{
+					"name": "Filtering",
+					"item": [
+						{
+							"name": "Get Deals by External Ref",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/jsonapi/deal-external-references?page[size]=100&sort=-id&filter=and(equals(integration.name,'MyIntegrationSource'),equals(externalReference,'ABC1234'))&include=deal",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"jsonapi",
+										"deal-external-references"
+									],
+									"query": [
+										{
+											"key": "page[size]",
+											"value": "100"
+										},
+										{
+											"key": "sort",
+											"value": "-id"
+										},
+										{
+											"key": "filter",
+											"value": "and(equals(integration.name,'MyIntegrationSource'),equals(externalReference,'ABC1234'))"
+										},
+										{
+											"key": "include",
+											"value": "deal"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Get Deal External Refs",
 					"request": {
 						"method": "GET",
@@ -2063,6 +2104,47 @@
 		{
 			"name": "Contact External Refs",
 			"item": [
+				{
+					"name": "Filtering",
+					"item": [
+						{
+							"name": "Get Contacts by External Ref",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PublicAPI_Url}}/jsonapi/contact-external-references?page[size]=100&sort=-id&filter=and(equals(integration.name,'Testing'),equals(externalReference,'freddy{{lastIntegrationId}}'))&include=contact",
+									"host": [
+										"{{PublicAPI_Url}}"
+									],
+									"path": [
+										"jsonapi",
+										"contact-external-references"
+									],
+									"query": [
+										{
+											"key": "page[size]",
+											"value": "100"
+										},
+										{
+											"key": "sort",
+											"value": "-id"
+										},
+										{
+											"key": "filter",
+											"value": "and(equals(integration.name,'Testing'),equals(externalReference,'freddy{{lastIntegrationId}}'))"
+										},
+										{
+											"key": "include",
+											"value": "contact"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
 				{
 					"name": "Get Contact External Refs",
 					"request": {
