@@ -22,7 +22,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="expense"></param>
         /// <param name="liability"></param>
         /// <param name="income"></param>
-        internal OwnerRelationships(RelationshipsSingleDocument contact, RelationshipsSingleDocument business, RelationshipsSingleDocument asset, RelationshipsSingleDocument expense, RelationshipsSingleDocument liability, RelationshipsSingleDocument income)
+        internal OwnerRelationships(RelationshipsSingleDocument contact, RelationshipsSingleDocument business, OwnerRelationshipsAsset asset, OwnerRelationshipsExpense expense, OwnerRelationshipsLiability liability, OwnerRelationshipsIncome income)
         {
             Contact = contact;
             Business = business;
@@ -37,12 +37,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Gets or sets the business. </summary>
         public RelationshipsSingleDocument Business { get; set; }
         /// <summary> Gets or sets the asset. </summary>
-        public RelationshipsSingleDocument Asset { get; set; }
+        public OwnerRelationshipsAsset Asset { get; set; }
         /// <summary> Gets or sets the expense. </summary>
-        public RelationshipsSingleDocument Expense { get; set; }
+        public OwnerRelationshipsExpense Expense { get; set; }
         /// <summary> Gets or sets the liability. </summary>
-        public RelationshipsSingleDocument Liability { get; set; }
+        public OwnerRelationshipsLiability Liability { get; set; }
         /// <summary> Gets or sets the income. </summary>
-        public RelationshipsSingleDocument Income { get; set; }
+        public OwnerRelationshipsIncome Income { get; set; }
     }
 }

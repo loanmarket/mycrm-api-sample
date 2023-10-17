@@ -17,12 +17,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Initializes a new instance of ExpenseTypeRelationships. </summary>
         /// <param name="expenseCategory"></param>
-        internal ExpenseTypeRelationships(RelationshipsSingleDocument expenseCategory)
+        internal ExpenseTypeRelationships(ExpenseTypeRelationshipsExpenseCategory expenseCategory)
         {
             ExpenseCategory = expenseCategory;
         }
 
         /// <summary> Gets or sets the expense category. </summary>
-        public RelationshipsSingleDocument ExpenseCategory { get; set; }
+        public ExpenseTypeRelationshipsExpenseCategory ExpenseCategory { get; set; }
     }
 }

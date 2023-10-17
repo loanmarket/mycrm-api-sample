@@ -11,16 +11,8 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    public partial class IntegrationDocument : IUtf8JsonSerializable
+    public partial class IntegrationDocument
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("data");
-            writer.WriteObjectValue(Data);
-            writer.WriteEndObject();
-        }
-
         internal static IntegrationDocument DeserializeIntegrationDocument(JsonElement element)
         {
             Optional<IReadOnlyDictionary<string, object>> meta = default;

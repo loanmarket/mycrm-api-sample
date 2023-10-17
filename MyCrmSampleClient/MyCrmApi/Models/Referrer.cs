@@ -17,29 +17,29 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public Referrer()
         {
             Meta = new ChangeTrackingDictionary<string, object>();
-            Type = "referrer";
+            Type = "referrers";
         }
 
         /// <summary> Initializes a new instance of Referrer. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="attributes"></param>
-        /// <param name="relationships"></param>
+        /// <param name="relationships"> Any object. </param>
         /// <param name="links"></param>
         /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
-        internal Referrer(string type, string id, ReferrerAttributes attributes, ReferrerRelationships relationships, ReferrerLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
+        internal Referrer(string type, string id, ReferrerAttributes attributes, object relationships, ReferrerLinks links, IReadOnlyDictionary<string, object> meta) : base(type, id)
         {
             Attributes = attributes;
             Relationships = relationships;
             Links = links;
             Meta = meta;
-            Type = type ?? "referrer";
+            Type = type ?? "referrers";
         }
 
         /// <summary> Gets or sets the attributes. </summary>
         public ReferrerAttributes Attributes { get; set; }
-        /// <summary> Gets or sets the relationships. </summary>
-        public ReferrerRelationships Relationships { get; set; }
+        /// <summary> Any object. </summary>
+        public object Relationships { get; set; }
         /// <summary> Gets the links. </summary>
         public ReferrerLinks Links { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>

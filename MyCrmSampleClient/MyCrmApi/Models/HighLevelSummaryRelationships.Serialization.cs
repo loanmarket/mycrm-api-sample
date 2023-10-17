@@ -25,7 +25,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static HighLevelSummaryRelationships DeserializeHighLevelSummaryRelationships(JsonElement element)
         {
-            Optional<RelationshipsSingleDocument> dealScenario = default;
+            Optional<HighLevelSummaryRelationshipsDealScenario> dealScenario = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dealScenario"))
@@ -35,7 +35,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dealScenario = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    dealScenario = HighLevelSummaryRelationshipsDealScenario.DeserializeHighLevelSummaryRelationshipsDealScenario(property.Value);
                     continue;
                 }
             }

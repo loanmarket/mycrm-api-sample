@@ -59,7 +59,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<double?> proposedLoanAmount = default;
             Optional<double?> securityAmount = default;
             Optional<string> summaryNotes = default;
-            Optional<string> loanPurpose = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("proposedLoanAmount"))
@@ -92,18 +91,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     summaryNotes = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("loanPurpose"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        loanPurpose = null;
-                        continue;
-                    }
-                    loanPurpose = property.Value.GetString();
-                    continue;
-                }
             }
-            return new HighLevelSummaryAttributes(Optional.ToNullable(proposedLoanAmount), Optional.ToNullable(securityAmount), summaryNotes.Value, loanPurpose.Value);
+            return new HighLevelSummaryAttributes(Optional.ToNullable(proposedLoanAmount), Optional.ToNullable(securityAmount), summaryNotes.Value);
         }
     }
 }

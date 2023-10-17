@@ -59,6 +59,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     case "deal-structure-important-dates": return DealStructureImportantDate.DeserializeDealStructureImportantDate(element);
                     case "deal-structures": return DealStructure.DeserializeDealStructure(element);
                     case "deals": return Deal.DeserializeDeal(element);
+                    case "enquiry-source": return EnquirySource.DeserializeEnquirySource(element);
                     case "expense-categories": return ExpenseCategory.DeserializeExpenseCategory(element);
                     case "expense-types": return ExpenseType.DeserializeExpenseType(element);
                     case "expenses": return Expense.DeserializeExpense(element);
@@ -77,8 +78,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     case "organisations": return Organisation.DeserializeOrganisation(element);
                     case "owners": return Owner.DeserializeOwner(element);
                     case "property-types": return PropertyType.DeserializePropertyType(element);
-                    case "referrer": return Referrer.DeserializeReferrer(element);
+                    case "referrer-members": return ReferrerMember.DeserializeReferrerMember(element);
                     case "referrer-organisation": return ReferrerOrganisation.DeserializeReferrerOrganisation(element);
+                    case "referrers": return Referrer.DeserializeReferrer(element);
                     case "structured-leads": return StructuredLead.DeserializeStructuredLead(element);
                     case "advisers": return Adviser.DeserializeAdviser(element);
                 }

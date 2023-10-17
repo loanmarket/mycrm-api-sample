@@ -25,7 +25,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static IncomeTypeRelationships DeserializeIncomeTypeRelationships(JsonElement element)
         {
-            Optional<RelationshipsSingleDocument> incomeCategory = default;
+            Optional<IncomeTypeRelationshipsIncomeCategory> incomeCategory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("incomeCategory"))
@@ -35,7 +35,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    incomeCategory = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    incomeCategory = IncomeTypeRelationshipsIncomeCategory.DeserializeIncomeTypeRelationshipsIncomeCategory(property.Value);
                     continue;
                 }
             }

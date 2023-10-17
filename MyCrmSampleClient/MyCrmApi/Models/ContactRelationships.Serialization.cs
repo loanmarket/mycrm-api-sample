@@ -54,8 +54,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<RelationshipsMultipleDocument> ownership = default;
             Optional<RelationshipsMultipleDocument> externalReferences = default;
             Optional<RelationshipsMultipleDocument> deals = default;
-            Optional<RelationshipsMultipleDocument> employments = default;
-            Optional<RelationshipsMultipleDocument> contactAddress = default;
+            Optional<ContactRelationshipsEmployments> employments = default;
+            Optional<ContactRelationshipsContactAddress> contactAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contactGroup"))
@@ -105,7 +105,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    employments = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
+                    employments = ContactRelationshipsEmployments.DeserializeContactRelationshipsEmployments(property.Value);
                     continue;
                 }
                 if (property.NameEquals("contactAddress"))
@@ -115,7 +115,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    contactAddress = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
+                    contactAddress = ContactRelationshipsContactAddress.DeserializeContactRelationshipsContactAddress(property.Value);
                     continue;
                 }
             }

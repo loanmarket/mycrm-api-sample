@@ -36,67 +36,6 @@ namespace MyCrmSampleClient.MyCrmApi
             _endpoint = endpoint ?? new Uri("");
         }
 
-        internal HttpMessage CreateGetContactsRequest(int id)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/contact-external-references/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/contact", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        /// <summary> Where `id` is the identifier of the contact external reference. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetContactsRequest(id);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ContactsDocument value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ContactsDocument.DeserializeContactsDocument(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 401:
-                    return Response.FromValue((ContactsDocument)null, message.Response);
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the contact external reference. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetContactsRequest(id);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ContactsDocument value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ContactsDocument.DeserializeContactsDocument(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 401:
-                    return Response.FromValue((ContactsDocument)null, message.Response);
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateGetIntegrationsRequest(int id)
         {
             var message = _pipeline.CreateMessage();
@@ -153,6 +92,67 @@ namespace MyCrmSampleClient.MyCrmApi
                     }
                 case 401:
                     return Response.FromValue((IntegrationsDocument)null, message.Response);
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetContactsRequest(int id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/contact-external-references/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/contact", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        /// <summary> Where `id` is the identifier of the contact external reference. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetContactsRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContactsDocument value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ContactsDocument.DeserializeContactsDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((ContactsDocument)null, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the contact external reference. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetContactsRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContactsDocument value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ContactsDocument.DeserializeContactsDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((ContactsDocument)null, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }

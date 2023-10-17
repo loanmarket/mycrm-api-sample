@@ -17,12 +17,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Initializes a new instance of IncomeTypeRelationships. </summary>
         /// <param name="incomeCategory"></param>
-        internal IncomeTypeRelationships(RelationshipsSingleDocument incomeCategory)
+        internal IncomeTypeRelationships(IncomeTypeRelationshipsIncomeCategory incomeCategory)
         {
             IncomeCategory = incomeCategory;
         }
 
         /// <summary> Gets or sets the income category. </summary>
-        public RelationshipsSingleDocument IncomeCategory { get; set; }
+        public IncomeTypeRelationshipsIncomeCategory IncomeCategory { get; set; }
     }
 }

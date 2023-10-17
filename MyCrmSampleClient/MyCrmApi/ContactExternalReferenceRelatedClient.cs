@@ -41,42 +41,6 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact external reference. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelatedClient.GetContacts");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetContactsAsync(id, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the contact external reference. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelatedClient.GetContacts");
-            scope.Start();
-            try
-            {
-                return RestClient.GetContacts(id, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the contact external reference. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IntegrationsDocument>> GetIntegrationsAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelatedClient.GetIntegrations");
@@ -102,6 +66,42 @@ namespace MyCrmSampleClient.MyCrmApi
             try
             {
                 return RestClient.GetIntegrations(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the contact external reference. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ContactsDocument>> GetContactsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelatedClient.GetContacts");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetContactsAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the contact external reference. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ContactsDocument> GetContacts(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContactExternalReferenceRelatedClient.GetContacts");
+            scope.Start();
+            try
+            {
+                return RestClient.GetContacts(id, cancellationToken);
             }
             catch (Exception e)
             {

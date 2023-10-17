@@ -25,7 +25,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static ReferrerOrganisationRelationships DeserializeReferrerOrganisationRelationships(JsonElement element)
         {
-            Optional<RelationshipsMultipleDocument> contactGroups = default;
+            Optional<ReferrerOrganisationRelationshipsContactGroups> contactGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contactGroups"))
@@ -35,7 +35,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    contactGroups = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
+                    contactGroups = ReferrerOrganisationRelationshipsContactGroups.DeserializeReferrerOrganisationRelationshipsContactGroups(property.Value);
                     continue;
                 }
             }

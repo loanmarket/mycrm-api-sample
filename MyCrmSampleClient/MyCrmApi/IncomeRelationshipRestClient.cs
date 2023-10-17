@@ -36,67 +36,6 @@ namespace MyCrmSampleClient.MyCrmApi
             _endpoint = endpoint ?? new Uri("");
         }
 
-        internal HttpMessage CreateGetAssetsRequest(int id)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/incomes/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/relationships/linkedAsset", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        /// <summary> Where `id` is the identifier of the income. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RelationshipsSingleDocument>> GetAssetsAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetAssetsRequest(id);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RelationshipsSingleDocument value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 401:
-                    return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the income. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RelationshipsSingleDocument> GetAssets(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetAssetsRequest(id);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RelationshipsSingleDocument value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 401:
-                    return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateGetOwnersRequest(int id)
         {
             var message = _pipeline.CreateMessage();
@@ -153,6 +92,67 @@ namespace MyCrmSampleClient.MyCrmApi
                     }
                 case 401:
                     return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetAssetsRequest(int id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/incomes/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/linkedAsset", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        /// <summary> Where `id` is the identifier of the income. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<RelationshipsSingleDocument>> GetAssetsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAssetsRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RelationshipsSingleDocument value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the income. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<RelationshipsSingleDocument> GetAssets(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAssetsRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RelationshipsSingleDocument value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((RelationshipsSingleDocument)null, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }

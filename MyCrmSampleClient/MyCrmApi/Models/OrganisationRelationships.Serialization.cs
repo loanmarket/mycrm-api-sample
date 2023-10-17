@@ -15,11 +15,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Advisers))
-            {
-                writer.WritePropertyName("advisers");
-                writer.WriteObjectValue(Advisers);
-            }
             if (Optional.IsDefined(Addresses))
             {
                 writer.WritePropertyName("addresses");
@@ -30,20 +25,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static OrganisationRelationships DeserializeOrganisationRelationships(JsonElement element)
         {
-            Optional<RelationshipsMultipleDocument> advisers = default;
-            Optional<RelationshipsMultipleDocument> addresses = default;
+            Optional<OrganisationRelationshipsAddresses> addresses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("advisers"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    advisers = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("addresses"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -51,11 +35,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    addresses = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
+                    addresses = OrganisationRelationshipsAddresses.DeserializeOrganisationRelationshipsAddresses(property.Value);
                     continue;
                 }
             }
-            return new OrganisationRelationships(advisers.Value, addresses.Value);
+            return new OrganisationRelationships(addresses.Value);
         }
     }
 }

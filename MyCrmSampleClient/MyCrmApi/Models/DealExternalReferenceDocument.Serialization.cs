@@ -11,16 +11,8 @@ using Azure.Core;
 
 namespace MyCrmSampleClient.MyCrmApi.Models
 {
-    public partial class DealExternalReferenceDocument : IUtf8JsonSerializable
+    public partial class DealExternalReferenceDocument
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("data");
-            writer.WriteObjectValue(Data);
-            writer.WriteEndObject();
-        }
-
         internal static DealExternalReferenceDocument DeserializeDealExternalReferenceDocument(JsonElement element)
         {
             Optional<IReadOnlyDictionary<string, object>> meta = default;

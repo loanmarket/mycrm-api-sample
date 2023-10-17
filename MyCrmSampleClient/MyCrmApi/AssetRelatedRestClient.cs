@@ -36,67 +36,6 @@ namespace MyCrmSampleClient.MyCrmApi
             _endpoint = endpoint ?? new Uri("");
         }
 
-        internal HttpMessage CreateGetOwnersRequest(int id)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/assets/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/ownership", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            return message;
-        }
-
-        /// <summary> Where `id` is the identifier of the asset. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<OwnersDocument>> GetOwnersAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetOwnersRequest(id);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        OwnersDocument value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OwnersDocument.DeserializeOwnersDocument(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 401:
-                    return Response.FromValue((OwnersDocument)null, message.Response);
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the asset. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<OwnersDocument> GetOwners(int id, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetOwnersRequest(id);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        OwnersDocument value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OwnersDocument.DeserializeOwnersDocument(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 401:
-                    return Response.FromValue((OwnersDocument)null, message.Response);
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateGetFinancialAddressesRequest(int id)
         {
             var message = _pipeline.CreateMessage();
@@ -153,6 +92,67 @@ namespace MyCrmSampleClient.MyCrmApi
                     }
                 case 401:
                     return Response.FromValue((FinancialAddressesDocument)null, message.Response);
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetOwnersRequest(int id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/assets/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/ownership", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        /// <summary> Where `id` is the identifier of the asset. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<OwnersDocument>> GetOwnersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetOwnersRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        OwnersDocument value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = OwnersDocument.DeserializeOwnersDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((OwnersDocument)null, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the asset. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<OwnersDocument> GetOwners(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetOwnersRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        OwnersDocument value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = OwnersDocument.DeserializeOwnersDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((OwnersDocument)null, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }

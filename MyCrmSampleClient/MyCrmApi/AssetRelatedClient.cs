@@ -41,42 +41,6 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the asset. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OwnersDocument>> GetOwnersAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("AssetRelatedClient.GetOwners");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetOwnersAsync(id, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the asset. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OwnersDocument> GetOwners(int id, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("AssetRelatedClient.GetOwners");
-            scope.Start();
-            try
-            {
-                return RestClient.GetOwners(id, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the asset. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FinancialAddressesDocument>> GetFinancialAddressesAsync(int id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AssetRelatedClient.GetFinancialAddresses");
@@ -102,6 +66,42 @@ namespace MyCrmSampleClient.MyCrmApi
             try
             {
                 return RestClient.GetFinancialAddresses(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the asset. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<OwnersDocument>> GetOwnersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("AssetRelatedClient.GetOwners");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetOwnersAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the asset. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<OwnersDocument> GetOwners(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("AssetRelatedClient.GetOwners");
+            scope.Start();
+            try
+            {
+                return RestClient.GetOwners(id, cancellationToken);
             }
             catch (Exception e)
             {

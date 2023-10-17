@@ -41,13 +41,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BusinessesDocument>> GetBusinessesAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdvisersDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetBusinesses");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetAdvisers");
             scope.Start();
             try
             {
-                return await RestClient.GetBusinessesAsync(id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetAdvisersAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -59,13 +59,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BusinessesDocument> GetBusinesses(int id, CancellationToken cancellationToken = default)
+        public virtual Response<AdvisersDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetBusinesses");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetAdvisers");
             scope.Start();
             try
             {
-                return RestClient.GetBusinesses(id, cancellationToken);
+                return RestClient.GetAdvisers(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -113,13 +113,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AdvisersDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BusinessesDocument>> GetBusinessesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetAdvisers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetBusinesses");
             scope.Start();
             try
             {
-                return await RestClient.GetAdvisersAsync(id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetBusinessesAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -131,13 +131,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AdvisersDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)
+        public virtual Response<BusinessesDocument> GetBusinesses(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetAdvisers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetBusinesses");
             scope.Start();
             try
             {
-                return RestClient.GetAdvisers(id, cancellationToken);
+                return RestClient.GetBusinesses(id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -185,13 +185,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReferrersDocument>> GetReferrersAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReferrerMembersDocument>> GetReferrerMembersAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetReferrers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetReferrerMembers");
             scope.Start();
             try
             {
-                return await RestClient.GetReferrersAsync(id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetReferrerMembersAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -203,13 +203,13 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReferrersDocument> GetReferrers(int id, CancellationToken cancellationToken = default)
+        public virtual Response<ReferrerMembersDocument> GetReferrerMembers(int id, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetReferrers");
+            using var scope = _clientDiagnostics.CreateScope("ContactGroupRelatedClient.GetReferrerMembers");
             scope.Start();
             try
             {
-                return RestClient.GetReferrers(id, cancellationToken);
+                return RestClient.GetReferrerMembers(id, cancellationToken);
             }
             catch (Exception e)
             {

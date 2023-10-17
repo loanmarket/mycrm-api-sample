@@ -25,7 +25,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static ExpenseCategoryRelationships DeserializeExpenseCategoryRelationships(JsonElement element)
         {
-            Optional<RelationshipsMultipleDocument> expenseTypes = default;
+            Optional<ExpenseCategoryRelationshipsExpenseTypes> expenseTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expenseTypes"))
@@ -35,7 +35,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    expenseTypes = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
+                    expenseTypes = ExpenseCategoryRelationshipsExpenseTypes.DeserializeExpenseCategoryRelationshipsExpenseTypes(property.Value);
                     continue;
                 }
             }

@@ -15,26 +15,25 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReferrerName))
-            {
-                if (ReferrerName != null)
-                {
-                    writer.WritePropertyName("referrerName");
-                    writer.WriteStringValue(ReferrerName);
-                }
-                else
-                {
-                    writer.WriteNull("referrerName");
-                }
-            }
             writer.WriteEndObject();
         }
 
         internal static ReferrerAttributes DeserializeReferrerAttributes(JsonElement element)
         {
+            Optional<string> referrerOrganisationName = default;
             Optional<string> referrerName = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("referrerOrganisationName"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        referrerOrganisationName = null;
+                        continue;
+                    }
+                    referrerOrganisationName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("referrerName"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -46,7 +45,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ReferrerAttributes(referrerName.Value);
+            return new ReferrerAttributes(referrerOrganisationName.Value, referrerName.Value);
         }
     }
 }

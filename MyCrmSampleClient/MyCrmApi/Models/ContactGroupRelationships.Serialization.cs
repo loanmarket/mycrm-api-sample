@@ -48,8 +48,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<RelationshipsMultipleDocument> businesses = default;
             Optional<RelationshipsMultipleDocument> contacts = default;
             Optional<RelationshipsSingleDocument> adviser = default;
-            Optional<RelationshipsSingleDocument> referrerOrganisation = default;
-            Optional<RelationshipsSingleDocument> referrer = default;
+            Optional<ContactGroupRelationshipsReferrerOrganisation> referrerOrganisation = default;
+            Optional<ContactGroupRelationshipsReferrer> referrer = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("businesses"))
@@ -89,7 +89,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    referrerOrganisation = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    referrerOrganisation = ContactGroupRelationshipsReferrerOrganisation.DeserializeContactGroupRelationshipsReferrerOrganisation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("referrer"))
@@ -99,7 +99,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    referrer = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    referrer = ContactGroupRelationshipsReferrer.DeserializeContactGroupRelationshipsReferrer(property.Value);
                     continue;
                 }
             }

@@ -25,7 +25,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static ContactAddressRelationships DeserializeContactAddressRelationships(JsonElement element)
         {
-            Optional<RelationshipsMultipleDocument> contacts = default;
+            Optional<ContactAddressRelationshipsContacts> contacts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contacts"))
@@ -35,7 +35,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    contacts = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
+                    contacts = ContactAddressRelationshipsContacts.DeserializeContactAddressRelationshipsContacts(property.Value);
                     continue;
                 }
             }

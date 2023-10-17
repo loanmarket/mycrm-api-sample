@@ -22,7 +22,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="familyFranchisees"></param>
         /// <param name="addresses"></param>
         /// <param name="contactGroups"></param>
-        internal AdviserRelationships(RelationshipsSingleDocument adviserDetails, RelationshipsSingleDocument organisation, RelationshipsMultipleDocument agreementHolders, RelationshipsMultipleDocument familyFranchisees, RelationshipsMultipleDocument addresses, RelationshipsMultipleDocument contactGroups)
+        internal AdviserRelationships(RelationshipsSingleDocument adviserDetails, RelationshipsSingleDocument organisation, RelationshipsMultipleDocument agreementHolders, RelationshipsMultipleDocument familyFranchisees, AdviserRelationshipsAddresses addresses, RelationshipsMultipleDocument contactGroups)
         {
             AdviserDetails = adviserDetails;
             Organisation = organisation;
@@ -41,7 +41,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Gets or sets the family franchisees. </summary>
         public RelationshipsMultipleDocument FamilyFranchisees { get; set; }
         /// <summary> Gets or sets the addresses. </summary>
-        public RelationshipsMultipleDocument Addresses { get; set; }
+        public AdviserRelationshipsAddresses Addresses { get; set; }
         /// <summary> Gets or sets the contact groups. </summary>
         public RelationshipsMultipleDocument ContactGroups { get; set; }
     }

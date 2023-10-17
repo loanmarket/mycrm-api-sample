@@ -18,7 +18,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of DealStructureRelationships. </summary>
         /// <param name="dealImportantDates"></param>
         /// <param name="deal"></param>
-        internal DealStructureRelationships(RelationshipsMultipleDocument dealImportantDates, RelationshipsSingleDocument deal)
+        internal DealStructureRelationships(RelationshipsMultipleDocument dealImportantDates, DealStructureRelationshipsDeal deal)
         {
             DealImportantDates = dealImportantDates;
             Deal = deal;
@@ -27,6 +27,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Gets or sets the deal important dates. </summary>
         public RelationshipsMultipleDocument DealImportantDates { get; set; }
         /// <summary> Gets or sets the deal. </summary>
-        public RelationshipsSingleDocument Deal { get; set; }
+        public DealStructureRelationshipsDeal Deal { get; set; }
     }
 }

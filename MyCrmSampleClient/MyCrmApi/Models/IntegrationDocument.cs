@@ -17,7 +17,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of IntegrationDocument. </summary>
         /// <param name="data"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public IntegrationDocument(Integration data)
+        internal IntegrationDocument(Integration data)
         {
             if (data == null)
             {
@@ -51,8 +51,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public IReadOnlyDictionary<string, object> JsonApi { get; }
         /// <summary> Gets the links. </summary>
         public IntegrationDocumentLinks Links { get; }
-        /// <summary> Gets or sets the data. </summary>
-        public Integration Data { get; set; }
+        /// <summary> Gets the data. </summary>
+        public Integration Data { get; }
         /// <summary> Gets the included. </summary>
         public IReadOnlyList<IncludedResource> Included { get; }
     }
