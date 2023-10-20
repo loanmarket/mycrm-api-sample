@@ -20,31 +20,31 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static OrganisationAttributes DeserializeOrganisationAttributes(JsonElement element)
         {
-            Optional<string> emailForCommissions = default;
+            Optional<string> brandedCategory = default;
             Optional<string> primaryBrandColour = default;
             Optional<string> name = default;
             Optional<string> tradingName = default;
             Optional<string> website = default;
             Optional<string> companyEmail = default;
-            Optional<string> brandedCategory = default;
             Optional<string> status = default;
             Optional<string> slug = default;
             Optional<string> businessNumber = default;
             Optional<string> companyNumber = default;
             Optional<string> officeDisplayName = default;
+            Optional<string> emailForCommissions = default;
             Optional<string> phone = default;
             Optional<string> fax = default;
             Optional<string> brandLogoUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("emailForCommissions"))
+                if (property.NameEquals("brandedCategory"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        emailForCommissions = null;
+                        brandedCategory = null;
                         continue;
                     }
-                    emailForCommissions = property.Value.GetString();
+                    brandedCategory = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("primaryBrandColour"))
@@ -97,16 +97,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     companyEmail = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("brandedCategory"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        brandedCategory = null;
-                        continue;
-                    }
-                    brandedCategory = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("status"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -157,6 +147,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     officeDisplayName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("emailForCommissions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        emailForCommissions = null;
+                        continue;
+                    }
+                    emailForCommissions = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("phone"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -188,7 +188,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new OrganisationAttributes(emailForCommissions.Value, primaryBrandColour.Value, name.Value, tradingName.Value, website.Value, companyEmail.Value, brandedCategory.Value, status.Value, slug.Value, businessNumber.Value, companyNumber.Value, officeDisplayName.Value, phone.Value, fax.Value, brandLogoUrl.Value);
+            return new OrganisationAttributes(brandedCategory.Value, primaryBrandColour.Value, name.Value, tradingName.Value, website.Value, companyEmail.Value, status.Value, slug.Value, businessNumber.Value, companyNumber.Value, officeDisplayName.Value, emailForCommissions.Value, phone.Value, fax.Value, brandLogoUrl.Value);
         }
     }
 }

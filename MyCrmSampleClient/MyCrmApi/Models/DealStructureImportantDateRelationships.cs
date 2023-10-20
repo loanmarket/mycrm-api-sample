@@ -17,12 +17,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Initializes a new instance of DealStructureImportantDateRelationships. </summary>
         /// <param name="dealStructure"></param>
-        internal DealStructureImportantDateRelationships(RelationshipsSingleDocument dealStructure)
+        internal DealStructureImportantDateRelationships(DealStructureImportantDateRelationshipsDealStructure dealStructure)
         {
             DealStructure = dealStructure;
         }
 
         /// <summary> Gets or sets the deal structure. </summary>
-        public RelationshipsSingleDocument DealStructure { get; set; }
+        public DealStructureImportantDateRelationshipsDealStructure DealStructure { get; set; }
     }
 }

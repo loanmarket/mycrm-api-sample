@@ -16,13 +16,17 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of ReferrerAttributes. </summary>
+        /// <param name="referrerOrganisationName"></param>
         /// <param name="referrerName"></param>
-        internal ReferrerAttributes(string referrerName)
+        internal ReferrerAttributes(string referrerOrganisationName, string referrerName)
         {
+            ReferrerOrganisationName = referrerOrganisationName;
             ReferrerName = referrerName;
         }
 
-        /// <summary> Gets or sets the referrer name. </summary>
-        public string ReferrerName { get; set; }
+        /// <summary> Gets the referrer organisation name. </summary>
+        public string ReferrerOrganisationName { get; }
+        /// <summary> Gets the referrer name. </summary>
+        public string ReferrerName { get; }
     }
 }

@@ -20,6 +20,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of AdviserAttributes. </summary>
         /// <param name="googlePlaces"></param>
         /// <param name="created"></param>
+        /// <param name="isBrokerWebPublic"></param>
         /// <param name="myLeadGenActivationDate"></param>
         /// <param name="isMyLeadGenActive"></param>
         /// <param name="bio"></param>
@@ -40,10 +41,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="profilePhotoFullBody"></param>
         /// <param name="countryCode"></param>
         /// <param name="youtubeChannel"></param>
-        internal AdviserAttributes(string googlePlaces, DateTimeOffset? created, DateTimeOffset? myLeadGenActivationDate, bool? isMyLeadGenActive, string bio, string jobTitle, string website, string status, string email, string skype, string facebook, string linkedIn, string twitter, string youtubeFeatured, string instagram, string calendly, string myLeadGenerator, string profilePhotoHeadShot, string profilePhotoHalfBody, string profilePhotoFullBody, AdviserAttributesCountryCode? countryCode, string youtubeChannel)
+        internal AdviserAttributes(string googlePlaces, DateTimeOffset? created, bool? isBrokerWebPublic, DateTimeOffset? myLeadGenActivationDate, bool? isMyLeadGenActive, string bio, string jobTitle, string website, string status, string email, string skype, string facebook, string linkedIn, string twitter, string youtubeFeatured, string instagram, string calendly, string myLeadGenerator, string profilePhotoHeadShot, string profilePhotoHalfBody, string profilePhotoFullBody, AdviserAttributesCountryCode? countryCode, string youtubeChannel)
         {
             GooglePlaces = googlePlaces;
             Created = created;
+            IsBrokerWebPublic = isBrokerWebPublic;
             MyLeadGenActivationDate = myLeadGenActivationDate;
             IsMyLeadGenActive = isMyLeadGenActive;
             Bio = bio;
@@ -70,6 +72,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string GooglePlaces { get; }
         /// <summary> Gets the created. </summary>
         public DateTimeOffset? Created { get; }
+        /// <summary> Gets the is broker web public. </summary>
+        public bool? IsBrokerWebPublic { get; }
         /// <summary> Gets the my lead gen activation date. </summary>
         public DateTimeOffset? MyLeadGenActivationDate { get; }
         /// <summary> Gets the is my lead gen active. </summary>

@@ -46,7 +46,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         internal static Referrer DeserializeReferrer(JsonElement element)
         {
             Optional<ReferrerAttributes> attributes = default;
-            Optional<ReferrerRelationships> relationships = default;
+            Optional<object> relationships = default;
             Optional<ReferrerLinks> links = default;
             Optional<IReadOnlyDictionary<string, object>> meta = default;
             string type = default;
@@ -70,7 +70,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    relationships = ReferrerRelationships.DeserializeReferrerRelationships(property.Value);
+                    relationships = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("links"))

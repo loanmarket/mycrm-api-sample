@@ -17,12 +17,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Initializes a new instance of LiabilityCategoryRelationships. </summary>
         /// <param name="liabilityTypes"></param>
-        internal LiabilityCategoryRelationships(RelationshipsMultipleDocument liabilityTypes)
+        internal LiabilityCategoryRelationships(LiabilityCategoryRelationshipsLiabilityTypes liabilityTypes)
         {
             LiabilityTypes = liabilityTypes;
         }
 
         /// <summary> Gets or sets the liability types. </summary>
-        public RelationshipsMultipleDocument LiabilityTypes { get; set; }
+        public LiabilityCategoryRelationshipsLiabilityTypes LiabilityTypes { get; set; }
     }
 }

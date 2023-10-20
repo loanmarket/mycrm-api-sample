@@ -19,13 +19,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="proposedLoanAmount"></param>
         /// <param name="securityAmount"></param>
         /// <param name="summaryNotes"></param>
-        /// <param name="loanPurpose"></param>
-        internal HighLevelSummaryAttributes(double? proposedLoanAmount, double? securityAmount, string summaryNotes, string loanPurpose)
+        internal HighLevelSummaryAttributes(double? proposedLoanAmount, double? securityAmount, string summaryNotes)
         {
             ProposedLoanAmount = proposedLoanAmount;
             SecurityAmount = securityAmount;
             SummaryNotes = summaryNotes;
-            LoanPurpose = loanPurpose;
         }
 
         /// <summary> Gets or sets the proposed loan amount. </summary>
@@ -34,7 +32,5 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public double? SecurityAmount { get; set; }
         /// <summary> Gets or sets the summary notes. </summary>
         public string SummaryNotes { get; set; }
-        /// <summary> Gets the loan purpose. </summary>
-        public string LoanPurpose { get; }
     }
 }

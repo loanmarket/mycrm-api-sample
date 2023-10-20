@@ -25,7 +25,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static DealStructureImportantDateRelationships DeserializeDealStructureImportantDateRelationships(JsonElement element)
         {
-            Optional<RelationshipsSingleDocument> dealStructure = default;
+            Optional<DealStructureImportantDateRelationshipsDealStructure> dealStructure = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dealStructure"))
@@ -35,7 +35,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dealStructure = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    dealStructure = DealStructureImportantDateRelationshipsDealStructure.DeserializeDealStructureImportantDateRelationshipsDealStructure(property.Value);
                     continue;
                 }
             }

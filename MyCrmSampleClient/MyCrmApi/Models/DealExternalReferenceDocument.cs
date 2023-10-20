@@ -17,7 +17,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of DealExternalReferenceDocument. </summary>
         /// <param name="data"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public DealExternalReferenceDocument(DealExternalReference data)
+        internal DealExternalReferenceDocument(DealExternalReference data)
         {
             if (data == null)
             {
@@ -51,8 +51,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public IReadOnlyDictionary<string, object> JsonApi { get; }
         /// <summary> Gets the links. </summary>
         public DealExternalReferenceDocumentLinks Links { get; }
-        /// <summary> Gets or sets the data. </summary>
-        public DealExternalReference Data { get; set; }
+        /// <summary> Gets the data. </summary>
+        public DealExternalReference Data { get; }
         /// <summary> Gets the included. </summary>
         public IReadOnlyList<IncludedResource> Included { get; }
     }

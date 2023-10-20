@@ -20,7 +20,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="ownership"></param>
         /// <param name="deals"></param>
         /// <param name="employments"></param>
-        internal BusinessRelationships(RelationshipsSingleDocument contactGroup, RelationshipsMultipleDocument ownership, RelationshipsMultipleDocument deals, RelationshipsMultipleDocument employments)
+        internal BusinessRelationships(RelationshipsSingleDocument contactGroup, RelationshipsMultipleDocument ownership, RelationshipsMultipleDocument deals, BusinessRelationshipsEmployments employments)
         {
             ContactGroup = contactGroup;
             Ownership = ownership;
@@ -35,6 +35,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Gets or sets the deals. </summary>
         public RelationshipsMultipleDocument Deals { get; set; }
         /// <summary> Gets or sets the employments. </summary>
-        public RelationshipsMultipleDocument Employments { get; set; }
+        public BusinessRelationshipsEmployments Employments { get; set; }
     }
 }

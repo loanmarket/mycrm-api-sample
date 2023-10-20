@@ -20,18 +20,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("apiFamilyFranchisees");
                 writer.WriteObjectValue(ApiFamilyFranchisees);
             }
-            if (Optional.IsDefined(Organisation))
-            {
-                writer.WritePropertyName("organisation");
-                writer.WriteObjectValue(Organisation);
-            }
             writer.WriteEndObject();
         }
 
         internal static AgreementHolderRelationships DeserializeAgreementHolderRelationships(JsonElement element)
         {
             Optional<RelationshipsMultipleDocument> apiFamilyFranchisees = default;
-            Optional<RelationshipsSingleDocument> organisation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiFamilyFranchisees"))
@@ -44,18 +38,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     apiFamilyFranchisees = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
                     continue;
                 }
-                if (property.NameEquals("organisation"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    organisation = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
-                    continue;
-                }
             }
-            return new AgreementHolderRelationships(apiFamilyFranchisees.Value, organisation.Value);
+            return new AgreementHolderRelationships(apiFamilyFranchisees.Value);
         }
     }
 }

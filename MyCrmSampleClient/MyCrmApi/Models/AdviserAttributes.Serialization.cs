@@ -23,6 +23,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<string> googlePlaces = default;
             Optional<DateTimeOffset?> created = default;
+            Optional<bool> isBrokerWebPublic = default;
             Optional<DateTimeOffset?> myLeadGenActivationDate = default;
             Optional<bool?> isMyLeadGenActive = default;
             Optional<string> bio = default;
@@ -63,6 +64,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     created = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("isBrokerWebPublic"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isBrokerWebPublic = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("myLeadGenActivationDate"))
@@ -266,7 +277,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new AdviserAttributes(googlePlaces.Value, Optional.ToNullable(created), Optional.ToNullable(myLeadGenActivationDate), Optional.ToNullable(isMyLeadGenActive), bio.Value, jobTitle.Value, website.Value, status.Value, email.Value, skype.Value, facebook.Value, linkedIn.Value, twitter.Value, youtubeFeatured.Value, instagram.Value, calendly.Value, myLeadGenerator.Value, profilePhotoHeadShot.Value, profilePhotoHalfBody.Value, profilePhotoFullBody.Value, Optional.ToNullable(countryCode), youtubeChannel.Value);
+            return new AdviserAttributes(googlePlaces.Value, Optional.ToNullable(created), Optional.ToNullable(isBrokerWebPublic), Optional.ToNullable(myLeadGenActivationDate), Optional.ToNullable(isMyLeadGenActive), bio.Value, jobTitle.Value, website.Value, status.Value, email.Value, skype.Value, facebook.Value, linkedIn.Value, twitter.Value, youtubeFeatured.Value, instagram.Value, calendly.Value, myLeadGenerator.Value, profilePhotoHeadShot.Value, profilePhotoHalfBody.Value, profilePhotoFullBody.Value, Optional.ToNullable(countryCode), youtubeChannel.Value);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static LiabilityCategoryRelationships DeserializeLiabilityCategoryRelationships(JsonElement element)
         {
-            Optional<RelationshipsMultipleDocument> liabilityTypes = default;
+            Optional<LiabilityCategoryRelationshipsLiabilityTypes> liabilityTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("liabilityTypes"))
@@ -35,7 +35,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    liabilityTypes = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
+                    liabilityTypes = LiabilityCategoryRelationshipsLiabilityTypes.DeserializeLiabilityCategoryRelationshipsLiabilityTypes(property.Value);
                     continue;
                 }
             }

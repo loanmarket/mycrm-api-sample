@@ -141,6 +141,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("gender");
                 writer.WriteStringValue(Gender.Value.ToString());
             }
+            if (Optional.IsDefined(HasMarketingConsent))
+            {
+                if (HasMarketingConsent != null)
+                {
+                    writer.WritePropertyName("hasMarketingConsent");
+                    writer.WriteBooleanValue(HasMarketingConsent.Value);
+                }
+                else
+                {
+                    writer.WriteNull("hasMarketingConsent");
+                }
+            }
             if (Optional.IsDefined(DateOfBirth))
             {
                 if (DateOfBirth != null)
@@ -165,24 +177,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("isPrimary");
                 }
             }
-            if (Optional.IsDefined(HasMarketingConsent))
-            {
-                if (HasMarketingConsent != null)
-                {
-                    writer.WritePropertyName("hasMarketingConsent");
-                    writer.WriteBooleanValue(HasMarketingConsent.Value);
-                }
-                else
-                {
-                    writer.WriteNull("hasMarketingConsent");
-                }
-            }
             writer.WriteEndObject();
         }
 
         internal static ContactAttributes DeserializeContactAttributes(JsonElement element)
         {
-            Optional<DateTimeOffset?> created = default;
             Optional<string> mobile = default;
             Optional<string> title = default;
             Optional<string> firstName = default;
@@ -195,22 +194,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> secondaryEmail = default;
             Optional<ContactAttributesGender> gender = default;
             Optional<DateTimeOffset?> updated = default;
+            Optional<bool?> hasMarketingConsent = default;
+            Optional<DateTimeOffset?> created = default;
             Optional<DateTimeOffset?> dateOfBirth = default;
             Optional<bool?> isPrimary = default;
             Optional<ContactAttributesRole> role = default;
-            Optional<bool?> hasMarketingConsent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("created"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        created = null;
-                        continue;
-                    }
-                    created = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (property.NameEquals("mobile"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -331,6 +321,26 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     updated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("hasMarketingConsent"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        hasMarketingConsent = null;
+                        continue;
+                    }
+                    hasMarketingConsent = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("created"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        created = null;
+                        continue;
+                    }
+                    created = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (property.NameEquals("dateOfBirth"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -361,18 +371,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     role = new ContactAttributesRole(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hasMarketingConsent"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        hasMarketingConsent = null;
-                        continue;
-                    }
-                    hasMarketingConsent = property.Value.GetBoolean();
-                    continue;
-                }
             }
-            return new ContactAttributes(Optional.ToNullable(created), mobile.Value, title.Value, firstName.Value, middleName.Value, lastName.Value, preferredName.Value, homePhone.Value, businessPhone.Value, email.Value, secondaryEmail.Value, Optional.ToNullable(gender), Optional.ToNullable(updated), Optional.ToNullable(dateOfBirth), Optional.ToNullable(isPrimary), Optional.ToNullable(role), Optional.ToNullable(hasMarketingConsent));
+            return new ContactAttributes(mobile.Value, title.Value, firstName.Value, middleName.Value, lastName.Value, preferredName.Value, homePhone.Value, businessPhone.Value, email.Value, secondaryEmail.Value, Optional.ToNullable(gender), Optional.ToNullable(updated), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(created), Optional.ToNullable(dateOfBirth), Optional.ToNullable(isPrimary), Optional.ToNullable(role));
         }
     }
 }

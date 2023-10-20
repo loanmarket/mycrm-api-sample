@@ -17,12 +17,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Initializes a new instance of HighLevelSummaryRelationships. </summary>
         /// <param name="dealScenario"></param>
-        internal HighLevelSummaryRelationships(RelationshipsSingleDocument dealScenario)
+        internal HighLevelSummaryRelationships(HighLevelSummaryRelationshipsDealScenario dealScenario)
         {
             DealScenario = dealScenario;
         }
 
         /// <summary> Gets or sets the deal scenario. </summary>
-        public RelationshipsSingleDocument DealScenario { get; set; }
+        public HighLevelSummaryRelationshipsDealScenario DealScenario { get; set; }
     }
 }

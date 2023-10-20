@@ -38,42 +38,6 @@ namespace MyCrmSampleClient.MyCrmApi
             _pipeline = pipeline;
         }
 
-        /// <summary> Creates a new integration with attributes, relationships or both. </summary>
-        /// <param name="body"> The IntegrationDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IntegrationDocument>> PostAsync(IntegrationDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationClient.Post");
-            scope.Start();
-            try
-            {
-                return await RestClient.PostAsync(body, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a new integration with attributes, relationships or both. </summary>
-        /// <param name="body"> The IntegrationDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IntegrationDocument> Post(IntegrationDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationClient.Post");
-            scope.Start();
-            try
-            {
-                return RestClient.Post(body, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Where `id` is the identifier of the integration. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,80 +66,6 @@ namespace MyCrmSampleClient.MyCrmApi
             try
             {
                 return RestClient.Get(id, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the integration. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The IntegrationDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IntegrationDocument>> PatchAsync(int id, IntegrationDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationClient.Patch");
-            scope.Start();
-            try
-            {
-                return await RestClient.PatchAsync(id, body, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the integration. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="body"> The IntegrationDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IntegrationDocument> Patch(int id, IntegrationDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationClient.Patch");
-            scope.Start();
-            try
-            {
-                return RestClient.Patch(id, body, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the integration. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(int id, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationClient.Delete");
-            scope.Start();
-            try
-            {
-                return await RestClient.DeleteAsync(id, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Where `id` is the identifier of the integration. </summary>
-        /// <param name="id"> The Integer to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(int id, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("IntegrationClient.Delete");
-            scope.Start();
-            try
-            {
-                return RestClient.Delete(id, cancellationToken);
             }
             catch (Exception e)
             {

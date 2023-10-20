@@ -17,12 +17,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Initializes a new instance of ReferrerOrganisationRelationships. </summary>
         /// <param name="contactGroups"></param>
-        internal ReferrerOrganisationRelationships(RelationshipsMultipleDocument contactGroups)
+        internal ReferrerOrganisationRelationships(ReferrerOrganisationRelationshipsContactGroups contactGroups)
         {
             ContactGroups = contactGroups;
         }
 
         /// <summary> Gets or sets the contact groups. </summary>
-        public RelationshipsMultipleDocument ContactGroups { get; set; }
+        public ReferrerOrganisationRelationshipsContactGroups ContactGroups { get; set; }
     }
 }

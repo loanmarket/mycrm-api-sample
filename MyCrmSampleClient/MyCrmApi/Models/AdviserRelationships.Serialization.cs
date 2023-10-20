@@ -54,7 +54,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<RelationshipsSingleDocument> organisation = default;
             Optional<RelationshipsMultipleDocument> agreementHolders = default;
             Optional<RelationshipsMultipleDocument> familyFranchisees = default;
-            Optional<RelationshipsMultipleDocument> addresses = default;
+            Optional<AdviserRelationshipsAddresses> addresses = default;
             Optional<RelationshipsMultipleDocument> contactGroups = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -105,7 +105,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    addresses = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
+                    addresses = AdviserRelationshipsAddresses.DeserializeAdviserRelationshipsAddresses(property.Value);
                     continue;
                 }
                 if (property.NameEquals("contactGroups"))

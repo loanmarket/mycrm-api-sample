@@ -36,7 +36,7 @@ namespace MyCrmSampleClient.MyCrmApi
             _endpoint = endpoint ?? new Uri("");
         }
 
-        internal HttpMessage CreateGetBusinessesRequest(int id)
+        internal HttpMessage CreateGetAdvisersRequest(int id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -45,7 +45,7 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/businesses", false);
+            uri.AppendPath("/adviser", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             return message;
@@ -54,21 +54,21 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<BusinessesDocument>> GetBusinessesAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<AdvisersDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBusinessesRequest(id);
+            using var message = CreateGetAdvisersRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BusinessesDocument value = default;
+                        AdvisersDocument value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BusinessesDocument.DeserializeBusinessesDocument(document.RootElement);
+                        value = AdvisersDocument.DeserializeAdvisersDocument(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((BusinessesDocument)null, message.Response);
+                    return Response.FromValue((AdvisersDocument)null, message.Response);
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -77,21 +77,21 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<BusinessesDocument> GetBusinesses(int id, CancellationToken cancellationToken = default)
+        public Response<AdvisersDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBusinessesRequest(id);
+            using var message = CreateGetAdvisersRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BusinessesDocument value = default;
+                        AdvisersDocument value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BusinessesDocument.DeserializeBusinessesDocument(document.RootElement);
+                        value = AdvisersDocument.DeserializeAdvisersDocument(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((BusinessesDocument)null, message.Response);
+                    return Response.FromValue((AdvisersDocument)null, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -158,7 +158,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreateGetAdvisersRequest(int id)
+        internal HttpMessage CreateGetBusinessesRequest(int id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -167,7 +167,7 @@ namespace MyCrmSampleClient.MyCrmApi
             uri.Reset(_endpoint);
             uri.AppendPath("/jsonapi/contact-groups/", false);
             uri.AppendPath(id, true);
-            uri.AppendPath("/adviser", false);
+            uri.AppendPath("/businesses", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.api+json");
             return message;
@@ -176,21 +176,21 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AdvisersDocument>> GetAdvisersAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<BusinessesDocument>> GetBusinessesAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAdvisersRequest(id);
+            using var message = CreateGetBusinessesRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AdvisersDocument value = default;
+                        BusinessesDocument value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AdvisersDocument.DeserializeAdvisersDocument(document.RootElement);
+                        value = BusinessesDocument.DeserializeBusinessesDocument(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((AdvisersDocument)null, message.Response);
+                    return Response.FromValue((BusinessesDocument)null, message.Response);
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -199,21 +199,21 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AdvisersDocument> GetAdvisers(int id, CancellationToken cancellationToken = default)
+        public Response<BusinessesDocument> GetBusinesses(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAdvisersRequest(id);
+            using var message = CreateGetBusinessesRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AdvisersDocument value = default;
+                        BusinessesDocument value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AdvisersDocument.DeserializeAdvisersDocument(document.RootElement);
+                        value = BusinessesDocument.DeserializeBusinessesDocument(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((AdvisersDocument)null, message.Response);
+                    return Response.FromValue((BusinessesDocument)null, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -280,7 +280,7 @@ namespace MyCrmSampleClient.MyCrmApi
             }
         }
 
-        internal HttpMessage CreateGetReferrersRequest(int id)
+        internal HttpMessage CreateGetReferrerMembersRequest(int id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -298,21 +298,21 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ReferrersDocument>> GetReferrersAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Response<ReferrerMembersDocument>> GetReferrerMembersAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetReferrersRequest(id);
+            using var message = CreateGetReferrerMembersRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReferrersDocument value = default;
+                        ReferrerMembersDocument value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReferrersDocument.DeserializeReferrersDocument(document.RootElement);
+                        value = ReferrerMembersDocument.DeserializeReferrerMembersDocument(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((ReferrersDocument)null, message.Response);
+                    return Response.FromValue((ReferrerMembersDocument)null, message.Response);
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -321,21 +321,21 @@ namespace MyCrmSampleClient.MyCrmApi
         /// <summary> Where `id` is the identifier of the contact group. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ReferrersDocument> GetReferrers(int id, CancellationToken cancellationToken = default)
+        public Response<ReferrerMembersDocument> GetReferrerMembers(int id, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetReferrersRequest(id);
+            using var message = CreateGetReferrerMembersRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReferrersDocument value = default;
+                        ReferrerMembersDocument value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReferrersDocument.DeserializeReferrersDocument(document.RootElement);
+                        value = ReferrerMembersDocument.DeserializeReferrerMembersDocument(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 401:
-                    return Response.FromValue((ReferrersDocument)null, message.Response);
+                    return Response.FromValue((ReferrerMembersDocument)null, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }

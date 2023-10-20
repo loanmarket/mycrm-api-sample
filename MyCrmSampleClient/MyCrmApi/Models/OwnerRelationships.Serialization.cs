@@ -52,10 +52,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<RelationshipsSingleDocument> contact = default;
             Optional<RelationshipsSingleDocument> business = default;
-            Optional<RelationshipsSingleDocument> asset = default;
-            Optional<RelationshipsSingleDocument> expense = default;
-            Optional<RelationshipsSingleDocument> liability = default;
-            Optional<RelationshipsSingleDocument> income = default;
+            Optional<OwnerRelationshipsAsset> asset = default;
+            Optional<OwnerRelationshipsExpense> expense = default;
+            Optional<OwnerRelationshipsLiability> liability = default;
+            Optional<OwnerRelationshipsIncome> income = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contact"))
@@ -85,7 +85,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    asset = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    asset = OwnerRelationshipsAsset.DeserializeOwnerRelationshipsAsset(property.Value);
                     continue;
                 }
                 if (property.NameEquals("expense"))
@@ -95,7 +95,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    expense = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    expense = OwnerRelationshipsExpense.DeserializeOwnerRelationshipsExpense(property.Value);
                     continue;
                 }
                 if (property.NameEquals("liability"))
@@ -105,7 +105,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    liability = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    liability = OwnerRelationshipsLiability.DeserializeOwnerRelationshipsLiability(property.Value);
                     continue;
                 }
                 if (property.NameEquals("income"))
@@ -115,7 +115,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    income = RelationshipsSingleDocument.DeserializeRelationshipsSingleDocument(property.Value);
+                    income = OwnerRelationshipsIncome.DeserializeOwnerRelationshipsIncome(property.Value);
                     continue;
                 }
             }
