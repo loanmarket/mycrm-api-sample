@@ -44,10 +44,21 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static DealNoteAttributes DeserializeDealNoteAttributes(JsonElement element)
         {
+            Optional<string> writtenBy = default;
             Optional<string> title = default;
             Optional<string> detail = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("writtenBy"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        writtenBy = null;
+                        continue;
+                    }
+                    writtenBy = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("title"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -69,7 +80,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new DealNoteAttributes(title.Value, detail.Value);
+            return new DealNoteAttributes(writtenBy.Value, title.Value, detail.Value);
         }
     }
 }

@@ -17,12 +17,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Initializes a new instance of AgreementHolderRelationships. </summary>
         /// <param name="apiFamilyFranchisees"></param>
-        internal AgreementHolderRelationships(RelationshipsMultipleDocument apiFamilyFranchisees)
+        /// <param name="organisation"></param>
+        internal AgreementHolderRelationships(RelationshipsMultipleDocument apiFamilyFranchisees, AgreementHolderRelationshipsOrganisation organisation)
         {
             ApiFamilyFranchisees = apiFamilyFranchisees;
+            Organisation = organisation;
         }
 
         /// <summary> Gets or sets the api family franchisees. </summary>
         public RelationshipsMultipleDocument ApiFamilyFranchisees { get; set; }
+        /// <summary> Gets or sets the organisation. </summary>
+        public AgreementHolderRelationshipsOrganisation Organisation { get; set; }
     }
 }

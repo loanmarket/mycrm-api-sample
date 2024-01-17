@@ -3584,6 +3584,483 @@
         }
       }
     },
+    "/jsonapi/deal-notes/{id}/deal": {
+      "get": {
+        "tags": [
+          "DealNotes"
+        ],
+        "summary": "Gets deals via a single related deal note",
+        "description": "Where `id` is the identifier of the deal note",
+        "operationId": "DealNoteRelated_Get_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealsDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealNotes"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealNoteRelated_Head_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-notes/{id}": {
+      "get": {
+        "tags": [
+          "DealNotes"
+        ],
+        "summary": "Gets a single deal note by id",
+        "description": "Where `id` is the identifier of the deal note",
+        "operationId": "DealNote_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealNoteDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealNotes"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealNote_Head",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "DealNotes"
+        ],
+        "summary": "Updates the attributes and/or relationships of an existing deal note. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
+        "description": "Where `id` is the identifier of the deal note",
+        "operationId": "DealNote_Patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DealNoteDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealNoteDocument"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DealNotes"
+        ],
+        "summary": "Deletes an existing deal note",
+        "description": "Where `id` is the identifier of the deal note",
+        "operationId": "DealNote_Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-notes/{id}/relationships/deal": {
+      "get": {
+        "tags": [
+          "DealNotes"
+        ],
+        "summary": "Gets a deals related to a single deal note",
+        "description": "Where `id` is the identifier of the deal note",
+        "operationId": "DealNoteRelationship_Get_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealNotes"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealNoteRelationship_Get_Head_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DealNotes"
+        ],
+        "summary": "Adds deals to a to-many relationship with an existing deal note",
+        "description": "Where `id` is the identifier of the primary deal note resource",
+        "operationId": "DealNoteRelationship_Post_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipsSingleDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "DealNotes"
+        ],
+        "summary": "Performs a complete replacement of a deal relationship on an existing deal note",
+        "description": "Where `id` is the identifier of the deal note",
+        "operationId": "DealNoteRelationship_Patch_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipsSingleDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DealNotes"
+        ],
+        "summary": "Removes a deal note from a to-many relationship with deals",
+        "description": "Where `id` is the identifier of the deal note",
+        "operationId": "DealNoteRelationship_Delete_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/deal-participants/{id}/contact": {
       "get": {
         "tags": [
@@ -3650,6 +4127,57 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-notes": {
+      "post": {
+        "tags": [
+          "DealNotes"
+        ],
+        "summary": "Creates a new deal note with attributes, relationships or both",
+        "operationId": "DealNote_Post",
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DealNoteDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "headers": {
+              "Location": {
+                "description": "Location of newly created resource",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealNoteDocument"
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized"
@@ -8290,639 +8818,6 @@
         "responses": {
           "200": {
             "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/jsonapi/deal-notes/{id}/deal": {
-      "get": {
-        "tags": [
-          "Notes"
-        ],
-        "summary": "Gets deals via a single related deal note",
-        "description": "Where `id` is the identifier of the deal note",
-        "operationId": "DealNoteRelated_Get_Deals",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DealsDocument"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "head": {
-        "tags": [
-          "Notes"
-        ],
-        "summary": "Retrieve headers related to the associated GET request",
-        "description": "",
-        "operationId": "DealNoteRelated_Head_Deals",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/jsonapi/deal-notes": {
-      "get": {
-        "tags": [
-          "Notes"
-        ],
-        "summary": "Gets a collection of notes on deals",
-        "operationId": "DealNotes_Get",
-        "parameters": [
-          {
-            "name": "filter",
-            "in": "query",
-            "style": "form",
-            "allowReserved": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "style": "form",
-            "explode": false,
-            "allowReserved": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "style": "deepObject",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/Pagination"
-            }
-          },
-          {
-            "name": "include",
-            "in": "query",
-            "style": "form",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DealNotesDocument"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "head": {
-        "tags": [
-          "Notes"
-        ],
-        "summary": "Retrieve headers related to the associated GET request",
-        "description": "",
-        "operationId": "DealNotes_Head",
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Notes"
-        ],
-        "summary": "Creates a new deal note with attributes, relationships or both",
-        "operationId": "DealNote_Post",
-        "requestBody": {
-          "content": {
-            "application/vnd.api+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DealNoteDocument"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "",
-            "headers": {
-              "Location": {
-                "description": "Location of newly created resource",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DealNoteDocument"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/jsonapi/deal-notes/{id}": {
-      "get": {
-        "tags": [
-          "Notes"
-        ],
-        "summary": "Gets a single deal note by id",
-        "description": "Where `id` is the identifier of the deal note",
-        "operationId": "DealNote_Get",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DealNoteDocument"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "head": {
-        "tags": [
-          "Notes"
-        ],
-        "summary": "Retrieve headers related to the associated GET request",
-        "description": "",
-        "operationId": "DealNote_Head",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Notes"
-        ],
-        "summary": "Updates the attributes and/or relationships of an existing deal note. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
-        "description": "Where `id` is the identifier of the deal note",
-        "operationId": "DealNote_Patch",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/vnd.api+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DealNoteDocument"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DealNoteDocument"
-                }
-              }
-            }
-          },
-          "204": {
-            "description": ""
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Notes"
-        ],
-        "summary": "Deletes an existing deal note",
-        "description": "Where `id` is the identifier of the deal note",
-        "operationId": "DealNote_Delete",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": ""
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/jsonapi/deal-notes/{id}/relationships/deal": {
-      "get": {
-        "tags": [
-          "Notes"
-        ],
-        "summary": "Gets a deals related to a single deal note",
-        "description": "Where `id` is the identifier of the deal note",
-        "operationId": "DealNoteRelationship_Get_Deals",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "head": {
-        "tags": [
-          "Notes"
-        ],
-        "summary": "Retrieve headers related to the associated GET request",
-        "description": "",
-        "operationId": "DealNoteRelationship_Get_Head_Deals",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Notes"
-        ],
-        "summary": "Adds deals to a to-many relationship with an existing deal note",
-        "description": "Where `id` is the identifier of the primary deal note resource",
-        "operationId": "DealNoteRelationship_Post_Deals",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/vnd.api+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RelationshipsSingleDocument"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": ""
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Notes"
-        ],
-        "summary": "Performs a complete replacement of a deal relationship on an existing deal note",
-        "description": "Where `id` is the identifier of the deal note",
-        "operationId": "DealNoteRelationship_Patch_Deals",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/vnd.api+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RelationshipsSingleDocument"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": ""
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Notes"
-        ],
-        "summary": "Removes a deal note from a to-many relationship with deals",
-        "description": "Where `id` is the identifier of the deal note",
-        "operationId": "DealNoteRelationship_Delete_Deals",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": ""
           },
           "401": {
             "description": "Unauthorized"
@@ -14361,6 +14256,14 @@
         "properties": {
           "apiFamilyFranchisees": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
+          "organisation": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RelationshipsSingleDocument"
+              }
+            ],
+            "writeOnly": true
           }
         }
       },
@@ -16481,6 +16384,101 @@
         ],
         "type": "string"
       },
+      "Coordinate": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number",
+            "format": "double"
+          },
+          "y": {
+            "type": "number",
+            "format": "double"
+          },
+          "z": {
+            "type": "number",
+            "format": "double"
+          },
+          "m": {
+            "type": "number",
+            "format": "double"
+          },
+          "coordinateValue": {
+            "$ref": "#/components/schemas/Coordinate"
+          },
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CoordinateEqualityComparer": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CoordinateSequence": {
+        "type": "object",
+        "properties": {
+          "dimension": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "measures": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "spatial": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "ordinates": {
+            "$ref": "#/components/schemas/Ordinates"
+          },
+          "hasZ": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasM": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "zOrdinateIndex": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "mOrdinateIndex": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "first": {
+            "$ref": "#/components/schemas/Coordinate"
+          },
+          "last": {
+            "$ref": "#/components/schemas/Coordinate"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CoordinateSequenceFactory": {
+        "type": "object",
+        "properties": {
+          "ordinates": {
+            "$ref": "#/components/schemas/Ordinates"
+          }
+        },
+        "additionalProperties": false
+      },
       "CountryCode": {
         "enum": [
           "NZ",
@@ -16564,14 +16562,6 @@
             "nullable": true,
             "readOnly": true
           },
-          "dealType": {
-            "type": "string",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/DealType"
-              }
-            ]
-          },
           "name": {
             "type": "string",
             "nullable": true,
@@ -16601,6 +16591,14 @@
             "type": "string",
             "nullable": true,
             "readOnly": true
+          },
+          "dealType": {
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DealType"
+              }
+            ]
           }
         }
       },
@@ -16985,6 +16983,13 @@
       "DealNoteAttributes": {
         "type": "object",
         "properties": {
+          "writtenBy": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
           "title": {
             "maxLength": 2000,
             "minLength": 0,
@@ -17868,6 +17873,22 @@
         ],
         "type": "string"
       },
+      "Dimension": {
+        "enum": [
+          "P",
+          "Curve",
+          "A",
+          "Collapse",
+          "Dontcare",
+          "True",
+          "Unknown"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "Dimension",
+          "modelAsString": true
+        }
+      },
       "EmployerType": {
         "enum": [
           "Private",
@@ -18071,6 +18092,69 @@
             "readOnly": true
           }
         }
+      },
+      "Envelope": {
+        "type": "object",
+        "properties": {
+          "isNull": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "width": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "height": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "diameter": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "minX": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "maxX": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "minY": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "maxY": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "area": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "minExtent": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "maxExtent": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "centre": {
+            "$ref": "#/components/schemas/Coordinate"
+          }
+        },
+        "additionalProperties": false
       },
       "ErrorDocument": {
         "type": "object",
@@ -18999,6 +19083,128 @@
           "modelAsString": true
         }
       },
+      "Geometry": {
+        "type": "object",
+        "properties": {
+          "factory": {
+            "$ref": "#/components/schemas/GeometryFactory"
+          },
+          "userData": {
+            "nullable": true
+          },
+          "srid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "geometryType": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "ogcGeometryType": {
+            "$ref": "#/components/schemas/OgcGeometryType"
+          },
+          "precisionModel": {
+            "$ref": "#/components/schemas/PrecisionModel"
+          },
+          "coordinate": {
+            "$ref": "#/components/schemas/Coordinate"
+          },
+          "coordinates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Coordinate"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "numPoints": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "numGeometries": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "isSimple": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isEmpty": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "area": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "length": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "centroid": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "interiorPoint": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "pointOnSurface": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "dimension": {
+            "$ref": "#/components/schemas/Dimension"
+          },
+          "boundary": {
+            "$ref": "#/components/schemas/Geometry"
+          },
+          "boundaryDimension": {
+            "$ref": "#/components/schemas/Dimension"
+          },
+          "envelope": {
+            "$ref": "#/components/schemas/Geometry"
+          },
+          "envelopeInternal": {
+            "$ref": "#/components/schemas/Envelope"
+          },
+          "isRectangle": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GeometryFactory": {
+        "type": "object",
+        "properties": {
+          "precisionModel": {
+            "$ref": "#/components/schemas/PrecisionModel"
+          },
+          "coordinateSequenceFactory": {
+            "$ref": "#/components/schemas/CoordinateSequenceFactory"
+          },
+          "srid": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "geometryServices": {
+            "$ref": "#/components/schemas/NtsGeometryServices"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GeometryOverlay": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "HighLevelSummariesDocument": {
         "required": [
           "data"
@@ -19247,15 +19453,6 @@
           "propertyName": "type",
           "mapping": {
             "contact-marketing": "#/components/schemas/ContactMarketing",
-            "contact-external-references": "#/components/schemas/ContactExternalReference",
-            "deal-external-references": "#/components/schemas/DealExternalReference",
-            "integrations": "#/components/schemas/Integration",
-            "adviser-details": "#/components/schemas/AdviserDetail",
-            "agreement-holders": "#/components/schemas/AgreementHolder",
-            "adviser-address": "#/components/schemas/AdviserAddress",
-            "advisers": "#/components/schemas/Adviser",
-            "organisation-addresses": "#/components/schemas/OrganisationAddress",
-            "organisations": "#/components/schemas/Organisation",
             "asset-categories": "#/components/schemas/AssetCategory",
             "asset-types": "#/components/schemas/AssetType",
             "asset-sub-types": "#/components/schemas/AssetSubType",
@@ -19273,20 +19470,29 @@
             "property-types": "#/components/schemas/PropertyType",
             "financial-address": "#/components/schemas/FinancialAddress",
             "assets": "#/components/schemas/Asset",
-            "deal-important-dates": "#/components/schemas/DealImportantDate",
-            "deal-participants": "#/components/schemas/DealParticipant",
-            "deal-notes": "#/components/schemas/DealNote",
-            "deals": "#/components/schemas/Deal",
             "high-level-summary": "#/components/schemas/HighLevelSummary",
             "deal-scenario": "#/components/schemas/DealScenario",
             "financials": "#/components/schemas/Financial",
             "owners": "#/components/schemas/Owner",
+            "adviser-details": "#/components/schemas/AdviserDetail",
+            "agreement-holders": "#/components/schemas/AgreementHolder",
+            "adviser-address": "#/components/schemas/AdviserAddress",
+            "advisers": "#/components/schemas/Adviser",
+            "organisation-addresses": "#/components/schemas/OrganisationAddress",
+            "organisations": "#/components/schemas/Organisation",
+            "deal-external-references": "#/components/schemas/DealExternalReference",
+            "integrations": "#/components/schemas/Integration",
+            "contact-external-references": "#/components/schemas/ContactExternalReference",
+            "deal-participants": "#/components/schemas/DealParticipant",
             "contacts": "#/components/schemas/Contact",
             "contact-address": "#/components/schemas/ContactAddress",
             "business": "#/components/schemas/Business",
             "referrer-organisation": "#/components/schemas/ReferrerOrganisation",
             "referrer-members": "#/components/schemas/ReferrerMember",
             "contact-groups": "#/components/schemas/ContactGroup",
+            "deal-important-dates": "#/components/schemas/DealImportantDate",
+            "deals": "#/components/schemas/Deal",
+            "deal-notes": "#/components/schemas/DealNote",
             "leads": "#/components/schemas/Lead",
             "structured-leads": "#/components/schemas/StructuredLead",
             "enquiry-source": "#/components/schemas/EnquirySource",
@@ -21461,6 +21667,54 @@
           "modelAsString": true
         }
       },
+      "NtsGeometryServices": {
+        "type": "object",
+        "properties": {
+          "geometryOverlay": {
+            "$ref": "#/components/schemas/GeometryOverlay"
+          },
+          "coordinateEqualityComparer": {
+            "$ref": "#/components/schemas/CoordinateEqualityComparer"
+          },
+          "defaultSRID": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "defaultCoordinateSequenceFactory": {
+            "$ref": "#/components/schemas/CoordinateSequenceFactory"
+          },
+          "defaultPrecisionModel": {
+            "$ref": "#/components/schemas/PrecisionModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OgcGeometryType": {
+        "enum": [
+          "Point",
+          "LineString",
+          "Polygon",
+          "MultiPoint",
+          "MultiLineString",
+          "MultiPolygon",
+          "GeometryCollection",
+          "CircularString",
+          "CompoundCurve",
+          "CurvePolygon",
+          "MultiCurve",
+          "MultiSurface",
+          "Curve",
+          "Surface",
+          "PolyhedralSurface",
+          "TIN"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "OgcGeometryType",
+          "modelAsString": true
+        }
+      },
       "Opportunity": {
         "type": "object",
         "properties": {
@@ -21484,6 +21738,55 @@
           }
         },
         "additionalProperties": false
+      },
+      "Ordinates": {
+        "enum": [
+          "None",
+          "X",
+          "Y",
+          "XY",
+          "Spatial3",
+          "XYZ",
+          "Spatial4",
+          "Spatial5",
+          "Spatial6",
+          "Spatial7",
+          "Spatial8",
+          "Spatial9",
+          "Spatial10",
+          "Spatial11",
+          "Spatial12",
+          "Spatial13",
+          "Spatial14",
+          "Spatial15",
+          "Spatial16",
+          "AllSpatialOrdinates",
+          "Measure1",
+          "XYM",
+          "XYZM",
+          "Measure2",
+          "Measure3",
+          "Measure4",
+          "Measure5",
+          "Measure6",
+          "Measure7",
+          "Measure8",
+          "Measure9",
+          "Measure10",
+          "Measure11",
+          "Measure12",
+          "Measure13",
+          "Measure14",
+          "Measure15",
+          "Measure16",
+          "AllMeasureOrdinates",
+          "AllOrdinates"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "Ordinates",
+          "modelAsString": true
+        }
       },
       "Organisation": {
         "required": [
@@ -22089,6 +22392,162 @@
           }
         },
         "additionalProperties": false
+      },
+      "Point": {
+        "type": "object",
+        "properties": {
+          "factory": {
+            "$ref": "#/components/schemas/GeometryFactory"
+          },
+          "userData": {
+            "nullable": true
+          },
+          "srid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "precisionModel": {
+            "$ref": "#/components/schemas/PrecisionModel"
+          },
+          "numGeometries": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "isSimple": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "area": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "length": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "centroid": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "interiorPoint": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "pointOnSurface": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "envelope": {
+            "$ref": "#/components/schemas/Geometry"
+          },
+          "envelopeInternal": {
+            "$ref": "#/components/schemas/Envelope"
+          },
+          "isRectangle": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "coordinateSequence": {
+            "$ref": "#/components/schemas/CoordinateSequence"
+          },
+          "coordinates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Coordinate"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "numPoints": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "isEmpty": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "dimension": {
+            "$ref": "#/components/schemas/Dimension"
+          },
+          "boundaryDimension": {
+            "$ref": "#/components/schemas/Dimension"
+          },
+          "x": {
+            "type": "number",
+            "format": "double"
+          },
+          "y": {
+            "type": "number",
+            "format": "double"
+          },
+          "coordinate": {
+            "$ref": "#/components/schemas/Coordinate"
+          },
+          "geometryType": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "ogcGeometryType": {
+            "$ref": "#/components/schemas/OgcGeometryType"
+          },
+          "boundary": {
+            "$ref": "#/components/schemas/Geometry"
+          },
+          "z": {
+            "type": "number",
+            "format": "double"
+          },
+          "m": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PrecisionModel": {
+        "type": "object",
+        "properties": {
+          "isFloating": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "maximumSignificantDigits": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "scale": {
+            "type": "number",
+            "format": "double"
+          },
+          "gridSize": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "precisionModelType": {
+            "$ref": "#/components/schemas/PrecisionModels"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PrecisionModels": {
+        "enum": [
+          "Floating",
+          "FloatingSingle",
+          "Fixed"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "PrecisionModels",
+          "modelAsString": true
+        }
       },
       "PropertyPrimaryPurpose": {
         "enum": [
@@ -23382,24 +23841,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "WorkbenchLogType": {
-        "enum": [
-          "Email",
-          "Mail",
-          "Notes",
-          "RequirementAdd",
-          "RequirementCompleted",
-          "RequirementUnticked",
-          "RequirementUpdated",
-          "RequirementDeleted",
-          "NextWorkDate"
-        ],
-        "type": "string",
-        "x-ms-enum": {
-          "name": "WorkbenchLogType",
-          "modelAsString": true
-        }
       }
     },
     "securitySchemes": {

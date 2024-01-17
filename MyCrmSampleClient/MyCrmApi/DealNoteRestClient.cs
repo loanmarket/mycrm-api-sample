@@ -36,74 +36,6 @@ namespace MyCrmSampleClient.MyCrmApi
             _endpoint = endpoint ?? new Uri("");
         }
 
-        internal HttpMessage CreatePostRequest(DealNoteDocument body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jsonapi/deal-notes", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.api+json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/vnd.api+json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
-            return message;
-        }
-
-        /// <summary> Creates a new deal note with attributes, relationships or both. </summary>
-        /// <param name="body"> The DealNoteDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DealNoteDocument, DealNotePostHeaders>> PostAsync(DealNoteDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreatePostRequest(body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DealNotePostHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        DealNoteDocument value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DealNoteDocument.DeserializeDealNoteDocument(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                case 401:
-                    return ResponseWithHeaders.FromValue((DealNoteDocument)null, headers, message.Response);
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Creates a new deal note with attributes, relationships or both. </summary>
-        /// <param name="body"> The DealNoteDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DealNoteDocument, DealNotePostHeaders> Post(DealNoteDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreatePostRequest(body);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new DealNotePostHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        DealNoteDocument value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DealNoteDocument.DeserializeDealNoteDocument(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                case 401:
-                    return ResponseWithHeaders.FromValue((DealNoteDocument)null, headers, message.Response);
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateGetRequest(int id)
         {
             var message = _pipeline.CreateMessage();
@@ -278,6 +210,74 @@ namespace MyCrmSampleClient.MyCrmApi
                 case 204:
                 case 401:
                     return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePostRequest(DealNoteDocument body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/deal-notes", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            if (body != null)
+            {
+                request.Headers.Add("Content-Type", "application/vnd.api+json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <summary> Creates a new deal note with attributes, relationships or both. </summary>
+        /// <param name="body"> The DealNoteDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<DealNoteDocument, DealNotePostHeaders>> PostAsync(DealNoteDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePostRequest(body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new DealNotePostHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        DealNoteDocument value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DealNoteDocument.DeserializeDealNoteDocument(document.RootElement);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                case 401:
+                    return ResponseWithHeaders.FromValue((DealNoteDocument)null, headers, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Creates a new deal note with attributes, relationships or both. </summary>
+        /// <param name="body"> The DealNoteDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<DealNoteDocument, DealNotePostHeaders> Post(DealNoteDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreatePostRequest(body);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new DealNotePostHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        DealNoteDocument value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DealNoteDocument.DeserializeDealNoteDocument(document.RootElement);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                case 401:
+                    return ResponseWithHeaders.FromValue((DealNoteDocument)null, headers, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }

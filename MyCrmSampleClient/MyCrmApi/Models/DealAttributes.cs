@@ -26,25 +26,25 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="dates"></param>
         /// <param name="totalLoanAmount"></param>
         /// <param name="customStatusName"></param>
-        /// <param name="dealType"></param>
         /// <param name="name"></param>
         /// <param name="dealStatus"></param>
         /// <param name="opportunity"></param>
         /// <param name="splits"></param>
         /// <param name="lenderName"></param>
-        internal DealAttributes(DateTimeOffset? updated, DateTimeOffset? created, ImportantDatesSet dates, double? totalLoanAmount, string customStatusName, DealAttributesDealType? dealType, string name, DealAttributesDealStatus? dealStatus, Opportunity opportunity, IReadOnlyList<Split> splits, string lenderName)
+        /// <param name="dealType"></param>
+        internal DealAttributes(DateTimeOffset? updated, DateTimeOffset? created, ImportantDatesSet dates, double? totalLoanAmount, string customStatusName, string name, DealAttributesDealStatus? dealStatus, Opportunity opportunity, IReadOnlyList<Split> splits, string lenderName, DealAttributesDealType? dealType)
         {
             Updated = updated;
             Created = created;
             Dates = dates;
             TotalLoanAmount = totalLoanAmount;
             CustomStatusName = customStatusName;
-            DealType = dealType;
             Name = name;
             DealStatus = dealStatus;
             Opportunity = opportunity;
             Splits = splits;
             LenderName = lenderName;
+            DealType = dealType;
         }
 
         /// <summary> Gets the updated. </summary>
@@ -57,8 +57,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public double? TotalLoanAmount { get; }
         /// <summary> Gets the custom status name. </summary>
         public string CustomStatusName { get; }
-        /// <summary> Gets or sets the deal type. </summary>
-        public DealAttributesDealType? DealType { get; set; }
         /// <summary> Gets the name. </summary>
         public string Name { get; }
         /// <summary> Gets the deal status. </summary>
@@ -69,5 +67,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public IReadOnlyList<Split> Splits { get; }
         /// <summary> Gets the lender name. </summary>
         public string LenderName { get; }
+        /// <summary> Gets or sets the deal type. </summary>
+        public DealAttributesDealType? DealType { get; set; }
     }
 }

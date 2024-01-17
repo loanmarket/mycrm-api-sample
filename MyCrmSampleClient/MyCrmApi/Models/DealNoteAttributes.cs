@@ -16,14 +16,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of DealNoteAttributes. </summary>
+        /// <param name="writtenBy"></param>
         /// <param name="title"></param>
         /// <param name="detail"></param>
-        internal DealNoteAttributes(string title, string detail)
+        internal DealNoteAttributes(string writtenBy, string title, string detail)
         {
+            WrittenBy = writtenBy;
             Title = title;
             Detail = detail;
         }
 
+        /// <summary> Gets the written by. </summary>
+        public string WrittenBy { get; }
         /// <summary> Gets or sets the title. </summary>
         public string Title { get; set; }
         /// <summary> Gets or sets the detail. </summary>
