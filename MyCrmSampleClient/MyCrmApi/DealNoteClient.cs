@@ -38,42 +38,6 @@ namespace MyCrmSampleClient.MyCrmApi
             _pipeline = pipeline;
         }
 
-        /// <summary> Creates a new deal note with attributes, relationships or both. </summary>
-        /// <param name="body"> The DealNoteDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DealNoteDocument>> PostAsync(DealNoteDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DealNoteClient.Post");
-            scope.Start();
-            try
-            {
-                return await RestClient.PostAsync(body, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a new deal note with attributes, relationships or both. </summary>
-        /// <param name="body"> The DealNoteDocument to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DealNoteDocument> Post(DealNoteDocument body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DealNoteClient.Post");
-            scope.Start();
-            try
-            {
-                return RestClient.Post(body, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Where `id` is the identifier of the deal note. </summary>
         /// <param name="id"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -176,6 +140,42 @@ namespace MyCrmSampleClient.MyCrmApi
             try
             {
                 return RestClient.Delete(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a new deal note with attributes, relationships or both. </summary>
+        /// <param name="body"> The DealNoteDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DealNoteDocument>> PostAsync(DealNoteDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealNoteClient.Post");
+            scope.Start();
+            try
+            {
+                return await RestClient.PostAsync(body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a new deal note with attributes, relationships or both. </summary>
+        /// <param name="body"> The DealNoteDocument to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DealNoteDocument> Post(DealNoteDocument body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealNoteClient.Post");
+            scope.Start();
+            try
+            {
+                return RestClient.Post(body, cancellationToken);
             }
             catch (Exception e)
             {

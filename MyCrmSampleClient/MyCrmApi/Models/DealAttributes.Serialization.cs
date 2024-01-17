@@ -22,15 +22,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("dates");
                 writer.WriteObjectValue(Dates);
             }
-            if (Optional.IsDefined(DealType))
-            {
-                writer.WritePropertyName("dealType");
-                writer.WriteStringValue(DealType.Value.ToString());
-            }
             if (Optional.IsDefined(Opportunity))
             {
                 writer.WritePropertyName("opportunity");
                 writer.WriteObjectValue(Opportunity);
+            }
+            if (Optional.IsDefined(DealType))
+            {
+                writer.WritePropertyName("dealType");
+                writer.WriteStringValue(DealType.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -42,12 +42,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<ImportantDatesSet> dates = default;
             Optional<double?> totalLoanAmount = default;
             Optional<string> customStatusName = default;
-            Optional<DealAttributesDealType> dealType = default;
             Optional<string> name = default;
             Optional<DealAttributesDealStatus> dealStatus = default;
             Optional<Opportunity> opportunity = default;
             Optional<IReadOnlyList<Split>> splits = default;
             Optional<string> lenderName = default;
+            Optional<DealAttributesDealType> dealType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("updated"))
@@ -98,16 +98,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     customStatusName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dealType"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    dealType = new DealAttributesDealType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -165,8 +155,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     lenderName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("dealType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dealType = new DealAttributesDealType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new DealAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), dates.Value, Optional.ToNullable(totalLoanAmount), customStatusName.Value, Optional.ToNullable(dealType), name.Value, Optional.ToNullable(dealStatus), opportunity.Value, Optional.ToList(splits), lenderName.Value);
+            return new DealAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), dates.Value, Optional.ToNullable(totalLoanAmount), customStatusName.Value, name.Value, Optional.ToNullable(dealStatus), opportunity.Value, Optional.ToList(splits), lenderName.Value, Optional.ToNullable(dealType));
         }
     }
 }
