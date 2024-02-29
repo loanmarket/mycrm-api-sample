@@ -1922,6 +1922,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="tradingName"></param>
         /// <param name="website"></param>
         /// <param name="companyEmail"></param>
+        /// <param name="isBrokerSearchVisible"></param>
         /// <param name="status"></param>
         /// <param name="slug"></param>
         /// <param name="businessNumber"></param>
@@ -1932,9 +1933,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="fax"></param>
         /// <param name="brandLogoUrl"></param>
         /// <returns> A new <see cref="Models.OrganisationAttributes"/> instance for mocking. </returns>
-        public static OrganisationAttributes OrganisationAttributes(string brandedCategory = null, string primaryBrandColour = null, string name = null, string tradingName = null, string website = null, string companyEmail = null, string status = null, string slug = null, string businessNumber = null, string companyNumber = null, string officeDisplayName = null, string emailForCommissions = null, string phone = null, string fax = null, string brandLogoUrl = null)
+        public static OrganisationAttributes OrganisationAttributes(string brandedCategory = null, string primaryBrandColour = null, string name = null, string tradingName = null, string website = null, string companyEmail = null, bool? isBrokerSearchVisible = null, string status = null, string slug = null, string businessNumber = null, string companyNumber = null, string officeDisplayName = null, string emailForCommissions = null, string phone = null, string fax = null, string brandLogoUrl = null)
         {
-            return new OrganisationAttributes(brandedCategory, primaryBrandColour, name, tradingName, website, companyEmail, status, slug, businessNumber, companyNumber, officeDisplayName, emailForCommissions, phone, fax, brandLogoUrl);
+            return new OrganisationAttributes(brandedCategory, primaryBrandColour, name, tradingName, website, companyEmail, isBrokerSearchVisible, status, slug, businessNumber, companyNumber, officeDisplayName, emailForCommissions, phone, fax, brandLogoUrl);
         }
 
         /// <summary> Initializes a new instance of OrganisationDocument. </summary>

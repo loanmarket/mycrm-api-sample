@@ -22044,6 +22044,11 @@
             "nullable": true,
             "readOnly": true
           },
+          "isBrokerSearchVisible": {
+            "type": "boolean",
+            "nullable": true,
+            "readOnly": true
+          },
           "status": {
             "type": "string",
             "nullable": true,
