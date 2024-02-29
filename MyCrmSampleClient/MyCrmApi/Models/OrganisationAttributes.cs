@@ -22,6 +22,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="tradingName"></param>
         /// <param name="website"></param>
         /// <param name="companyEmail"></param>
+        /// <param name="isBrokerSearchVisible"></param>
         /// <param name="status"></param>
         /// <param name="slug"></param>
         /// <param name="businessNumber"></param>
@@ -31,7 +32,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="phone"></param>
         /// <param name="fax"></param>
         /// <param name="brandLogoUrl"></param>
-        internal OrganisationAttributes(string brandedCategory, string primaryBrandColour, string name, string tradingName, string website, string companyEmail, string status, string slug, string businessNumber, string companyNumber, string officeDisplayName, string emailForCommissions, string phone, string fax, string brandLogoUrl)
+        internal OrganisationAttributes(string brandedCategory, string primaryBrandColour, string name, string tradingName, string website, string companyEmail, bool? isBrokerSearchVisible, string status, string slug, string businessNumber, string companyNumber, string officeDisplayName, string emailForCommissions, string phone, string fax, string brandLogoUrl)
         {
             BrandedCategory = brandedCategory;
             PrimaryBrandColour = primaryBrandColour;
@@ -39,6 +40,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             TradingName = tradingName;
             Website = website;
             CompanyEmail = companyEmail;
+            IsBrokerSearchVisible = isBrokerSearchVisible;
             Status = status;
             Slug = slug;
             BusinessNumber = businessNumber;
@@ -62,6 +64,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string Website { get; }
         /// <summary> Gets the company email. </summary>
         public string CompanyEmail { get; }
+        /// <summary> Gets the is broker search visible. </summary>
+        public bool? IsBrokerSearchVisible { get; }
         /// <summary> Gets the status. </summary>
         public string Status { get; }
         /// <summary> Gets the slug. </summary>
