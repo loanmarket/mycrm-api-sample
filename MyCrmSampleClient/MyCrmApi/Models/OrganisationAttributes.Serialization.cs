@@ -26,6 +26,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> tradingName = default;
             Optional<string> website = default;
             Optional<string> companyEmail = default;
+            Optional<bool?> isBrokerSearchVisible = default;
             Optional<string> status = default;
             Optional<string> slug = default;
             Optional<string> businessNumber = default;
@@ -95,6 +96,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     companyEmail = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isBrokerSearchVisible"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        isBrokerSearchVisible = null;
+                        continue;
+                    }
+                    isBrokerSearchVisible = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("status"))
@@ -188,7 +199,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new OrganisationAttributes(brandedCategory.Value, primaryBrandColour.Value, name.Value, tradingName.Value, website.Value, companyEmail.Value, status.Value, slug.Value, businessNumber.Value, companyNumber.Value, officeDisplayName.Value, emailForCommissions.Value, phone.Value, fax.Value, brandLogoUrl.Value);
+            return new OrganisationAttributes(brandedCategory.Value, primaryBrandColour.Value, name.Value, tradingName.Value, website.Value, companyEmail.Value, Optional.ToNullable(isBrokerSearchVisible), status.Value, slug.Value, businessNumber.Value, companyNumber.Value, officeDisplayName.Value, emailForCommissions.Value, phone.Value, fax.Value, brandLogoUrl.Value);
         }
     }
 }

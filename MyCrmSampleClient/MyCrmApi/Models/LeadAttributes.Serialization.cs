@@ -223,6 +223,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("formattedAddress");
                 }
             }
+            if (Optional.IsDefined(DealName))
+            {
+                if (DealName != null)
+                {
+                    writer.WritePropertyName("dealName");
+                    writer.WriteStringValue(DealName);
+                }
+                else
+                {
+                    writer.WriteNull("dealName");
+                }
+            }
             if (Optional.IsDefined(NoteTitle))
             {
                 if (NoteTitle != null)
@@ -343,6 +355,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("sourceCategoryId");
                 }
             }
+            if (Optional.IsDefined(SourceReferrerId))
+            {
+                if (SourceReferrerId != null)
+                {
+                    writer.WritePropertyName("sourceReferrerId");
+                    writer.WriteStringValue(SourceReferrerId);
+                }
+                else
+                {
+                    writer.WriteNull("sourceReferrerId");
+                }
+            }
             if (Optional.IsDefined(SourceAdditionalDetails))
             {
                 if (SourceAdditionalDetails != null)
@@ -413,6 +437,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> country = default;
             Optional<LeadAttributesAddressType> addressType = default;
             Optional<string> formattedAddress = default;
+            Optional<string> dealName = default;
             Optional<string> noteTitle = default;
             Optional<string> noteDetails = default;
             Optional<string> utmSource = default;
@@ -423,6 +448,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> sourceSystemUrl = default;
             Optional<int?> sourceId = default;
             Optional<int?> sourceCategoryId = default;
+            Optional<string> sourceReferrerId = default;
             Optional<string> sourceAdditionalDetails = default;
             Optional<string> externalReference = default;
             Optional<string> externalIntegration = default;
@@ -622,6 +648,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     formattedAddress = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("dealName"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dealName = null;
+                        continue;
+                    }
+                    dealName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("noteTitle"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -722,6 +758,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     sourceCategoryId = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("sourceReferrerId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sourceReferrerId = null;
+                        continue;
+                    }
+                    sourceReferrerId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("sourceAdditionalDetails"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -793,7 +839,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new LeadAttributes(Optional.ToNullable(dateOfBirth), Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), streetAddress.Value, suburb.Value, state.Value, postCode.Value, country.Value, Optional.ToNullable(addressType), formattedAddress.Value, noteTitle.Value, noteDetails.Value, utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, sourceSystemUrl.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceAdditionalDetails.Value, externalReference.Value, externalIntegration.Value, Optional.ToNullable(externalIntegrationAllowCreate), Optional.ToNullable(sendNotification), customStatusName.Value, Optional.ToNullable(dealStatus));
+            return new LeadAttributes(Optional.ToNullable(dateOfBirth), Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), streetAddress.Value, suburb.Value, state.Value, postCode.Value, country.Value, Optional.ToNullable(addressType), formattedAddress.Value, dealName.Value, noteTitle.Value, noteDetails.Value, utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, sourceSystemUrl.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceReferrerId.Value, sourceAdditionalDetails.Value, externalReference.Value, externalIntegration.Value, Optional.ToNullable(externalIntegrationAllowCreate), Optional.ToNullable(sendNotification), customStatusName.Value, Optional.ToNullable(dealStatus));
         }
     }
 }
