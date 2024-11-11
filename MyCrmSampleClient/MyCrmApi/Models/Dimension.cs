@@ -22,28 +22,28 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string PValue = "P";
+        private const string PointValue = "Point";
         private const string CurveValue = "Curve";
-        private const string AValue = "A";
+        private const string SurfaceValue = "Surface";
         private const string CollapseValue = "Collapse";
         private const string DontcareValue = "Dontcare";
         private const string TrueValue = "True";
-        private const string UnknownValue = "Unknown";
+        private const string FalseValue = "False";
 
-        /// <summary> P. </summary>
-        public static Dimension P { get; } = new Dimension(PValue);
+        /// <summary> Point. </summary>
+        public static Dimension Point { get; } = new Dimension(PointValue);
         /// <summary> Curve. </summary>
         public static Dimension Curve { get; } = new Dimension(CurveValue);
-        /// <summary> A. </summary>
-        public static Dimension A { get; } = new Dimension(AValue);
+        /// <summary> Surface. </summary>
+        public static Dimension Surface { get; } = new Dimension(SurfaceValue);
         /// <summary> Collapse. </summary>
         public static Dimension Collapse { get; } = new Dimension(CollapseValue);
         /// <summary> Dontcare. </summary>
         public static Dimension Dontcare { get; } = new Dimension(DontcareValue);
         /// <summary> True. </summary>
         public static Dimension True { get; } = new Dimension(TrueValue);
-        /// <summary> Unknown. </summary>
-        public static Dimension Unknown { get; } = new Dimension(UnknownValue);
+        /// <summary> False. </summary>
+        public static Dimension False { get; } = new Dimension(FalseValue);
         /// <summary> Determines if two <see cref="Dimension"/> values are the same. </summary>
         public static bool operator ==(Dimension left, Dimension right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Dimension"/> values are not the same. </summary>

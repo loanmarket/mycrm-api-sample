@@ -26,7 +26,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         private const string XValue = "X";
         private const string YValue = "Y";
         private const string XYValue = "XY";
-        private const string Spatial3Value = "Spatial3";
+        private const string ZValue = "Z";
         private const string XYZValue = "XYZ";
         private const string Spatial4Value = "Spatial4";
         private const string Spatial5Value = "Spatial5";
@@ -42,7 +42,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         private const string Spatial15Value = "Spatial15";
         private const string Spatial16Value = "Spatial16";
         private const string AllSpatialOrdinatesValue = "AllSpatialOrdinates";
-        private const string Measure1Value = "Measure1";
+        private const string MValue = "M";
         private const string XYMValue = "XYM";
         private const string XyzmValue = "XYZM";
         private const string Measure2Value = "Measure2";
@@ -71,8 +71,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public static Ordinates Y { get; } = new Ordinates(YValue);
         /// <summary> XY. </summary>
         public static Ordinates XY { get; } = new Ordinates(XYValue);
-        /// <summary> Spatial3. </summary>
-        public static Ordinates Spatial3 { get; } = new Ordinates(Spatial3Value);
+        /// <summary> Z. </summary>
+        public static Ordinates Z { get; } = new Ordinates(ZValue);
         /// <summary> XYZ. </summary>
         public static Ordinates XYZ { get; } = new Ordinates(XYZValue);
         /// <summary> Spatial4. </summary>
@@ -103,8 +103,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public static Ordinates Spatial16 { get; } = new Ordinates(Spatial16Value);
         /// <summary> AllSpatialOrdinates. </summary>
         public static Ordinates AllSpatialOrdinates { get; } = new Ordinates(AllSpatialOrdinatesValue);
-        /// <summary> Measure1. </summary>
-        public static Ordinates Measure1 { get; } = new Ordinates(Measure1Value);
+        /// <summary> M. </summary>
+        public static Ordinates M { get; } = new Ordinates(MValue);
         /// <summary> XYM. </summary>
         public static Ordinates XYM { get; } = new Ordinates(XYMValue);
         /// <summary> XYZM. </summary>

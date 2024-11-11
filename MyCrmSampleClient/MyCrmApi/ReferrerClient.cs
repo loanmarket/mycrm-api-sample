@@ -39,9 +39,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Where `id` is the identifier of the referrer. </summary>
-        /// <param name="id"> The Integer to use. </param>
+        /// <param name="id"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReferrerDocument>> GetAsync(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReferrerDocument>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ReferrerClient.Get");
             scope.Start();
@@ -57,9 +57,9 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Where `id` is the identifier of the referrer. </summary>
-        /// <param name="id"> The Integer to use. </param>
+        /// <param name="id"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReferrerDocument> Get(int id, CancellationToken cancellationToken = default)
+        public virtual Response<ReferrerDocument> Get(string id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ReferrerClient.Get");
             scope.Start();

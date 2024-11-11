@@ -94,7 +94,7 @@
         "operationId": "Advisers_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -177,7 +177,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -260,7 +260,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -343,7 +343,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -450,7 +450,7 @@
         "operationId": "AdviserDetails_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -533,7 +533,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -616,7 +616,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -699,7 +699,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -806,7 +806,7 @@
         "operationId": "AssetCategories_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -889,7 +889,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -972,7 +972,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -1055,7 +1055,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -1162,7 +1162,7 @@
         "operationId": "Assets_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -1245,7 +1245,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -1328,7 +1328,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -1411,7 +1411,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -1518,7 +1518,7 @@
         "operationId": "AssetSubTypes_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -1601,7 +1601,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -1684,7 +1684,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -1767,7 +1767,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -1874,7 +1874,7 @@
         "operationId": "AssetTypes_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -1957,7 +1957,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -2040,7 +2040,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -2123,7 +2123,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -2230,7 +2230,7 @@
         "operationId": "ContactExternalReferences_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -2313,7 +2313,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -2396,7 +2396,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -2479,7 +2479,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -2586,7 +2586,7 @@
         "operationId": "ContactGroups_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -2669,7 +2669,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -2752,7 +2752,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -2835,7 +2835,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -3044,7 +3044,7 @@
         "operationId": "Contacts_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -3127,7 +3127,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -3210,7 +3210,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -3293,7 +3293,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -3400,7 +3400,7 @@
         "operationId": "DealExternalReferences_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -3483,7 +3483,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -3566,7 +3566,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -3649,7 +3649,58 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-notes": {
+      "post": {
+        "tags": [
+          "DealNotes"
+        ],
+        "summary": "Creates a new deal note with attributes, relationships or both",
+        "operationId": "DealNote_Post",
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DealNoteDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "headers": {
+              "Location": {
+                "description": "Location of newly created resource",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealNoteDocument"
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized"
@@ -3668,6 +3719,62 @@
       }
     },
     "/jsonapi/deal-notes/{id}": {
+      "patch": {
+        "tags": [
+          "DealNotes"
+        ],
+        "summary": "Updates the attributes and/or relationships of an existing deal note. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
+        "description": "Where `id` is the identifier of the deal note",
+        "operationId": "DealNote_Patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DealNoteDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealNoteDocument"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
         "tags": [
           "DealNotes"
@@ -3732,63 +3839,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "DealNotes"
-        ],
-        "summary": "Updates the attributes and/or relationships of an existing deal note. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
-        "description": "Where `id` is the identifier of the deal note",
-        "operationId": "DealNote_Patch",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/vnd.api+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DealNoteDocument"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DealNoteDocument"
-                }
-              }
-            }
-          },
-          "204": {
-            "description": ""
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -3908,7 +3959,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -3954,7 +4005,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "204": {
             "description": ""
@@ -4003,7 +4054,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "204": {
             "description": ""
@@ -4126,58 +4177,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/jsonapi/deal-notes": {
-      "post": {
-        "tags": [
-          "DealNotes"
-        ],
-        "summary": "Creates a new deal note with attributes, relationships or both",
-        "operationId": "DealNote_Post",
-        "requestBody": {
-          "content": {
-            "application/vnd.api+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DealNoteDocument"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "",
-            "headers": {
-              "Location": {
-                "description": "Location of newly created resource",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DealNoteDocument"
-                }
-              }
-            }
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -4284,7 +4284,7 @@
         "operationId": "DealParticipants_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -4367,7 +4367,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -4450,7 +4450,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -4533,7 +4533,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -4640,7 +4640,7 @@
         "operationId": "Deals_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -4723,7 +4723,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -4806,7 +4806,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -4889,7 +4889,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -4996,7 +4996,7 @@
         "operationId": "EnquirySources_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -5077,7 +5077,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -5160,7 +5160,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -5243,7 +5243,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -5350,7 +5350,7 @@
         "operationId": "ExpenseCategories_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -5433,7 +5433,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -5516,7 +5516,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -5599,7 +5599,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -5706,7 +5706,7 @@
         "operationId": "Expenses_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -5789,7 +5789,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -5872,7 +5872,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -5955,7 +5955,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -6062,7 +6062,7 @@
         "operationId": "ExpenseTypes_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -6145,7 +6145,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -6228,7 +6228,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -6311,7 +6311,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -6418,7 +6418,7 @@
         "operationId": "IncomeCategories_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -6501,7 +6501,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -6584,7 +6584,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -6667,7 +6667,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -6774,7 +6774,7 @@
         "operationId": "Incomes_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -6857,7 +6857,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -6940,7 +6940,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -7023,7 +7023,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -7130,7 +7130,7 @@
         "operationId": "IncomeTypes_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -7213,7 +7213,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -7296,7 +7296,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -7379,7 +7379,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -7486,7 +7486,7 @@
         "operationId": "Integrations_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -7569,7 +7569,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -7652,7 +7652,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -7735,7 +7735,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -7939,7 +7939,7 @@
         "operationId": "Liabilities_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -8022,7 +8022,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -8105,7 +8105,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -8188,7 +8188,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -8295,7 +8295,7 @@
         "operationId": "LiabilityCategories_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -8378,7 +8378,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -8461,7 +8461,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -8544,7 +8544,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -8651,7 +8651,7 @@
         "operationId": "LiabilityTypes_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -8734,7 +8734,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -8817,7 +8817,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -8900,7 +8900,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -9007,7 +9007,7 @@
         "operationId": "Organisations_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -9090,7 +9090,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -9173,7 +9173,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -9280,7 +9280,7 @@
         "operationId": "PropertyTypes_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -9363,7 +9363,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -9470,7 +9470,7 @@
         "operationId": "Referrers_Head",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -9502,8 +9502,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
@@ -9546,14 +9545,13 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -9733,7 +9731,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -9816,7 +9814,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -9899,7 +9897,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -9982,7 +9980,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -10065,7 +10063,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -10148,7 +10146,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -10231,7 +10229,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -10314,7 +10312,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -10397,7 +10395,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -10480,7 +10478,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -10563,7 +10561,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -10646,7 +10644,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -10729,7 +10727,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -10812,7 +10810,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -10895,7 +10893,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -10978,7 +10976,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -11061,7 +11059,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -11144,7 +11142,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -11227,7 +11225,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -11310,7 +11308,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -11393,7 +11391,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -11476,7 +11474,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -11559,7 +11557,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -11642,7 +11640,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -11725,7 +11723,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -11808,7 +11806,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -11891,7 +11889,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -11974,7 +11972,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -12057,7 +12055,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -12140,7 +12138,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -12223,7 +12221,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -12306,7 +12304,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -12389,7 +12387,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -12472,7 +12470,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -12555,7 +12553,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -12638,7 +12636,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -12721,7 +12719,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -12804,7 +12802,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -12887,7 +12885,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -12970,7 +12968,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -13053,7 +13051,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -13136,7 +13134,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -13219,7 +13217,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -13302,7 +13300,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -13385,7 +13383,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -17875,13 +17873,13 @@
       },
       "Dimension": {
         "enum": [
-          "P",
+          "Point",
           "Curve",
-          "A",
+          "Surface",
           "Collapse",
           "Dontcare",
           "True",
-          "Unknown"
+          "False"
         ],
         "type": "string",
         "x-ms-enum": {
@@ -20495,6 +20493,11 @@
             "nullable": true,
             "writeOnly": true
           },
+          "dealName": {
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true
+          },
           "noteTitle": {
             "type": "string",
             "nullable": true,
@@ -20544,6 +20547,11 @@
           "sourceCategoryId": {
             "type": "integer",
             "format": "int32",
+            "nullable": true,
+            "writeOnly": true
+          },
+          "sourceReferrerId": {
+            "type": "string",
             "nullable": true,
             "writeOnly": true
           },
@@ -21745,7 +21753,7 @@
           "X",
           "Y",
           "XY",
-          "Spatial3",
+          "Z",
           "XYZ",
           "Spatial4",
           "Spatial5",
@@ -21761,7 +21769,7 @@
           "Spatial15",
           "Spatial16",
           "AllSpatialOrdinates",
-          "Measure1",
+          "M",
           "XYM",
           "XYZM",
           "Measure2",
@@ -22041,6 +22049,11 @@
             "maxLength": 1000,
             "minLength": 0,
             "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "isBrokerSearchVisible": {
+            "type": "boolean",
             "nullable": true,
             "readOnly": true
           },
@@ -22745,7 +22758,6 @@
             "$ref": "#/components/schemas/ReferrersEntityType"
           },
           "id": {
-            "pattern": "^[1-9]\\d*$",
             "type": "string",
             "readOnly": true
           },
@@ -23625,6 +23637,11 @@
             "nullable": true,
             "writeOnly": true
           },
+          "sourceReferrerId": {
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true
+          },
           "sourceAdditionalDetails": {
             "maxLength": 255,
             "minLength": 0,
@@ -23633,6 +23650,11 @@
             "writeOnly": true
           },
           "sourceSystemUrl": {
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true
+          },
+          "dealName": {
             "type": "string",
             "nullable": true,
             "writeOnly": true

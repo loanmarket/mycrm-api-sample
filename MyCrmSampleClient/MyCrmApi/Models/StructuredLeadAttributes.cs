@@ -40,8 +40,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="utmContent"></param>
         /// <param name="sourceId"></param>
         /// <param name="sourceCategoryId"></param>
+        /// <param name="sourceReferrerId"></param>
         /// <param name="sourceAdditionalDetails"></param>
         /// <param name="sourceSystemUrl"></param>
+        /// <param name="dealName"></param>
         /// <param name="noteTitle"></param>
         /// <param name="noteDetails"></param>
         /// <param name="externalReference"></param>
@@ -50,7 +52,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="sendNotification"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
-        internal StructuredLeadAttributes(IList<LeadContact> contacts, IList<LeadAddress> addresses, IList<LeadAsset> assets, IList<LeadExpense> expenses, IList<LeadIncome> incomes, IList<LeadLiability> liabilities, IList<LeadEmployment> employments, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, int? sourceId, int? sourceCategoryId, string sourceAdditionalDetails, string sourceSystemUrl, string noteTitle, string noteDetails, string externalReference, string externalIntegration, bool? externalIntegrationAllowCreate, bool? sendNotification, string customStatusName, StructuredLeadAttributesDealStatus? dealStatus)
+        internal StructuredLeadAttributes(IList<LeadContact> contacts, IList<LeadAddress> addresses, IList<LeadAsset> assets, IList<LeadExpense> expenses, IList<LeadIncome> incomes, IList<LeadLiability> liabilities, IList<LeadEmployment> employments, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, int? sourceId, int? sourceCategoryId, string sourceReferrerId, string sourceAdditionalDetails, string sourceSystemUrl, string dealName, string noteTitle, string noteDetails, string externalReference, string externalIntegration, bool? externalIntegrationAllowCreate, bool? sendNotification, string customStatusName, StructuredLeadAttributesDealStatus? dealStatus)
         {
             Contacts = contacts;
             Addresses = addresses;
@@ -66,8 +68,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             UtmContent = utmContent;
             SourceId = sourceId;
             SourceCategoryId = sourceCategoryId;
+            SourceReferrerId = sourceReferrerId;
             SourceAdditionalDetails = sourceAdditionalDetails;
             SourceSystemUrl = sourceSystemUrl;
+            DealName = dealName;
             NoteTitle = noteTitle;
             NoteDetails = noteDetails;
             ExternalReference = externalReference;
@@ -106,10 +110,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public int? SourceId { get; set; }
         /// <summary> Gets or sets the source category id. </summary>
         public int? SourceCategoryId { get; set; }
+        /// <summary> Gets or sets the source referrer id. </summary>
+        public string SourceReferrerId { get; set; }
         /// <summary> Gets or sets the source additional details. </summary>
         public string SourceAdditionalDetails { get; set; }
         /// <summary> Gets or sets the source system url. </summary>
         public string SourceSystemUrl { get; set; }
+        /// <summary> Gets or sets the deal name. </summary>
+        public string DealName { get; set; }
         /// <summary> Gets or sets the note title. </summary>
         public string NoteTitle { get; set; }
         /// <summary> Gets or sets the note details. </summary>

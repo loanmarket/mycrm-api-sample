@@ -1626,6 +1626,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="country"></param>
         /// <param name="addressType"></param>
         /// <param name="formattedAddress"></param>
+        /// <param name="dealName"></param>
         /// <param name="noteTitle"></param>
         /// <param name="noteDetails"></param>
         /// <param name="utmSource"></param>
@@ -1636,6 +1637,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="sourceSystemUrl"></param>
         /// <param name="sourceId"></param>
         /// <param name="sourceCategoryId"></param>
+        /// <param name="sourceReferrerId"></param>
         /// <param name="sourceAdditionalDetails"></param>
         /// <param name="externalReference"></param>
         /// <param name="externalIntegration"></param>
@@ -1644,9 +1646,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
         /// <returns> A new <see cref="Models.LeadAttributes"/> instance for mocking. </returns>
-        public static LeadAttributes LeadAttributes(DateTimeOffset? dateOfBirth = null, LeadAttributesTitle? title = null, string firstName = null, string preferredName = null, string lastName = null, string email = null, string mobile = null, LeadAttributesGender? gender = null, bool? hasMarketingConsent = null, bool? isGuarantor = null, bool? isDependant = null, bool? isPrimary = null, string streetAddress = null, string suburb = null, string state = null, string postCode = null, string country = null, LeadAttributesAddressType? addressType = null, string formattedAddress = null, string noteTitle = null, string noteDetails = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, string sourceSystemUrl = null, int? sourceId = null, int? sourceCategoryId = null, string sourceAdditionalDetails = null, string externalReference = null, string externalIntegration = null, bool? externalIntegrationAllowCreate = null, bool? sendNotification = null, string customStatusName = null, LeadAttributesDealStatus? dealStatus = null)
+        public static LeadAttributes LeadAttributes(DateTimeOffset? dateOfBirth = null, LeadAttributesTitle? title = null, string firstName = null, string preferredName = null, string lastName = null, string email = null, string mobile = null, LeadAttributesGender? gender = null, bool? hasMarketingConsent = null, bool? isGuarantor = null, bool? isDependant = null, bool? isPrimary = null, string streetAddress = null, string suburb = null, string state = null, string postCode = null, string country = null, LeadAttributesAddressType? addressType = null, string formattedAddress = null, string dealName = null, string noteTitle = null, string noteDetails = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, string sourceSystemUrl = null, int? sourceId = null, int? sourceCategoryId = null, string sourceReferrerId = null, string sourceAdditionalDetails = null, string externalReference = null, string externalIntegration = null, bool? externalIntegrationAllowCreate = null, bool? sendNotification = null, string customStatusName = null, LeadAttributesDealStatus? dealStatus = null)
         {
-            return new LeadAttributes(dateOfBirth, title, firstName, preferredName, lastName, email, mobile, gender, hasMarketingConsent, isGuarantor, isDependant, isPrimary, streetAddress, suburb, state, postCode, country, addressType, formattedAddress, noteTitle, noteDetails, utmSource, utmMedium, utmCampaign, utmTerm, utmContent, sourceSystemUrl, sourceId, sourceCategoryId, sourceAdditionalDetails, externalReference, externalIntegration, externalIntegrationAllowCreate, sendNotification, customStatusName, dealStatus);
+            return new LeadAttributes(dateOfBirth, title, firstName, preferredName, lastName, email, mobile, gender, hasMarketingConsent, isGuarantor, isDependant, isPrimary, streetAddress, suburb, state, postCode, country, addressType, formattedAddress, dealName, noteTitle, noteDetails, utmSource, utmMedium, utmCampaign, utmTerm, utmContent, sourceSystemUrl, sourceId, sourceCategoryId, sourceReferrerId, sourceAdditionalDetails, externalReference, externalIntegration, externalIntegrationAllowCreate, sendNotification, customStatusName, dealStatus);
         }
 
         /// <summary> Initializes a new instance of LiabilitiesDocument. </summary>
@@ -1922,6 +1924,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="tradingName"></param>
         /// <param name="website"></param>
         /// <param name="companyEmail"></param>
+        /// <param name="isBrokerSearchVisible"></param>
         /// <param name="status"></param>
         /// <param name="slug"></param>
         /// <param name="businessNumber"></param>
@@ -1932,9 +1935,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="fax"></param>
         /// <param name="brandLogoUrl"></param>
         /// <returns> A new <see cref="Models.OrganisationAttributes"/> instance for mocking. </returns>
-        public static OrganisationAttributes OrganisationAttributes(string brandedCategory = null, string primaryBrandColour = null, string name = null, string tradingName = null, string website = null, string companyEmail = null, string status = null, string slug = null, string businessNumber = null, string companyNumber = null, string officeDisplayName = null, string emailForCommissions = null, string phone = null, string fax = null, string brandLogoUrl = null)
+        public static OrganisationAttributes OrganisationAttributes(string brandedCategory = null, string primaryBrandColour = null, string name = null, string tradingName = null, string website = null, string companyEmail = null, bool? isBrokerSearchVisible = null, string status = null, string slug = null, string businessNumber = null, string companyNumber = null, string officeDisplayName = null, string emailForCommissions = null, string phone = null, string fax = null, string brandLogoUrl = null)
         {
-            return new OrganisationAttributes(brandedCategory, primaryBrandColour, name, tradingName, website, companyEmail, status, slug, businessNumber, companyNumber, officeDisplayName, emailForCommissions, phone, fax, brandLogoUrl);
+            return new OrganisationAttributes(brandedCategory, primaryBrandColour, name, tradingName, website, companyEmail, isBrokerSearchVisible, status, slug, businessNumber, companyNumber, officeDisplayName, emailForCommissions, phone, fax, brandLogoUrl);
         }
 
         /// <summary> Initializes a new instance of OrganisationDocument. </summary>
@@ -2114,8 +2117,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="utmContent"></param>
         /// <param name="sourceId"></param>
         /// <param name="sourceCategoryId"></param>
+        /// <param name="sourceReferrerId"></param>
         /// <param name="sourceAdditionalDetails"></param>
         /// <param name="sourceSystemUrl"></param>
+        /// <param name="dealName"></param>
         /// <param name="noteTitle"></param>
         /// <param name="noteDetails"></param>
         /// <param name="externalReference"></param>
@@ -2125,7 +2130,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
         /// <returns> A new <see cref="Models.StructuredLeadAttributes"/> instance for mocking. </returns>
-        public static StructuredLeadAttributes StructuredLeadAttributes(IEnumerable<LeadContact> contacts = null, IEnumerable<LeadAddress> addresses = null, IEnumerable<LeadAsset> assets = null, IEnumerable<LeadExpense> expenses = null, IEnumerable<LeadIncome> incomes = null, IEnumerable<LeadLiability> liabilities = null, IEnumerable<LeadEmployment> employments = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, int? sourceId = null, int? sourceCategoryId = null, string sourceAdditionalDetails = null, string sourceSystemUrl = null, string noteTitle = null, string noteDetails = null, string externalReference = null, string externalIntegration = null, bool? externalIntegrationAllowCreate = null, bool? sendNotification = null, string customStatusName = null, StructuredLeadAttributesDealStatus? dealStatus = null)
+        public static StructuredLeadAttributes StructuredLeadAttributes(IEnumerable<LeadContact> contacts = null, IEnumerable<LeadAddress> addresses = null, IEnumerable<LeadAsset> assets = null, IEnumerable<LeadExpense> expenses = null, IEnumerable<LeadIncome> incomes = null, IEnumerable<LeadLiability> liabilities = null, IEnumerable<LeadEmployment> employments = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, int? sourceId = null, int? sourceCategoryId = null, string sourceReferrerId = null, string sourceAdditionalDetails = null, string sourceSystemUrl = null, string dealName = null, string noteTitle = null, string noteDetails = null, string externalReference = null, string externalIntegration = null, bool? externalIntegrationAllowCreate = null, bool? sendNotification = null, string customStatusName = null, StructuredLeadAttributesDealStatus? dealStatus = null)
         {
             contacts ??= new List<LeadContact>();
             addresses ??= new List<LeadAddress>();
@@ -2135,7 +2140,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             liabilities ??= new List<LeadLiability>();
             employments ??= new List<LeadEmployment>();
 
-            return new StructuredLeadAttributes(contacts?.ToList(), addresses?.ToList(), assets?.ToList(), expenses?.ToList(), incomes?.ToList(), liabilities?.ToList(), employments?.ToList(), utmSource, utmMedium, utmCampaign, utmTerm, utmContent, sourceId, sourceCategoryId, sourceAdditionalDetails, sourceSystemUrl, noteTitle, noteDetails, externalReference, externalIntegration, externalIntegrationAllowCreate, sendNotification, customStatusName, dealStatus);
+            return new StructuredLeadAttributes(contacts?.ToList(), addresses?.ToList(), assets?.ToList(), expenses?.ToList(), incomes?.ToList(), liabilities?.ToList(), employments?.ToList(), utmSource, utmMedium, utmCampaign, utmTerm, utmContent, sourceId, sourceCategoryId, sourceReferrerId, sourceAdditionalDetails, sourceSystemUrl, dealName, noteTitle, noteDetails, externalReference, externalIntegration, externalIntegrationAllowCreate, sendNotification, customStatusName, dealStatus);
         }
 
         /// <summary> Initializes a new instance of AgreementHoldersDocument. </summary>

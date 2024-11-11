@@ -37,6 +37,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="country"></param>
         /// <param name="addressType"></param>
         /// <param name="formattedAddress"></param>
+        /// <param name="dealName"></param>
         /// <param name="noteTitle"></param>
         /// <param name="noteDetails"></param>
         /// <param name="utmSource"></param>
@@ -47,6 +48,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="sourceSystemUrl"></param>
         /// <param name="sourceId"></param>
         /// <param name="sourceCategoryId"></param>
+        /// <param name="sourceReferrerId"></param>
         /// <param name="sourceAdditionalDetails"></param>
         /// <param name="externalReference"></param>
         /// <param name="externalIntegration"></param>
@@ -54,7 +56,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="sendNotification"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
-        internal LeadAttributes(DateTimeOffset? dateOfBirth, LeadAttributesTitle? title, string firstName, string preferredName, string lastName, string email, string mobile, LeadAttributesGender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, LeadAttributesAddressType? addressType, string formattedAddress, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, int? sourceId, int? sourceCategoryId, string sourceAdditionalDetails, string externalReference, string externalIntegration, bool? externalIntegrationAllowCreate, bool? sendNotification, string customStatusName, LeadAttributesDealStatus? dealStatus)
+        internal LeadAttributes(DateTimeOffset? dateOfBirth, LeadAttributesTitle? title, string firstName, string preferredName, string lastName, string email, string mobile, LeadAttributesGender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, LeadAttributesAddressType? addressType, string formattedAddress, string dealName, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, int? sourceId, int? sourceCategoryId, string sourceReferrerId, string sourceAdditionalDetails, string externalReference, string externalIntegration, bool? externalIntegrationAllowCreate, bool? sendNotification, string customStatusName, LeadAttributesDealStatus? dealStatus)
         {
             DateOfBirth = dateOfBirth;
             Title = title;
@@ -75,6 +77,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Country = country;
             AddressType = addressType;
             FormattedAddress = formattedAddress;
+            DealName = dealName;
             NoteTitle = noteTitle;
             NoteDetails = noteDetails;
             UtmSource = utmSource;
@@ -85,6 +88,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             SourceSystemUrl = sourceSystemUrl;
             SourceId = sourceId;
             SourceCategoryId = sourceCategoryId;
+            SourceReferrerId = sourceReferrerId;
             SourceAdditionalDetails = sourceAdditionalDetails;
             ExternalReference = externalReference;
             ExternalIntegration = externalIntegration;
@@ -132,6 +136,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public LeadAttributesAddressType? AddressType { get; set; }
         /// <summary> Gets or sets the formatted address. </summary>
         public string FormattedAddress { get; set; }
+        /// <summary> Gets or sets the deal name. </summary>
+        public string DealName { get; set; }
         /// <summary> Gets or sets the note title. </summary>
         public string NoteTitle { get; set; }
         /// <summary> Gets or sets the note details. </summary>
@@ -152,6 +158,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public int? SourceId { get; set; }
         /// <summary> Gets or sets the source category id. </summary>
         public int? SourceCategoryId { get; set; }
+        /// <summary> Gets or sets the source referrer id. </summary>
+        public string SourceReferrerId { get; set; }
         /// <summary> Gets or sets the source additional details. </summary>
         public string SourceAdditionalDetails { get; set; }
         /// <summary> Gets or sets the external reference. </summary>

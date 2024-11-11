@@ -36,7 +36,7 @@ namespace MyCrmSampleClient.MyCrmApi
             _endpoint = endpoint ?? new Uri("");
         }
 
-        internal HttpMessage CreateGetRequest(int id)
+        internal HttpMessage CreateGetRequest(string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,10 +51,16 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Where `id` is the identifier of the referrer. </summary>
-        /// <param name="id"> The Integer to use. </param>
+        /// <param name="id"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ReferrerDocument>> GetAsync(int id, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public async Task<Response<ReferrerDocument>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
             using var message = CreateGetRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -74,10 +80,16 @@ namespace MyCrmSampleClient.MyCrmApi
         }
 
         /// <summary> Where `id` is the identifier of the referrer. </summary>
-        /// <param name="id"> The Integer to use. </param>
+        /// <param name="id"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ReferrerDocument> Get(int id, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public Response<ReferrerDocument> Get(string id, CancellationToken cancellationToken = default)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
             using var message = CreateGetRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
