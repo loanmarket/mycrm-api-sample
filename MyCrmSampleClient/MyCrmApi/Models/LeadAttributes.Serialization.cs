@@ -93,6 +93,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("mobile");
                 }
             }
+            if (Optional.IsDefined(ContactMatchExisting))
+            {
+                writer.WritePropertyName("contactMatchExisting");
+                writer.WriteStringValue(ContactMatchExisting.Value.ToString());
+            }
             if (Optional.IsDefined(Gender))
             {
                 writer.WritePropertyName("gender");
@@ -425,6 +430,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> lastName = default;
             Optional<string> email = default;
             Optional<string> mobile = default;
+            Optional<LeadAttributesContactMatchExisting> contactMatchExisting = default;
             Optional<LeadAttributesGender> gender = default;
             Optional<bool?> hasMarketingConsent = default;
             Optional<bool?> isGuarantor = default;
@@ -526,6 +532,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     mobile = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("contactMatchExisting"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    contactMatchExisting = new LeadAttributesContactMatchExisting(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("gender"))
@@ -839,7 +855,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new LeadAttributes(Optional.ToNullable(dateOfBirth), Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), streetAddress.Value, suburb.Value, state.Value, postCode.Value, country.Value, Optional.ToNullable(addressType), formattedAddress.Value, dealName.Value, noteTitle.Value, noteDetails.Value, utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, sourceSystemUrl.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceReferrerId.Value, sourceAdditionalDetails.Value, externalReference.Value, externalIntegration.Value, Optional.ToNullable(externalIntegrationAllowCreate), Optional.ToNullable(sendNotification), customStatusName.Value, Optional.ToNullable(dealStatus));
+            return new LeadAttributes(Optional.ToNullable(dateOfBirth), Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, Optional.ToNullable(contactMatchExisting), Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), streetAddress.Value, suburb.Value, state.Value, postCode.Value, country.Value, Optional.ToNullable(addressType), formattedAddress.Value, dealName.Value, noteTitle.Value, noteDetails.Value, utmSource.Value, utmMedium.Value, utmCampaign.Value, utmTerm.Value, utmContent.Value, sourceSystemUrl.Value, Optional.ToNullable(sourceId), Optional.ToNullable(sourceCategoryId), sourceReferrerId.Value, sourceAdditionalDetails.Value, externalReference.Value, externalIntegration.Value, Optional.ToNullable(externalIntegrationAllowCreate), Optional.ToNullable(sendNotification), customStatusName.Value, Optional.ToNullable(dealStatus));
         }
     }
 }

@@ -25,6 +25,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="lastName"></param>
         /// <param name="email"></param>
         /// <param name="mobile"></param>
+        /// <param name="contactMatchExisting"></param>
         /// <param name="gender"></param>
         /// <param name="hasMarketingConsent"></param>
         /// <param name="isGuarantor"></param>
@@ -56,7 +57,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="sendNotification"></param>
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
-        internal LeadAttributes(DateTimeOffset? dateOfBirth, LeadAttributesTitle? title, string firstName, string preferredName, string lastName, string email, string mobile, LeadAttributesGender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, LeadAttributesAddressType? addressType, string formattedAddress, string dealName, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, int? sourceId, int? sourceCategoryId, string sourceReferrerId, string sourceAdditionalDetails, string externalReference, string externalIntegration, bool? externalIntegrationAllowCreate, bool? sendNotification, string customStatusName, LeadAttributesDealStatus? dealStatus)
+        internal LeadAttributes(DateTimeOffset? dateOfBirth, LeadAttributesTitle? title, string firstName, string preferredName, string lastName, string email, string mobile, LeadAttributesContactMatchExisting? contactMatchExisting, LeadAttributesGender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, string streetAddress, string suburb, string state, string postCode, string country, LeadAttributesAddressType? addressType, string formattedAddress, string dealName, string noteTitle, string noteDetails, string utmSource, string utmMedium, string utmCampaign, string utmTerm, string utmContent, string sourceSystemUrl, int? sourceId, int? sourceCategoryId, string sourceReferrerId, string sourceAdditionalDetails, string externalReference, string externalIntegration, bool? externalIntegrationAllowCreate, bool? sendNotification, string customStatusName, LeadAttributesDealStatus? dealStatus)
         {
             DateOfBirth = dateOfBirth;
             Title = title;
@@ -65,6 +66,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             LastName = lastName;
             Email = email;
             Mobile = mobile;
+            ContactMatchExisting = contactMatchExisting;
             Gender = gender;
             HasMarketingConsent = hasMarketingConsent;
             IsGuarantor = isGuarantor;
@@ -112,6 +114,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string Email { get; set; }
         /// <summary> Gets or sets the mobile. </summary>
         public string Mobile { get; set; }
+        /// <summary> Gets or sets the contact match existing. </summary>
+        public LeadAttributesContactMatchExisting? ContactMatchExisting { get; set; }
         /// <summary> Gets or sets the gender. </summary>
         public LeadAttributesGender? Gender { get; set; }
         /// <summary> Gets or sets the has marketing consent. </summary>
