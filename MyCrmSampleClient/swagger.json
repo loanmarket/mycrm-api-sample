@@ -18239,6 +18239,21 @@
         },
         "additionalProperties": false
       },
+      "ExistingContactCheck": {
+        "enum": [
+          "Email",
+          "EmailMobile",
+          "EmailName",
+          "EmailMobileName",
+          "EmailDateOfBirth",
+          "EmailDateOfBirthName"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ExistingContactCheck",
+          "modelAsString": true
+        }
+      },
       "Expense": {
         "required": [
           "type",
@@ -20421,6 +20436,15 @@
           "mobile": {
             "type": "string",
             "nullable": true,
+            "writeOnly": true
+          },
+          "contactMatchExisting": {
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ExistingContactCheck"
+              }
+            ],
             "writeOnly": true
           },
           "gender": {
