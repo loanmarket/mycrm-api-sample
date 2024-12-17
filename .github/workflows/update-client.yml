@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Checkout loanmarket/mycrm-api
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: loanmarket/mycrm-api
           token: ${{ secrets.LOAN_MARKET_TOKEN_READ_WRITE }}
@@ -17,7 +17,7 @@ jobs:
           path: mycrm-api
 
       - name: Checkout loanmarket/mycrm-api-sample
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
           path: mycrm-api-sample
@@ -29,7 +29,7 @@ jobs:
           cat ./MyCRMAPI.WebHost.Tests/ApiSpecTests.ApiSpecIsApproved.jsonapi.approved.json | sed 's/"MyCRM JsonApi"/"MyCRM API"/g' > $GITHUB_WORKSPACE/mycrm-api-sample/MyCrmSampleClient/swagger.json
 
       - name: Setup Node and NPM
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '16'
 
