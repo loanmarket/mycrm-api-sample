@@ -55,6 +55,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("dealNotes");
                 writer.WriteObjectValue(DealNotes);
             }
+            if (Optional.IsDefined(LoanSecurities))
+            {
+                writer.WritePropertyName("loanSecurities");
+                writer.WriteObjectValue(LoanSecurities);
+            }
             writer.WriteEndObject();
         }
 
@@ -68,6 +73,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<DealRelationshipsContacts> contacts = default;
             Optional<RelationshipsSingleDocument> adviser = default;
             Optional<RelationshipsMultipleDocument> dealNotes = default;
+            Optional<RelationshipsMultipleDocument> loanSecurities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dealScenario"))
@@ -150,8 +156,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     dealNotes = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
                     continue;
                 }
+                if (property.NameEquals("loanSecurities"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    loanSecurities = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(property.Value);
+                    continue;
+                }
             }
-            return new DealRelationships(dealScenario.Value, importantDates.Value, participants.Value, externalReferences.Value, dealStructures.Value, contacts.Value, adviser.Value, dealNotes.Value);
+            return new DealRelationships(dealScenario.Value, importantDates.Value, participants.Value, externalReferences.Value, dealStructures.Value, contacts.Value, adviser.Value, dealNotes.Value, loanSecurities.Value);
         }
     }
 }

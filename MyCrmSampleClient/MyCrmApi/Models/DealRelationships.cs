@@ -24,7 +24,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="contacts"></param>
         /// <param name="adviser"></param>
         /// <param name="dealNotes"></param>
-        internal DealRelationships(RelationshipsSingleDocument dealScenario, RelationshipsMultipleDocument importantDates, RelationshipsMultipleDocument participants, RelationshipsMultipleDocument externalReferences, RelationshipsMultipleDocument dealStructures, DealRelationshipsContacts contacts, RelationshipsSingleDocument adviser, RelationshipsMultipleDocument dealNotes)
+        /// <param name="loanSecurities"></param>
+        internal DealRelationships(RelationshipsSingleDocument dealScenario, RelationshipsMultipleDocument importantDates, RelationshipsMultipleDocument participants, RelationshipsMultipleDocument externalReferences, RelationshipsMultipleDocument dealStructures, DealRelationshipsContacts contacts, RelationshipsSingleDocument adviser, RelationshipsMultipleDocument dealNotes, RelationshipsMultipleDocument loanSecurities)
         {
             DealScenario = dealScenario;
             ImportantDates = importantDates;
@@ -34,6 +35,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Contacts = contacts;
             Adviser = adviser;
             DealNotes = dealNotes;
+            LoanSecurities = loanSecurities;
         }
 
         /// <summary> Gets or sets the deal scenario. </summary>
@@ -52,5 +54,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public RelationshipsSingleDocument Adviser { get; set; }
         /// <summary> Gets or sets the deal notes. </summary>
         public RelationshipsMultipleDocument DealNotes { get; set; }
+        /// <summary> Gets or sets the loan securities. </summary>
+        public RelationshipsMultipleDocument LoanSecurities { get; set; }
     }
 }

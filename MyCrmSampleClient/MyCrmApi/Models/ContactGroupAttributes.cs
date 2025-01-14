@@ -23,6 +23,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of ContactGroupAttributes. </summary>
         /// <param name="updated"></param>
         /// <param name="created"></param>
+        /// <param name="reviewMonth"></param>
         /// <param name="utmSource"></param>
         /// <param name="utmMedium"></param>
         /// <param name="utmTerm"></param>
@@ -34,10 +35,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="notes"></param>
         /// <param name="enquirySourceCategory"></param>
         /// <param name="enquirySource"></param>
-        internal ContactGroupAttributes(DateTimeOffset? updated, DateTimeOffset? created, string utmSource, string utmMedium, string utmTerm, string utmContent, string utmCampaign, IReadOnlyList<string> categories, string sourceAdditionalDetails, ContactGroupAttributesContactType? contactType, string notes, string enquirySourceCategory, string enquirySource)
+        internal ContactGroupAttributes(DateTimeOffset? updated, DateTimeOffset? created, int? reviewMonth, string utmSource, string utmMedium, string utmTerm, string utmContent, string utmCampaign, IReadOnlyList<string> categories, string sourceAdditionalDetails, ContactGroupAttributesContactType? contactType, string notes, string enquirySourceCategory, string enquirySource)
         {
             Updated = updated;
             Created = created;
+            ReviewMonth = reviewMonth;
             UtmSource = utmSource;
             UtmMedium = utmMedium;
             UtmTerm = utmTerm;
@@ -55,6 +57,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public DateTimeOffset? Updated { get; }
         /// <summary> Gets the created. </summary>
         public DateTimeOffset? Created { get; }
+        /// <summary> Gets or sets the review month. </summary>
+        public int? ReviewMonth { get; set; }
         /// <summary> Gets or sets the utm source. </summary>
         public string UtmSource { get; set; }
         /// <summary> Gets or sets the utm medium. </summary>

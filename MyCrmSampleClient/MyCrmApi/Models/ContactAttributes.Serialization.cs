@@ -195,10 +195,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<ContactAttributesGender> gender = default;
             Optional<DateTimeOffset?> updated = default;
             Optional<bool?> hasMarketingConsent = default;
-            Optional<DateTimeOffset?> created = default;
             Optional<DateTimeOffset?> dateOfBirth = default;
             Optional<bool?> isPrimary = default;
             Optional<ContactAttributesRole> role = default;
+            Optional<DateTimeOffset?> created = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mobile"))
@@ -331,16 +331,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     hasMarketingConsent = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("created"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        created = null;
-                        continue;
-                    }
-                    created = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (property.NameEquals("dateOfBirth"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -371,8 +361,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     role = new ContactAttributesRole(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("created"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        created = null;
+                        continue;
+                    }
+                    created = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new ContactAttributes(mobile.Value, title.Value, firstName.Value, middleName.Value, lastName.Value, preferredName.Value, homePhone.Value, businessPhone.Value, email.Value, secondaryEmail.Value, Optional.ToNullable(gender), Optional.ToNullable(updated), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(created), Optional.ToNullable(dateOfBirth), Optional.ToNullable(isPrimary), Optional.ToNullable(role));
+            return new ContactAttributes(mobile.Value, title.Value, firstName.Value, middleName.Value, lastName.Value, preferredName.Value, homePhone.Value, businessPhone.Value, email.Value, secondaryEmail.Value, Optional.ToNullable(gender), Optional.ToNullable(updated), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(dateOfBirth), Optional.ToNullable(isPrimary), Optional.ToNullable(role), Optional.ToNullable(created));
         }
     }
 }

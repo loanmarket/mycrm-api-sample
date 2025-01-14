@@ -17,6 +17,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(ReviewMonth))
+            {
+                if (ReviewMonth != null)
+                {
+                    writer.WritePropertyName("reviewMonth");
+                    writer.WriteNumberValue(ReviewMonth.Value);
+                }
+                else
+                {
+                    writer.WriteNull("reviewMonth");
+                }
+            }
             if (Optional.IsDefined(UtmSource))
             {
                 if (UtmSource != null)
@@ -113,6 +125,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<DateTimeOffset?> updated = default;
             Optional<DateTimeOffset?> created = default;
+            Optional<int?> reviewMonth = default;
             Optional<string> utmSource = default;
             Optional<string> utmMedium = default;
             Optional<string> utmTerm = default;
@@ -144,6 +157,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     created = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("reviewMonth"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        reviewMonth = null;
+                        continue;
+                    }
+                    reviewMonth = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("utmSource"))
@@ -262,7 +285,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new ContactGroupAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), utmSource.Value, utmMedium.Value, utmTerm.Value, utmContent.Value, utmCampaign.Value, Optional.ToList(categories), sourceAdditionalDetails.Value, Optional.ToNullable(contactType), notes.Value, enquirySourceCategory.Value, enquirySource.Value);
+            return new ContactGroupAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), Optional.ToNullable(reviewMonth), utmSource.Value, utmMedium.Value, utmTerm.Value, utmContent.Value, utmCampaign.Value, Optional.ToList(categories), sourceAdditionalDetails.Value, Optional.ToNullable(contactType), notes.Value, enquirySourceCategory.Value, enquirySource.Value);
         }
     }
 }

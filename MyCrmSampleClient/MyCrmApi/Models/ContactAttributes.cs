@@ -31,11 +31,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="gender"></param>
         /// <param name="updated"></param>
         /// <param name="hasMarketingConsent"></param>
-        /// <param name="created"></param>
         /// <param name="dateOfBirth"></param>
         /// <param name="isPrimary"></param>
         /// <param name="role"></param>
-        internal ContactAttributes(string mobile, string title, string firstName, string middleName, string lastName, string preferredName, string homePhone, string businessPhone, string email, string secondaryEmail, ContactAttributesGender? gender, DateTimeOffset? updated, bool? hasMarketingConsent, DateTimeOffset? created, DateTimeOffset? dateOfBirth, bool? isPrimary, ContactAttributesRole? role)
+        /// <param name="created"></param>
+        internal ContactAttributes(string mobile, string title, string firstName, string middleName, string lastName, string preferredName, string homePhone, string businessPhone, string email, string secondaryEmail, ContactAttributesGender? gender, DateTimeOffset? updated, bool? hasMarketingConsent, DateTimeOffset? dateOfBirth, bool? isPrimary, ContactAttributesRole? role, DateTimeOffset? created)
         {
             Mobile = mobile;
             Title = title;
@@ -50,10 +50,10 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Gender = gender;
             Updated = updated;
             HasMarketingConsent = hasMarketingConsent;
-            Created = created;
             DateOfBirth = dateOfBirth;
             IsPrimary = isPrimary;
             Role = role;
+            Created = created;
         }
 
         /// <summary> Gets or sets the mobile. </summary>
@@ -82,13 +82,13 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public DateTimeOffset? Updated { get; }
         /// <summary> Gets or sets the has marketing consent. </summary>
         public bool? HasMarketingConsent { get; set; }
-        /// <summary> Gets the created. </summary>
-        public DateTimeOffset? Created { get; }
         /// <summary> Gets or sets the date of birth. </summary>
         public DateTimeOffset? DateOfBirth { get; set; }
         /// <summary> Gets or sets the is primary. </summary>
         public bool? IsPrimary { get; set; }
         /// <summary> Gets the role. </summary>
         public ContactAttributesRole? Role { get; }
+        /// <summary> Gets the created. </summary>
+        public DateTimeOffset? Created { get; }
     }
 }

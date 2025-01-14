@@ -545,14 +545,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="gender"></param>
         /// <param name="updated"></param>
         /// <param name="hasMarketingConsent"></param>
-        /// <param name="created"></param>
         /// <param name="dateOfBirth"></param>
         /// <param name="isPrimary"></param>
         /// <param name="role"></param>
+        /// <param name="created"></param>
         /// <returns> A new <see cref="Models.ContactAttributes"/> instance for mocking. </returns>
-        public static ContactAttributes ContactAttributes(string mobile = null, string title = null, string firstName = null, string middleName = null, string lastName = null, string preferredName = null, string homePhone = null, string businessPhone = null, string email = null, string secondaryEmail = null, ContactAttributesGender? gender = null, DateTimeOffset? updated = null, bool? hasMarketingConsent = null, DateTimeOffset? created = null, DateTimeOffset? dateOfBirth = null, bool? isPrimary = null, ContactAttributesRole? role = null)
+        public static ContactAttributes ContactAttributes(string mobile = null, string title = null, string firstName = null, string middleName = null, string lastName = null, string preferredName = null, string homePhone = null, string businessPhone = null, string email = null, string secondaryEmail = null, ContactAttributesGender? gender = null, DateTimeOffset? updated = null, bool? hasMarketingConsent = null, DateTimeOffset? dateOfBirth = null, bool? isPrimary = null, ContactAttributesRole? role = null, DateTimeOffset? created = null)
         {
-            return new ContactAttributes(mobile, title, firstName, middleName, lastName, preferredName, homePhone, businessPhone, email, secondaryEmail, gender, updated, hasMarketingConsent, created, dateOfBirth, isPrimary, role);
+            return new ContactAttributes(mobile, title, firstName, middleName, lastName, preferredName, homePhone, businessPhone, email, secondaryEmail, gender, updated, hasMarketingConsent, dateOfBirth, isPrimary, role, created);
         }
 
         /// <summary> Initializes a new instance of AssetTypesDocument. </summary>
@@ -788,6 +788,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of ContactGroupAttributes. </summary>
         /// <param name="updated"></param>
         /// <param name="created"></param>
+        /// <param name="reviewMonth"></param>
         /// <param name="utmSource"></param>
         /// <param name="utmMedium"></param>
         /// <param name="utmTerm"></param>
@@ -800,11 +801,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="enquirySourceCategory"></param>
         /// <param name="enquirySource"></param>
         /// <returns> A new <see cref="Models.ContactGroupAttributes"/> instance for mocking. </returns>
-        public static ContactGroupAttributes ContactGroupAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, string utmSource = null, string utmMedium = null, string utmTerm = null, string utmContent = null, string utmCampaign = null, IEnumerable<string> categories = null, string sourceAdditionalDetails = null, ContactGroupAttributesContactType? contactType = null, string notes = null, string enquirySourceCategory = null, string enquirySource = null)
+        public static ContactGroupAttributes ContactGroupAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, int? reviewMonth = null, string utmSource = null, string utmMedium = null, string utmTerm = null, string utmContent = null, string utmCampaign = null, IEnumerable<string> categories = null, string sourceAdditionalDetails = null, ContactGroupAttributesContactType? contactType = null, string notes = null, string enquirySourceCategory = null, string enquirySource = null)
         {
             categories ??= new List<string>();
 
-            return new ContactGroupAttributes(updated, created, utmSource, utmMedium, utmTerm, utmContent, utmCampaign, categories?.ToList(), sourceAdditionalDetails, contactType, notes, enquirySourceCategory, enquirySource);
+            return new ContactGroupAttributes(updated, created, reviewMonth, utmSource, utmMedium, utmTerm, utmContent, utmCampaign, categories?.ToList(), sourceAdditionalDetails, contactType, notes, enquirySourceCategory, enquirySource);
         }
 
         /// <summary> Initializes a new instance of ContactGroupDocument. </summary>
@@ -916,19 +917,19 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="created"></param>
         /// <param name="dates"></param>
         /// <param name="totalLoanAmount"></param>
-        /// <param name="customStatusName"></param>
         /// <param name="name"></param>
         /// <param name="dealStatus"></param>
         /// <param name="opportunity"></param>
         /// <param name="splits"></param>
         /// <param name="lenderName"></param>
+        /// <param name="customStatusName"></param>
         /// <param name="dealType"></param>
         /// <returns> A new <see cref="Models.DealAttributes"/> instance for mocking. </returns>
-        public static DealAttributes DealAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, ImportantDatesSet dates = null, double? totalLoanAmount = null, string customStatusName = null, string name = null, DealAttributesDealStatus? dealStatus = null, Opportunity opportunity = null, IEnumerable<Split> splits = null, string lenderName = null, DealAttributesDealType? dealType = null)
+        public static DealAttributes DealAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, ImportantDatesSet dates = null, double? totalLoanAmount = null, string name = null, DealAttributesDealStatus? dealStatus = null, Opportunity opportunity = null, IEnumerable<Split> splits = null, string lenderName = null, string customStatusName = null, DealAttributesDealType? dealType = null)
         {
             splits ??= new List<Split>();
 
-            return new DealAttributes(updated, created, dates, totalLoanAmount, customStatusName, name, dealStatus, opportunity, splits?.ToList(), lenderName, dealType);
+            return new DealAttributes(updated, created, dates, totalLoanAmount, name, dealStatus, opportunity, splits?.ToList(), lenderName, customStatusName, dealType);
         }
 
         /// <summary> Initializes a new instance of Split. </summary>
@@ -1146,6 +1147,95 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             included ??= new List<IncludedResource>();
 
             return new DealDocument(meta, jsonApi, links, data, included?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DealSecuritiesDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.DealSecuritiesDocument"/> instance for mocking. </returns>
+        public static DealSecuritiesDocument DealSecuritiesDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, DealSecuritiesDocumentLinks links = null, IEnumerable<DealSecurity> data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            data ??= new List<DealSecurity>();
+            included ??= new List<IncludedResource>();
+
+            return new DealSecuritiesDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DealSecurity. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"></param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <returns> A new <see cref="Models.DealSecurity"/> instance for mocking. </returns>
+        public static DealSecurity DealSecurity(string type = null, string id = null, DealSecurityAttributes attributes = null, DealSecurityRelationships relationships = null, DealSecurityLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        {
+            meta ??= new Dictionary<string, object>();
+
+            return new DealSecurity(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of DealSecurityAttributes. </summary>
+        /// <param name="contactForAccess"></param>
+        /// <param name="isPreApproval"></param>
+        /// <param name="contractPrice"></param>
+        /// <param name="landValue"></param>
+        /// <param name="currentValue"></param>
+        /// <param name="contractDate"></param>
+        /// <param name="licensedRealEstateAgentContract"></param>
+        /// <param name="propertyState"></param>
+        /// <param name="isElectronicTransfer"></param>
+        /// <param name="titleType"></param>
+        /// <param name="title"></param>
+        /// <param name="valuationBasis"></param>
+        /// <param name="propertyType"></param>
+        /// <param name="propertyZoning"></param>
+        /// <param name="propertyHolding"></param>
+        /// <param name="propertyPrimaryPurpose"></param>
+        /// <param name="futureValue"></param>
+        /// <param name="buildAmount"></param>
+        /// <param name="propertyStatus"></param>
+        /// <param name="constructionType"></param>
+        /// <param name="constructionCategory"></param>
+        /// <param name="propertyTransaction"></param>
+        /// <param name="securityType"></param>
+        /// <param name="propertySuburb"></param>
+        /// <param name="accessFaxNumber"></param>
+        /// <param name="accessFaxAreaCode"></param>
+        /// <param name="accessMobileNumber"></param>
+        /// <param name="accessMobileAreaCode"></param>
+        /// <param name="accessPhoneNumber"></param>
+        /// <param name="accessPhoneAreaCode"></param>
+        /// <param name="accessContactLastName"></param>
+        /// <param name="isAnnualPropertyTax"></param>
+        /// <param name="accessContactFirstName"></param>
+        /// <param name="accessContactTitle"></param>
+        /// <returns> A new <see cref="Models.DealSecurityAttributes"/> instance for mocking. </returns>
+        public static DealSecurityAttributes DealSecurityAttributes(DealSecurityAttributesContactForAccess? contactForAccess = null, bool? isPreApproval = null, double? contractPrice = null, double? landValue = null, double? currentValue = null, DateTimeOffset? contractDate = null, bool? licensedRealEstateAgentContract = null, string propertyState = null, bool? isElectronicTransfer = null, string titleType = null, string title = null, string valuationBasis = null, string propertyType = null, string propertyZoning = null, string propertyHolding = null, string propertyPrimaryPurpose = null, double? futureValue = null, double? buildAmount = null, string propertyStatus = null, string constructionType = null, string constructionCategory = null, string propertyTransaction = null, string securityType = null, string propertySuburb = null, string accessFaxNumber = null, string accessFaxAreaCode = null, string accessMobileNumber = null, string accessMobileAreaCode = null, string accessPhoneNumber = null, string accessPhoneAreaCode = null, string accessContactLastName = null, bool? isAnnualPropertyTax = null, string accessContactFirstName = null, string accessContactTitle = null)
+        {
+            return new DealSecurityAttributes(contactForAccess, isPreApproval, contractPrice, landValue, currentValue, contractDate, licensedRealEstateAgentContract, propertyState, isElectronicTransfer, titleType, title, valuationBasis, propertyType, propertyZoning, propertyHolding, propertyPrimaryPurpose, futureValue, buildAmount, propertyStatus, constructionType, constructionCategory, propertyTransaction, securityType, propertySuburb, accessFaxNumber, accessFaxAreaCode, accessMobileNumber, accessMobileAreaCode, accessPhoneNumber, accessPhoneAreaCode, accessContactLastName, isAnnualPropertyTax, accessContactFirstName, accessContactTitle);
+        }
+
+        /// <summary> Initializes a new instance of DealSecurityDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.DealSecurityDocument"/> instance for mocking. </returns>
+        public static DealSecurityDocument DealSecurityDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, DealSecurityDocumentLinks links = null, DealSecurity data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            included ??= new List<IncludedResource>();
+
+            return new DealSecurityDocument(meta, jsonApi, links, data, included?.ToList());
         }
 
         /// <summary> Initializes a new instance of EnquirySourcesDocument. </summary>
@@ -2450,6 +2540,87 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             included ??= new List<IncludedResource>();
 
             return new DealNotesDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DealSecurityTitleIdentitiesDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.DealSecurityTitleIdentitiesDocument"/> instance for mocking. </returns>
+        public static DealSecurityTitleIdentitiesDocument DealSecurityTitleIdentitiesDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, DealSecurityTitleIdentitiesDocumentLinks links = null, IEnumerable<DealSecurityTitleIdentity> data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            data ??= new List<DealSecurityTitleIdentity>();
+            included ??= new List<IncludedResource>();
+
+            return new DealSecurityTitleIdentitiesDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DealSecurityTitleIdentity. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"> Any object. </param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <returns> A new <see cref="Models.DealSecurityTitleIdentity"/> instance for mocking. </returns>
+        public static DealSecurityTitleIdentity DealSecurityTitleIdentity(string type = null, string id = null, DealSecurityTitleIdentityAttributes attributes = null, object relationships = null, DealSecurityTitleIdentityLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        {
+            meta ??= new Dictionary<string, object>();
+
+            return new DealSecurityTitleIdentity(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of DealSecurityTitleIdentityAttributes. </summary>
+        /// <param name="titleIdentificationType"></param>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Models.DealSecurityTitleIdentityAttributes"/> instance for mocking. </returns>
+        public static DealSecurityTitleIdentityAttributes DealSecurityTitleIdentityAttributes(string titleIdentificationType = null, string value = null)
+        {
+            return new DealSecurityTitleIdentityAttributes(titleIdentificationType, value);
+        }
+
+        /// <summary> Initializes a new instance of DealSecurityOwnershipsDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.DealSecurityOwnershipsDocument"/> instance for mocking. </returns>
+        public static DealSecurityOwnershipsDocument DealSecurityOwnershipsDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, DealSecurityOwnershipsDocumentLinks links = null, IEnumerable<DealSecurityOwnership> data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            data ??= new List<DealSecurityOwnership>();
+            included ??= new List<IncludedResource>();
+
+            return new DealSecurityOwnershipsDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DealSecurityOwnership. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"></param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <returns> A new <see cref="Models.DealSecurityOwnership"/> instance for mocking. </returns>
+        public static DealSecurityOwnership DealSecurityOwnership(string type = null, string id = null, DealSecurityOwnershipAttributes attributes = null, DealSecurityOwnershipRelationships relationships = null, DealSecurityOwnershipLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        {
+            meta ??= new Dictionary<string, object>();
+
+            return new DealSecurityOwnership(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of DealSecurityOwnershipAttributes. </summary>
+        /// <param name="ownershipPercentage"></param>
+        /// <returns> A new <see cref="Models.DealSecurityOwnershipAttributes"/> instance for mocking. </returns>
+        public static DealSecurityOwnershipAttributes DealSecurityOwnershipAttributes(double? ownershipPercentage = null)
+        {
+            return new DealSecurityOwnershipAttributes(ownershipPercentage);
         }
 
         /// <summary> Initializes a new instance of DealStructureImportantDate. </summary>
