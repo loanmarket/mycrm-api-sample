@@ -4824,6 +4824,362 @@
         }
       }
     },
+    "/jsonapi/deal-securities/{id}/asset": {
+      "get": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Gets assets via a single related securities for a deal",
+        "description": "Where `id` is the identifier of the securities for a deal",
+        "operationId": "DealSecurityRelated_Get_Assets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetsDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealSecurityRelated_Head_Assets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-securities": {
+      "get": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Gets a collection of securities for deals",
+        "operationId": "DealSecurities_Get",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "style": "form",
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "style": "form",
+            "explode": false,
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pagination"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealSecuritiesDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealSecurities_Head",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-securities/{id}": {
+      "get": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Gets a single securities for a deal by id",
+        "description": "Where `id` is the identifier of the securities for a deal",
+        "operationId": "DealSecurity_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealSecurityDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealSecurity_Head",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-securities/{id}/relationships/asset": {
+      "get": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Gets a assets related to a single securities for a deal",
+        "description": "Where `id` is the identifier of the securities for a deal",
+        "operationId": "DealSecurityRelationship_Get_Assets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealSecurityRelationship_Get_Head_Assets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/incomes/{id}/relationships/ownership": {
       "get": {
         "tags": [
@@ -12488,6 +12844,89 @@
         }
       }
     },
+    "/jsonapi/deals/{id}/loanSecurities": {
+      "get": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Gets loanSecurities via a single related deal",
+        "description": "Where `id` is the identifier of the deal",
+        "operationId": "DealRelated_Get_DealSecurities",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealSecuritiesDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealRelated_Head_DealSecurities",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/deals/{id}/relationships/importantDates": {
       "get": {
         "tags": [
@@ -13038,6 +13477,421 @@
         "summary": "Retrieve headers related to the associated GET request",
         "description": "",
         "operationId": "DealRelationship_Get_Head_DealNotes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deals/{id}/relationships/loanSecurities": {
+      "get": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Gets a loanSecurities related to a single deal",
+        "description": "Where `id` is the identifier of the deal",
+        "operationId": "DealRelationship_Get_DealSecurities",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealRelationship_Get_Head_DealSecurities",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-securities/{id}/titleIdentifications": {
+      "get": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Gets titleIdentifications via a single related securities for a deal",
+        "description": "Where `id` is the identifier of the securities for a deal",
+        "operationId": "DealSecurityRelated_Get_DealSecurityTitleIdentities",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealSecurityTitleIdentitiesDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealSecurityRelated_Head_DealSecurityTitleIdentities",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-securities/{id}/ownership": {
+      "get": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Gets ownerships via a single related securities for a deal",
+        "description": "Where `id` is the identifier of the securities for a deal",
+        "operationId": "DealSecurityRelated_Get_DealSecurityOwnerships",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealSecurityOwnershipsDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealSecurityRelated_Head_DealSecurityOwnerships",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-securities/{id}/relationships/titleIdentifications": {
+      "get": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Gets a titleIdentifications related to a single securities for a deal",
+        "description": "Where `id` is the identifier of the securities for a deal",
+        "operationId": "DealSecurityRelationship_Get_DealSecurityTitleIdentities",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealSecurityRelationship_Get_Head_DealSecurityTitleIdentities",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-securities/{id}/relationships/ownership": {
+      "get": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Gets a ownerships related to a single securities for a deal",
+        "description": "Where `id` is the identifier of the securities for a deal",
+        "operationId": "DealSecurityRelationship_Get_DealSecurityOwnerships",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealSecurityRelationship_Get_Head_DealSecurityOwnerships",
         "parameters": [
           {
             "name": "id",
@@ -14436,6 +15290,28 @@
         },
         "additionalProperties": false
       },
+      "ApiLoanSecurity": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "loanSecurityInfo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DealSecurity"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Asset": {
         "required": [
           "type",
@@ -15411,6 +16287,17 @@
         },
         "additionalProperties": false
       },
+      "ContactAccessType": {
+        "enum": [
+          "Other",
+          "LoanParty"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ContactAccessType",
+          "modelAsString": true
+        }
+      },
       "ContactAddress": {
         "required": [
           "type",
@@ -15685,12 +16572,6 @@
             "type": "boolean",
             "nullable": true
           },
-          "created": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true,
-            "readOnly": true
-          },
           "dateOfBirth": {
             "type": "string",
             "format": "date",
@@ -15707,6 +16588,12 @@
                 "$ref": "#/components/schemas/ContactRole"
               }
             ],
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
             "readOnly": true
           }
         }
@@ -15950,6 +16837,11 @@
             "format": "date-time",
             "nullable": true,
             "readOnly": true
+          },
+          "reviewMonth": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "utmSource": {
             "maxLength": 100,
@@ -16555,11 +17447,6 @@
             "nullable": true,
             "readOnly": true
           },
-          "customStatusName": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
           "name": {
             "type": "string",
             "nullable": true,
@@ -16586,6 +17473,11 @@
             "readOnly": true
           },
           "lenderName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "customStatusName": {
             "type": "string",
             "nullable": true,
             "readOnly": true
@@ -17290,6 +18182,9 @@
           },
           "dealNotes": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
+          "loanSecurities": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           }
         }
       },
@@ -17436,6 +18331,637 @@
             "readOnly": true
           }
         }
+      },
+      "DealSecuritiesDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DealSecurity"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "DealSecuritiesEntityType": {
+        "enum": [
+          "deal-securities"
+        ],
+        "type": "string"
+      },
+      "DealSecurity": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/DealSecuritiesEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/DealSecurityAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/DealSecurityRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DealSecurityAttributes": {
+        "type": "object",
+        "properties": {
+          "contactForAccess": {
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ContactAccessType"
+              }
+            ],
+            "readOnly": true
+          },
+          "isPreApproval": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "contractPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "landValue": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "currentValue": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "contractDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "licensedRealEstateAgentContract": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "propertyState": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "isElectronicTransfer": {
+            "type": "boolean",
+            "nullable": true,
+            "readOnly": true
+          },
+          "titleType": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "valuationBasis": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "propertyType": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "propertyZoning": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "propertyHolding": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "propertyPrimaryPurpose": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "futureValue": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "buildAmount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "propertyStatus": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "constructionType": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "constructionCategory": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "propertyTransaction": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "securityType": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "propertySuburb": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "accessFaxNumber": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "accessFaxAreaCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "accessMobileNumber": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "accessMobileAreaCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "accessPhoneNumber": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "accessPhoneAreaCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "accessContactLastName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "isAnnualPropertyTax": {
+            "type": "boolean",
+            "nullable": true,
+            "readOnly": true
+          },
+          "accessContactFirstName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "accessContactTitle": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "DealSecurityDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/DealSecurity"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "DealSecurityOwnership": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/DealSecurityOwnershipEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/DealSecurityOwnershipAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/DealSecurityOwnershipRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DealSecurityOwnershipAttributes": {
+        "type": "object",
+        "properties": {
+          "ownershipPercentage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "DealSecurityOwnershipDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/DealSecurityOwnership"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "DealSecurityOwnershipEntityType": {
+        "enum": [
+          "deal-security-ownership"
+        ],
+        "type": "string"
+      },
+      "DealSecurityOwnershipRelationships": {
+        "type": "object",
+        "properties": {
+          "business": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          },
+          "contact": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          }
+        }
+      },
+      "DealSecurityOwnershipsDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DealSecurityOwnership"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "DealSecurityRelationships": {
+        "type": "object",
+        "properties": {
+          "titleIdentifications": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
+          "address": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RelationshipsSingleDocument"
+              }
+            ],
+            "writeOnly": true
+          },
+          "asset": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RelationshipsSingleDocument"
+              }
+            ],
+            "writeOnly": true
+          },
+          "ownership": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          }
+        }
+      },
+      "DealSecurityTitleIdentitiesDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DealSecurityTitleIdentity"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "DealSecurityTitleIdentity": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/DealSecurityTitleIdentityEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/DealSecurityTitleIdentityAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/DealSecurityTitleIdentityRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DealSecurityTitleIdentityAttributes": {
+        "type": "object",
+        "properties": {
+          "titleIdentificationType": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "value": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "DealSecurityTitleIdentityDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/DealSecurityTitleIdentity"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "DealSecurityTitleIdentityEntityType": {
+        "enum": [
+          "deal-security-title-identity"
+        ],
+        "type": "string"
+      },
+      "DealSecurityTitleIdentityRelationships": {
+        "type": "object"
       },
       "DealStructure": {
         "required": [
@@ -19480,7 +21006,10 @@
             "deal-structure-important-dates": "#/components/schemas/DealStructureImportantDate",
             "deal-structures": "#/components/schemas/DealStructure",
             "expenses": "#/components/schemas/Expense",
+            "deal-security-title-identity": "#/components/schemas/DealSecurityTitleIdentity",
             "property-types": "#/components/schemas/PropertyType",
+            "deal-security-ownership": "#/components/schemas/DealSecurityOwnership",
+            "deal-securities": "#/components/schemas/DealSecurity",
             "financial-address": "#/components/schemas/FinancialAddress",
             "assets": "#/components/schemas/Asset",
             "high-level-summary": "#/components/schemas/HighLevelSummary",

@@ -41,12 +41,12 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<DateTimeOffset?> created = default;
             Optional<ImportantDatesSet> dates = default;
             Optional<double?> totalLoanAmount = default;
-            Optional<string> customStatusName = default;
             Optional<string> name = default;
             Optional<DealAttributesDealStatus> dealStatus = default;
             Optional<Opportunity> opportunity = default;
             Optional<IReadOnlyList<Split>> splits = default;
             Optional<string> lenderName = default;
+            Optional<string> customStatusName = default;
             Optional<DealAttributesDealType> dealType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,16 +88,6 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     totalLoanAmount = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("customStatusName"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        customStatusName = null;
-                        continue;
-                    }
-                    customStatusName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -155,6 +145,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     lenderName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("customStatusName"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        customStatusName = null;
+                        continue;
+                    }
+                    customStatusName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("dealType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -166,7 +166,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new DealAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), dates.Value, Optional.ToNullable(totalLoanAmount), customStatusName.Value, name.Value, Optional.ToNullable(dealStatus), opportunity.Value, Optional.ToList(splits), lenderName.Value, Optional.ToNullable(dealType));
+            return new DealAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), dates.Value, Optional.ToNullable(totalLoanAmount), name.Value, Optional.ToNullable(dealStatus), opportunity.Value, Optional.ToList(splits), lenderName.Value, customStatusName.Value, Optional.ToNullable(dealType));
         }
     }
 }

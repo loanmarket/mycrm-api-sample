@@ -56,6 +56,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     case "deal-notes": return DealNote.DeserializeDealNote(element);
                     case "deal-participants": return DealParticipant.DeserializeDealParticipant(element);
                     case "deal-scenario": return DealScenario.DeserializeDealScenario(element);
+                    case "deal-securities": return DealSecurity.DeserializeDealSecurity(element);
+                    case "deal-security-ownership": return DealSecurityOwnership.DeserializeDealSecurityOwnership(element);
+                    case "deal-security-title-identity": return DealSecurityTitleIdentity.DeserializeDealSecurityTitleIdentity(element);
                     case "deal-structure-important-dates": return DealStructureImportantDate.DeserializeDealStructureImportantDate(element);
                     case "deal-structures": return DealStructure.DeserializeDealStructure(element);
                     case "deals": return Deal.DeserializeDeal(element);

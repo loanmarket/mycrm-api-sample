@@ -325,5 +325,41 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
+
+        /// <summary> Where `id` is the identifier of the deal. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DealSecuritiesDocument>> GetDealSecuritiesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealSecurities");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetDealSecuritiesAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the deal. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DealSecuritiesDocument> GetDealSecurities(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DealRelatedClient.GetDealSecurities");
+            scope.Start();
+            try
+            {
+                return RestClient.GetDealSecurities(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }
