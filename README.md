@@ -334,6 +334,11 @@ Use of pagination within a search such as `?page[number]={no}`, incurs an additi
 
 Use of any sort other than `?sort=id` or `?sort=-id` will incur an additional **multiplicative** cost.
 
+**Recommended Action:** Avoid sorting by columns other than `id` when possible.
+
 #### Includes
 
 Use of includes such as `?include=contacts,contacts.contactAddress` will incur an additional ****multiplicative**** cost for each include. The deeper the include, the higher the cost.
+
+**Recommended Action:** Limit the use of includes where possible, particularly with search endpoints. It may also be possible to call a different endpoint which is closer to the required data and so doesn't require as deep an include. For example, rather than calling the `contact` endpoint to get a linked asset adress, use the `asset` endpoint.
+
