@@ -14270,12 +14270,54 @@
             "type": "string",
             "readOnly": true
           },
+          "postCode": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "suburb": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "streetAddress": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "country": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "formattedAddress": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
           "addressDetails": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ContactAddress"
             },
             "nullable": true
+          },
+          "state": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -21029,8 +21071,8 @@
             "contacts": "#/components/schemas/Contact",
             "contact-address": "#/components/schemas/ContactAddress",
             "business": "#/components/schemas/Business",
-            "referrer-organisation": "#/components/schemas/ReferrerOrganisation",
             "referrer-members": "#/components/schemas/ReferrerMember",
+            "referrer-organisation": "#/components/schemas/ReferrerOrganisation",
             "contact-groups": "#/components/schemas/ContactGroup",
             "deal-important-dates": "#/components/schemas/DealImportantDate",
             "deals": "#/components/schemas/Deal",
