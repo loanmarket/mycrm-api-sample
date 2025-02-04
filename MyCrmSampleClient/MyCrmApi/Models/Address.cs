@@ -30,7 +30,19 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         /// <summary> Gets the id. </summary>
         public string Id { get; }
+        /// <summary> Gets the post code. </summary>
+        public string PostCode { get; }
+        /// <summary> Gets the suburb. </summary>
+        public string Suburb { get; }
+        /// <summary> Gets the street address. </summary>
+        public string StreetAddress { get; }
+        /// <summary> Gets the country. </summary>
+        public string Country { get; }
+        /// <summary> Gets the formatted address. </summary>
+        public string FormattedAddress { get; }
         /// <summary> Gets the address details. </summary>
         public IReadOnlyList<ContactAddress> AddressDetails { get; }
+        /// <summary> Gets the state. </summary>
+        public string State { get; }
     }
 }
