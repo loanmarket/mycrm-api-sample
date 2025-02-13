@@ -30,15 +30,17 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="isAccountDetailsKnown"></param>
         /// <param name="liabilityTypeId"></param>
         /// <param name="loanTerm"></param>
+        /// <param name="liabilitySubTypeId"></param>
         /// <param name="repaymentFrequency"></param>
         /// <param name="liabilityCategory"></param>
-        /// <param name="liabilityCategoryId"></param>
+        /// <param name="liabilitySubType"></param>
         /// <param name="liabilityType"></param>
         /// <param name="mortgagePriority"></param>
         /// <param name="updated"></param>
         /// <param name="creditorName"></param>
         /// <param name="loanRepaymentType"></param>
-        internal LiabilityAttributes(DateTimeOffset? created, double? repayment, double? value, double? limit, string accountName, string accountNumber, string bsb, bool? interestTaxDeductible, double? interestRate, bool? isAccountDetailsKnown, int? liabilityTypeId, int? loanTerm, string repaymentFrequency, string liabilityCategory, int? liabilityCategoryId, string liabilityType, string mortgagePriority, DateTimeOffset? updated, string creditorName, LiabilityAttributesLoanRepaymentType? loanRepaymentType)
+        /// <param name="liabilityCategoryId"></param>
+        internal LiabilityAttributes(DateTimeOffset? created, double? repayment, double? value, double? limit, string accountName, string accountNumber, string bsb, bool? interestTaxDeductible, double? interestRate, bool? isAccountDetailsKnown, int? liabilityTypeId, int? loanTerm, int? liabilitySubTypeId, string repaymentFrequency, string liabilityCategory, string liabilitySubType, string liabilityType, string mortgagePriority, DateTimeOffset? updated, string creditorName, LiabilityAttributesLoanRepaymentType? loanRepaymentType, int? liabilityCategoryId)
         {
             Created = created;
             Repayment = repayment;
@@ -52,14 +54,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             IsAccountDetailsKnown = isAccountDetailsKnown;
             LiabilityTypeId = liabilityTypeId;
             LoanTerm = loanTerm;
+            LiabilitySubTypeId = liabilitySubTypeId;
             RepaymentFrequency = repaymentFrequency;
             LiabilityCategory = liabilityCategory;
-            LiabilityCategoryId = liabilityCategoryId;
+            LiabilitySubType = liabilitySubType;
             LiabilityType = liabilityType;
             MortgagePriority = mortgagePriority;
             Updated = updated;
             CreditorName = creditorName;
             LoanRepaymentType = loanRepaymentType;
+            LiabilityCategoryId = liabilityCategoryId;
         }
 
         /// <summary> Gets the created. </summary>
@@ -86,12 +90,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public int? LiabilityTypeId { get; }
         /// <summary> Gets or sets the loan term. </summary>
         public int? LoanTerm { get; set; }
+        /// <summary> Gets the liability sub type id. </summary>
+        public int? LiabilitySubTypeId { get; }
         /// <summary> Gets the repayment frequency. </summary>
         public string RepaymentFrequency { get; }
         /// <summary> Gets the liability category. </summary>
         public string LiabilityCategory { get; }
-        /// <summary> Gets the liability category id. </summary>
-        public int? LiabilityCategoryId { get; }
+        /// <summary> Gets the liability sub type. </summary>
+        public string LiabilitySubType { get; }
         /// <summary> Gets the liability type. </summary>
         public string LiabilityType { get; }
         /// <summary> Gets the mortgage priority. </summary>
@@ -102,5 +108,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string CreditorName { get; }
         /// <summary> Gets the loan repayment type. </summary>
         public LiabilityAttributesLoanRepaymentType? LoanRepaymentType { get; }
+        /// <summary> Gets the liability category id. </summary>
+        public int? LiabilityCategoryId { get; }
     }
 }

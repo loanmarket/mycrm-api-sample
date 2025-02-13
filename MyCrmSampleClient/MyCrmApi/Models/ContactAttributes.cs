@@ -28,6 +28,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="businessPhone"></param>
         /// <param name="email"></param>
         /// <param name="secondaryEmail"></param>
+        /// <param name="maritalStatus"></param>
         /// <param name="gender"></param>
         /// <param name="updated"></param>
         /// <param name="hasMarketingConsent"></param>
@@ -35,7 +36,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="isPrimary"></param>
         /// <param name="role"></param>
         /// <param name="created"></param>
-        internal ContactAttributes(string mobile, string title, string firstName, string middleName, string lastName, string preferredName, string homePhone, string businessPhone, string email, string secondaryEmail, ContactAttributesGender? gender, DateTimeOffset? updated, bool? hasMarketingConsent, DateTimeOffset? dateOfBirth, bool? isPrimary, ContactAttributesRole? role, DateTimeOffset? created)
+        internal ContactAttributes(string mobile, string title, string firstName, string middleName, string lastName, string preferredName, string homePhone, string businessPhone, string email, string secondaryEmail, ContactAttributesMaritalStatus? maritalStatus, ContactAttributesGender? gender, DateTimeOffset? updated, bool? hasMarketingConsent, DateTimeOffset? dateOfBirth, bool? isPrimary, ContactAttributesRole? role, DateTimeOffset? created)
         {
             Mobile = mobile;
             Title = title;
@@ -47,6 +48,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             BusinessPhone = businessPhone;
             Email = email;
             SecondaryEmail = secondaryEmail;
+            MaritalStatus = maritalStatus;
             Gender = gender;
             Updated = updated;
             HasMarketingConsent = hasMarketingConsent;
@@ -76,6 +78,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string Email { get; set; }
         /// <summary> Gets or sets the secondary email. </summary>
         public string SecondaryEmail { get; set; }
+        /// <summary> Gets or sets the marital status. </summary>
+        public ContactAttributesMaritalStatus? MaritalStatus { get; set; }
         /// <summary> Gets or sets the gender. </summary>
         public ContactAttributesGender? Gender { get; set; }
         /// <summary> Gets the updated. </summary>

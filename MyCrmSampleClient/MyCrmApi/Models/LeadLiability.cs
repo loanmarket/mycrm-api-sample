@@ -22,6 +22,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <summary> Initializes a new instance of LeadLiability. </summary>
         /// <param name="lid"></param>
         /// <param name="liabilityTypeId"></param>
+        /// <param name="liabilitySubTypeId"></param>
         /// <param name="description"></param>
         /// <param name="accountName"></param>
         /// <param name="bsb"></param>
@@ -38,10 +39,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="mortgagePriority"></param>
         /// <param name="asset"></param>
         /// <param name="ownership"></param>
-        internal LeadLiability(string lid, int? liabilityTypeId, string description, string accountName, string bsb, string accountNumber, double? value, double? limit, double? repayments, Frequency? repaymentFrequency, double? interestRate, bool? interestTaxDeductible, string creditorName, int? loanTerm, LiabilityRepaymentType? loanRepaymentType, MortgagePriority? mortgagePriority, LeadAssetReference asset, IList<LeadContactReference> ownership)
+        internal LeadLiability(string lid, int? liabilityTypeId, int? liabilitySubTypeId, string description, string accountName, string bsb, string accountNumber, double? value, double? limit, double? repayments, Frequency? repaymentFrequency, double? interestRate, bool? interestTaxDeductible, string creditorName, int? loanTerm, LiabilityRepaymentType? loanRepaymentType, MortgagePriority? mortgagePriority, LeadAssetReference asset, IList<LeadContactReference> ownership)
         {
             Lid = lid;
             LiabilityTypeId = liabilityTypeId;
+            LiabilitySubTypeId = liabilitySubTypeId;
             Description = description;
             AccountName = accountName;
             Bsb = bsb;
@@ -64,6 +66,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public string Lid { get; set; }
         /// <summary> Gets or sets the liability type id. </summary>
         public int? LiabilityTypeId { get; set; }
+        /// <summary> Gets or sets the liability sub type id. </summary>
+        public int? LiabilitySubTypeId { get; set; }
         /// <summary> Gets or sets the description. </summary>
         public string Description { get; set; }
         /// <summary> Gets or sets the account name. </summary>

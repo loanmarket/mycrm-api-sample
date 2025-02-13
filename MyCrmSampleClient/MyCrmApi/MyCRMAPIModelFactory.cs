@@ -542,6 +542,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="businessPhone"></param>
         /// <param name="email"></param>
         /// <param name="secondaryEmail"></param>
+        /// <param name="maritalStatus"></param>
         /// <param name="gender"></param>
         /// <param name="updated"></param>
         /// <param name="hasMarketingConsent"></param>
@@ -550,9 +551,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="role"></param>
         /// <param name="created"></param>
         /// <returns> A new <see cref="Models.ContactAttributes"/> instance for mocking. </returns>
-        public static ContactAttributes ContactAttributes(string mobile = null, string title = null, string firstName = null, string middleName = null, string lastName = null, string preferredName = null, string homePhone = null, string businessPhone = null, string email = null, string secondaryEmail = null, ContactAttributesGender? gender = null, DateTimeOffset? updated = null, bool? hasMarketingConsent = null, DateTimeOffset? dateOfBirth = null, bool? isPrimary = null, ContactAttributesRole? role = null, DateTimeOffset? created = null)
+        public static ContactAttributes ContactAttributes(string mobile = null, string title = null, string firstName = null, string middleName = null, string lastName = null, string preferredName = null, string homePhone = null, string businessPhone = null, string email = null, string secondaryEmail = null, ContactAttributesMaritalStatus? maritalStatus = null, ContactAttributesGender? gender = null, DateTimeOffset? updated = null, bool? hasMarketingConsent = null, DateTimeOffset? dateOfBirth = null, bool? isPrimary = null, ContactAttributesRole? role = null, DateTimeOffset? created = null)
         {
-            return new ContactAttributes(mobile, title, firstName, middleName, lastName, preferredName, homePhone, businessPhone, email, secondaryEmail, gender, updated, hasMarketingConsent, dateOfBirth, isPrimary, role, created);
+            return new ContactAttributes(mobile, title, firstName, middleName, lastName, preferredName, homePhone, businessPhone, email, secondaryEmail, maritalStatus, gender, updated, hasMarketingConsent, dateOfBirth, isPrimary, role, created);
         }
 
         /// <summary> Initializes a new instance of AssetTypesDocument. </summary>
@@ -1607,14 +1608,15 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="description"></param>
         /// <param name="value"></param>
         /// <param name="incomeTypeId"></param>
+        /// <param name="incomeVerification"></param>
         /// <param name="frequency"></param>
         /// <param name="incomeCategory"></param>
         /// <param name="incomeType"></param>
         /// <param name="incomeCategoryId"></param>
         /// <returns> A new <see cref="Models.IncomeAttributes"/> instance for mocking. </returns>
-        public static IncomeAttributes IncomeAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, string description = null, double? value = null, int? incomeTypeId = null, string frequency = null, string incomeCategory = null, string incomeType = null, int? incomeCategoryId = null)
+        public static IncomeAttributes IncomeAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, string description = null, double? value = null, int? incomeTypeId = null, string incomeVerification = null, string frequency = null, string incomeCategory = null, string incomeType = null, int? incomeCategoryId = null)
         {
-            return new IncomeAttributes(updated, created, description, value, incomeTypeId, frequency, incomeCategory, incomeType, incomeCategoryId);
+            return new IncomeAttributes(updated, created, description, value, incomeTypeId, incomeVerification, frequency, incomeCategory, incomeType, incomeCategoryId);
         }
 
         /// <summary> Initializes a new instance of IncomeDocument. </summary>
@@ -1706,6 +1708,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="mobile"></param>
         /// <param name="contactMatchExisting"></param>
         /// <param name="gender"></param>
+        /// <param name="maritalStatus"></param>
         /// <param name="hasMarketingConsent"></param>
         /// <param name="isGuarantor"></param>
         /// <param name="isDependant"></param>
@@ -1737,9 +1740,9 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="customStatusName"></param>
         /// <param name="dealStatus"></param>
         /// <returns> A new <see cref="Models.LeadAttributes"/> instance for mocking. </returns>
-        public static LeadAttributes LeadAttributes(DateTimeOffset? dateOfBirth = null, LeadAttributesTitle? title = null, string firstName = null, string preferredName = null, string lastName = null, string email = null, string mobile = null, LeadAttributesContactMatchExisting? contactMatchExisting = null, LeadAttributesGender? gender = null, bool? hasMarketingConsent = null, bool? isGuarantor = null, bool? isDependant = null, bool? isPrimary = null, string streetAddress = null, string suburb = null, string state = null, string postCode = null, string country = null, LeadAttributesAddressType? addressType = null, string formattedAddress = null, string dealName = null, string noteTitle = null, string noteDetails = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, string sourceSystemUrl = null, int? sourceId = null, int? sourceCategoryId = null, string sourceReferrerId = null, string sourceAdditionalDetails = null, string externalReference = null, string externalIntegration = null, bool? externalIntegrationAllowCreate = null, bool? sendNotification = null, string customStatusName = null, LeadAttributesDealStatus? dealStatus = null)
+        public static LeadAttributes LeadAttributes(DateTimeOffset? dateOfBirth = null, LeadAttributesTitle? title = null, string firstName = null, string preferredName = null, string lastName = null, string email = null, string mobile = null, LeadAttributesContactMatchExisting? contactMatchExisting = null, LeadAttributesGender? gender = null, LeadAttributesMaritalStatus? maritalStatus = null, bool? hasMarketingConsent = null, bool? isGuarantor = null, bool? isDependant = null, bool? isPrimary = null, string streetAddress = null, string suburb = null, string state = null, string postCode = null, string country = null, LeadAttributesAddressType? addressType = null, string formattedAddress = null, string dealName = null, string noteTitle = null, string noteDetails = null, string utmSource = null, string utmMedium = null, string utmCampaign = null, string utmTerm = null, string utmContent = null, string sourceSystemUrl = null, int? sourceId = null, int? sourceCategoryId = null, string sourceReferrerId = null, string sourceAdditionalDetails = null, string externalReference = null, string externalIntegration = null, bool? externalIntegrationAllowCreate = null, bool? sendNotification = null, string customStatusName = null, LeadAttributesDealStatus? dealStatus = null)
         {
-            return new LeadAttributes(dateOfBirth, title, firstName, preferredName, lastName, email, mobile, contactMatchExisting, gender, hasMarketingConsent, isGuarantor, isDependant, isPrimary, streetAddress, suburb, state, postCode, country, addressType, formattedAddress, dealName, noteTitle, noteDetails, utmSource, utmMedium, utmCampaign, utmTerm, utmContent, sourceSystemUrl, sourceId, sourceCategoryId, sourceReferrerId, sourceAdditionalDetails, externalReference, externalIntegration, externalIntegrationAllowCreate, sendNotification, customStatusName, dealStatus);
+            return new LeadAttributes(dateOfBirth, title, firstName, preferredName, lastName, email, mobile, contactMatchExisting, gender, maritalStatus, hasMarketingConsent, isGuarantor, isDependant, isPrimary, streetAddress, suburb, state, postCode, country, addressType, formattedAddress, dealName, noteTitle, noteDetails, utmSource, utmMedium, utmCampaign, utmTerm, utmContent, sourceSystemUrl, sourceId, sourceCategoryId, sourceReferrerId, sourceAdditionalDetails, externalReference, externalIntegration, externalIntegrationAllowCreate, sendNotification, customStatusName, dealStatus);
         }
 
         /// <summary> Initializes a new instance of LiabilitiesDocument. </summary>
@@ -1787,18 +1790,20 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="isAccountDetailsKnown"></param>
         /// <param name="liabilityTypeId"></param>
         /// <param name="loanTerm"></param>
+        /// <param name="liabilitySubTypeId"></param>
         /// <param name="repaymentFrequency"></param>
         /// <param name="liabilityCategory"></param>
-        /// <param name="liabilityCategoryId"></param>
+        /// <param name="liabilitySubType"></param>
         /// <param name="liabilityType"></param>
         /// <param name="mortgagePriority"></param>
         /// <param name="updated"></param>
         /// <param name="creditorName"></param>
         /// <param name="loanRepaymentType"></param>
+        /// <param name="liabilityCategoryId"></param>
         /// <returns> A new <see cref="Models.LiabilityAttributes"/> instance for mocking. </returns>
-        public static LiabilityAttributes LiabilityAttributes(DateTimeOffset? created = null, double? repayment = null, double? value = null, double? limit = null, string accountName = null, string accountNumber = null, string bsb = null, bool? interestTaxDeductible = null, double? interestRate = null, bool? isAccountDetailsKnown = null, int? liabilityTypeId = null, int? loanTerm = null, string repaymentFrequency = null, string liabilityCategory = null, int? liabilityCategoryId = null, string liabilityType = null, string mortgagePriority = null, DateTimeOffset? updated = null, string creditorName = null, LiabilityAttributesLoanRepaymentType? loanRepaymentType = null)
+        public static LiabilityAttributes LiabilityAttributes(DateTimeOffset? created = null, double? repayment = null, double? value = null, double? limit = null, string accountName = null, string accountNumber = null, string bsb = null, bool? interestTaxDeductible = null, double? interestRate = null, bool? isAccountDetailsKnown = null, int? liabilityTypeId = null, int? loanTerm = null, int? liabilitySubTypeId = null, string repaymentFrequency = null, string liabilityCategory = null, string liabilitySubType = null, string liabilityType = null, string mortgagePriority = null, DateTimeOffset? updated = null, string creditorName = null, LiabilityAttributesLoanRepaymentType? loanRepaymentType = null, int? liabilityCategoryId = null)
         {
-            return new LiabilityAttributes(created, repayment, value, limit, accountName, accountNumber, bsb, interestTaxDeductible, interestRate, isAccountDetailsKnown, liabilityTypeId, loanTerm, repaymentFrequency, liabilityCategory, liabilityCategoryId, liabilityType, mortgagePriority, updated, creditorName, loanRepaymentType);
+            return new LiabilityAttributes(created, repayment, value, limit, accountName, accountNumber, bsb, interestTaxDeductible, interestRate, isAccountDetailsKnown, liabilityTypeId, loanTerm, liabilitySubTypeId, repaymentFrequency, liabilityCategory, liabilitySubType, liabilityType, mortgagePriority, updated, creditorName, loanRepaymentType, liabilityCategoryId);
         }
 
         /// <summary> Initializes a new instance of LiabilityDocument. </summary>
@@ -2621,6 +2626,46 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public static DealSecurityOwnershipAttributes DealSecurityOwnershipAttributes(double? ownershipPercentage = null)
         {
             return new DealSecurityOwnershipAttributes(ownershipPercentage);
+        }
+
+        /// <summary> Initializes a new instance of LiabilitySubTypesDocument. </summary>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="jsonApi"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="links"></param>
+        /// <param name="data"></param>
+        /// <param name="included"></param>
+        /// <returns> A new <see cref="Models.LiabilitySubTypesDocument"/> instance for mocking. </returns>
+        public static LiabilitySubTypesDocument LiabilitySubTypesDocument(IReadOnlyDictionary<string, object> meta = null, IReadOnlyDictionary<string, object> jsonApi = null, LiabilitySubTypesDocumentLinks links = null, IEnumerable<LiabilitySubType> data = null, IEnumerable<IncludedResource> included = null)
+        {
+            meta ??= new Dictionary<string, object>();
+            jsonApi ??= new Dictionary<string, object>();
+            data ??= new List<LiabilitySubType>();
+            included ??= new List<IncludedResource>();
+
+            return new LiabilitySubTypesDocument(meta, jsonApi, links, data?.ToList(), included?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of LiabilitySubType. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="attributes"></param>
+        /// <param name="relationships"> Any object. </param>
+        /// <param name="links"></param>
+        /// <param name="meta"> Dictionary of &lt;any&gt;. </param>
+        /// <returns> A new <see cref="Models.LiabilitySubType"/> instance for mocking. </returns>
+        public static LiabilitySubType LiabilitySubType(string type = null, string id = null, LiabilitySubTypeAttributes attributes = null, object relationships = null, LiabilitySubTypeLinks links = null, IReadOnlyDictionary<string, object> meta = null)
+        {
+            meta ??= new Dictionary<string, object>();
+
+            return new LiabilitySubType(type, id, attributes, relationships, links, meta);
+        }
+
+        /// <summary> Initializes a new instance of LiabilitySubTypeAttributes. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.LiabilitySubTypeAttributes"/> instance for mocking. </returns>
+        public static LiabilitySubTypeAttributes LiabilitySubTypeAttributes(string name = null)
+        {
+            return new LiabilitySubTypeAttributes(name);
         }
 
         /// <summary> Initializes a new instance of DealStructureImportantDate. </summary>

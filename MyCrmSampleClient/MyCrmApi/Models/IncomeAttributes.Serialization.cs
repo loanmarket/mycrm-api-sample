@@ -50,6 +50,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> description = default;
             Optional<double?> value = default;
             Optional<int?> incomeTypeId = default;
+            Optional<string> incomeVerification = default;
             Optional<string> frequency = default;
             Optional<string> incomeCategory = default;
             Optional<string> incomeType = default;
@@ -106,6 +107,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     incomeTypeId = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("incomeVerification"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        incomeVerification = null;
+                        continue;
+                    }
+                    incomeVerification = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("frequency"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -147,7 +158,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new IncomeAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), description.Value, Optional.ToNullable(value), Optional.ToNullable(incomeTypeId), frequency.Value, incomeCategory.Value, incomeType.Value, Optional.ToNullable(incomeCategoryId));
+            return new IncomeAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), description.Value, Optional.ToNullable(value), Optional.ToNullable(incomeTypeId), incomeVerification.Value, frequency.Value, incomeCategory.Value, incomeType.Value, Optional.ToNullable(incomeCategoryId));
         }
     }
 }

@@ -23,17 +23,19 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="description"></param>
         /// <param name="value"></param>
         /// <param name="incomeTypeId"></param>
+        /// <param name="incomeVerification"></param>
         /// <param name="frequency"></param>
         /// <param name="incomeCategory"></param>
         /// <param name="incomeType"></param>
         /// <param name="incomeCategoryId"></param>
-        internal IncomeAttributes(DateTimeOffset? updated, DateTimeOffset? created, string description, double? value, int? incomeTypeId, string frequency, string incomeCategory, string incomeType, int? incomeCategoryId)
+        internal IncomeAttributes(DateTimeOffset? updated, DateTimeOffset? created, string description, double? value, int? incomeTypeId, string incomeVerification, string frequency, string incomeCategory, string incomeType, int? incomeCategoryId)
         {
             Updated = updated;
             Created = created;
             Description = description;
             Value = value;
             IncomeTypeId = incomeTypeId;
+            IncomeVerification = incomeVerification;
             Frequency = frequency;
             IncomeCategory = incomeCategory;
             IncomeType = incomeType;
@@ -50,6 +52,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public double? Value { get; set; }
         /// <summary> Gets the income type id. </summary>
         public int? IncomeTypeId { get; }
+        /// <summary> Gets the income verification. </summary>
+        public string IncomeVerification { get; }
         /// <summary> Gets the frequency. </summary>
         public string Frequency { get; }
         /// <summary> Gets the income category. </summary>

@@ -96,5 +96,66 @@ namespace MyCrmSampleClient.MyCrmApi
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateGetLiabilitySubTypesRequest(int id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jsonapi/liability-types/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/liabilitySubTypes", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.api+json");
+            return message;
+        }
+
+        /// <summary> Where `id` is the identifier of the liability type. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<RelationshipsMultipleDocument>> GetLiabilitySubTypesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetLiabilitySubTypesRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RelationshipsMultipleDocument value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the liability type. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<RelationshipsMultipleDocument> GetLiabilitySubTypes(int id, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetLiabilitySubTypesRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RelationshipsMultipleDocument value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = RelationshipsMultipleDocument.DeserializeRelationshipsMultipleDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 401:
+                    return Response.FromValue((RelationshipsMultipleDocument)null, message.Response);
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
     }
 }

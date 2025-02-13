@@ -14254,6 +14254,172 @@
           }
         }
       }
+    },
+    "/jsonapi/liability-types/{id}/liabilitySubTypes": {
+      "get": {
+        "tags": [
+          "LiabilityTypes"
+        ],
+        "summary": "Gets liabilitySubTypes via a single related liability type",
+        "description": "Where `id` is the identifier of the liability type",
+        "operationId": "LiabilityTypeRelated_Get_LiabilitySubTypes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiabilitySubTypesDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "LiabilityTypes"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "LiabilityTypeRelated_Head_LiabilitySubTypes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/liability-types/{id}/relationships/liabilitySubTypes": {
+      "get": {
+        "tags": [
+          "LiabilityTypes"
+        ],
+        "summary": "Gets a liabilitySubTypes related to a single liability type",
+        "description": "Where `id` is the identifier of the liability type",
+        "operationId": "LiabilityTypeRelationship_Get_LiabilitySubTypes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "LiabilityTypes"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "LiabilityTypeRelationship_Get_Head_LiabilitySubTypes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -16595,6 +16761,14 @@
             "minLength": 0,
             "type": "string",
             "nullable": true
+          },
+          "maritalStatus": {
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MaritalStatus"
+              }
+            ]
           },
           "gender": {
             "type": "string",
@@ -21040,6 +21214,7 @@
             "expense-categories": "#/components/schemas/ExpenseCategory",
             "expense-types": "#/components/schemas/ExpenseType",
             "liability-categories": "#/components/schemas/LiabilityCategory",
+            "liability-sub-types": "#/components/schemas/LiabilitySubType",
             "liability-types": "#/components/schemas/LiabilityType",
             "liabilities": "#/components/schemas/Liability",
             "income-categories": "#/components/schemas/IncomeCategory",
@@ -21155,6 +21330,11 @@
           "incomeTypeId": {
             "type": "integer",
             "format": "int32",
+            "nullable": true,
+            "readOnly": true
+          },
+          "incomeVerification": {
+            "type": "string",
             "nullable": true,
             "readOnly": true
           },
@@ -22027,6 +22207,15 @@
             ],
             "writeOnly": true
           },
+          "maritalStatus": {
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MaritalStatus"
+              }
+            ],
+            "writeOnly": true
+          },
           "hasMarketingConsent": {
             "type": "boolean",
             "nullable": true,
@@ -22259,6 +22448,9 @@
           },
           "gender": {
             "$ref": "#/components/schemas/Gender"
+          },
+          "maritalStatus": {
+            "$ref": "#/components/schemas/MaritalStatus"
           },
           "hasMarketingConsent": {
             "type": "boolean",
@@ -22539,6 +22731,11 @@
             "nullable": true
           },
           "liabilityTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "liabilitySubTypeId": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -22827,6 +23024,12 @@
             "format": "int32",
             "nullable": true
           },
+          "liabilitySubTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "readOnly": true
+          },
           "repaymentFrequency": {
             "type": "string",
             "nullable": true,
@@ -22837,9 +23040,8 @@
             "nullable": true,
             "readOnly": true
           },
-          "liabilityCategoryId": {
-            "type": "integer",
-            "format": "int32",
+          "liabilitySubType": {
+            "type": "string",
             "nullable": true,
             "readOnly": true
           },
@@ -22871,6 +23073,12 @@
                 "$ref": "#/components/schemas/LiabilityRepaymentType"
               }
             ],
+            "readOnly": true
+          },
+          "liabilityCategoryId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
             "readOnly": true
           }
         }
@@ -23084,6 +23292,146 @@
           "modelAsString": true
         }
       },
+      "LiabilitySubType": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/LiabilitySubTypesEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/LiabilitySubTypeAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/LiabilitySubTypeRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LiabilitySubTypeAttributes": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "LiabilitySubTypeDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/LiabilitySubType"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "LiabilitySubTypeRelationships": {
+        "type": "object"
+      },
+      "LiabilitySubTypesDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LiabilitySubType"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "LiabilitySubTypesEntityType": {
+        "enum": [
+          "liability-sub-types"
+        ],
+        "type": "string"
+      },
       "LiabilityType": {
         "required": [
           "type",
@@ -23185,6 +23533,14 @@
               }
             ],
             "writeOnly": true
+          },
+          "liabilitySubTypes": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+              }
+            ],
+            "writeOnly": true
           }
         }
       },
@@ -23255,6 +23611,21 @@
         "type": "string",
         "x-ms-enum": {
           "name": "LoanStructureType",
+          "modelAsString": true
+        }
+      },
+      "MaritalStatus": {
+        "enum": [
+          "Single",
+          "Married",
+          "DeFacto",
+          "Separated",
+          "Divorced",
+          "Widowed"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "MaritalStatus",
           "modelAsString": true
         }
       },
