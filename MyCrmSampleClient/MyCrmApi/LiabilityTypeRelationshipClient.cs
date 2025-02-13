@@ -73,5 +73,41 @@ namespace MyCrmSampleClient.MyCrmApi
                 throw;
             }
         }
+
+        /// <summary> Where `id` is the identifier of the liability type. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RelationshipsMultipleDocument>> GetLiabilitySubTypesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("LiabilityTypeRelationshipClient.GetLiabilitySubTypes");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetLiabilitySubTypesAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Where `id` is the identifier of the liability type. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RelationshipsMultipleDocument> GetLiabilitySubTypes(int id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("LiabilityTypeRelationshipClient.GetLiabilitySubTypes");
+            scope.Start();
+            try
+            {
+                return RestClient.GetLiabilitySubTypes(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

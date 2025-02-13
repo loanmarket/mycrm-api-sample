@@ -34,13 +34,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="dateOfBirthAsString"></param>
         /// <param name="dateOfBirth"></param>
         /// <param name="gender"></param>
+        /// <param name="maritalStatus"></param>
         /// <param name="hasMarketingConsent"></param>
         /// <param name="isGuarantor"></param>
         /// <param name="isDependant"></param>
         /// <param name="isPrimary"></param>
         /// <param name="addresses"></param>
         /// <param name="employments"></param>
-        internal LeadContact(string lid, Title? title, string firstName, string preferredName, string lastName, string email, string mobile, string homePhone, string businessPhone, DateTimeOffset? dateOfBirthAsString, DateTimeOffset? dateOfBirth, Gender? gender, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, IList<LeadAddressReference> addresses, IList<LeadEmploymentReference> employments)
+        internal LeadContact(string lid, Title? title, string firstName, string preferredName, string lastName, string email, string mobile, string homePhone, string businessPhone, DateTimeOffset? dateOfBirthAsString, DateTimeOffset? dateOfBirth, Gender? gender, MaritalStatus? maritalStatus, bool? hasMarketingConsent, bool? isGuarantor, bool? isDependant, bool? isPrimary, IList<LeadAddressReference> addresses, IList<LeadEmploymentReference> employments)
         {
             Lid = lid;
             Title = title;
@@ -54,6 +55,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             DateOfBirthAsString = dateOfBirthAsString;
             DateOfBirth = dateOfBirth;
             Gender = gender;
+            MaritalStatus = maritalStatus;
             HasMarketingConsent = hasMarketingConsent;
             IsGuarantor = isGuarantor;
             IsDependant = isDependant;
@@ -86,6 +88,8 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public DateTimeOffset? DateOfBirth { get; set; }
         /// <summary> Gets or sets the gender. </summary>
         public Gender? Gender { get; set; }
+        /// <summary> Gets or sets the marital status. </summary>
+        public MaritalStatus? MaritalStatus { get; set; }
         /// <summary> Gets or sets the has marketing consent. </summary>
         public bool? HasMarketingConsent { get; set; }
         /// <summary> Gets or sets the is guarantor. </summary>

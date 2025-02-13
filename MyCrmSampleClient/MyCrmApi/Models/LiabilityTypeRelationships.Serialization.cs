@@ -20,12 +20,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("liabilityCategory");
                 writer.WriteObjectValue(LiabilityCategory);
             }
+            if (Optional.IsDefined(LiabilitySubTypes))
+            {
+                writer.WritePropertyName("liabilitySubTypes");
+                writer.WriteObjectValue(LiabilitySubTypes);
+            }
             writer.WriteEndObject();
         }
 
         internal static LiabilityTypeRelationships DeserializeLiabilityTypeRelationships(JsonElement element)
         {
             Optional<LiabilityTypeRelationshipsLiabilityCategory> liabilityCategory = default;
+            Optional<LiabilityTypeRelationshipsLiabilitySubTypes> liabilitySubTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("liabilityCategory"))
@@ -38,8 +44,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     liabilityCategory = LiabilityTypeRelationshipsLiabilityCategory.DeserializeLiabilityTypeRelationshipsLiabilityCategory(property.Value);
                     continue;
                 }
+                if (property.NameEquals("liabilitySubTypes"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    liabilitySubTypes = LiabilityTypeRelationshipsLiabilitySubTypes.DeserializeLiabilityTypeRelationshipsLiabilitySubTypes(property.Value);
+                    continue;
+                }
             }
-            return new LiabilityTypeRelationships(liabilityCategory.Value);
+            return new LiabilityTypeRelationships(liabilityCategory.Value, liabilitySubTypes.Value);
         }
     }
 }

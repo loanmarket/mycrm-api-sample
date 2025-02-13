@@ -40,6 +40,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     writer.WriteNull("liabilityTypeId");
                 }
             }
+            if (Optional.IsDefined(LiabilitySubTypeId))
+            {
+                if (LiabilitySubTypeId != null)
+                {
+                    writer.WritePropertyName("liabilitySubTypeId");
+                    writer.WriteNumberValue(LiabilitySubTypeId.Value);
+                }
+                else
+                {
+                    writer.WriteNull("liabilitySubTypeId");
+                }
+            }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -216,6 +228,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         {
             Optional<string> lid = default;
             Optional<int?> liabilityTypeId = default;
+            Optional<int?> liabilitySubTypeId = default;
             Optional<string> description = default;
             Optional<string> accountName = default;
             Optional<string> bsb = default;
@@ -252,6 +265,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     liabilityTypeId = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("liabilitySubTypeId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        liabilitySubTypeId = null;
+                        continue;
+                    }
+                    liabilitySubTypeId = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -420,7 +443,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new LeadLiability(lid.Value, Optional.ToNullable(liabilityTypeId), description.Value, accountName.Value, bsb.Value, accountNumber.Value, Optional.ToNullable(value), Optional.ToNullable(limit), Optional.ToNullable(repayments), Optional.ToNullable(repaymentFrequency), Optional.ToNullable(interestRate), Optional.ToNullable(interestTaxDeductible), creditorName.Value, Optional.ToNullable(loanTerm), Optional.ToNullable(loanRepaymentType), Optional.ToNullable(mortgagePriority), asset.Value, Optional.ToList(ownership));
+            return new LeadLiability(lid.Value, Optional.ToNullable(liabilityTypeId), Optional.ToNullable(liabilitySubTypeId), description.Value, accountName.Value, bsb.Value, accountNumber.Value, Optional.ToNullable(value), Optional.ToNullable(limit), Optional.ToNullable(repayments), Optional.ToNullable(repaymentFrequency), Optional.ToNullable(interestRate), Optional.ToNullable(interestTaxDeductible), creditorName.Value, Optional.ToNullable(loanTerm), Optional.ToNullable(loanRepaymentType), Optional.ToNullable(mortgagePriority), asset.Value, Optional.ToList(ownership));
         }
     }
 }

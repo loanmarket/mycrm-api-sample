@@ -147,6 +147,11 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                 writer.WritePropertyName("gender");
                 writer.WriteStringValue(Gender.Value.ToString());
             }
+            if (Optional.IsDefined(MaritalStatus))
+            {
+                writer.WritePropertyName("maritalStatus");
+                writer.WriteStringValue(MaritalStatus.Value.ToString());
+            }
             if (Optional.IsDefined(HasMarketingConsent))
             {
                 if (HasMarketingConsent != null)
@@ -246,6 +251,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<DateTimeOffset?> dateOfBirthAsString = default;
             Optional<DateTimeOffset?> dateOfBirth = default;
             Optional<Gender> gender = default;
+            Optional<MaritalStatus> maritalStatus = default;
             Optional<bool?> hasMarketingConsent = default;
             Optional<bool?> isGuarantor = default;
             Optional<bool?> isDependant = default;
@@ -374,6 +380,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     gender = new Gender(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("maritalStatus"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    maritalStatus = new MaritalStatus(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("hasMarketingConsent"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -445,7 +461,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     continue;
                 }
             }
-            return new LeadContact(lid.Value, Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, homePhone.Value, businessPhone.Value, Optional.ToNullable(dateOfBirthAsString), Optional.ToNullable(dateOfBirth), Optional.ToNullable(gender), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), Optional.ToList(addresses), Optional.ToList(employments));
+            return new LeadContact(lid.Value, Optional.ToNullable(title), firstName.Value, preferredName.Value, lastName.Value, email.Value, mobile.Value, homePhone.Value, businessPhone.Value, Optional.ToNullable(dateOfBirthAsString), Optional.ToNullable(dateOfBirth), Optional.ToNullable(gender), Optional.ToNullable(maritalStatus), Optional.ToNullable(hasMarketingConsent), Optional.ToNullable(isGuarantor), Optional.ToNullable(isDependant), Optional.ToNullable(isPrimary), Optional.ToList(addresses), Optional.ToList(employments));
         }
     }
 }

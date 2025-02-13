@@ -153,14 +153,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<bool?> isAccountDetailsKnown = default;
             Optional<int?> liabilityTypeId = default;
             Optional<int?> loanTerm = default;
+            Optional<int?> liabilitySubTypeId = default;
             Optional<string> repaymentFrequency = default;
             Optional<string> liabilityCategory = default;
-            Optional<int?> liabilityCategoryId = default;
+            Optional<string> liabilitySubType = default;
             Optional<string> liabilityType = default;
             Optional<string> mortgagePriority = default;
             Optional<DateTimeOffset?> updated = default;
             Optional<string> creditorName = default;
             Optional<LiabilityAttributesLoanRepaymentType> loanRepaymentType = default;
+            Optional<int?> liabilityCategoryId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("created"))
@@ -283,6 +285,16 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     loanTerm = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("liabilitySubTypeId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        liabilitySubTypeId = null;
+                        continue;
+                    }
+                    liabilitySubTypeId = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("repaymentFrequency"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -303,14 +315,14 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     liabilityCategory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("liabilityCategoryId"))
+                if (property.NameEquals("liabilitySubType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        liabilityCategoryId = null;
+                        liabilitySubType = null;
                         continue;
                     }
-                    liabilityCategoryId = property.Value.GetInt32();
+                    liabilitySubType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("liabilityType"))
@@ -363,8 +375,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     loanRepaymentType = new LiabilityAttributesLoanRepaymentType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("liabilityCategoryId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        liabilityCategoryId = null;
+                        continue;
+                    }
+                    liabilityCategoryId = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new LiabilityAttributes(Optional.ToNullable(created), Optional.ToNullable(repayment), Optional.ToNullable(value), Optional.ToNullable(limit), accountName.Value, accountNumber.Value, bsb.Value, Optional.ToNullable(interestTaxDeductible), Optional.ToNullable(interestRate), Optional.ToNullable(isAccountDetailsKnown), Optional.ToNullable(liabilityTypeId), Optional.ToNullable(loanTerm), repaymentFrequency.Value, liabilityCategory.Value, Optional.ToNullable(liabilityCategoryId), liabilityType.Value, mortgagePriority.Value, Optional.ToNullable(updated), creditorName.Value, Optional.ToNullable(loanRepaymentType));
+            return new LiabilityAttributes(Optional.ToNullable(created), Optional.ToNullable(repayment), Optional.ToNullable(value), Optional.ToNullable(limit), accountName.Value, accountNumber.Value, bsb.Value, Optional.ToNullable(interestTaxDeductible), Optional.ToNullable(interestRate), Optional.ToNullable(isAccountDetailsKnown), Optional.ToNullable(liabilityTypeId), Optional.ToNullable(loanTerm), Optional.ToNullable(liabilitySubTypeId), repaymentFrequency.Value, liabilityCategory.Value, liabilitySubType.Value, liabilityType.Value, mortgagePriority.Value, Optional.ToNullable(updated), creditorName.Value, Optional.ToNullable(loanRepaymentType), Optional.ToNullable(liabilityCategoryId));
         }
     }
 }

@@ -76,6 +76,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     case "leads": return Lead.DeserializeLead(element);
                     case "liabilities": return Liability.DeserializeLiability(element);
                     case "liability-categories": return LiabilityCategory.DeserializeLiabilityCategory(element);
+                    case "liability-sub-types": return LiabilitySubType.DeserializeLiabilitySubType(element);
                     case "liability-types": return LiabilityType.DeserializeLiabilityType(element);
                     case "organisation-addresses": return OrganisationAddress.DeserializeOrganisationAddress(element);
                     case "organisations": return Organisation.DeserializeOrganisation(element);
