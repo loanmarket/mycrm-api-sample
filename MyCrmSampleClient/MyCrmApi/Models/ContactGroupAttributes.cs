@@ -21,7 +21,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of ContactGroupAttributes. </summary>
-        /// <param name="updated"></param>
+        /// <param name="enquirySourceCategoryId"></param>
         /// <param name="created"></param>
         /// <param name="reviewMonth"></param>
         /// <param name="utmSource"></param>
@@ -31,13 +31,19 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="utmCampaign"></param>
         /// <param name="categories"></param>
         /// <param name="sourceAdditionalDetails"></param>
+        /// <param name="enquirySourceSystemUrl"></param>
+        /// <param name="enquirySourceReferrerName"></param>
+        /// <param name="enquirySourceReferrerOrganisationName"></param>
         /// <param name="contactType"></param>
         /// <param name="notes"></param>
+        /// <param name="updated"></param>
+        /// <param name="enquirySourceId"></param>
         /// <param name="enquirySourceCategory"></param>
         /// <param name="enquirySource"></param>
-        internal ContactGroupAttributes(DateTimeOffset? updated, DateTimeOffset? created, int? reviewMonth, string utmSource, string utmMedium, string utmTerm, string utmContent, string utmCampaign, IReadOnlyList<string> categories, string sourceAdditionalDetails, ContactGroupAttributesContactType? contactType, string notes, string enquirySourceCategory, string enquirySource)
+        /// <param name="enquirySourceReferrerId"></param>
+        internal ContactGroupAttributes(int? enquirySourceCategoryId, DateTimeOffset? created, int? reviewMonth, string utmSource, string utmMedium, string utmTerm, string utmContent, string utmCampaign, IReadOnlyList<string> categories, string sourceAdditionalDetails, string enquirySourceSystemUrl, string enquirySourceReferrerName, string enquirySourceReferrerOrganisationName, ContactGroupAttributesContactType? contactType, string notes, DateTimeOffset? updated, int? enquirySourceId, string enquirySourceCategory, string enquirySource, string enquirySourceReferrerId)
         {
-            Updated = updated;
+            EnquirySourceCategoryId = enquirySourceCategoryId;
             Created = created;
             ReviewMonth = reviewMonth;
             UtmSource = utmSource;
@@ -47,14 +53,20 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             UtmCampaign = utmCampaign;
             Categories = categories;
             SourceAdditionalDetails = sourceAdditionalDetails;
+            EnquirySourceSystemUrl = enquirySourceSystemUrl;
+            EnquirySourceReferrerName = enquirySourceReferrerName;
+            EnquirySourceReferrerOrganisationName = enquirySourceReferrerOrganisationName;
             ContactType = contactType;
             Notes = notes;
+            Updated = updated;
+            EnquirySourceId = enquirySourceId;
             EnquirySourceCategory = enquirySourceCategory;
             EnquirySource = enquirySource;
+            EnquirySourceReferrerId = enquirySourceReferrerId;
         }
 
-        /// <summary> Gets the updated. </summary>
-        public DateTimeOffset? Updated { get; }
+        /// <summary> Gets the enquiry source category id. </summary>
+        public int? EnquirySourceCategoryId { get; }
         /// <summary> Gets the created. </summary>
         public DateTimeOffset? Created { get; }
         /// <summary> Gets or sets the review month. </summary>
@@ -73,13 +85,25 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         public IReadOnlyList<string> Categories { get; }
         /// <summary> Gets or sets the source additional details. </summary>
         public string SourceAdditionalDetails { get; set; }
+        /// <summary> Gets the enquiry source system url. </summary>
+        public string EnquirySourceSystemUrl { get; }
+        /// <summary> Gets the enquiry source referrer name. </summary>
+        public string EnquirySourceReferrerName { get; }
+        /// <summary> Gets the enquiry source referrer organisation name. </summary>
+        public string EnquirySourceReferrerOrganisationName { get; }
         /// <summary> Gets or sets the contact type. </summary>
         public ContactGroupAttributesContactType? ContactType { get; set; }
         /// <summary> Gets or sets the notes. </summary>
         public string Notes { get; set; }
+        /// <summary> Gets the updated. </summary>
+        public DateTimeOffset? Updated { get; }
+        /// <summary> Gets the enquiry source id. </summary>
+        public int? EnquirySourceId { get; }
         /// <summary> Gets the enquiry source category. </summary>
         public string EnquirySourceCategory { get; }
         /// <summary> Gets the enquiry source. </summary>
         public string EnquirySource { get; }
+        /// <summary> Gets the enquiry source referrer id. </summary>
+        public string EnquirySourceReferrerId { get; }
     }
 }

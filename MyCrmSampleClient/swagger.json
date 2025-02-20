@@ -17042,9 +17042,9 @@
       "ContactGroupAttributes": {
         "type": "object",
         "properties": {
-          "updated": {
-            "type": "string",
-            "format": "date-time",
+          "enquirySourceCategoryId": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true,
             "readOnly": true
           },
@@ -17103,6 +17103,27 @@
             "type": "string",
             "nullable": true
           },
+          "enquirySourceSystemUrl": {
+            "maxLength": 400,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "enquirySourceReferrerName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "enquirySourceReferrerOrganisationName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
           "contactType": {
             "type": "string",
             "allOf": [
@@ -17115,12 +17136,29 @@
             "type": "string",
             "nullable": true
           },
+          "updated": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "enquirySourceId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "readOnly": true
+          },
           "enquirySourceCategory": {
             "type": "string",
             "nullable": true,
             "readOnly": true
           },
           "enquirySource": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "enquirySourceReferrerId": {
             "type": "string",
             "nullable": true,
             "readOnly": true

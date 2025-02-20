@@ -123,7 +123,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
 
         internal static ContactGroupAttributes DeserializeContactGroupAttributes(JsonElement element)
         {
-            Optional<DateTimeOffset?> updated = default;
+            Optional<int?> enquirySourceCategoryId = default;
             Optional<DateTimeOffset?> created = default;
             Optional<int?> reviewMonth = default;
             Optional<string> utmSource = default;
@@ -133,20 +133,26 @@ namespace MyCrmSampleClient.MyCrmApi.Models
             Optional<string> utmCampaign = default;
             Optional<IReadOnlyList<string>> categories = default;
             Optional<string> sourceAdditionalDetails = default;
+            Optional<string> enquirySourceSystemUrl = default;
+            Optional<string> enquirySourceReferrerName = default;
+            Optional<string> enquirySourceReferrerOrganisationName = default;
             Optional<ContactGroupAttributesContactType> contactType = default;
             Optional<string> notes = default;
+            Optional<DateTimeOffset?> updated = default;
+            Optional<int?> enquirySourceId = default;
             Optional<string> enquirySourceCategory = default;
             Optional<string> enquirySource = default;
+            Optional<string> enquirySourceReferrerId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("updated"))
+                if (property.NameEquals("enquirySourceCategoryId"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        updated = null;
+                        enquirySourceCategoryId = null;
                         continue;
                     }
-                    updated = property.Value.GetDateTimeOffset("O");
+                    enquirySourceCategoryId = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("created"))
@@ -244,6 +250,36 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     sourceAdditionalDetails = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("enquirySourceSystemUrl"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        enquirySourceSystemUrl = null;
+                        continue;
+                    }
+                    enquirySourceSystemUrl = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("enquirySourceReferrerName"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        enquirySourceReferrerName = null;
+                        continue;
+                    }
+                    enquirySourceReferrerName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("enquirySourceReferrerOrganisationName"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        enquirySourceReferrerOrganisationName = null;
+                        continue;
+                    }
+                    enquirySourceReferrerOrganisationName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("contactType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -262,6 +298,26 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                         continue;
                     }
                     notes = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("updated"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        updated = null;
+                        continue;
+                    }
+                    updated = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("enquirySourceId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        enquirySourceId = null;
+                        continue;
+                    }
+                    enquirySourceId = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("enquirySourceCategory"))
@@ -284,8 +340,18 @@ namespace MyCrmSampleClient.MyCrmApi.Models
                     enquirySource = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("enquirySourceReferrerId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        enquirySourceReferrerId = null;
+                        continue;
+                    }
+                    enquirySourceReferrerId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ContactGroupAttributes(Optional.ToNullable(updated), Optional.ToNullable(created), Optional.ToNullable(reviewMonth), utmSource.Value, utmMedium.Value, utmTerm.Value, utmContent.Value, utmCampaign.Value, Optional.ToList(categories), sourceAdditionalDetails.Value, Optional.ToNullable(contactType), notes.Value, enquirySourceCategory.Value, enquirySource.Value);
+            return new ContactGroupAttributes(Optional.ToNullable(enquirySourceCategoryId), Optional.ToNullable(created), Optional.ToNullable(reviewMonth), utmSource.Value, utmMedium.Value, utmTerm.Value, utmContent.Value, utmCampaign.Value, Optional.ToList(categories), sourceAdditionalDetails.Value, enquirySourceSystemUrl.Value, enquirySourceReferrerName.Value, enquirySourceReferrerOrganisationName.Value, Optional.ToNullable(contactType), notes.Value, Optional.ToNullable(updated), Optional.ToNullable(enquirySourceId), enquirySourceCategory.Value, enquirySource.Value, enquirySourceReferrerId.Value);
         }
     }
 }
