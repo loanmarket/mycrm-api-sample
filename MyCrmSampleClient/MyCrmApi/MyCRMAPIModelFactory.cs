@@ -787,7 +787,7 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         }
 
         /// <summary> Initializes a new instance of ContactGroupAttributes. </summary>
-        /// <param name="updated"></param>
+        /// <param name="enquirySourceCategoryId"></param>
         /// <param name="created"></param>
         /// <param name="reviewMonth"></param>
         /// <param name="utmSource"></param>
@@ -797,16 +797,22 @@ namespace MyCrmSampleClient.MyCrmApi.Models
         /// <param name="utmCampaign"></param>
         /// <param name="categories"></param>
         /// <param name="sourceAdditionalDetails"></param>
+        /// <param name="enquirySourceSystemUrl"></param>
+        /// <param name="enquirySourceReferrerName"></param>
+        /// <param name="enquirySourceReferrerOrganisationName"></param>
         /// <param name="contactType"></param>
         /// <param name="notes"></param>
+        /// <param name="updated"></param>
+        /// <param name="enquirySourceId"></param>
         /// <param name="enquirySourceCategory"></param>
         /// <param name="enquirySource"></param>
+        /// <param name="enquirySourceReferrerId"></param>
         /// <returns> A new <see cref="Models.ContactGroupAttributes"/> instance for mocking. </returns>
-        public static ContactGroupAttributes ContactGroupAttributes(DateTimeOffset? updated = null, DateTimeOffset? created = null, int? reviewMonth = null, string utmSource = null, string utmMedium = null, string utmTerm = null, string utmContent = null, string utmCampaign = null, IEnumerable<string> categories = null, string sourceAdditionalDetails = null, ContactGroupAttributesContactType? contactType = null, string notes = null, string enquirySourceCategory = null, string enquirySource = null)
+        public static ContactGroupAttributes ContactGroupAttributes(int? enquirySourceCategoryId = null, DateTimeOffset? created = null, int? reviewMonth = null, string utmSource = null, string utmMedium = null, string utmTerm = null, string utmContent = null, string utmCampaign = null, IEnumerable<string> categories = null, string sourceAdditionalDetails = null, string enquirySourceSystemUrl = null, string enquirySourceReferrerName = null, string enquirySourceReferrerOrganisationName = null, ContactGroupAttributesContactType? contactType = null, string notes = null, DateTimeOffset? updated = null, int? enquirySourceId = null, string enquirySourceCategory = null, string enquirySource = null, string enquirySourceReferrerId = null)
         {
             categories ??= new List<string>();
 
-            return new ContactGroupAttributes(updated, created, reviewMonth, utmSource, utmMedium, utmTerm, utmContent, utmCampaign, categories?.ToList(), sourceAdditionalDetails, contactType, notes, enquirySourceCategory, enquirySource);
+            return new ContactGroupAttributes(enquirySourceCategoryId, created, reviewMonth, utmSource, utmMedium, utmTerm, utmContent, utmCampaign, categories?.ToList(), sourceAdditionalDetails, enquirySourceSystemUrl, enquirySourceReferrerName, enquirySourceReferrerOrganisationName, contactType, notes, updated, enquirySourceId, enquirySourceCategory, enquirySource, enquirySourceReferrerId);
         }
 
         /// <summary> Initializes a new instance of ContactGroupDocument. </summary>
