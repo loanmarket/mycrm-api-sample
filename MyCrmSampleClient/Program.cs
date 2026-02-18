@@ -1,136 +1,94 @@
-﻿using System;
-using System.Linq;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Kiota.Http.HttpClientLibrary;
 using MyCrmSampleClient.Auth;
-using MyCrmSampleClient.MyCrmApi.Models;
+using MyCrmSampleClient.Console;
+using MyCrmSampleClient.Kiota;
+using MyCrmSampleClient.KiotaExtensions;
 using Serilog;
 
-namespace MyCrmSampleClient
+namespace MyCrmSampleClient;
+
+public class Program
 {
-    class Program
+    static async Task Main(string[] args)
     {
-        static async Task Main(string[] args)
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.SpectreConsole()
+            .CreateLogger();
+
+        try
         {
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .CreateLogger();
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddUserSecrets(typeof(Program).Assembly, optional: true)
+                .AddCommandLine(args)
+                .Build();
 
-            try
+            var authConfig = config.GetSection("Auth").Get<AuthConfig>();
+            var mycrmConfig = config.GetSection("MyCRM").Get<MyCrmConfig>();
+            var stateFilePath = GetDefaultStateFilePath();
+
+            if (!ValidateConfig(authConfig, mycrmConfig))
             {
-                var config = new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json")
-                    .AddUserSecrets(typeof(Program).Assembly)
-                    .AddCommandLine(args)
-                    .Build();
-
-                var authConfig = config.GetSection("Auth").Get<AuthConfig>();
-                var mycrmConfig = config.GetSection("MyCRM").Get<MyCrmConfig>();
-
-                var contactGroup = new ContactGroupAttributes();
-                
-                var contact = new ContactAttributes
-                {
-                    Title = "Mr",
-                    FirstName = "Fred",
-                    LastName = "Flinstone",
-                    PreferredName = "Freddy",
-                    Mobile = "0400123456",
-                    Email = "freddy.flintstone@outlook.com",
-                    Gender = ContactAttributesGender.Male 
-                };
-                
-                var authClient = new AuthClient();
-                var token = await authClient.GetAuthorizationToken(authConfig);
-                if (!token.Success) return;
-
-                var mycrmClient = new MyCrmApiClient(new MyCrmApiClientCredential(token), new MyCrmApiClientOptions(mycrmConfig.AdviserContactId, mycrmConfig.Url));
-                
-                var (groupId, contactId) = await FindOrCreateContact(mycrmClient, contact);
-
-                var contactRefsForGroup = await mycrmClient.ContactGroupRelationship.GetContactsAsync(int.Parse(groupId));
-                Log.Information("Contact References for Contact Group {GroupId} returned {@Details}", groupId, contactRefsForGroup.Value.Data?.Select(x => x.Id));
-
-                var contactsByGroup = mycrmClient.ContactGroupRelated.GetContacts(int.Parse(groupId));
-                Log.Information("Contacts for Contact Group {GroupId} returned {@Details}", groupId, contactsByGroup.Value.Data?.Select(x => x.Attributes));
+                return;
             }
-            catch (Exception ex)
+
+            var authClient = new AuthClient();
+            var token = await authClient.GetAuthorizationToken(authConfig);
+            if (!token.Success)
             {
-                Log.Fatal(ex, "Unexpected error");
+                return;
             }
+
+            var requestAdapter = new HttpClientRequestAdapter(new MyCrmKiotaAuthProvider(token.Token, mycrmConfig.AdviserContactId))
+            {
+                BaseUrl = mycrmConfig.Url.ToString().TrimEnd('/')
+            };
+
+            var mycrmClient = new MyCrmApiClient(requestAdapter);
+
+            JsonApiFluentContext.BaseUrl = requestAdapter.BaseUrl;
+            
+            var console = new SampleConsole(mycrmClient, mycrmConfig, stateFilePath, authConfig.Scopes);
+            
+            await console.Run();
         }
-        
-        private static async Task<(string contactGroupId, string contactId)> FindOrCreateContact(MyCrmApiClient mycrmClient, ContactAttributes contact)
+        catch (Exception ex)
         {
-            var getContactsResp = await mycrmClient.Contacts.GetAsync(filter: 
-                new[] {$"equals({nameof(ContactAttributes.Email).ToCamelCase()},'{contact.Email}')"});
-            
-            if (getContactsResp.Value == null)
-            {
-                Log.Fatal("Get contacts failed {Status}", getContactsResp.GetRawResponse().Status);
-                return (null, null);
-            }
-
-            string contactId, contactGroupId;
-            if (getContactsResp.Value.Data.Count != 0)
-            {
-                contactId = getContactsResp.Value.Data.First().Id;
-                Log.Information("Found existing contact {ContactId}", contactId);
-
-                var getContactGroupsResp =
-                    await mycrmClient.ContactRelationship.GetContactGroupsAsync(int.Parse(contactId));
-
-                if (getContactGroupsResp.Value == null)
-                {
-                    Log.Fatal("Get contacts associated group failed {Status}", getContactGroupsResp.GetRawResponse().Status);
-                    return (null, null);
-                }
-                
-                contactGroupId = getContactGroupsResp.Value.Data.Id;
-            }
-            else
-            {
-                var addGroupResp = await mycrmClient.ContactGroup.PostAsync(
-                    new ContactGroupDocument(
-                        new ContactGroup
-                        {
-                            Attributes = new ContactGroupAttributes()
-                        }
-                    ));
-
-                if (addGroupResp.Value == null)
-                {
-                    Log.Fatal("Add contact group failed {Status}", addGroupResp.GetRawResponse().Status);
-                    return (null, null);
-                }
-            
-                contactGroupId = addGroupResp.Value.Data.Id;
-                Log.Information("Created contact group {ContactGroupId}", contactGroupId);
-                
-                var addContactResp = await mycrmClient.Contact.PostAsync(
-                    new ContactDocument(
-                        new Contact
-                        {
-                            Attributes = contact,
-                            Relationships = new ContactRelationships
-                            {
-                                ContactGroup = new RelationshipsSingleDocument(
-                                    new ResourceIdentifier("contact-groups", contactGroupId))
-                            }
-                        }
-                    ));
-
-                if (addContactResp.Value == null)
-                {
-                    Log.Fatal("Add contact failed {Status}", addContactResp.GetRawResponse().Status);
-                    return (null, null);
-                }
-
-                contactId = addContactResp.Value.Data.Id;
-                Log.Information("Created contact {ContactId}", contactId);
-            }
-
-            return (contactGroupId, contactId);
+            Log.Fatal(ex, "Unexpected error");
         }
+    }
+    
+    private static bool ValidateConfig(AuthConfig authConfig, MyCrmConfig mycrmConfig)
+    {
+        if (authConfig == null || authConfig.Url == null ||
+            string.IsNullOrWhiteSpace(authConfig.ClientID) ||
+            string.IsNullOrWhiteSpace(authConfig.ClientSecret))
+        {
+            Log.Fatal("Missing Auth config. Populate Auth:Url, Auth:ClientID and Auth:ClientSecret");
+            return false;
+        }
+
+        if (mycrmConfig == null || mycrmConfig.Url == null)
+        {
+            Log.Fatal("Missing MyCRM config. Populate MyCRM:Url");
+            return false;
+        }
+
+        return true;
+    }
+    
+    private static string GetDefaultStateFilePath()
+    {
+        var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        if (string.IsNullOrWhiteSpace(appDataPath))
+        {
+            appDataPath = Directory.GetCurrentDirectory();
+        }
+
+        return Path.Combine(appDataPath, "MyCrmSampleClient", "sample-state.json");
     }
 }

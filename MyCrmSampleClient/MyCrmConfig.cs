@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace MyCrmSampleClient
+namespace MyCrmSampleClient;
+
+public class MyCrmConfig
 {
-    public class MyCrmConfig
-    {
-        public Uri Url { get; set; }
-        public int AdviserContactId { get; set; }
-    }
+    public Uri Url { get; set; }
+    public int AdviserContactId { get; set; }
 }
