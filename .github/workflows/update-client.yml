@@ -9,53 +9,54 @@ jobs:
 
     steps:
       - name: Checkout loanmarket/mycrm-api
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: loanmarket/mycrm-api
           token: ${{ secrets.LOAN_MARKET_TOKEN_READ_WRITE }}
-          ref: master
+          ref: main
           path: mycrm-api
 
       - name: Checkout loanmarket/mycrm-api-sample
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          ref: main
+          ref: ${{ github.ref }}
           path: mycrm-api-sample
 
       - name: Copy latest jsonapi openapi spec
         working-directory: ./mycrm-api
         run: |
           set -euo pipefail
-          cat ./MyCRMAPI.WebHost.Tests/ApiSpecTests.ApiSpecIsApproved.jsonapi.approved.json | sed 's/"MyCRM JsonApi"/"MyCRM API"/g' > $GITHUB_WORKSPACE/mycrm-api-sample/MyCrmSampleClient/swagger.json
+          cat ./MyCRMAPI.WebHost.Tests/ApiSpecTests.ApiSpecIsApproved.jsonapi.approved.json | sed 's/"MyCRM JsonApi"/"MyCRM API"/g' | sed 's/SingleOrManyData`1/SingleOrManyData/g' > $GITHUB_WORKSPACE/mycrm-api-sample/MyCrmSampleClient/swagger.json
 
-      - name: Setup Node and NPM
-        uses: actions/setup-node@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
         with:
-          node-version: '16'
+          dotnet-version: '8.x'
 
-      - name: Install autorest
+      - name: Install Kiota
+        working-directory: ./mycrm-api-sample/MyCrmSampleClient
         run: |
           set -euo pipefail
-          npm install -g autorest
+          dotnet tool restore
 
       - name: Build client
         working-directory: ./mycrm-api-sample/MyCrmSampleClient
         run: |
           set -euo pipefail
-          autorest autorest.yml --input-file=swagger.json
+          dotnet tool run kiota update --output ./Generated/KiotaClient --clean-output
 
       - name: Remove loanmarket/mycrm-api local files
-        uses: JesseTG/rm@v1.0.2
+        uses: JesseTG/rm@v1.0.3
         with:
           path: $GITHUB_WORKSPACE/mycrm-api
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v8
         env:
           GITHUB_TOKEN: ${{ secrets.LOAN_MARKET_TOKEN_READ_WRITE }}
         with:
           path: mycrm-api-sample
-          commit-message: Auto-scaffold latest autorest client
+          commit-message: Auto-scaffold latest Kiota client
           branch: chore/update-client
           delete-branch: true
           title: 'Auto-Update Client'
