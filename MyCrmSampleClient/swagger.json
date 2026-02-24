@@ -25207,7 +25207,7 @@
             "$ref": "#/components/schemas/RelationshipLinks"
           },
           "data": {
-            "$ref": "#/components/schemas/SingleOrManyData`1"
+            "$ref": "#/components/schemas/SingleOrManyData"
           },
           "meta": {
             "type": "object",
@@ -25426,7 +25426,7 @@
           }
         }
       },
-      "SingleOrManyData`1": {
+      "SingleOrManyData": {
         "type": "object",
         "properties": {
           "value": {
