@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.4",
   "info": {
     "title": "MyCRM API",
     "version": "v1"
@@ -14639,12 +14639,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -14690,12 +14694,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -15014,12 +15022,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -15059,12 +15071,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -15105,12 +15121,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -15170,12 +15190,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -15282,12 +15306,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -15335,12 +15363,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -15714,12 +15746,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -15814,12 +15850,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -15854,12 +15894,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -15956,12 +16000,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -15996,12 +16044,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -16096,12 +16148,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -16136,12 +16192,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -16182,12 +16242,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -16342,12 +16406,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -16407,12 +16475,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -16611,12 +16683,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -16667,12 +16743,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -16822,12 +16902,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -16911,12 +16995,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -16959,12 +17047,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -17173,12 +17265,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -17240,12 +17336,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -17343,12 +17443,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -17389,12 +17493,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -17490,12 +17598,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -17754,12 +17866,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -17843,12 +17959,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -17891,12 +18011,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -17999,12 +18123,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -18044,12 +18172,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -18154,12 +18286,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -18199,12 +18335,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -18319,12 +18459,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -18367,12 +18511,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -18495,12 +18643,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -18554,12 +18706,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -18594,12 +18750,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -18870,12 +19030,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -18960,12 +19124,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -19014,12 +19182,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -19081,12 +19253,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -19179,12 +19355,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -19313,15 +19493,15 @@
             "nullable": true,
             "readOnly": true
           },
-          "loanTermYears": {
-            "type": "number",
-            "format": "double",
-            "nullable": true,
-            "readOnly": true
-          },
           "fixedRateExpiryDate": {
             "type": "string",
             "format": "date",
+            "nullable": true,
+            "readOnly": true
+          },
+          "loanTermYears": {
+            "type": "number",
+            "format": "double",
             "nullable": true,
             "readOnly": true
           }
@@ -19335,12 +19515,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -19440,12 +19624,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -19490,12 +19678,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -19552,12 +19744,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -19613,12 +19809,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -19666,6 +19866,15 @@
           "name": "Dimension",
           "modelAsString": true
         }
+      },
+      "ElevationModel": {
+        "type": "object",
+        "properties": {
+          "extent": {
+            "$ref": "#/components/schemas/Envelope"
+          }
+        },
+        "additionalProperties": false
       },
       "EmployerType": {
         "enum": [
@@ -19793,12 +20002,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -19839,12 +20052,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -19995,7 +20212,9 @@
           },
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "nullable": true
           }
         },
@@ -20139,12 +20358,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -20239,12 +20462,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -20289,12 +20516,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -20388,12 +20619,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -20438,12 +20673,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -20484,12 +20723,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -20649,12 +20892,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -20695,12 +20942,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -20738,12 +20989,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -20798,12 +21053,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -20988,6 +21247,9 @@
             "format": "int32",
             "readOnly": true
           },
+          "elevationModel": {
+            "$ref": "#/components/schemas/ElevationModel"
+          },
           "geometryServices": {
             "$ref": "#/components/schemas/NtsGeometryServices"
           }
@@ -20995,6 +21257,10 @@
         "additionalProperties": false
       },
       "GeometryOverlay": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GeometryRelate": {
         "type": "object",
         "additionalProperties": false
       },
@@ -21006,12 +21272,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -21109,12 +21379,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -21407,12 +21681,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -21507,12 +21785,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -21557,12 +21839,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -21659,12 +21945,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -21709,12 +21999,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -21775,12 +22069,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -21889,12 +22187,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -21937,12 +22239,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -22544,12 +22850,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -22870,12 +23180,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -22916,12 +23230,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -23129,12 +23447,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -23229,12 +23551,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -23279,12 +23605,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -23392,12 +23722,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -23432,12 +23766,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -23532,12 +23870,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -23590,12 +23932,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -23685,6 +24031,9 @@
           "geometryOverlay": {
             "$ref": "#/components/schemas/GeometryOverlay"
           },
+          "geometryRelate": {
+            "$ref": "#/components/schemas/GeometryRelate"
+          },
           "coordinateEqualityComparer": {
             "$ref": "#/components/schemas/CoordinateEqualityComparer"
           },
@@ -23698,6 +24047,9 @@
           },
           "defaultPrecisionModel": {
             "$ref": "#/components/schemas/PrecisionModel"
+          },
+          "defaultElevationModel": {
+            "$ref": "#/components/schemas/ElevationModel"
           }
         },
         "additionalProperties": false
@@ -23935,12 +24287,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -23975,12 +24331,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -24117,12 +24477,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -24167,12 +24531,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -24278,12 +24646,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -24358,12 +24730,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -24650,12 +25026,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -24690,12 +25070,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -24810,12 +25194,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -24900,12 +25288,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -24950,12 +25342,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -25049,12 +25445,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -25105,12 +25505,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -25148,12 +25552,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -25207,11 +25615,13 @@
             "$ref": "#/components/schemas/RelationshipLinks"
           },
           "data": {
-            "$ref": "#/components/schemas/SingleOrManyData`1"
+            "$ref": "#/components/schemas/SingleOrManyData"
           },
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "nullable": true
           }
         },
@@ -25233,7 +25643,9 @@
           },
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "data": {
@@ -25262,7 +25674,9 @@
           },
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "data": {
@@ -25354,12 +25768,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -25394,12 +25812,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -25426,7 +25848,7 @@
           }
         }
       },
-      "SingleOrManyData`1": {
+      "SingleOrManyData": {
         "type": "object",
         "properties": {
           "value": {
@@ -25451,6 +25873,20 @@
             "$ref": "#/components/schemas/LoanStructureType"
           },
           "amount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "capitaliseLmi": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "lmiPremium": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "amountInclLmi": {
             "type": "number",
             "format": "double",
             "nullable": true
@@ -25719,12 +26155,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {
@@ -25759,12 +26199,16 @@
         "properties": {
           "meta": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "jsonApi": {
             "type": "object",
-            "additionalProperties": { },
+            "additionalProperties": {
+              "nullable": true
+            },
             "readOnly": true
           },
           "links": {

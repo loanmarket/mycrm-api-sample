@@ -15,6 +15,10 @@ namespace MyCrmSampleClient.Kiota.Models
     {
         /// <summary>The amount property</summary>
         public double? Amount { get; set; }
+        /// <summary>The amountInclLmi property</summary>
+        public double? AmountInclLmi { get; set; }
+        /// <summary>The capitaliseLmi property</summary>
+        public bool? CapitaliseLmi { get; set; }
         /// <summary>The fixedRateEndDate property</summary>
         public Date? FixedRateEndDate { get; set; }
         /// <summary>The fixedRateStartDate property</summary>
@@ -25,6 +29,8 @@ namespace MyCrmSampleClient.Kiota.Models
         public Date? InterestOnlyStartDate { get; set; }
         /// <summary>The interestRate property</summary>
         public double? InterestRate { get; set; }
+        /// <summary>The lmiPremium property</summary>
+        public double? LmiPremium { get; set; }
         /// <summary>The loanStructureType property</summary>
         public global::MyCrmSampleClient.Kiota.Models.LoanStructureType? LoanStructureType { get; set; }
         /// <summary>The loanTermYears property</summary>
@@ -64,11 +70,14 @@ namespace MyCrmSampleClient.Kiota.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "amount", n => { Amount = n.GetDoubleValue(); } },
+                { "amountInclLmi", n => { AmountInclLmi = n.GetDoubleValue(); } },
+                { "capitaliseLmi", n => { CapitaliseLmi = n.GetBoolValue(); } },
                 { "fixedRateEndDate", n => { FixedRateEndDate = n.GetDateValue(); } },
                 { "fixedRateStartDate", n => { FixedRateStartDate = n.GetDateValue(); } },
                 { "interestOnlyEndDate", n => { InterestOnlyEndDate = n.GetDateValue(); } },
                 { "interestOnlyStartDate", n => { InterestOnlyStartDate = n.GetDateValue(); } },
                 { "interestRate", n => { InterestRate = n.GetDoubleValue(); } },
+                { "lmiPremium", n => { LmiPremium = n.GetDoubleValue(); } },
                 { "loanStructureType", n => { LoanStructureType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LoanStructureType>(); } },
                 { "loanTermYears", n => { LoanTermYears = n.GetDoubleValue(); } },
                 { "paymentAmount", n => { PaymentAmount = n.GetDoubleValue(); } },
@@ -86,11 +95,14 @@ namespace MyCrmSampleClient.Kiota.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteDoubleValue("amount", Amount);
+            writer.WriteDoubleValue("amountInclLmi", AmountInclLmi);
+            writer.WriteBoolValue("capitaliseLmi", CapitaliseLmi);
             writer.WriteDateValue("fixedRateEndDate", FixedRateEndDate);
             writer.WriteDateValue("fixedRateStartDate", FixedRateStartDate);
             writer.WriteDateValue("interestOnlyEndDate", InterestOnlyEndDate);
             writer.WriteDateValue("interestOnlyStartDate", InterestOnlyStartDate);
             writer.WriteDoubleValue("interestRate", InterestRate);
+            writer.WriteDoubleValue("lmiPremium", LmiPremium);
             writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LoanStructureType>("loanStructureType", LoanStructureType);
             writer.WriteDoubleValue("loanTermYears", LoanTermYears);
             writer.WriteDoubleValue("paymentAmount", PaymentAmount);
