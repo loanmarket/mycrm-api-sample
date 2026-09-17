@@ -123,11 +123,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.DealNotes.Item
         /// <exception cref="global::MyCrmSampleClient.Kiota.Models.ErrorDocument">When receiving a 4XX or 5XX status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<global::MyCrmSampleClient.Kiota.Models.DealNoteDocument?> PatchAsync(global::MyCrmSampleClient.Kiota.Models.DealNoteDocument body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.DealNoteDocument?> PatchAsync(global::MyCrmSampleClient.Kiota.Models.DealNotePatchDocument body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<global::MyCrmSampleClient.Kiota.Models.DealNoteDocument> PatchAsync(global::MyCrmSampleClient.Kiota.Models.DealNoteDocument body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.DealNoteDocument> PatchAsync(global::MyCrmSampleClient.Kiota.Models.DealNotePatchDocument body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             if(ReferenceEquals(body, null)) throw new ArgumentNullException(nameof(body));
@@ -200,11 +200,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.DealNotes.Item
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public RequestInformation ToPatchRequestInformation(global::MyCrmSampleClient.Kiota.Models.DealNoteDocument body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToPatchRequestInformation(global::MyCrmSampleClient.Kiota.Models.DealNotePatchDocument body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default)
         {
 #nullable restore
 #else
-        public RequestInformation ToPatchRequestInformation(global::MyCrmSampleClient.Kiota.Models.DealNoteDocument body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default)
+        public RequestInformation ToPatchRequestInformation(global::MyCrmSampleClient.Kiota.Models.DealNotePatchDocument body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default)
         {
 #endif
             if(ReferenceEquals(body, null)) throw new ArgumentNullException(nameof(body));

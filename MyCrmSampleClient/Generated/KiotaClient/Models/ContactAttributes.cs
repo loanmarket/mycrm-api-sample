@@ -106,10 +106,10 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The role property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public string? Role { get; private set; }
+        public string? Role { get; set; }
 #nullable restore
 #else
-        public string Role { get; private set; }
+        public string Role { get; set; }
 #endif
         /// <summary>The secondaryEmail property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -194,6 +194,7 @@ namespace MyCrmSampleClient.Kiota.Models
             writer.WriteStringValue("middleName", MiddleName);
             writer.WriteStringValue("mobile", Mobile);
             writer.WriteStringValue("preferredName", PreferredName);
+            writer.WriteStringValue("role", Role);
             writer.WriteStringValue("secondaryEmail", SecondaryEmail);
             writer.WriteStringValue("title", Title);
             writer.WriteAdditionalData(AdditionalData);

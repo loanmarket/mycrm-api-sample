@@ -49,6 +49,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 "assets" => new global::MyCrmSampleClient.Kiota.Models.Asset(),
                 "business" => new global::MyCrmSampleClient.Kiota.Models.Business(),
                 "contact-address" => new global::MyCrmSampleClient.Kiota.Models.ContactAddress(),
+                "contact-categories" => new global::MyCrmSampleClient.Kiota.Models.ContactCategory(),
                 "contact-external-references" => new global::MyCrmSampleClient.Kiota.Models.ContactExternalReference(),
                 "contact-groups" => new global::MyCrmSampleClient.Kiota.Models.ContactGroup(),
                 "contact-marketing" => new global::MyCrmSampleClient.Kiota.Models.ContactMarketing(),
@@ -88,6 +89,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 "referrer-organisation" => new global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisation(),
                 "referrers" => new global::MyCrmSampleClient.Kiota.Models.Referrer(),
                 "structured-leads" => new global::MyCrmSampleClient.Kiota.Models.StructuredLead(),
+                "tasks" => new global::MyCrmSampleClient.Kiota.Models.TaskObject(),
                 _ => new global::MyCrmSampleClient.Kiota.Models.IncludedResource(),
             };
         }

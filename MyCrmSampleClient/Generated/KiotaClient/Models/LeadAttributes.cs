@@ -23,6 +23,16 @@ namespace MyCrmSampleClient.Kiota.Models
 #else
         public string AddressType { get; set; }
 #endif
+        /// <summary>The categories property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public List<string>? Categories { get; set; }
+#nullable restore
+#else
+        public List<string> Categories { get; set; }
+#endif
+        /// <summary>The categoriesAllowCreate property</summary>
+        public bool? CategoriesAllowCreate { get; set; }
         /// <summary>The contactMatchExisting property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -307,6 +317,8 @@ namespace MyCrmSampleClient.Kiota.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "addressType", n => { AddressType = n.GetStringValue(); } },
+                { "categories", n => { Categories = n.GetCollectionOfPrimitiveValues<string>()?.AsList(); } },
+                { "categoriesAllowCreate", n => { CategoriesAllowCreate = n.GetBoolValue(); } },
                 { "contactMatchExisting", n => { ContactMatchExisting = n.GetStringValue(); } },
                 { "country", n => { Country = n.GetStringValue(); } },
                 { "customStatusName", n => { CustomStatusName = n.GetStringValue(); } },
@@ -356,6 +368,8 @@ namespace MyCrmSampleClient.Kiota.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteStringValue("addressType", AddressType);
+            writer.WriteCollectionOfPrimitiveValues<string>("categories", Categories);
+            writer.WriteBoolValue("categoriesAllowCreate", CategoriesAllowCreate);
             writer.WriteStringValue("contactMatchExisting", ContactMatchExisting);
             writer.WriteStringValue("country", Country);
             writer.WriteDateValue("dateOfBirth", DateOfBirth);
