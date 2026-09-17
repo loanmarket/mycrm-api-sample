@@ -8,6 +8,7 @@ using MyCrmSampleClient.Kiota.Jsonapi.AssetCategories;
 using MyCrmSampleClient.Kiota.Jsonapi.AssetSubTypes;
 using MyCrmSampleClient.Kiota.Jsonapi.AssetTypes;
 using MyCrmSampleClient.Kiota.Jsonapi.Assets;
+using MyCrmSampleClient.Kiota.Jsonapi.ContactCategories;
 using MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences;
 using MyCrmSampleClient.Kiota.Jsonapi.ContactGroups;
 using MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing;
@@ -33,6 +34,7 @@ using MyCrmSampleClient.Kiota.Jsonapi.Organisations;
 using MyCrmSampleClient.Kiota.Jsonapi.PropertyTypes;
 using MyCrmSampleClient.Kiota.Jsonapi.Referrers;
 using MyCrmSampleClient.Kiota.Jsonapi.StructuredLeads;
+using MyCrmSampleClient.Kiota.Jsonapi.Tasks;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -74,6 +76,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi
         public global::MyCrmSampleClient.Kiota.Jsonapi.AssetTypes.AssetTypesRequestBuilder AssetTypes
         {
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.AssetTypes.AssetTypesRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The contactCategories property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.ContactCategories.ContactCategoriesRequestBuilder ContactCategories
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.ContactCategories.ContactCategoriesRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The contactExternalReferences property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences.ContactExternalReferencesRequestBuilder ContactExternalReferences
@@ -199,6 +206,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi
         public global::MyCrmSampleClient.Kiota.Jsonapi.StructuredLeads.StructuredLeadsRequestBuilder StructuredLeads
         {
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.StructuredLeads.StructuredLeadsRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The tasks property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.Tasks.TasksRequestBuilder Tasks
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.Tasks.TasksRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>
         /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.JsonapiRequestBuilder"/> and sets the default values.
