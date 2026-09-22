@@ -54,6 +54,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 "contact-groups" => new global::MyCrmSampleClient.Kiota.Models.ContactGroup(),
                 "contact-marketing" => new global::MyCrmSampleClient.Kiota.Models.ContactMarketing(),
                 "contacts" => new global::MyCrmSampleClient.Kiota.Models.Contact(),
+                "custom-statuses" => new global::MyCrmSampleClient.Kiota.Models.CustomStatus(),
                 "deal-external-references" => new global::MyCrmSampleClient.Kiota.Models.DealExternalReference(),
                 "deal-important-dates" => new global::MyCrmSampleClient.Kiota.Models.DealImportantDate(),
                 "deal-notes" => new global::MyCrmSampleClient.Kiota.Models.DealNote(),

@@ -22,6 +22,14 @@ namespace MyCrmSampleClient.Kiota.Models
 #else
         public global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument Addresses { get; set; }
 #endif
+        /// <summary>The customStatuses property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument? CustomStatuses { get; set; }
+#nullable restore
+#else
+        public global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument CustomStatuses { get; set; }
+#endif
         /// <summary>
         /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Models.OrganisationRelationships"/> and sets the default values.
         /// </summary>
@@ -48,6 +56,7 @@ namespace MyCrmSampleClient.Kiota.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "addresses", n => { Addresses = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument.CreateFromDiscriminatorValue); } },
+                { "customStatuses", n => { CustomStatuses = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument.CreateFromDiscriminatorValue); } },
             };
         }
         /// <summary>
@@ -58,6 +67,7 @@ namespace MyCrmSampleClient.Kiota.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>("addresses", Addresses);
+            writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>("customStatuses", CustomStatuses);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

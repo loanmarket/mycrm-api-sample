@@ -13,18 +13,34 @@ namespace MyCrmSampleClient.Kiota.Models
     public partial class DealStructureAttributes : IAdditionalDataHolder, IParsable
     #pragma warning restore CS1591
     {
+        /// <summary>The accountNumber property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? AccountNumber { get; set; }
+#nullable restore
+#else
+        public string AccountNumber { get; set; }
+#endif
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>The amount property</summary>
-        public double? Amount { get; private set; }
+        public double? Amount { get; set; }
+        /// <summary>The capitaliseLmi property</summary>
+        public bool? CapitaliseLmi { get; set; }
         /// <summary>The fixedRateBeginDate property</summary>
-        public Date? FixedRateBeginDate { get; private set; }
+        public Date? FixedRateBeginDate { get; set; }
         /// <summary>The fixedRateExpiryDate property</summary>
-        public Date? FixedRateExpiryDate { get; private set; }
+        public Date? FixedRateExpiryDate { get; set; }
         /// <summary>The interestOnlyExpiryDate property</summary>
         public Date? InterestOnlyExpiryDate { get; private set; }
+        /// <summary>The interestOnlyTermYears property</summary>
+        public double? InterestOnlyTermYears { get; set; }
         /// <summary>The interestRate property</summary>
-        public double? InterestRate { get; private set; }
+        public double? InterestRate { get; set; }
+        /// <summary>The isLinkRateExpiry property</summary>
+        public bool? IsLinkRateExpiry { get; set; }
+        /// <summary>The lmiPremium property</summary>
+        public double? LmiPremium { get; set; }
         /// <summary>The loanStructureType property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -34,19 +50,29 @@ namespace MyCrmSampleClient.Kiota.Models
         public string LoanStructureType { get; set; }
 #endif
         /// <summary>The loanTermYears property</summary>
-        public double? LoanTermYears { get; private set; }
+        public double? LoanTermYears { get; set; }
         /// <summary>The paymentAmount property</summary>
-        public double? PaymentAmount { get; private set; }
+        public double? PaymentAmount { get; set; }
+        /// <summary>The rateTermYears property</summary>
+        public int? RateTermYears { get; set; }
         /// <summary>The rateType property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public string? RateType { get; private set; }
+        public string? RateType { get; set; }
 #nullable restore
 #else
-        public string RateType { get; private set; }
+        public string RateType { get; set; }
 #endif
         /// <summary>The rateTypePeriodMonths property</summary>
         public int? RateTypePeriodMonths { get; private set; }
+        /// <summary>The repaymentFrequency property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? RepaymentFrequency { get; set; }
+#nullable restore
+#else
+        public string RepaymentFrequency { get; set; }
+#endif
         /// <summary>
         /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Models.DealStructureAttributes"/> and sets the default values.
         /// </summary>
@@ -72,16 +98,23 @@ namespace MyCrmSampleClient.Kiota.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
+                { "accountNumber", n => { AccountNumber = n.GetStringValue(); } },
                 { "amount", n => { Amount = n.GetDoubleValue(); } },
+                { "capitaliseLmi", n => { CapitaliseLmi = n.GetBoolValue(); } },
                 { "fixedRateBeginDate", n => { FixedRateBeginDate = n.GetDateValue(); } },
                 { "fixedRateExpiryDate", n => { FixedRateExpiryDate = n.GetDateValue(); } },
                 { "interestOnlyExpiryDate", n => { InterestOnlyExpiryDate = n.GetDateValue(); } },
+                { "interestOnlyTermYears", n => { InterestOnlyTermYears = n.GetDoubleValue(); } },
                 { "interestRate", n => { InterestRate = n.GetDoubleValue(); } },
+                { "isLinkRateExpiry", n => { IsLinkRateExpiry = n.GetBoolValue(); } },
+                { "lmiPremium", n => { LmiPremium = n.GetDoubleValue(); } },
                 { "loanStructureType", n => { LoanStructureType = n.GetStringValue(); } },
                 { "loanTermYears", n => { LoanTermYears = n.GetDoubleValue(); } },
                 { "paymentAmount", n => { PaymentAmount = n.GetDoubleValue(); } },
+                { "rateTermYears", n => { RateTermYears = n.GetIntValue(); } },
                 { "rateType", n => { RateType = n.GetStringValue(); } },
                 { "rateTypePeriodMonths", n => { RateTypePeriodMonths = n.GetIntValue(); } },
+                { "repaymentFrequency", n => { RepaymentFrequency = n.GetStringValue(); } },
             };
         }
         /// <summary>
@@ -91,7 +124,21 @@ namespace MyCrmSampleClient.Kiota.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
+            writer.WriteStringValue("accountNumber", AccountNumber);
+            writer.WriteDoubleValue("amount", Amount);
+            writer.WriteBoolValue("capitaliseLmi", CapitaliseLmi);
+            writer.WriteDateValue("fixedRateBeginDate", FixedRateBeginDate);
+            writer.WriteDateValue("fixedRateExpiryDate", FixedRateExpiryDate);
+            writer.WriteDoubleValue("interestOnlyTermYears", InterestOnlyTermYears);
+            writer.WriteDoubleValue("interestRate", InterestRate);
+            writer.WriteBoolValue("isLinkRateExpiry", IsLinkRateExpiry);
+            writer.WriteDoubleValue("lmiPremium", LmiPremium);
             writer.WriteStringValue("loanStructureType", LoanStructureType);
+            writer.WriteDoubleValue("loanTermYears", LoanTermYears);
+            writer.WriteDoubleValue("paymentAmount", PaymentAmount);
+            writer.WriteIntValue("rateTermYears", RateTermYears);
+            writer.WriteStringValue("rateType", RateType);
+            writer.WriteStringValue("repaymentFrequency", RepaymentFrequency);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

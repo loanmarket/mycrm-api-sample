@@ -14,6 +14,14 @@ namespace MyCrmSampleClient.Kiota.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
+        /// <summary>The auRationale property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public global::MyCrmSampleClient.Kiota.Models.AuDealRationale? AuRationale { get; set; }
+#nullable restore
+#else
+        public global::MyCrmSampleClient.Kiota.Models.AuDealRationale AuRationale { get; set; }
+#endif
         /// <summary>The created property</summary>
         public DateTimeOffset? Created { get; private set; }
         /// <summary>The customStatusName property</summary>
@@ -59,10 +67,18 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The name property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public string? Name { get; private set; }
+        public string? Name { get; set; }
 #nullable restore
 #else
-        public string Name { get; private set; }
+        public string Name { get; set; }
+#endif
+        /// <summary>The nzRationale property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public global::MyCrmSampleClient.Kiota.Models.NzDealRationale? NzRationale { get; set; }
+#nullable restore
+#else
+        public global::MyCrmSampleClient.Kiota.Models.NzDealRationale NzRationale { get; set; }
 #endif
         /// <summary>The opportunity property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -109,6 +125,7 @@ namespace MyCrmSampleClient.Kiota.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
+                { "auRationale", n => { AuRationale = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.AuDealRationale>(global::MyCrmSampleClient.Kiota.Models.AuDealRationale.CreateFromDiscriminatorValue); } },
                 { "created", n => { Created = n.GetDateTimeOffsetValue(); } },
                 { "customStatusName", n => { CustomStatusName = n.GetStringValue(); } },
                 { "dates", n => { Dates = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.ImportantDatesSet>(global::MyCrmSampleClient.Kiota.Models.ImportantDatesSet.CreateFromDiscriminatorValue); } },
@@ -116,6 +133,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "dealType", n => { DealType = n.GetStringValue(); } },
                 { "lenderName", n => { LenderName = n.GetStringValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
+                { "nzRationale", n => { NzRationale = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.NzDealRationale>(global::MyCrmSampleClient.Kiota.Models.NzDealRationale.CreateFromDiscriminatorValue); } },
                 { "opportunity", n => { Opportunity = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.Opportunity>(global::MyCrmSampleClient.Kiota.Models.Opportunity.CreateFromDiscriminatorValue); } },
                 { "splits", n => { Splits = n.GetCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.Split>(global::MyCrmSampleClient.Kiota.Models.Split.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "totalLoanAmount", n => { TotalLoanAmount = n.GetDoubleValue(); } },
@@ -129,8 +147,11 @@ namespace MyCrmSampleClient.Kiota.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
+            writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.AuDealRationale>("auRationale", AuRationale);
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.ImportantDatesSet>("dates", Dates);
             writer.WriteStringValue("dealType", DealType);
+            writer.WriteStringValue("name", Name);
+            writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.NzDealRationale>("nzRationale", NzRationale);
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.Opportunity>("opportunity", Opportunity);
             writer.WriteAdditionalData(AdditionalData);
         }

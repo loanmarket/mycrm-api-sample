@@ -13,10 +13,12 @@ using MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences;
 using MyCrmSampleClient.Kiota.Jsonapi.ContactGroups;
 using MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing;
 using MyCrmSampleClient.Kiota.Jsonapi.Contacts;
+using MyCrmSampleClient.Kiota.Jsonapi.CustomStatuses;
 using MyCrmSampleClient.Kiota.Jsonapi.DealExternalReferences;
 using MyCrmSampleClient.Kiota.Jsonapi.DealNotes;
 using MyCrmSampleClient.Kiota.Jsonapi.DealParticipants;
 using MyCrmSampleClient.Kiota.Jsonapi.DealSecurities;
+using MyCrmSampleClient.Kiota.Jsonapi.DealStructures;
 using MyCrmSampleClient.Kiota.Jsonapi.Deals;
 using MyCrmSampleClient.Kiota.Jsonapi.EnquirySources;
 using MyCrmSampleClient.Kiota.Jsonapi.ExpenseCategories;
@@ -102,6 +104,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi
         {
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.Contacts.ContactsRequestBuilder(PathParameters, RequestAdapter);
         }
+        /// <summary>The customStatuses property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.CustomStatuses.CustomStatusesRequestBuilder CustomStatuses
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.CustomStatuses.CustomStatusesRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>The dealExternalReferences property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.DealExternalReferences.DealExternalReferencesRequestBuilder DealExternalReferences
         {
@@ -126,6 +133,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi
         public global::MyCrmSampleClient.Kiota.Jsonapi.DealSecurities.DealSecuritiesRequestBuilder DealSecurities
         {
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.DealSecurities.DealSecuritiesRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The dealStructures property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.DealStructures.DealStructuresRequestBuilder DealStructures
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.DealStructures.DealStructuresRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The enquirySources property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.EnquirySources.EnquirySourcesRequestBuilder EnquirySources

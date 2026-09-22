@@ -4,6 +4,7 @@ using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions;
 using MyCrmSampleClient.Kiota.Jsonapi.Deals.Item.Relationships.Adviser;
 using MyCrmSampleClient.Kiota.Jsonapi.Deals.Item.Relationships.Contacts;
+using MyCrmSampleClient.Kiota.Jsonapi.Deals.Item.Relationships.CustomStatus;
 using MyCrmSampleClient.Kiota.Jsonapi.Deals.Item.Relationships.DealNotes;
 using MyCrmSampleClient.Kiota.Jsonapi.Deals.Item.Relationships.DealScenario;
 using MyCrmSampleClient.Kiota.Jsonapi.Deals.Item.Relationships.DealStructures;
@@ -32,6 +33,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Deals.Item.Relationships
         public global::MyCrmSampleClient.Kiota.Jsonapi.Deals.Item.Relationships.Contacts.ContactsRequestBuilder Contacts
         {
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.Deals.Item.Relationships.Contacts.ContactsRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The customStatus property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.Deals.Item.Relationships.CustomStatus.CustomStatusRequestBuilder CustomStatus
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.Deals.Item.Relationships.CustomStatus.CustomStatusRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The dealNotes property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.Deals.Item.Relationships.DealNotes.DealNotesRequestBuilder DealNotes
