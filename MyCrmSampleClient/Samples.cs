@@ -570,9 +570,9 @@ public class Samples
 
         Log.Information("POST /jsonapi/deal-notes created deal note id={DealNoteId}", dealNoteId);
     
-        var updated = await _console.Client.Jsonapi.DealNotes[dealNoteId].PatchAsync(new DealNoteDocument
+        var updated = await _console.Client.Jsonapi.DealNotes[dealNoteId].PatchAsync(new DealNotePatchDocument
         {
-            Data = new DealNote
+            Data = new DealNotePatch
             {
                 Type = "deal-notes",
                 Id = dealNoteId.ToString(),
