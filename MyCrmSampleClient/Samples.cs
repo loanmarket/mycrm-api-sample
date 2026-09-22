@@ -10,7 +10,7 @@ using Spectre.Console;
 
 namespace MyCrmSampleClient;
 
-public class Samples
+public partial class Samples
 {
     private readonly SampleConsole _console;
 
