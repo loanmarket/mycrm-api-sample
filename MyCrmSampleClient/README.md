@@ -17,6 +17,8 @@ dotnet run
 
 You will be presented with an interactive menu. Use the arrow keys to select a sample and press Enter to run it. Each sample calls the MyCRM API and prints a formatted table of results.
 
+The deal edit samples prompt for values to send and apply them to the deal in shared state. These are live writes. `MyCRM:Url` should be the API host URL, without `/jsonapi`; the generated client adds that path.
+
 ## How it works
 
 ### The Kiota-generated client
@@ -53,7 +55,7 @@ Some samples depend on an ID returned by a previous sample. For example, the `co
 |----------------------|-----------------------------------------------|---------------------------------------------------|
 | `LastContactId`      | `latest-contacts`, `filtered-latest-contacts` | `contact-with-address`, `patch-contact-marketing` |
 | `LastContactGroupId` | `latest-contact-groups`                       | `contact-group-contacts`, `contact-group-emails`  |
-| `LastDealId`         | `latest-deals`, `create-lead`                 | `create-update-deal-note`                         |
+| `LastDealId`         | `latest-deals`, `create-lead`                 | `create-update-deal-note`, `patch-deal-name`, `patch-deal-rationale`, `deal-custom-status`, `change-deal-status`, `create-deal-structure` |
 
 The state file is stored in your local app data directory (e.g. `~/.local/share/MyCrmSampleClient/sample-state.json` on Linux/macOS). You can view or clear the state from the menu.
 
@@ -202,7 +204,30 @@ Fetches the most recently created deals and stores the latest deal ID in shared 
 
 - Querying the `deals` resource, which is one of the more complex (and rate-limit-expensive) resource types
 - The basic attributes of a deal: name, status, lender name, and total loan amount
-- Populating the shared state so the `create-update-deal-note` sample can run
+- Populating the shared state for deal notes, deal edits and status samples
+
+---
+
+### Deal edits and custom statuses
+
+See the [deal guide](../docs/deals.md) for payloads and movement rules; implementations are in [DealSamples.cs](DealSamples.cs) and [DealStructureSamples.cs](DealStructureSamples.cs).
+
+Run `latest-deals` or `create-lead` first, then check `LastDealId` in the menu. Deal edits and structure creation use that deal. BID notes and structure writes require pre-submission; name-only edits are allowed at any status. Structure PATCH prompts for its own structure ID.
+
+| Sample | Action |
+|---|---|
+| `patch-deal-name` | PATCH a new name. |
+| `patch-deal-rationale` | Discover the adviser's country and PATCH AU or NZ BID notes. |
+| `custom-statuses` | List accessible statuses sorted by `sortOrder`. |
+| `deal-custom-status` | Read the deal's current status. |
+| `organisation-custom-statuses` | Prompt for an organisation ID and list its statuses in pipeline order. |
+| `create-deal-structure` | Create a structure on the selected deal, then read it back. |
+| `patch-deal-structure` | Update a structure's repayment amount, then read it back. |
+| `change-deal-status` | PUT a target custom status ID and display the result or error details. |
+
+BID notes are write-only. Status IDs must belong to the deal's organisation. `Run all samples` includes these prompts.
+
+Structure samples require `api.deal-structures.read` plus `api.deal-structures.create` or `api.deal-structures.update` (or broader applicable scopes). The deal's adviser and custom status are read directly through their related-resource endpoints.
 
 ---
 
