@@ -17,11 +17,13 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The categories property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public List<string>? Categories { get; private set; }
+        public List<string>? Categories { get; set; }
 #nullable restore
 #else
-        public List<string> Categories { get; private set; }
+        public List<string> Categories { get; set; }
 #endif
+        /// <summary>The categoriesAllowCreate property</summary>
+        public bool? CategoriesAllowCreate { get; set; }
         /// <summary>The contactType property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -49,16 +51,16 @@ namespace MyCrmSampleClient.Kiota.Models
         public string EnquirySourceCategory { get; private set; }
 #endif
         /// <summary>The enquirySourceCategoryId property</summary>
-        public int? EnquirySourceCategoryId { get; private set; }
+        public int? EnquirySourceCategoryId { get; set; }
         /// <summary>The enquirySourceId property</summary>
-        public int? EnquirySourceId { get; private set; }
+        public int? EnquirySourceId { get; set; }
         /// <summary>The enquirySourceReferrerId property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public string? EnquirySourceReferrerId { get; private set; }
+        public string? EnquirySourceReferrerId { get; set; }
 #nullable restore
 #else
-        public string EnquirySourceReferrerId { get; private set; }
+        public string EnquirySourceReferrerId { get; set; }
 #endif
         /// <summary>The enquirySourceReferrerName property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -170,6 +172,7 @@ namespace MyCrmSampleClient.Kiota.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "categories", n => { Categories = n.GetCollectionOfPrimitiveValues<string>()?.AsList(); } },
+                { "categoriesAllowCreate", n => { CategoriesAllowCreate = n.GetBoolValue(); } },
                 { "contactType", n => { ContactType = n.GetStringValue(); } },
                 { "created", n => { Created = n.GetDateTimeOffsetValue(); } },
                 { "enquirySource", n => { EnquirySource = n.GetStringValue(); } },
@@ -198,7 +201,12 @@ namespace MyCrmSampleClient.Kiota.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
+            writer.WriteCollectionOfPrimitiveValues<string>("categories", Categories);
+            writer.WriteBoolValue("categoriesAllowCreate", CategoriesAllowCreate);
             writer.WriteStringValue("contactType", ContactType);
+            writer.WriteIntValue("enquirySourceCategoryId", EnquirySourceCategoryId);
+            writer.WriteIntValue("enquirySourceId", EnquirySourceId);
+            writer.WriteStringValue("enquirySourceReferrerId", EnquirySourceReferrerId);
             writer.WriteStringValue("notes", Notes);
             writer.WriteIntValue("reviewMonth", ReviewMonth);
             writer.WriteStringValue("sourceAdditionalDetails", SourceAdditionalDetails);
