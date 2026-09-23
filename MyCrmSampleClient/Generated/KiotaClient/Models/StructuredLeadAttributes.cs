@@ -30,6 +30,16 @@ namespace MyCrmSampleClient.Kiota.Models
 #else
         public List<global::MyCrmSampleClient.Kiota.Models.LeadAsset> Assets { get; set; }
 #endif
+        /// <summary>The categories property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public List<string>? Categories { get; set; }
+#nullable restore
+#else
+        public List<string> Categories { get; set; }
+#endif
+        /// <summary>The categoriesAllowCreate property</summary>
+        public bool? CategoriesAllowCreate { get; set; }
         /// <summary>The contacts property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -225,6 +235,8 @@ namespace MyCrmSampleClient.Kiota.Models
             {
                 { "addresses", n => { Addresses = n.GetCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadAddress>(global::MyCrmSampleClient.Kiota.Models.LeadAddress.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "assets", n => { Assets = n.GetCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadAsset>(global::MyCrmSampleClient.Kiota.Models.LeadAsset.CreateFromDiscriminatorValue)?.AsList(); } },
+                { "categories", n => { Categories = n.GetCollectionOfPrimitiveValues<string>()?.AsList(); } },
+                { "categoriesAllowCreate", n => { CategoriesAllowCreate = n.GetBoolValue(); } },
                 { "contacts", n => { Contacts = n.GetCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadContact>(global::MyCrmSampleClient.Kiota.Models.LeadContact.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "customStatusName", n => { CustomStatusName = n.GetStringValue(); } },
                 { "dealName", n => { DealName = n.GetStringValue(); } },
@@ -260,6 +272,8 @@ namespace MyCrmSampleClient.Kiota.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadAddress>("addresses", Addresses);
             writer.WriteCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadAsset>("assets", Assets);
+            writer.WriteCollectionOfPrimitiveValues<string>("categories", Categories);
+            writer.WriteBoolValue("categoriesAllowCreate", CategoriesAllowCreate);
             writer.WriteCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadContact>("contacts", Contacts);
             writer.WriteStringValue("dealName", DealName);
             writer.WriteCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadEmployment>("employments", Employments);
