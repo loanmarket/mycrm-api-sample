@@ -283,7 +283,7 @@
         "tags": [
           "AdviserDetails"
         ],
-        "summary": "Gets advisers via a single related adviser detail",
+        "summary": "Gets adviser via a single related adviser detail",
         "description": "Where `id` is the identifier of the adviser detail",
         "operationId": "AdviserDetailRelated_Get_Advisers",
         "parameters": [
@@ -303,7 +303,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AdvisersDocument"
+                  "$ref": "#/components/schemas/AdviserDocument"
                 }
               }
             }
@@ -556,7 +556,7 @@
         "tags": [
           "AdviserDetails"
         ],
-        "summary": "Gets a advisers related to a single adviser detail",
+        "summary": "Gets a adviser related to a single adviser detail",
         "description": "Where `id` is the identifier of the adviser detail",
         "operationId": "AdviserDetailRelationship_Get_Advisers",
         "parameters": [
@@ -1351,7 +1351,7 @@
         "tags": [
           "ContactGroups"
         ],
-        "summary": "Gets referrers via a single related contact group",
+        "summary": "Gets referrer via a single related contact group",
         "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelated_Get_ReferrerMembers",
         "parameters": [
@@ -1371,7 +1371,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReferrerMembersDocument"
+                  "$ref": "#/components/schemas/ReferrerMemberDocument"
                 }
               }
             }
@@ -1624,7 +1624,7 @@
         "tags": [
           "ContactGroups"
         ],
-        "summary": "Gets referrerOrganisations via a single related contact group",
+        "summary": "Gets referrerOrganisation via a single related contact group",
         "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelated_Get_ReferrerOrganisations",
         "parameters": [
@@ -1644,7 +1644,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReferrerOrganisationsDocument"
+                  "$ref": "#/components/schemas/ReferrerOrganisationDocument"
                 }
               }
             }
@@ -1707,7 +1707,7 @@
         "tags": [
           "ContactGroups"
         ],
-        "summary": "Gets advisers via a single related contact group",
+        "summary": "Gets adviser via a single related contact group",
         "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelated_Get_Advisers",
         "parameters": [
@@ -1727,7 +1727,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AdvisersDocument"
+                  "$ref": "#/components/schemas/AdviserDocument"
                 }
               }
             }
@@ -2063,7 +2063,7 @@
         "tags": [
           "ContactExternalReferences"
         ],
-        "summary": "Gets a integrations related to a single contact external reference",
+        "summary": "Gets a integration related to a single contact external reference",
         "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelationship_Get_Integrations",
         "parameters": [
@@ -2478,7 +2478,7 @@
         "tags": [
           "ContactExternalReferences"
         ],
-        "summary": "Gets integrations via a single related contact external reference",
+        "summary": "Gets integration via a single related contact external reference",
         "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelated_Get_Integrations",
         "parameters": [
@@ -2498,7 +2498,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/IntegrationsDocument"
+                  "$ref": "#/components/schemas/IntegrationDocument"
                 }
               }
             }
@@ -2561,7 +2561,7 @@
         "tags": [
           "ContactExternalReferences"
         ],
-        "summary": "Gets contacts via a single related contact external reference",
+        "summary": "Gets contact via a single related contact external reference",
         "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelated_Get_Contacts",
         "parameters": [
@@ -2581,7 +2581,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactsDocument"
+                  "$ref": "#/components/schemas/ContactDocument"
                 }
               }
             }
@@ -2976,7 +2976,7 @@
         "tags": [
           "ContactExternalReferences"
         ],
-        "summary": "Gets a contacts related to a single contact external reference",
+        "summary": "Gets a contact related to a single contact external reference",
         "description": "Where `id` is the identifier of the contact external reference",
         "operationId": "ContactExternalReferenceRelationship_Get_Contacts",
         "parameters": [
@@ -3508,7 +3508,7 @@
         "tags": [
           "Contacts"
         ],
-        "summary": "Gets contactGroups via a single related contact",
+        "summary": "Gets contactGroup via a single related contact",
         "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelated_Get_ContactGroups",
         "parameters": [
@@ -3528,7 +3528,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactGroupsDocument"
+                  "$ref": "#/components/schemas/ContactGroupDocument"
                 }
               }
             }
@@ -4025,7 +4025,7 @@
         "tags": [
           "Contacts"
         ],
-        "summary": "Gets a contactGroups related to a single contact",
+        "summary": "Gets a contactGroup related to a single contact",
         "description": "Where `id` is the identifier of the contact",
         "operationId": "ContactRelationship_Get_ContactGroups",
         "parameters": [
@@ -4108,7 +4108,7 @@
         "tags": [
           "DealExternalReferences"
         ],
-        "summary": "Gets deals via a single related deal external reference",
+        "summary": "Gets deal via a single related deal external reference",
         "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelated_Get_Deals",
         "parameters": [
@@ -4128,7 +4128,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealsDocument"
+                  "$ref": "#/components/schemas/DealDocument"
                 }
               }
             }
@@ -4523,7 +4523,7 @@
         "tags": [
           "DealExternalReferences"
         ],
-        "summary": "Gets a deals related to a single deal external reference",
+        "summary": "Gets a deal related to a single deal external reference",
         "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelationship_Get_Deals",
         "parameters": [
@@ -4606,7 +4606,7 @@
         "tags": [
           "DealNotes"
         ],
-        "summary": "Gets deals via a single related deal note",
+        "summary": "Gets deal via a single related deal note",
         "description": "Where `id` is the identifier of the deal note",
         "operationId": "DealNoteRelated_Get_Deals",
         "parameters": [
@@ -4626,7 +4626,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealsDocument"
+                  "$ref": "#/components/schemas/DealDocument"
                 }
               }
             }
@@ -4916,7 +4916,7 @@
         "tags": [
           "DealNotes"
         ],
-        "summary": "Gets a deals related to a single deal note",
+        "summary": "Gets a deal related to a single deal note",
         "description": "Where `id` is the identifier of the deal note",
         "operationId": "DealNoteRelationship_Get_Deals",
         "parameters": [
@@ -4999,7 +4999,7 @@
         "tags": [
           "DealParticipants"
         ],
-        "summary": "Gets contacts via a single related participants in a deal",
+        "summary": "Gets contact via a single related participants in a deal",
         "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipantRelated_Get_Contacts",
         "parameters": [
@@ -5019,7 +5019,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactsDocument"
+                  "$ref": "#/components/schemas/ContactDocument"
                 }
               }
             }
@@ -5272,7 +5272,7 @@
         "tags": [
           "DealParticipants"
         ],
-        "summary": "Gets a contacts related to a single participants in a deal",
+        "summary": "Gets a contact related to a single participants in a deal",
         "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipantRelationship_Get_Contacts",
         "parameters": [
@@ -5355,7 +5355,7 @@
         "tags": [
           "Deals"
         ],
-        "summary": "Gets dealScenarios via a single related deal",
+        "summary": "Gets dealScenario via a single related deal",
         "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelated_Get_DealScenarios",
         "parameters": [
@@ -5375,7 +5375,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealScenariosDocument"
+                  "$ref": "#/components/schemas/DealScenarioDocument"
                 }
               }
             }
@@ -5628,7 +5628,7 @@
         "tags": [
           "Deals"
         ],
-        "summary": "Gets a dealScenarios related to a single deal",
+        "summary": "Gets a dealScenario related to a single deal",
         "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Get_DealScenarios",
         "parameters": [
@@ -5711,7 +5711,7 @@
         "tags": [
           "DealSecurities"
         ],
-        "summary": "Gets assets via a single related securities for a deal",
+        "summary": "Gets asset via a single related securities for a deal",
         "description": "Where `id` is the identifier of the securities for a deal",
         "operationId": "DealSecurityRelated_Get_Assets",
         "parameters": [
@@ -5731,7 +5731,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AssetsDocument"
+                  "$ref": "#/components/schemas/AssetDocument"
                 }
               }
             }
@@ -5984,7 +5984,7 @@
         "tags": [
           "DealSecurities"
         ],
-        "summary": "Gets a assets related to a single securities for a deal",
+        "summary": "Gets a asset related to a single securities for a deal",
         "description": "Where `id` is the identifier of the securities for a deal",
         "operationId": "DealSecurityRelationship_Get_Assets",
         "parameters": [
@@ -7133,7 +7133,7 @@
         "tags": [
           "ExpenseTypes"
         ],
-        "summary": "Gets expenseCategories via a single related expense type",
+        "summary": "Gets expenseCategory via a single related expense type",
         "description": "Where `id` is the identifier of the expense type",
         "operationId": "ExpenseTypeRelated_Get_ExpenseCategories",
         "parameters": [
@@ -7153,7 +7153,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ExpenseCategoriesDocument"
+                  "$ref": "#/components/schemas/ExpenseCategoryDocument"
                 }
               }
             }
@@ -7406,7 +7406,7 @@
         "tags": [
           "ExpenseTypes"
         ],
-        "summary": "Gets a expenseCategories related to a single expense type",
+        "summary": "Gets a expenseCategory related to a single expense type",
         "description": "Where `id` is the identifier of the expense type",
         "operationId": "ExpenseTypeRelationship_Get_ExpenseCategories",
         "parameters": [
@@ -7845,7 +7845,7 @@
         "tags": [
           "Incomes"
         ],
-        "summary": "Gets linkedAssets via a single related income",
+        "summary": "Gets linkedAsset via a single related income",
         "description": "Where `id` is the identifier of the income",
         "operationId": "IncomeRelated_Get_Assets",
         "parameters": [
@@ -7865,7 +7865,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AssetsDocument"
+                  "$ref": "#/components/schemas/AssetDocument"
                 }
               }
             }
@@ -8118,7 +8118,7 @@
         "tags": [
           "Incomes"
         ],
-        "summary": "Gets a linkedAssets related to a single income",
+        "summary": "Gets a linkedAsset related to a single income",
         "description": "Where `id` is the identifier of the income",
         "operationId": "IncomeRelationship_Get_Assets",
         "parameters": [
@@ -8201,7 +8201,7 @@
         "tags": [
           "IncomeTypes"
         ],
-        "summary": "Gets incomeCategories via a single related income type",
+        "summary": "Gets incomeCategory via a single related income type",
         "description": "Where `id` is the identifier of the income type",
         "operationId": "IncomeTypeRelated_Get_IncomeCategories",
         "parameters": [
@@ -8221,7 +8221,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/IncomeCategoriesDocument"
+                  "$ref": "#/components/schemas/IncomeCategoryDocument"
                 }
               }
             }
@@ -8474,7 +8474,7 @@
         "tags": [
           "IncomeTypes"
         ],
-        "summary": "Gets a incomeCategories related to a single income type",
+        "summary": "Gets a incomeCategory related to a single income type",
         "description": "Where `id` is the identifier of the income type",
         "operationId": "IncomeTypeRelationship_Get_IncomeCategories",
         "parameters": [
@@ -9055,7 +9055,7 @@
         "tags": [
           "Liabilities"
         ],
-        "summary": "Gets linkedAssets via a single related liabilities",
+        "summary": "Gets linkedAsset via a single related liabilities",
         "description": "Where `id` is the identifier of the liabilities",
         "operationId": "LiabilityRelated_Get_Assets",
         "parameters": [
@@ -9075,7 +9075,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AssetsDocument"
+                  "$ref": "#/components/schemas/AssetDocument"
                 }
               }
             }
@@ -9425,7 +9425,7 @@
         "tags": [
           "Liabilities"
         ],
-        "summary": "Gets a linkedAssets related to a single liabilities",
+        "summary": "Gets a linkedAsset related to a single liabilities",
         "description": "Where `id` is the identifier of the liabilities",
         "operationId": "LiabilityRelationship_Get_Assets",
         "parameters": [
@@ -9864,7 +9864,7 @@
         "tags": [
           "LiabilityTypes"
         ],
-        "summary": "Gets liabilityCategories via a single related liability type",
+        "summary": "Gets liabilityCategory via a single related liability type",
         "description": "Where `id` is the identifier of the liability type",
         "operationId": "LiabilityTypeRelated_Get_LiabilityCategories",
         "parameters": [
@@ -9884,7 +9884,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LiabilityCategoriesDocument"
+                  "$ref": "#/components/schemas/LiabilityCategoryDocument"
                 }
               }
             }
@@ -10137,7 +10137,7 @@
         "tags": [
           "LiabilityTypes"
         ],
-        "summary": "Gets a liabilityCategories related to a single liability type",
+        "summary": "Gets a liabilityCategory related to a single liability type",
         "description": "Where `id` is the identifier of the liability type",
         "operationId": "LiabilityTypeRelationship_Get_LiabilityCategories",
         "parameters": [
@@ -10576,7 +10576,7 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Gets commercialFinanceDiversifiedDeals via a single related task",
+        "summary": "Gets commercialFinanceDiversifiedDeal via a single related task",
         "description": "Where `id` is the identifier of the task",
         "operationId": "TaskRelated_Get_CommercialDeals",
         "parameters": [
@@ -10596,7 +10596,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CommercialDealsDocument"
+                  "$ref": "#/components/schemas/CommercialDealDocument"
                 }
               }
             }
@@ -10849,7 +10849,7 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Gets assetFinanceDiversifiedDeals via a single related task",
+        "summary": "Gets assetFinanceDiversifiedDeal via a single related task",
         "description": "Where `id` is the identifier of the task",
         "operationId": "TaskRelated_Get_AssetDeals",
         "parameters": [
@@ -10869,7 +10869,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AssetDealsDocument"
+                  "$ref": "#/components/schemas/AssetDealDocument"
                 }
               }
             }
@@ -11203,7 +11203,7 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Gets residentialDeals via a single related task",
+        "summary": "Gets residentialDeal via a single related task",
         "description": "Where `id` is the identifier of the task",
         "operationId": "TaskRelated_Get_Deals",
         "parameters": [
@@ -11223,7 +11223,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealsDocument"
+                  "$ref": "#/components/schemas/DealDocument"
                 }
               }
             }
@@ -11286,7 +11286,7 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Gets assignees via a single related task",
+        "summary": "Gets assignee via a single related task",
         "description": "Where `id` is the identifier of the task",
         "operationId": "TaskRelated_Get_Advisers",
         "parameters": [
@@ -11306,7 +11306,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AdvisersDocument"
+                  "$ref": "#/components/schemas/AdviserDocument"
                 }
               }
             }
@@ -11619,7 +11619,7 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Gets a assignees related to a single task",
+        "summary": "Gets a assignee related to a single task",
         "description": "Where `id` is the identifier of the task",
         "operationId": "TaskRelationship_Get_Advisers",
         "parameters": [
@@ -11785,7 +11785,7 @@
         "tags": [
           "Adviser"
         ],
-        "summary": "Gets adviserDetails via a single related adviser",
+        "summary": "Gets adviserDetail via a single related adviser",
         "description": "Where `id` is the identifier of the adviser",
         "operationId": "AdviserRelated_Get_AdviserDetails",
         "parameters": [
@@ -11805,7 +11805,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AdviserDetailsDocument"
+                  "$ref": "#/components/schemas/AdviserDetailDocument"
                 }
               }
             }
@@ -11868,7 +11868,7 @@
         "tags": [
           "Adviser"
         ],
-        "summary": "Gets organisations via a single related adviser",
+        "summary": "Gets organisation via a single related adviser",
         "description": "Where `id` is the identifier of the adviser",
         "operationId": "AdviserRelated_Get_Organisations",
         "parameters": [
@@ -11888,7 +11888,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrganisationsDocument"
+                  "$ref": "#/components/schemas/OrganisationDocument"
                 }
               }
             }
@@ -12117,7 +12117,7 @@
         "tags": [
           "Adviser"
         ],
-        "summary": "Gets a adviserDetails related to a single adviser",
+        "summary": "Gets a adviserDetail related to a single adviser",
         "description": "Where `id` is the identifier of the adviser",
         "operationId": "AdviserRelationship_Get_AdviserDetails",
         "parameters": [
@@ -12200,7 +12200,7 @@
         "tags": [
           "Adviser"
         ],
-        "summary": "Gets a organisations related to a single adviser",
+        "summary": "Gets a organisation related to a single adviser",
         "description": "Where `id` is the identifier of the adviser",
         "operationId": "AdviserRelationship_Get_Organisations",
         "parameters": [
@@ -12532,7 +12532,7 @@
         "tags": [
           "ContactGroups"
         ],
-        "summary": "Gets a advisers related to a single contact group",
+        "summary": "Gets a adviser related to a single contact group",
         "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Get_Advisers",
         "parameters": [
@@ -12615,7 +12615,7 @@
         "tags": [
           "ContactGroups"
         ],
-        "summary": "Gets a referrerOrganisations related to a single contact group",
+        "summary": "Gets a referrerOrganisation related to a single contact group",
         "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Get_ReferrerOrganisations",
         "parameters": [
@@ -12698,7 +12698,7 @@
         "tags": [
           "ContactGroups"
         ],
-        "summary": "Gets a referrers related to a single contact group",
+        "summary": "Gets a referrer related to a single contact group",
         "description": "Where `id` is the identifier of the contact group",
         "operationId": "ContactGroupRelationship_Get_ReferrerMembers",
         "parameters": [
@@ -13445,7 +13445,7 @@
         "tags": [
           "DealExternalReferences"
         ],
-        "summary": "Gets integrations via a single related deal external reference",
+        "summary": "Gets integration via a single related deal external reference",
         "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelated_Get_Integrations",
         "parameters": [
@@ -13465,7 +13465,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/IntegrationsDocument"
+                  "$ref": "#/components/schemas/IntegrationDocument"
                 }
               }
             }
@@ -13528,7 +13528,7 @@
         "tags": [
           "DealExternalReferences"
         ],
-        "summary": "Gets a integrations related to a single deal external reference",
+        "summary": "Gets a integration related to a single deal external reference",
         "description": "Where `id` is the identifier of the deal external reference",
         "operationId": "DealExternalReferenceRelationship_Get_Integrations",
         "parameters": [
@@ -13611,7 +13611,7 @@
         "tags": [
           "DealParticipants"
         ],
-        "summary": "Gets deals via a single related participants in a deal",
+        "summary": "Gets deal via a single related participants in a deal",
         "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipantRelated_Get_Deals",
         "parameters": [
@@ -13631,7 +13631,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealsDocument"
+                  "$ref": "#/components/schemas/DealDocument"
                 }
               }
             }
@@ -13694,7 +13694,7 @@
         "tags": [
           "DealParticipants"
         ],
-        "summary": "Gets a deals related to a single participants in a deal",
+        "summary": "Gets a deal related to a single participants in a deal",
         "description": "Where `id` is the identifier of the participants in a deal",
         "operationId": "DealParticipantRelationship_Get_Deals",
         "parameters": [
@@ -14192,7 +14192,7 @@
         "tags": [
           "Deals"
         ],
-        "summary": "Gets advisers via a single related deal",
+        "summary": "Gets adviser via a single related deal",
         "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelated_Get_Advisers",
         "parameters": [
@@ -14212,7 +14212,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AdvisersDocument"
+                  "$ref": "#/components/schemas/AdviserDocument"
                 }
               }
             }
@@ -14856,7 +14856,7 @@
         "tags": [
           "Deals"
         ],
-        "summary": "Gets a advisers related to a single deal",
+        "summary": "Gets a adviser related to a single deal",
         "description": "Where `id` is the identifier of the deal",
         "operationId": "DealRelationship_Get_Advisers",
         "parameters": [
@@ -15935,7 +15935,7 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Gets a residentialDeals related to a single task",
+        "summary": "Gets a residentialDeal related to a single task",
         "description": "Where `id` is the identifier of the task",
         "operationId": "TaskRelationship_Get_Deals",
         "parameters": [
@@ -16101,7 +16101,7 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Gets a assetFinanceDiversifiedDeals related to a single task",
+        "summary": "Gets a assetFinanceDiversifiedDeal related to a single task",
         "description": "Where `id` is the identifier of the task",
         "operationId": "TaskRelationship_Get_AssetDeals",
         "parameters": [
@@ -16184,7 +16184,7 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Gets a commercialFinanceDiversifiedDeals related to a single task",
+        "summary": "Gets a commercialFinanceDiversifiedDeal related to a single task",
         "description": "Where `id` is the identifier of the task",
         "operationId": "TaskRelationship_Get_CommercialDeals",
         "parameters": [
