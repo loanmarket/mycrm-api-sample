@@ -36,17 +36,17 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.LiabilityTypes.Item.LiabilityCategory
         /// <summary>
         /// Where `id` is the identifier of the liability type
         /// </summary>
-        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Models.LiabilityCategoriesDocument"/></returns>
+        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Models.LiabilityCategoryDocument"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
         /// <exception cref="global::MyCrmSampleClient.Kiota.Models.ErrorDocument">When receiving a 4XX or 5XX status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<global::MyCrmSampleClient.Kiota.Models.LiabilityCategoriesDocument?> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.LiabilityCategoryDocument?> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<global::MyCrmSampleClient.Kiota.Models.LiabilityCategoriesDocument> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.LiabilityCategoryDocument> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             var requestInfo = ToGetRequestInformation(requestConfiguration);
@@ -54,7 +54,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.LiabilityTypes.Item.LiabilityCategory
             {
                 { "XXX", global::MyCrmSampleClient.Kiota.Models.ErrorDocument.CreateFromDiscriminatorValue },
             };
-            return await RequestAdapter.SendAsync<global::MyCrmSampleClient.Kiota.Models.LiabilityCategoriesDocument>(requestInfo, global::MyCrmSampleClient.Kiota.Models.LiabilityCategoriesDocument.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
+            return await RequestAdapter.SendAsync<global::MyCrmSampleClient.Kiota.Models.LiabilityCategoryDocument>(requestInfo, global::MyCrmSampleClient.Kiota.Models.LiabilityCategoryDocument.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// Retrieve headers related to the associated GET request

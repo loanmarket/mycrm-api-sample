@@ -9,7 +9,7 @@ namespace MyCrmSampleClient.Kiota.Models
 {
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     #pragma warning disable CS1591
-    public partial class ReferrerOrganisationsDocument : IAdditionalDataHolder, IParsable
+    public partial class ReferrerOrganisationDocument : IAdditionalDataHolder, IParsable
     #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
@@ -17,10 +17,10 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The data property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public List<global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisation>? Data { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisation? Data { get; set; }
 #nullable restore
 #else
-        public List<global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisation> Data { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisation Data { get; set; }
 #endif
         /// <summary>The included property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -33,10 +33,10 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The jsonApi property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationsDocument_jsonApi? JsonApi { get; private set; }
+        public global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationDocument_jsonApi? JsonApi { get; private set; }
 #nullable restore
 #else
-        public global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationsDocument_jsonApi JsonApi { get; private set; }
+        public global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationDocument_jsonApi JsonApi { get; private set; }
 #endif
         /// <summary>The links property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -49,27 +49,27 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The meta property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationsDocument_meta? Meta { get; private set; }
+        public global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationDocument_meta? Meta { get; private set; }
 #nullable restore
 #else
-        public global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationsDocument_meta Meta { get; private set; }
+        public global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationDocument_meta Meta { get; private set; }
 #endif
         /// <summary>
-        /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationsDocument"/> and sets the default values.
+        /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationDocument"/> and sets the default values.
         /// </summary>
-        public ReferrerOrganisationsDocument()
+        public ReferrerOrganisationDocument()
         {
             AdditionalData = new Dictionary<string, object>();
         }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
-        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationsDocument"/></returns>
+        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationDocument"/></returns>
         /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-        public static global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationsDocument CreateFromDiscriminatorValue(IParseNode parseNode)
+        public static global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationDocument CreateFromDiscriminatorValue(IParseNode parseNode)
         {
             if(ReferenceEquals(parseNode, null)) throw new ArgumentNullException(nameof(parseNode));
-            return new global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationsDocument();
+            return new global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationDocument();
         }
         /// <summary>
         /// The deserialization information for the current model
@@ -79,11 +79,11 @@ namespace MyCrmSampleClient.Kiota.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "data", n => { Data = n.GetCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisation>(global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisation.CreateFromDiscriminatorValue)?.AsList(); } },
+                { "data", n => { Data = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisation>(global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisation.CreateFromDiscriminatorValue); } },
                 { "included", n => { Included = n.GetCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.IncludedResource>(global::MyCrmSampleClient.Kiota.Models.IncludedResource.CreateFromDiscriminatorValue)?.AsList(); } },
-                { "jsonApi", n => { JsonApi = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationsDocument_jsonApi>(global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationsDocument_jsonApi.CreateFromDiscriminatorValue); } },
+                { "jsonApi", n => { JsonApi = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationDocument_jsonApi>(global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationDocument_jsonApi.CreateFromDiscriminatorValue); } },
                 { "links", n => { Links = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.TopLevelLinks>(global::MyCrmSampleClient.Kiota.Models.TopLevelLinks.CreateFromDiscriminatorValue); } },
-                { "meta", n => { Meta = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationsDocument_meta>(global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationsDocument_meta.CreateFromDiscriminatorValue); } },
+                { "meta", n => { Meta = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationDocument_meta>(global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisationDocument_meta.CreateFromDiscriminatorValue); } },
             };
         }
         /// <summary>
@@ -93,7 +93,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisation>("data", Data);
+            writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.ReferrerOrganisation>("data", Data);
             writer.WriteAdditionalData(AdditionalData);
         }
     }
