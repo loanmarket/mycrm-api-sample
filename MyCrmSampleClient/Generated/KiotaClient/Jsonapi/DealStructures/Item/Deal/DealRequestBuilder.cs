@@ -3,68 +3,50 @@
 using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Kiota.Abstractions;
-using MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.Addresses;
-using MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.CustomStatuses;
-using MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.Relationships;
 using MyCrmSampleClient.Kiota.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
-namespace MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item
+namespace MyCrmSampleClient.Kiota.Jsonapi.DealStructures.Item.Deal
 {
     /// <summary>
-    /// Builds and executes requests for operations under \jsonapi\organisations\{id}
+    /// Builds and executes requests for operations under \jsonapi\deal-structures\{id}\deal
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    public partial class OrganisationsItemRequestBuilder : BaseRequestBuilder
+    public partial class DealRequestBuilder : BaseRequestBuilder
     {
-        /// <summary>The addresses property</summary>
-        public global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.Addresses.AddressesRequestBuilder Addresses
-        {
-            get => new global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.Addresses.AddressesRequestBuilder(PathParameters, RequestAdapter);
-        }
-        /// <summary>The customStatuses property</summary>
-        public global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.CustomStatuses.CustomStatusesRequestBuilder CustomStatuses
-        {
-            get => new global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.CustomStatuses.CustomStatusesRequestBuilder(PathParameters, RequestAdapter);
-        }
-        /// <summary>The relationships property</summary>
-        public global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.Relationships.RelationshipsRequestBuilder Relationships
-        {
-            get => new global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.Relationships.RelationshipsRequestBuilder(PathParameters, RequestAdapter);
-        }
         /// <summary>
-        /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.OrganisationsItemRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.DealStructures.Item.Deal.DealRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public OrganisationsItemRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/organisations/{id}", pathParameters)
+        public DealRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/deal-structures/{id}/deal", pathParameters)
         {
         }
         /// <summary>
-        /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.OrganisationsItemRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.DealStructures.Item.Deal.DealRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public OrganisationsItemRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/organisations/{id}", rawUrl)
+        public DealRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/deal-structures/{id}/deal", rawUrl)
         {
         }
         /// <summary>
-        /// Where `id` is the identifier of the organisation
+        /// Where `id` is the identifier of the deal structure
         /// </summary>
-        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Models.OrganisationDocument"/></returns>
+        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Models.DealDocument"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
         /// <exception cref="global::MyCrmSampleClient.Kiota.Models.ErrorDocument">When receiving a 4XX or 5XX status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<global::MyCrmSampleClient.Kiota.Models.OrganisationDocument?> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.DealDocument?> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<global::MyCrmSampleClient.Kiota.Models.OrganisationDocument> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.DealDocument> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             var requestInfo = ToGetRequestInformation(requestConfiguration);
@@ -72,7 +54,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item
             {
                 { "XXX", global::MyCrmSampleClient.Kiota.Models.ErrorDocument.CreateFromDiscriminatorValue },
             };
-            return await RequestAdapter.SendAsync<global::MyCrmSampleClient.Kiota.Models.OrganisationDocument>(requestInfo, global::MyCrmSampleClient.Kiota.Models.OrganisationDocument.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
+            return await RequestAdapter.SendAsync<global::MyCrmSampleClient.Kiota.Models.DealDocument>(requestInfo, global::MyCrmSampleClient.Kiota.Models.DealDocument.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// Retrieve headers related to the associated GET request
@@ -98,7 +80,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item
             return await RequestAdapter.SendPrimitiveAsync<Stream>(requestInfo, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Where `id` is the identifier of the organisation
+        /// Where `id` is the identifier of the deal structure
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -135,18 +117,18 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item
         /// <summary>
         /// Returns a request builder with the provided arbitrary URL. Using this method means any other path or query parameters are ignored.
         /// </summary>
-        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.OrganisationsItemRequestBuilder"/></returns>
+        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.DealStructures.Item.Deal.DealRequestBuilder"/></returns>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
-        public global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.OrganisationsItemRequestBuilder WithUrl(string rawUrl)
+        public global::MyCrmSampleClient.Kiota.Jsonapi.DealStructures.Item.Deal.DealRequestBuilder WithUrl(string rawUrl)
         {
-            return new global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.OrganisationsItemRequestBuilder(rawUrl, RequestAdapter);
+            return new global::MyCrmSampleClient.Kiota.Jsonapi.DealStructures.Item.Deal.DealRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
         /// Configuration for the request such as headers, query parameters, and middleware options.
         /// </summary>
         [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class OrganisationsItemRequestBuilderGetRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
+        public partial class DealRequestBuilderGetRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
         {
         }
         /// <summary>
@@ -154,7 +136,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item
         /// </summary>
         [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class OrganisationsItemRequestBuilderHeadRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
+        public partial class DealRequestBuilderHeadRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
         {
         }
     }
