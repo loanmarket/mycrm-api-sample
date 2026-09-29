@@ -3,6 +3,7 @@
 using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions;
 using MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.Relationships.Addresses;
+using MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.Relationships.CustomStatuses;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -19,6 +20,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.Relationships
         public global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.Relationships.Addresses.AddressesRequestBuilder Addresses
         {
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.Relationships.Addresses.AddressesRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The customStatuses property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.Relationships.CustomStatuses.CustomStatusesRequestBuilder CustomStatuses
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.Relationships.CustomStatuses.CustomStatusesRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>
         /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.Organisations.Item.Relationships.RelationshipsRequestBuilder"/> and sets the default values.

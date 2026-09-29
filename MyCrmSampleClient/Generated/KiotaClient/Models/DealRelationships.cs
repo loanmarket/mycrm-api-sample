@@ -30,6 +30,14 @@ namespace MyCrmSampleClient.Kiota.Models
 #else
         public global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument Contacts { get; set; }
 #endif
+        /// <summary>The customStatus property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument? CustomStatus { get; set; }
+#nullable restore
+#else
+        public global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument CustomStatus { get; set; }
+#endif
         /// <summary>The dealNotes property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -113,6 +121,7 @@ namespace MyCrmSampleClient.Kiota.Models
             {
                 { "adviser", n => { Adviser = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument.CreateFromDiscriminatorValue); } },
                 { "contacts", n => { Contacts = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument.CreateFromDiscriminatorValue); } },
+                { "customStatus", n => { CustomStatus = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument.CreateFromDiscriminatorValue); } },
                 { "dealNotes", n => { DealNotes = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument.CreateFromDiscriminatorValue); } },
                 { "dealScenario", n => { DealScenario = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument.CreateFromDiscriminatorValue); } },
                 { "dealStructures", n => { DealStructures = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument.CreateFromDiscriminatorValue); } },
@@ -131,6 +140,7 @@ namespace MyCrmSampleClient.Kiota.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument>("adviser", Adviser);
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>("contacts", Contacts);
+            writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument>("customStatus", CustomStatus);
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>("dealNotes", DealNotes);
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument>("dealScenario", DealScenario);
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>("dealStructures", DealStructures);

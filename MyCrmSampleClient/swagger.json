@@ -4103,6 +4103,362 @@
         }
       }
     },
+    "/jsonapi/deal-external-references/{id}/relationships/integration": {
+      "get": {
+        "tags": [
+          "DealExternalReferences"
+        ],
+        "summary": "Gets a integration related to a single deal external reference",
+        "description": "Where `id` is the identifier of the deal external reference",
+        "operationId": "DealExternalReferenceRelationship_Get_Integrations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealExternalReferences"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealExternalReferenceRelationship_Get_Head_Integrations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/custom-statuses": {
+      "get": {
+        "tags": [
+          "CustomStatuses"
+        ],
+        "summary": "Gets a collection of custom statuses",
+        "operationId": "CustomStatuses_Get",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "style": "form",
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "style": "form",
+            "explode": false,
+            "allowReserved": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pagination"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomStatusesDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "CustomStatuses"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "CustomStatuses_Head",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/custom-statuses/{id}": {
+      "get": {
+        "tags": [
+          "CustomStatuses"
+        ],
+        "summary": "Gets a single custom status by id",
+        "description": "Where `id` is the identifier of the custom status",
+        "operationId": "CustomStatus_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomStatusDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "CustomStatuses"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "CustomStatus_Head",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-external-references/{id}/integration": {
+      "get": {
+        "tags": [
+          "DealExternalReferences"
+        ],
+        "summary": "Gets integration via a single related deal external reference",
+        "description": "Where `id` is the identifier of the deal external reference",
+        "operationId": "DealExternalReferenceRelated_Get_Integrations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealExternalReferences"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealExternalReferenceRelated_Head_Integrations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/deal-external-references/{id}/deal": {
       "get": {
         "tags": [
@@ -5350,14 +5706,14 @@
         }
       }
     },
-    "/jsonapi/deals/{id}/dealScenario": {
+    "/jsonapi/deals/{id}/customStatus": {
       "get": {
         "tags": [
           "Deals"
         ],
-        "summary": "Gets dealScenario via a single related deal",
+        "summary": "Gets customStatus via a single related deal",
         "description": "Where `id` is the identifier of the deal",
-        "operationId": "DealRelated_Get_DealScenarios",
+        "operationId": "DealRelated_Get_CustomStatuses",
         "parameters": [
           {
             "name": "id",
@@ -5375,7 +5731,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DealScenarioDocument"
+                  "$ref": "#/components/schemas/CustomStatusDocument"
                 }
               }
             }
@@ -5401,7 +5757,146 @@
         ],
         "summary": "Retrieve headers related to the associated GET request",
         "description": "",
-        "operationId": "DealRelated_Head_DealScenarios",
+        "operationId": "DealRelated_Head_CustomStatuses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deals/{id}": {
+      "patch": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Updates the attributes and/or relationships of an existing deal. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
+        "description": "Where `id` is the identifier of the deal",
+        "operationId": "Deal_Patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DealPatchDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealDocument"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Gets a single deal by id",
+        "description": "Where `id` is the identifier of the deal",
+        "operationId": "Deal_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "Deal_Head",
         "parameters": [
           {
             "name": "id",
@@ -5540,97 +6035,14 @@
         }
       }
     },
-    "/jsonapi/deals/{id}": {
+    "/jsonapi/deals/{id}/relationships/customStatus": {
       "get": {
         "tags": [
           "Deals"
         ],
-        "summary": "Gets a single deal by id",
+        "summary": "Gets a customStatus related to a single deal",
         "description": "Where `id` is the identifier of the deal",
-        "operationId": "Deal_Get",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DealDocument"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "head": {
-        "tags": [
-          "Deals"
-        ],
-        "summary": "Retrieve headers related to the associated GET request",
-        "description": "",
-        "operationId": "Deal_Head",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/jsonapi/deals/{id}/relationships/dealScenario": {
-      "get": {
-        "tags": [
-          "Deals"
-        ],
-        "summary": "Gets a dealScenario related to a single deal",
-        "description": "Where `id` is the identifier of the deal",
-        "operationId": "DealRelationship_Get_DealScenarios",
+        "operationId": "DealRelationship_Get_CustomStatuses",
         "parameters": [
           {
             "name": "id",
@@ -5674,7 +6086,7 @@
         ],
         "summary": "Retrieve headers related to the associated GET request",
         "description": "",
-        "operationId": "DealRelationship_Get_Head_DealScenarios",
+        "operationId": "DealRelationship_Get_Head_CustomStatuses",
         "parameters": [
           {
             "name": "id",
@@ -6031,6 +6443,434 @@
         "summary": "Retrieve headers related to the associated GET request",
         "description": "",
         "operationId": "DealSecurityRelationship_Get_Head_Assets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-structures/{id}/deal": {
+      "get": {
+        "tags": [
+          "DealStructures"
+        ],
+        "summary": "Gets deal via a single related deal structure",
+        "description": "Where `id` is the identifier of the deal structure",
+        "operationId": "DealStructureRelated_Get_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealStructures"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealStructureRelated_Head_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deals/{id}/status": {
+      "put": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Changes the custom status of a deal",
+        "description": "Where `id` is the identifier of the deal. The target `CustomStatusId` must belong to the same org as the deal.",
+        "operationId": "DealStatus_ChangeStatus",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DealStatusChangeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealStatusChangeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-structures": {
+      "post": {
+        "tags": [
+          "DealStructures"
+        ],
+        "summary": "Creates a new deal structure with attributes, relationships or both",
+        "operationId": "DealStructure_Post",
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DealStructureCreateDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "headers": {
+              "Location": {
+                "description": "Location of newly created resource",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealStructureCreateDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-structures/{id}": {
+      "patch": {
+        "tags": [
+          "DealStructures"
+        ],
+        "summary": "Updates the attributes and/or relationships of an existing deal structure. Only the values of sent attributes are replaced. And only the values of sent relationships are replaced",
+        "description": "Where `id` is the identifier of the deal structure",
+        "operationId": "DealStructure_Patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DealStructurePatchDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealStructureDocument"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "DealStructures"
+        ],
+        "summary": "Gets a single deal structure by id",
+        "description": "Where `id` is the identifier of the deal structure",
+        "operationId": "DealStructure_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealStructureDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealStructures"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealStructure_Head",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-structures/{id}/relationships/deal": {
+      "get": {
+        "tags": [
+          "DealStructures"
+        ],
+        "summary": "Gets a deal related to a single deal structure",
+        "description": "Where `id` is the identifier of the deal structure",
+        "operationId": "DealStructureRelationship_Get_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealStructures"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealStructureRelationship_Get_Head_Deals",
         "parameters": [
           {
             "name": "id",
@@ -10215,14 +11055,14 @@
         }
       }
     },
-    "/jsonapi/organisations/{id}/addresses": {
+    "/jsonapi/organisations/{id}/customStatuses": {
       "get": {
         "tags": [
           "Organisations"
         ],
-        "summary": "Gets addresses via a single related organisation",
+        "summary": "Gets customStatuses via a single related organisation",
         "description": "Where `id` is the identifier of the organisation",
-        "operationId": "OrganisationRelated_Get_OrganisationAddresses",
+        "operationId": "OrganisationRelated_Get_CustomStatuses",
         "parameters": [
           {
             "name": "id",
@@ -10240,7 +11080,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrganisationAddressesDocument"
+                  "$ref": "#/components/schemas/CustomStatusesDocument"
                 }
               }
             }
@@ -10266,7 +11106,7 @@
         ],
         "summary": "Retrieve headers related to the associated GET request",
         "description": "",
-        "operationId": "OrganisationRelated_Head_OrganisationAddresses",
+        "operationId": "OrganisationRelated_Head_CustomStatuses",
         "parameters": [
           {
             "name": "id",
@@ -10488,14 +11328,14 @@
         }
       }
     },
-    "/jsonapi/organisations/{id}/relationships/addresses": {
+    "/jsonapi/organisations/{id}/relationships/customStatuses": {
       "get": {
         "tags": [
           "Organisations"
         ],
-        "summary": "Gets a addresses related to a single organisation",
+        "summary": "Gets a customStatuses related to a single organisation",
         "description": "Where `id` is the identifier of the organisation",
-        "operationId": "OrganisationRelationship_Get_OrganisationAddresses",
+        "operationId": "OrganisationRelationship_Get_CustomStatuses",
         "parameters": [
           {
             "name": "id",
@@ -10539,7 +11379,7 @@
         ],
         "summary": "Retrieve headers related to the associated GET request",
         "description": "",
-        "operationId": "OrganisationRelationship_Get_Head_OrganisationAddresses",
+        "operationId": "OrganisationRelationship_Get_Head_CustomStatuses",
         "parameters": [
           {
             "name": "id",
@@ -13440,172 +14280,6 @@
         }
       }
     },
-    "/jsonapi/deal-external-references/{id}/integration": {
-      "get": {
-        "tags": [
-          "DealExternalReferences"
-        ],
-        "summary": "Gets integration via a single related deal external reference",
-        "description": "Where `id` is the identifier of the deal external reference",
-        "operationId": "DealExternalReferenceRelated_Get_Integrations",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/IntegrationDocument"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "head": {
-        "tags": [
-          "DealExternalReferences"
-        ],
-        "summary": "Retrieve headers related to the associated GET request",
-        "description": "",
-        "operationId": "DealExternalReferenceRelated_Head_Integrations",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/jsonapi/deal-external-references/{id}/relationships/integration": {
-      "get": {
-        "tags": [
-          "DealExternalReferences"
-        ],
-        "summary": "Gets a integration related to a single deal external reference",
-        "description": "Where `id` is the identifier of the deal external reference",
-        "operationId": "DealExternalReferenceRelationship_Get_Integrations",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      },
-      "head": {
-        "tags": [
-          "DealExternalReferences"
-        ],
-        "summary": "Retrieve headers related to the associated GET request",
-        "description": "",
-        "operationId": "DealExternalReferenceRelationship_Get_Head_Integrations",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "default": {
-            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDocument"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/jsonapi/deal-participants/{id}/deal": {
       "get": {
         "tags": [
@@ -13741,6 +14415,89 @@
         "summary": "Retrieve headers related to the associated GET request",
         "description": "",
         "operationId": "DealParticipantRelationship_Get_Head_Deals",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deals/{id}/dealScenario": {
+      "get": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Gets dealScenario via a single related deal",
+        "description": "Where `id` is the identifier of the deal",
+        "operationId": "DealRelated_Get_DealScenarios",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealScenarioDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealRelated_Head_DealScenarios",
         "parameters": [
           {
             "name": "id",
@@ -14405,6 +15162,89 @@
         "summary": "Retrieve headers related to the associated GET request",
         "description": "",
         "operationId": "DealRelated_Head_DealSecurities",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deals/{id}/relationships/dealScenario": {
+      "get": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Gets a dealScenario related to a single deal",
+        "description": "Where `id` is the identifier of the deal",
+        "operationId": "DealRelationship_Get_DealScenarios",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealRelationship_Get_Head_DealScenarios",
         "parameters": [
           {
             "name": "id",
@@ -15432,6 +16272,172 @@
         }
       }
     },
+    "/jsonapi/deal-structures/{id}/dealImportantDates": {
+      "get": {
+        "tags": [
+          "DealStructures"
+        ],
+        "summary": "Gets dealImportantDates via a single related deal structure",
+        "description": "Where `id` is the identifier of the deal structure",
+        "operationId": "DealStructureRelated_Get_DealStructureImportantDates",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealStructureImportantDatesDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealStructures"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealStructureRelated_Head_DealStructureImportantDates",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-structures/{id}/relationships/dealImportantDates": {
+      "get": {
+        "tags": [
+          "DealStructures"
+        ],
+        "summary": "Gets a dealImportantDates related to a single deal structure",
+        "description": "Where `id` is the identifier of the deal structure",
+        "operationId": "DealStructureRelationship_Get_DealStructureImportantDates",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealStructures"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealStructureRelationship_Get_Head_DealStructureImportantDates",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/integrations/{id}/dealExternalReferences": {
       "get": {
         "tags": [
@@ -15899,6 +16905,172 @@
         "summary": "Retrieve headers related to the associated GET request",
         "description": "",
         "operationId": "LiabilityTypeRelationship_Get_Head_LiabilitySubTypes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/organisations/{id}/addresses": {
+      "get": {
+        "tags": [
+          "Organisations"
+        ],
+        "summary": "Gets addresses via a single related organisation",
+        "description": "Where `id` is the identifier of the organisation",
+        "operationId": "OrganisationRelated_Get_OrganisationAddresses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganisationAddressesDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Organisations"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "OrganisationRelated_Head_OrganisationAddresses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/organisations/{id}/relationships/addresses": {
+      "get": {
+        "tags": [
+          "Organisations"
+        ],
+        "summary": "Gets a addresses related to a single organisation",
+        "description": "Where `id` is the identifier of the organisation",
+        "operationId": "OrganisationRelationship_Get_OrganisationAddresses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Organisations"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "OrganisationRelationship_Get_Head_OrganisationAddresses",
         "parameters": [
           {
             "name": "id",
@@ -18647,6 +19819,16 @@
         ],
         "type": "string"
       },
+      "AuDealRationale": {
+        "type": "object",
+        "properties": {
+          "summary": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Business": {
         "required": [
           "type",
@@ -20693,6 +21875,158 @@
           "modelAsString": true
         }
       },
+      "CustomStatus": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/CustomStatusesEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/CustomStatusAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/CustomStatusRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomStatusAttributes": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 64,
+            "minLength": 0,
+            "type": "string",
+            "readOnly": true
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        }
+      },
+      "CustomStatusDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/CustomStatus"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "CustomStatusRelationships": {
+        "type": "object"
+      },
+      "CustomStatusesDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomStatus"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "CustomStatusesEntityType": {
+        "enum": [
+          "custom-statuses"
+        ],
+        "type": "string"
+      },
       "Deal": {
         "required": [
           "type",
@@ -20760,9 +22094,10 @@
             "readOnly": true
           },
           "name": {
+            "maxLength": 200,
+            "minLength": 0,
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "dealStatus": {
             "type": "string",
@@ -20801,6 +22136,12 @@
                 "$ref": "#/components/schemas/DealType"
               }
             ]
+          },
+          "auRationale": {
+            "$ref": "#/components/schemas/AuDealRationale"
+          },
+          "nzRationale": {
+            "$ref": "#/components/schemas/NzDealRationale"
           }
         }
       },
@@ -22018,6 +23359,9 @@
       "DealRelationships": {
         "type": "object",
         "properties": {
+          "customStatus": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          },
           "dealScenario": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           },
@@ -23031,6 +24375,37 @@
       "DealSecurityTitleIdentityRelationships": {
         "type": "object"
       },
+      "DealStatusChangeRequest": {
+        "required": [
+          "customStatusId"
+        ],
+        "type": "object",
+        "properties": {
+          "customStatusId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DealStatusChangeResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "customStatusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "statusName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "DealStructure": {
         "required": [
           "type",
@@ -23076,11 +24451,10 @@
       "DealStructureAttributes": {
         "type": "object",
         "properties": {
-          "fixedRateBeginDate": {
-            "type": "string",
-            "format": "date",
-            "nullable": true,
-            "readOnly": true
+          "rateTermYears": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "rateTypePeriodMonths": {
             "type": "integer",
@@ -23099,27 +24473,45 @@
           "interestRate": {
             "type": "number",
             "format": "double",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "amount": {
             "type": "number",
             "format": "double",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "rateType": {
             "maxLength": 50,
             "minLength": 0,
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "paymentAmount": {
             "type": "number",
             "format": "double",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
+          },
+          "accountNumber": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "capitaliseLmi": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isLinkRateExpiry": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "repaymentFrequency": {
+            "type": "string",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FrequencyType"
+              }
+            ]
           },
           "interestOnlyExpiryDate": {
             "type": "string",
@@ -23127,17 +24519,121 @@
             "nullable": true,
             "readOnly": true
           },
+          "lmiPremium": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
           "fixedRateExpiryDate": {
             "type": "string",
             "format": "date",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
+          },
+          "fixedRateBeginDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
           },
           "loanTermYears": {
             "type": "number",
             "format": "double",
+            "nullable": true
+          },
+          "interestOnlyTermYears": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        }
+      },
+      "DealStructureCreate": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/DealStructuresEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/DealStructureAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/DealStructureCreateRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DealStructureCreateDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/DealStructureCreate"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
             "nullable": true,
             "readOnly": true
+          }
+        }
+      },
+      "DealStructureCreateRelationships": {
+        "type": "object",
+        "properties": {
+          "deal": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
         }
       },
@@ -23354,6 +24850,92 @@
         ],
         "type": "string"
       },
+      "DealStructurePatch": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/DealStructuresEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/DealStructureAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/DealStructurePatchRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DealStructurePatchDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/DealStructurePatch"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "DealStructurePatchRelationships": {
+        "type": "object"
+      },
       "DealStructureRelationships": {
         "type": "object",
         "properties": {
@@ -23361,12 +24943,7 @@
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           },
           "deal": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/RelationshipsSingleDocument"
-              }
-            ],
-            "writeOnly": true
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
         }
       },
@@ -25261,6 +26838,22 @@
           "modelAsString": true
         }
       },
+      "FrequencyType": {
+        "enum": [
+          "Yearly",
+          "HalfYearly",
+          "Quarterly",
+          "Monthly",
+          "Fortnightly",
+          "Weekly",
+          "HalfMonthly"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "FrequencyType",
+          "modelAsString": true
+        }
+      },
       "Gender": {
         "enum": [
           "Male",
@@ -25709,6 +27302,7 @@
             "deal-securities": "#/components/schemas/DealSecurity",
             "organisation-addresses": "#/components/schemas/OrganisationAddress",
             "organisations": "#/components/schemas/Organisation",
+            "custom-statuses": "#/components/schemas/CustomStatus",
             "referrer-members": "#/components/schemas/ReferrerMember",
             "referrer-organisation": "#/components/schemas/ReferrerOrganisation",
             "contact-groups": "#/components/schemas/ContactGroup",
@@ -29449,6 +31043,28 @@
         },
         "additionalProperties": false
       },
+      "NzDealRationale": {
+        "type": "object",
+        "properties": {
+          "summary": {
+            "type": "string",
+            "nullable": true
+          },
+          "lenderPreferences": {
+            "type": "string",
+            "nullable": true
+          },
+          "loanStructure": {
+            "type": "string",
+            "nullable": true
+          },
+          "productFeatures": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "OgcGeometryType": {
         "enum": [
           "Point",
@@ -30080,6 +31696,9 @@
       "OrganisationRelationships": {
         "type": "object",
         "properties": {
+          "customStatuses": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
           "addresses": {
             "allOf": [
               {
