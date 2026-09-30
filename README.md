@@ -20,6 +20,7 @@ To use the MyCRM API you will need credentials and details supplied by LMG.
   - [Includes](#includes)
   - [Field Selection](#field-selection)
 - [Creating and updating resources](#creating-and-updating-resources)
+- [Editing deals, structures and statuses](#editing-deals-structures-and-statuses)
 - [Real-time Updates via Webhooks](#real-time-updates-via-webhooks)
 - [Rate Limiting](#rate-limiting)
 
@@ -126,7 +127,7 @@ API credentials are not issued for a single user — at a minimum they are issue
 
 Each request should identify which adviser it is acting on behalf of via the `UserId` header. The value is the `AdviserContactId` supplied with your credentials, displayed in the API Settings page within MyCRM or from the `adviser-details` endpoint.
 
-- During write operations (`POST`, `PATCH`, `DELETE`) the `UserId` is recorded as the creator or last modified user of the record. For example, a new lead will be allocated to that adviser. As such, this header is required and a failure to include it will result in a `403 Forbidden` error.
+- During write operations (`POST`, `PATCH`, `PUT`, `DELETE`) the `UserId` identifies the adviser making the change. For example, a new lead will be allocated to that adviser. As such, this header is required and a failure to include it will result in a `403 Forbidden` error.
 - In most `read` operations the `UserId` header has no impact.
 - In some `search` operations including the `UserId` header may limit responses to only records owned by the nominated user. If the `UserId` header is necessary for a `search` endpoint, an error will be returned indicating that the  `UserId` header is missing.
 
@@ -139,19 +140,21 @@ Each request should identify which adviser it is acting on behalf of via the `Us
 | `Accept`        | `application/vnd.api+json` | Tells the server you expect a JSON:API response                  |
 | `Content-Type`  | `application/vnd.api+json` | Required on write requests (`POST`, `PATCH`)                     |
 
+The [deal status change endpoint](docs/deals.md#changing-a-deals-status) uses `application/json` for both `Accept` and `Content-Type` on its `PUT` request.
+
 ## Reviewing the API
 
 You can review our [API specification online](https://api-docs.mycrm.io/) or the full OpenAPI specification is available in [MyCrmSampleClient/swagger.json](MyCrmSampleClient/swagger.json).
 
-The API conforms to the [JSON:API](https://jsonapi.org/) standard, described below.
+Resource endpoints follow the [JSON:API](https://jsonapi.org/) standard, described below. The [deal status change endpoint](docs/deals.md#changing-a-deals-status) uses plain JSON.
 
 ## JSON:API overview
 
-[JSON:API](https://jsonapi.org/) is a standardised convention for structuring REST API responses. All MyCRM API responses follow this format, so understanding it is essential.
+[JSON:API](https://jsonapi.org/) is a standardised convention for structuring REST API responses. MyCRM resource endpoints use this format.
 
 ### Response structure
 
-Every response wraps its payload in a `data` field. Each resource object has four key parts:
+A successful JSON:API resource response wraps its payload in a `data` field. Each resource object has four key parts:
 
 | Field           | Purpose                                                                                                           |
 |-----------------|-------------------------------------------------------------------------------------------------------------------|
@@ -378,7 +381,7 @@ Things to note:
 
 ## Creating and updating resources
 
-Write operations follow the same JSON:API structure as read responses. The request body must always include a `data` object with a `type` and, for updates, an `id`.
+Resource creation (`POST`) and partial updates (`PATCH`) follow the same JSON:API structure as read responses. The request body must include a `data` object with a `type` and, for updates, an `id`.
 
 ### Creating a resource (POST)
 
@@ -448,6 +451,10 @@ UserId: {AdviserContactId}
 ```
 
 A successful update returns `200 OK` with the updated resource, or `204 No Content` if no body is returned.
+
+## Editing deals, structures and statuses
+
+See the [deal guide](docs/deals.md) for editing names and BID notes, creating and editing deal structures, and reading or changing custom statuses, with [runnable C# examples](MyCrmSampleClient/README.md#deal-edits-and-custom-statuses).
 
 ## Real-time Updates via Webhooks
 

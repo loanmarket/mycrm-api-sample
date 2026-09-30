@@ -260,13 +260,8 @@ public class SampleConsole
 
         var start = DateTime.Now;
         
-        await AnsiConsole.Status()
-            .Spinner(Spinner.Known.Dots)
-            .StartAsync($"Executing [aqua]{escapedSampleName}[/]...", async _ =>
-            {
-                Log.Information("Calling {ApiMethod} ...", sample.ApiMethod);
-                await sample.RunAsync();
-            });
+        Log.Information("Calling {ApiMethod} ...", sample.ApiMethod);
+        await sample.RunAsync();
 
         AnsiConsole.MarkupLine($"[Grey]Completed[/] [Aqua]{escapedSampleName}[/] in [Grey]{(DateTime.Now - start).TotalSeconds:0.00}s[/]");
         
