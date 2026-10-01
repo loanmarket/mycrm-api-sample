@@ -68,13 +68,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public string FirstName { get; set; }
 #endif
         /// <summary>The gender property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? Gender { get; set; }
-#nullable restore
-#else
-        public string Gender { get; set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.AdviserDetailAttributes_gender? Gender { get; set; }
         /// <summary>The homePhone property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -174,7 +168,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "email", n => { Email = n.GetStringValue(); } },
                 { "fax", n => { Fax = n.GetStringValue(); } },
                 { "firstName", n => { FirstName = n.GetStringValue(); } },
-                { "gender", n => { Gender = n.GetStringValue(); } },
+                { "gender", n => { Gender = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.AdviserDetailAttributes_gender>(); } },
                 { "homePhone", n => { HomePhone = n.GetStringValue(); } },
                 { "lastName", n => { LastName = n.GetStringValue(); } },
                 { "middleName", n => { MiddleName = n.GetStringValue(); } },
@@ -200,7 +194,7 @@ namespace MyCrmSampleClient.Kiota.Models
             writer.WriteStringValue("email", Email);
             writer.WriteStringValue("fax", Fax);
             writer.WriteStringValue("firstName", FirstName);
-            writer.WriteStringValue("gender", Gender);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.AdviserDetailAttributes_gender>("gender", Gender);
             writer.WriteStringValue("homePhone", HomePhone);
             writer.WriteStringValue("lastName", LastName);
             writer.WriteStringValue("middleName", MiddleName);

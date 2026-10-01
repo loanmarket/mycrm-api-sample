@@ -22,7 +22,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ContactMarketingItemRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-marketing/{id}", pathParameters)
+        public ContactMarketingItemRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-marketing/{id}{?fields*,include}", pathParameters)
         {
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ContactMarketingItemRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-marketing/{id}", rawUrl)
+        public ContactMarketingItemRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-marketing/{id}{?fields*,include}", rawUrl)
         {
         }
         /// <summary>
@@ -42,11 +42,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item
         /// <exception cref="global::MyCrmSampleClient.Kiota.Models.ErrorDocument">When receiving a 4XX or 5XX status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument?> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument?> GetAsync(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item.ContactMarketingItemRequestBuilder.ContactMarketingItemRequestBuilderGetQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument> GetAsync(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item.ContactMarketingItemRequestBuilder.ContactMarketingItemRequestBuilderGetQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             var requestInfo = ToGetRequestInformation(requestConfiguration);
@@ -66,11 +66,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item
         /// <exception cref="global::MyCrmSampleClient.Kiota.Models.ErrorDocument">When receiving a 4XX or 5XX status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument?> PatchAsync(global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument?> PatchAsync(global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item.ContactMarketingItemRequestBuilder.ContactMarketingItemRequestBuilderPatchQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument> PatchAsync(global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument> PatchAsync(global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item.ContactMarketingItemRequestBuilder.ContactMarketingItemRequestBuilderPatchQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             if(ReferenceEquals(body, null)) throw new ArgumentNullException(nameof(body));
@@ -88,11 +88,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item.ContactMarketingItemRequestBuilder.ContactMarketingItemRequestBuilderGetQueryParameters>>? requestConfiguration = default)
         {
 #nullable restore
 #else
-        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default)
+        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item.ContactMarketingItemRequestBuilder.ContactMarketingItemRequestBuilderGetQueryParameters>> requestConfiguration = default)
         {
 #endif
             var requestInfo = new RequestInformation(Method.GET, UrlTemplate, PathParameters);
@@ -108,11 +108,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public RequestInformation ToPatchRequestInformation(global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToPatchRequestInformation(global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item.ContactMarketingItemRequestBuilder.ContactMarketingItemRequestBuilderPatchQueryParameters>>? requestConfiguration = default)
         {
 #nullable restore
 #else
-        public RequestInformation ToPatchRequestInformation(global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default)
+        public RequestInformation ToPatchRequestInformation(global::MyCrmSampleClient.Kiota.Models.ContactMarketingDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item.ContactMarketingItemRequestBuilder.ContactMarketingItemRequestBuilderPatchQueryParameters>> requestConfiguration = default)
         {
 #endif
             if(ReferenceEquals(body, null)) throw new ArgumentNullException(nameof(body));
@@ -132,19 +132,73 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item
             return new global::MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item.ContactMarketingItemRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
-        /// Configuration for the request such as headers, query parameters, and middleware options.
+        /// Where `id` is the identifier of the contact
         /// </summary>
-        [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class ContactMarketingItemRequestBuilderGetRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
+        public partial class ContactMarketingItemRequestBuilderGetQueryParameters 
         {
+            /// <summary>Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("fields")]
+            public string? Fields { get; set; }
+#nullable restore
+#else
+            [QueryParameter("fields")]
+            public string Fields { get; set; }
+#endif
+            /// <summary>Comma-separated relationship paths for the response representation. Use dots for nested relationships.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("include")]
+            public string[]? Include { get; set; }
+#nullable restore
+#else
+            [QueryParameter("include")]
+            public string[] Include { get; set; }
+#endif
         }
         /// <summary>
         /// Configuration for the request such as headers, query parameters, and middleware options.
         /// </summary>
         [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class ContactMarketingItemRequestBuilderPatchRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
+        public partial class ContactMarketingItemRequestBuilderGetRequestConfiguration : RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item.ContactMarketingItemRequestBuilder.ContactMarketingItemRequestBuilderGetQueryParameters>
+        {
+        }
+        /// <summary>
+        /// Where `id` is the identifier of the contact
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
+        public partial class ContactMarketingItemRequestBuilderPatchQueryParameters 
+        {
+            /// <summary>Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("fields")]
+            public string? Fields { get; set; }
+#nullable restore
+#else
+            [QueryParameter("fields")]
+            public string Fields { get; set; }
+#endif
+            /// <summary>Comma-separated relationship paths for the response representation. Use dots for nested relationships.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("include")]
+            public string[]? Include { get; set; }
+#nullable restore
+#else
+            [QueryParameter("include")]
+            public string[] Include { get; set; }
+#endif
+        }
+        /// <summary>
+        /// Configuration for the request such as headers, query parameters, and middleware options.
+        /// </summary>
+        [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
+        public partial class ContactMarketingItemRequestBuilderPatchRequestConfiguration : RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactMarketing.Item.ContactMarketingItemRequestBuilder.ContactMarketingItemRequestBuilderPatchQueryParameters>
         {
         }
     }

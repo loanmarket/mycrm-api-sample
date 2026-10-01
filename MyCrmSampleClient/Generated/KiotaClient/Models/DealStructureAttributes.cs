@@ -42,13 +42,7 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The lmiPremium property</summary>
         public double? LmiPremium { get; set; }
         /// <summary>The loanStructureType property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? LoanStructureType { get; set; }
-#nullable restore
-#else
-        public string LoanStructureType { get; set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.DealStructureAttributes_loanStructureType? LoanStructureType { get; set; }
         /// <summary>The loanTermYears property</summary>
         public double? LoanTermYears { get; set; }
         /// <summary>The paymentAmount property</summary>
@@ -66,13 +60,7 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The rateTypePeriodMonths property</summary>
         public int? RateTypePeriodMonths { get; private set; }
         /// <summary>The repaymentFrequency property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? RepaymentFrequency { get; set; }
-#nullable restore
-#else
-        public string RepaymentFrequency { get; set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.DealStructureAttributes_repaymentFrequency? RepaymentFrequency { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Models.DealStructureAttributes"/> and sets the default values.
         /// </summary>
@@ -108,13 +96,13 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "interestRate", n => { InterestRate = n.GetDoubleValue(); } },
                 { "isLinkRateExpiry", n => { IsLinkRateExpiry = n.GetBoolValue(); } },
                 { "lmiPremium", n => { LmiPremium = n.GetDoubleValue(); } },
-                { "loanStructureType", n => { LoanStructureType = n.GetStringValue(); } },
+                { "loanStructureType", n => { LoanStructureType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.DealStructureAttributes_loanStructureType>(); } },
                 { "loanTermYears", n => { LoanTermYears = n.GetDoubleValue(); } },
                 { "paymentAmount", n => { PaymentAmount = n.GetDoubleValue(); } },
                 { "rateTermYears", n => { RateTermYears = n.GetIntValue(); } },
                 { "rateType", n => { RateType = n.GetStringValue(); } },
                 { "rateTypePeriodMonths", n => { RateTypePeriodMonths = n.GetIntValue(); } },
-                { "repaymentFrequency", n => { RepaymentFrequency = n.GetStringValue(); } },
+                { "repaymentFrequency", n => { RepaymentFrequency = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.DealStructureAttributes_repaymentFrequency>(); } },
             };
         }
         /// <summary>
@@ -133,12 +121,12 @@ namespace MyCrmSampleClient.Kiota.Models
             writer.WriteDoubleValue("interestRate", InterestRate);
             writer.WriteBoolValue("isLinkRateExpiry", IsLinkRateExpiry);
             writer.WriteDoubleValue("lmiPremium", LmiPremium);
-            writer.WriteStringValue("loanStructureType", LoanStructureType);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.DealStructureAttributes_loanStructureType>("loanStructureType", LoanStructureType);
             writer.WriteDoubleValue("loanTermYears", LoanTermYears);
             writer.WriteDoubleValue("paymentAmount", PaymentAmount);
             writer.WriteIntValue("rateTermYears", RateTermYears);
             writer.WriteStringValue("rateType", RateType);
-            writer.WriteStringValue("repaymentFrequency", RepaymentFrequency);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.DealStructureAttributes_repaymentFrequency>("repaymentFrequency", RepaymentFrequency);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

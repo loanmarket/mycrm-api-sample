@@ -106,13 +106,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public string ConstructionType { get; private set; }
 #endif
         /// <summary>The contactForAccess property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? ContactForAccess { get; private set; }
-#nullable restore
-#else
-        public string ContactForAccess { get; private set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.DealSecurityAttributes_contactForAccess? ContactForAccess { get; private set; }
         /// <summary>The contractDate property</summary>
         public Date? ContractDate { get; set; }
         /// <summary>The contractPrice property</summary>
@@ -264,7 +258,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "buildAmount", n => { BuildAmount = n.GetDoubleValue(); } },
                 { "constructionCategory", n => { ConstructionCategory = n.GetStringValue(); } },
                 { "constructionType", n => { ConstructionType = n.GetStringValue(); } },
-                { "contactForAccess", n => { ContactForAccess = n.GetStringValue(); } },
+                { "contactForAccess", n => { ContactForAccess = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.DealSecurityAttributes_contactForAccess>(); } },
                 { "contractDate", n => { ContractDate = n.GetDateValue(); } },
                 { "contractPrice", n => { ContractPrice = n.GetDoubleValue(); } },
                 { "currentValue", n => { CurrentValue = n.GetDoubleValue(); } },

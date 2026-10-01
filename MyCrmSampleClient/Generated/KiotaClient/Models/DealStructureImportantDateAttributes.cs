@@ -16,13 +16,7 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>The dateType property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? DateType { get; private set; }
-#nullable restore
-#else
-        public string DateType { get; private set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.DealStructureImportantDateAttributes_dateType? DateType { get; private set; }
         /// <summary>The finishDate property</summary>
         public Date? FinishDate { get; private set; }
         /// <summary>The startDate property</summary>
@@ -52,7 +46,7 @@ namespace MyCrmSampleClient.Kiota.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "dateType", n => { DateType = n.GetStringValue(); } },
+                { "dateType", n => { DateType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.DealStructureImportantDateAttributes_dateType>(); } },
                 { "finishDate", n => { FinishDate = n.GetDateValue(); } },
                 { "startDate", n => { StartDate = n.GetDateValue(); } },
             };

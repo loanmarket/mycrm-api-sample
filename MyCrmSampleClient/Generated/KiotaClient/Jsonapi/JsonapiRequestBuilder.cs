@@ -35,6 +35,7 @@ using MyCrmSampleClient.Kiota.Jsonapi.LiabilityTypes;
 using MyCrmSampleClient.Kiota.Jsonapi.Organisations;
 using MyCrmSampleClient.Kiota.Jsonapi.PropertyTypes;
 using MyCrmSampleClient.Kiota.Jsonapi.Referrers;
+using MyCrmSampleClient.Kiota.Jsonapi.RentalVerificationTypes;
 using MyCrmSampleClient.Kiota.Jsonapi.StructuredLeads;
 using MyCrmSampleClient.Kiota.Jsonapi.Tasks;
 using System.Collections.Generic;
@@ -213,6 +214,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi
         public global::MyCrmSampleClient.Kiota.Jsonapi.Referrers.ReferrersRequestBuilder Referrers
         {
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.Referrers.ReferrersRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The rentalVerificationTypes property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.RentalVerificationTypes.RentalVerificationTypesRequestBuilder RentalVerificationTypes
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.RentalVerificationTypes.RentalVerificationTypesRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The structuredLeads property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.StructuredLeads.StructuredLeadsRequestBuilder StructuredLeads
