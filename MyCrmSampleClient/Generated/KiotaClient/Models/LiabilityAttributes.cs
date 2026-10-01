@@ -87,13 +87,7 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The limit property</summary>
         public double? Limit { get; set; }
         /// <summary>The loanRepaymentType property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? LoanRepaymentType { get; private set; }
-#nullable restore
-#else
-        public string LoanRepaymentType { get; private set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.LiabilityAttributes_loanRepaymentType? LoanRepaymentType { get; private set; }
         /// <summary>The loanTerm property</summary>
         public int? LoanTerm { get; set; }
         /// <summary>The mortgagePriority property</summary>
@@ -158,7 +152,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "liabilityType", n => { LiabilityType = n.GetStringValue(); } },
                 { "liabilityTypeId", n => { LiabilityTypeId = n.GetIntValue(); } },
                 { "limit", n => { Limit = n.GetDoubleValue(); } },
-                { "loanRepaymentType", n => { LoanRepaymentType = n.GetStringValue(); } },
+                { "loanRepaymentType", n => { LoanRepaymentType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LiabilityAttributes_loanRepaymentType>(); } },
                 { "loanTerm", n => { LoanTerm = n.GetIntValue(); } },
                 { "mortgagePriority", n => { MortgagePriority = n.GetStringValue(); } },
                 { "repayment", n => { Repayment = n.GetDoubleValue(); } },

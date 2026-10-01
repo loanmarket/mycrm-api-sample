@@ -79,11 +79,11 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The limit property</summary>
         public double? Limit { get; set; }
         /// <summary>The loanRepaymentType property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.LiabilityRepaymentType? LoanRepaymentType { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.LeadLiability_loanRepaymentType? LoanRepaymentType { get; set; }
         /// <summary>The loanTerm property</summary>
         public int? LoanTerm { get; set; }
         /// <summary>The mortgagePriority property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.MortgagePriority? MortgagePriority { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.LeadLiability_mortgagePriority? MortgagePriority { get; set; }
         /// <summary>The ownership property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -128,9 +128,9 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "liabilityTypeId", n => { LiabilityTypeId = n.GetIntValue(); } },
                 { "lid", n => { Lid = n.GetStringValue(); } },
                 { "limit", n => { Limit = n.GetDoubleValue(); } },
-                { "loanRepaymentType", n => { LoanRepaymentType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LiabilityRepaymentType>(); } },
+                { "loanRepaymentType", n => { LoanRepaymentType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadLiability_loanRepaymentType>(); } },
                 { "loanTerm", n => { LoanTerm = n.GetIntValue(); } },
-                { "mortgagePriority", n => { MortgagePriority = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.MortgagePriority>(); } },
+                { "mortgagePriority", n => { MortgagePriority = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadLiability_mortgagePriority>(); } },
                 { "ownership", n => { Ownership = n.GetCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadContactReference>(global::MyCrmSampleClient.Kiota.Models.LeadContactReference.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "repaymentFrequency", n => { RepaymentFrequency = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.Frequency>(); } },
                 { "repayments", n => { Repayments = n.GetDoubleValue(); } },
@@ -156,9 +156,9 @@ namespace MyCrmSampleClient.Kiota.Models
             writer.WriteIntValue("liabilityTypeId", LiabilityTypeId);
             writer.WriteStringValue("lid", Lid);
             writer.WriteDoubleValue("limit", Limit);
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LiabilityRepaymentType>("loanRepaymentType", LoanRepaymentType);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadLiability_loanRepaymentType>("loanRepaymentType", LoanRepaymentType);
             writer.WriteIntValue("loanTerm", LoanTerm);
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.MortgagePriority>("mortgagePriority", MortgagePriority);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadLiability_mortgagePriority>("mortgagePriority", MortgagePriority);
             writer.WriteCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadContactReference>("ownership", Ownership);
             writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.Frequency>("repaymentFrequency", RepaymentFrequency);
             writer.WriteDoubleValue("repayments", Repayments);

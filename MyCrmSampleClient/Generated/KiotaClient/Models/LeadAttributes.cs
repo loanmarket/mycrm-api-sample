@@ -16,13 +16,7 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>The addressType property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? AddressType { get; set; }
-#nullable restore
-#else
-        public string AddressType { get; set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.LeadAttributes_addressType? AddressType { get; set; }
         /// <summary>The categories property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -34,13 +28,7 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The categoriesAllowCreate property</summary>
         public bool? CategoriesAllowCreate { get; set; }
         /// <summary>The contactMatchExisting property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? ContactMatchExisting { get; set; }
-#nullable restore
-#else
-        public string ContactMatchExisting { get; set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.LeadAttributes_contactMatchExisting? ContactMatchExisting { get; set; }
         /// <summary>The country property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -68,13 +56,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public string DealName { get; set; }
 #endif
         /// <summary>The dealStatus property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? DealStatus { get; private set; }
-#nullable restore
-#else
-        public string DealStatus { get; private set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.LeadAttributes_dealStatus? DealStatus { get; private set; }
         /// <summary>The email property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -118,13 +100,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public string FormattedAddress { get; set; }
 #endif
         /// <summary>The gender property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? Gender { get; set; }
-#nullable restore
-#else
-        public string Gender { get; set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.LeadAttributes_gender? Gender { get; set; }
         /// <summary>The hasMarketingConsent property</summary>
         public bool? HasMarketingConsent { get; set; }
         /// <summary>The isDependant property</summary>
@@ -142,13 +118,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public string LastName { get; set; }
 #endif
         /// <summary>The maritalStatus property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? MaritalStatus { get; set; }
-#nullable restore
-#else
-        public string MaritalStatus { get; set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.LeadAttributes_maritalStatus? MaritalStatus { get; set; }
         /// <summary>The mobile property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -244,13 +214,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public string Suburb { get; set; }
 #endif
         /// <summary>The title property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? Title { get; set; }
-#nullable restore
-#else
-        public string Title { get; set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.LeadAttributes_title? Title { get; set; }
         /// <summary>The utmCampaign property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -316,28 +280,28 @@ namespace MyCrmSampleClient.Kiota.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "addressType", n => { AddressType = n.GetStringValue(); } },
+                { "addressType", n => { AddressType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAttributes_addressType>(); } },
                 { "categories", n => { Categories = n.GetCollectionOfPrimitiveValues<string>()?.AsList(); } },
                 { "categoriesAllowCreate", n => { CategoriesAllowCreate = n.GetBoolValue(); } },
-                { "contactMatchExisting", n => { ContactMatchExisting = n.GetStringValue(); } },
+                { "contactMatchExisting", n => { ContactMatchExisting = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAttributes_contactMatchExisting>(); } },
                 { "country", n => { Country = n.GetStringValue(); } },
                 { "customStatusName", n => { CustomStatusName = n.GetStringValue(); } },
                 { "dateOfBirth", n => { DateOfBirth = n.GetDateValue(); } },
                 { "dealName", n => { DealName = n.GetStringValue(); } },
-                { "dealStatus", n => { DealStatus = n.GetStringValue(); } },
+                { "dealStatus", n => { DealStatus = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAttributes_dealStatus>(); } },
                 { "email", n => { Email = n.GetStringValue(); } },
                 { "externalIntegration", n => { ExternalIntegration = n.GetStringValue(); } },
                 { "externalIntegrationAllowCreate", n => { ExternalIntegrationAllowCreate = n.GetBoolValue(); } },
                 { "externalReference", n => { ExternalReference = n.GetStringValue(); } },
                 { "firstName", n => { FirstName = n.GetStringValue(); } },
                 { "formattedAddress", n => { FormattedAddress = n.GetStringValue(); } },
-                { "gender", n => { Gender = n.GetStringValue(); } },
+                { "gender", n => { Gender = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAttributes_gender>(); } },
                 { "hasMarketingConsent", n => { HasMarketingConsent = n.GetBoolValue(); } },
                 { "isDependant", n => { IsDependant = n.GetBoolValue(); } },
                 { "isGuarantor", n => { IsGuarantor = n.GetBoolValue(); } },
                 { "isPrimary", n => { IsPrimary = n.GetBoolValue(); } },
                 { "lastName", n => { LastName = n.GetStringValue(); } },
-                { "maritalStatus", n => { MaritalStatus = n.GetStringValue(); } },
+                { "maritalStatus", n => { MaritalStatus = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAttributes_maritalStatus>(); } },
                 { "mobile", n => { Mobile = n.GetStringValue(); } },
                 { "noteDetails", n => { NoteDetails = n.GetStringValue(); } },
                 { "noteTitle", n => { NoteTitle = n.GetStringValue(); } },
@@ -352,7 +316,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "state", n => { State = n.GetStringValue(); } },
                 { "streetAddress", n => { StreetAddress = n.GetStringValue(); } },
                 { "suburb", n => { Suburb = n.GetStringValue(); } },
-                { "title", n => { Title = n.GetStringValue(); } },
+                { "title", n => { Title = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAttributes_title>(); } },
                 { "utmCampaign", n => { UtmCampaign = n.GetStringValue(); } },
                 { "utmContent", n => { UtmContent = n.GetStringValue(); } },
                 { "utmMedium", n => { UtmMedium = n.GetStringValue(); } },
@@ -367,10 +331,10 @@ namespace MyCrmSampleClient.Kiota.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteStringValue("addressType", AddressType);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAttributes_addressType>("addressType", AddressType);
             writer.WriteCollectionOfPrimitiveValues<string>("categories", Categories);
             writer.WriteBoolValue("categoriesAllowCreate", CategoriesAllowCreate);
-            writer.WriteStringValue("contactMatchExisting", ContactMatchExisting);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAttributes_contactMatchExisting>("contactMatchExisting", ContactMatchExisting);
             writer.WriteStringValue("country", Country);
             writer.WriteDateValue("dateOfBirth", DateOfBirth);
             writer.WriteStringValue("dealName", DealName);
@@ -380,13 +344,13 @@ namespace MyCrmSampleClient.Kiota.Models
             writer.WriteStringValue("externalReference", ExternalReference);
             writer.WriteStringValue("firstName", FirstName);
             writer.WriteStringValue("formattedAddress", FormattedAddress);
-            writer.WriteStringValue("gender", Gender);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAttributes_gender>("gender", Gender);
             writer.WriteBoolValue("hasMarketingConsent", HasMarketingConsent);
             writer.WriteBoolValue("isDependant", IsDependant);
             writer.WriteBoolValue("isGuarantor", IsGuarantor);
             writer.WriteBoolValue("isPrimary", IsPrimary);
             writer.WriteStringValue("lastName", LastName);
-            writer.WriteStringValue("maritalStatus", MaritalStatus);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAttributes_maritalStatus>("maritalStatus", MaritalStatus);
             writer.WriteStringValue("mobile", Mobile);
             writer.WriteStringValue("noteDetails", NoteDetails);
             writer.WriteStringValue("noteTitle", NoteTitle);
@@ -401,7 +365,7 @@ namespace MyCrmSampleClient.Kiota.Models
             writer.WriteStringValue("state", State);
             writer.WriteStringValue("streetAddress", StreetAddress);
             writer.WriteStringValue("suburb", Suburb);
-            writer.WriteStringValue("title", Title);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAttributes_title>("title", Title);
             writer.WriteStringValue("utmCampaign", UtmCampaign);
             writer.WriteStringValue("utmContent", UtmContent);
             writer.WriteStringValue("utmMedium", UtmMedium);

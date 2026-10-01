@@ -44,13 +44,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public string FirstName { get; set; }
 #endif
         /// <summary>The gender property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? Gender { get; set; }
-#nullable restore
-#else
-        public string Gender { get; set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.ContactAttributes_gender? Gender { get; set; }
         /// <summary>The hasMarketingConsent property</summary>
         public bool? HasMarketingConsent { get; set; }
         /// <summary>The homePhone property</summary>
@@ -72,13 +66,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public string LastName { get; set; }
 #endif
         /// <summary>The maritalStatus property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? MaritalStatus { get; set; }
-#nullable restore
-#else
-        public string MaritalStatus { get; set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.ContactAttributes_maritalStatus? MaritalStatus { get; set; }
         /// <summary>The middleName property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -104,13 +92,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public string PreferredName { get; set; }
 #endif
         /// <summary>The role property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? Role { get; set; }
-#nullable restore
-#else
-        public string Role { get; set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.ContactAttributes_role? Role { get; set; }
         /// <summary>The secondaryEmail property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -159,16 +141,16 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "dateOfBirth", n => { DateOfBirth = n.GetDateValue(); } },
                 { "email", n => { Email = n.GetStringValue(); } },
                 { "firstName", n => { FirstName = n.GetStringValue(); } },
-                { "gender", n => { Gender = n.GetStringValue(); } },
+                { "gender", n => { Gender = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.ContactAttributes_gender>(); } },
                 { "hasMarketingConsent", n => { HasMarketingConsent = n.GetBoolValue(); } },
                 { "homePhone", n => { HomePhone = n.GetStringValue(); } },
                 { "isPrimary", n => { IsPrimary = n.GetBoolValue(); } },
                 { "lastName", n => { LastName = n.GetStringValue(); } },
-                { "maritalStatus", n => { MaritalStatus = n.GetStringValue(); } },
+                { "maritalStatus", n => { MaritalStatus = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.ContactAttributes_maritalStatus>(); } },
                 { "middleName", n => { MiddleName = n.GetStringValue(); } },
                 { "mobile", n => { Mobile = n.GetStringValue(); } },
                 { "preferredName", n => { PreferredName = n.GetStringValue(); } },
-                { "role", n => { Role = n.GetStringValue(); } },
+                { "role", n => { Role = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.ContactAttributes_role>(); } },
                 { "secondaryEmail", n => { SecondaryEmail = n.GetStringValue(); } },
                 { "title", n => { Title = n.GetStringValue(); } },
                 { "updated", n => { Updated = n.GetDateTimeOffsetValue(); } },
@@ -185,16 +167,16 @@ namespace MyCrmSampleClient.Kiota.Models
             writer.WriteDateValue("dateOfBirth", DateOfBirth);
             writer.WriteStringValue("email", Email);
             writer.WriteStringValue("firstName", FirstName);
-            writer.WriteStringValue("gender", Gender);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.ContactAttributes_gender>("gender", Gender);
             writer.WriteBoolValue("hasMarketingConsent", HasMarketingConsent);
             writer.WriteStringValue("homePhone", HomePhone);
             writer.WriteBoolValue("isPrimary", IsPrimary);
             writer.WriteStringValue("lastName", LastName);
-            writer.WriteStringValue("maritalStatus", MaritalStatus);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.ContactAttributes_maritalStatus>("maritalStatus", MaritalStatus);
             writer.WriteStringValue("middleName", MiddleName);
             writer.WriteStringValue("mobile", Mobile);
             writer.WriteStringValue("preferredName", PreferredName);
-            writer.WriteStringValue("role", Role);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.ContactAttributes_role>("role", Role);
             writer.WriteStringValue("secondaryEmail", SecondaryEmail);
             writer.WriteStringValue("title", Title);
             writer.WriteAdditionalData(AdditionalData);
