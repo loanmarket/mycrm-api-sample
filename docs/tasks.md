@@ -16,7 +16,27 @@ Broader applicable scopes also work. An assignee uses an **adviser family ID** f
 
 Run `dotnet run` from `MyCrmSampleClient` after configuring credentials as described in the [client README](../MyCrmSampleClient/README.md). These samples make live writes.
 
-1. Run `advisers` and note the assignee's `Id`. This lookup requires `api.advisers.search`.
+### Dependencies and running samples independently
+
+The walkthrough below is a suggested order, not a requirement to run every sample. Some samples need IDs from shared state; others can run independently. Shared state is saved locally between application runs, so dependent samples do not need to run consecutively. Check **Show shared state** before a write; clearing state removes these saved IDs.
+
+| Sample | Prerequisite |
+|---|---|
+| `create-residential-task` | `LastDealId`, set by `latest-deals` or `create-lead`. |
+| `create-contact-group-task` | `LastContactGroupId`, set by `latest-contact-groups`. |
+| `get-task` | No earlier sample required: enter any accessible task ID. This sets `LastTaskId`. |
+| `task-fields`, `patch-task`, `task-progress` | `LastTaskId`, set by either task-creation sample, `get-task` or `promote-contact-task`. These samples can run in any order. |
+| `promote-contact-task` | Run `create-contact-group-task` first to set `LastContactGroupTaskId`. The task must still have exactly one contact link and no engagement links. Promotion is possible only once per task. |
+
+For an existing task, run `get-task`, then whichever of `task-fields`, `patch-task` or `task-progress` you need. You do not have to create a task first.
+
+For promotion, run `latest-contact-groups` → `create-contact-group-task` → `promote-contact-task`. The promotion sample prompts for the target residential deal ID; it uses `LastContactGroupTaskId`, even if `get-task` has selected a different task.
+
+Run `advisers` only if you need to look up the assignee ID. All samples still require the configured credentials, `AdviserContactId` and appropriate scopes.
+
+### Suggested walkthrough
+
+1. If needed, run `advisers` and note the assignee's `Id`. This lookup requires `api.advisers.search`.
 2. Run `create-lead` or `latest-deals` to set `LastDealId`, then `create-residential-task`. These setup samples require `api.leads.create` or `api.deals.search`.
 3. Run `get-task`, `task-fields`, `patch-task` and `task-progress` to read and change the residential task.
 4. Run `latest-contact-groups` (requires `api.contact-groups.search`) to set `LastContactGroupId`, then `create-contact-group-task`.

@@ -288,6 +288,8 @@ The [task guide](../docs/tasks.md) contains request bodies, scope requirements a
 
 Run `advisers` to find an assignee's **adviser family ID**. This differs from `AdviserContactId`, which supplies the `UserId` header. Run `latest-deals` or `create-lead`, then `create-residential-task`; run `latest-contact-groups`, then `create-contact-group-task`. Use `get-task` to switch between them before edits. Creation calculates future due dates from the current time.
 
+The samples do not need to run consecutively: shared IDs persist between application runs. `get-task` can run independently with an existing task ID; `task-fields`, `patch-task` and `task-progress` can then run in any order. Promotion requires a task created by `create-contact-group-task` and is possible only once per task. See the [dependency table and minimal run sequences](../docs/tasks.md#dependencies-and-running-samples-independently) for details.
+
 All task samples require `AdviserContactId`. They check `api.tasks.create`, `api.tasks.read` or `api.tasks.update` as appropriate. PATCH samples also require read scope to display the result. These are live writes, including when using **Run all samples**.
 
 Task reads support sparse fields but reject `include`. Use the returned relationship IDs with the related resources' own endpoints if you need their attributes. Collection GET, DELETE and relationship-only writes are not supported.
