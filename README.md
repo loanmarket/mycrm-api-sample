@@ -21,6 +21,7 @@ To use the MyCRM API you will need credentials and details supplied by LMG.
   - [Field Selection](#field-selection)
 - [Creating and updating resources](#creating-and-updating-resources)
 - [Editing deals, structures and statuses](#editing-deals-structures-and-statuses)
+- [Creating, reading and updating tasks](#creating-reading-and-updating-tasks)
 - [Real-time Updates via Webhooks](#real-time-updates-via-webhooks)
 - [Rate Limiting](#rate-limiting)
 
@@ -455,6 +456,10 @@ A successful update returns `200 OK` with the updated resource, or `204 No Conte
 ## Editing deals, structures and statuses
 
 See the [deal guide](docs/deals.md) for editing names and BID notes, creating and editing deal structures, and reading or changing custom statuses, with [runnable C# examples](MyCrmSampleClient/README.md#deal-edits-and-custom-statuses).
+
+## Creating, reading and updating tasks
+
+See the [task guide](docs/tasks.md) for creating residential-deal and contact-group tasks, reading selected fields, editing attributes and progress, and promoting a contact task to a deal task. The [runnable C# samples](MyCrmSampleClient/README.md#tasks) retain task IDs in shared state.
 
 ## Real-time Updates via Webhooks
 

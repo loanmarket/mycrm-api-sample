@@ -7,6 +7,24 @@ public sealed record SampleState
     public int? LastContactId { get; init; }
     public int? LastContactGroupId { get; init; }
     public int? LastDealId { get; init; }
+    public int? LastTaskId { get; init; }
+    public int? LastResidentialTaskId { get; init; }
+    public int? LastContactGroupTaskId { get; init; }
+
+    public bool TryGetTaskId(string sampleName, out int taskId)
+    {
+        if (LastTaskId is > 0)
+        {
+            taskId = LastTaskId.Value;
+            return true;
+        }
+
+        taskId = 0;
+        Log.Warning(
+            "Sample '{SampleName}' requires LastTaskId. Run create-residential-task, create-contact-group-task or get-task first",
+            sampleName);
+        return false;
+    }
         
     public bool TryGetDealId(string sampleName, out int dealId)
     {
