@@ -57,6 +57,16 @@ Some samples depend on an ID returned by a previous sample. For example, the `co
 | `LastContactGroupId` | `latest-contact-groups`                       | `contact-group-contacts`, `contact-group-emails`  |
 | `LastDealId`         | `latest-deals`, `create-lead`                 | `create-update-deal-note`, `patch-deal-name`, `patch-deal-rationale`, `deal-custom-status`, `change-deal-status`, `create-deal-structure` |
 
+Task samples also save these IDs:
+
+| State value | Set by | Used by |
+|---|---|---|
+| `LastTaskId` | `create-residential-task`, `create-contact-group-task`, `get-task`, `promote-contact-task` | Default for `get-task`; target for `task-fields`, `patch-task`, `task-progress` |
+| `LastResidentialTaskId` | `create-residential-task` | Reference when selecting the original task in `get-task` |
+| `LastContactGroupTaskId` | `create-contact-group-task` | `promote-contact-task` |
+
+Task creation uses `LastDealId` or `LastContactGroupId`. Check **Show shared state** before running a write sample.
+
 The state file is stored in your local app data directory (e.g. `~/.local/share/MyCrmSampleClient/sample-state.json` on Linux/macOS). You can view or clear the state from the menu.
 
 **Recommended order when running samples for the first time:** run `latest-contacts`, `latest-contact-groups`, and `latest-deals` first to populate the state, then run the samples that depend on them.
@@ -259,6 +269,30 @@ Creates a note on an existing deal, then immediately updates its title and body.
 - The full create-then-update lifecycle: POST returns the newly created resource with its server-assigned ID, which is then used immediately in a PATCH
 - How to structure a PATCH body: include `type`, `id`, and only the attributes to change
 - A practical pattern for integrations that create a record and then want to annotate or correct it without fetching it again
+
+---
+
+## Tasks
+
+The [task guide](../docs/tasks.md) contains request bodies, scope requirements and a walkthrough. Implementations are in [TaskSamples.cs](TaskSamples.cs).
+
+| Sample | Action |
+|---|---|
+| `create-residential-task` | Create a task linked to `LastDealId` and save its ID. |
+| `create-contact-group-task` | Create a task linked to `LastContactGroupId`, with no engagement, and save its ID. |
+| `get-task` | Prompt for a task ID, display attributes and relationship IDs, and select it as `LastTaskId`. |
+| `task-fields` | Read only title, progress and due date for `LastTaskId`. |
+| `patch-task` | Prompt for title and detail, PATCH `LastTaskId`, then read it back. |
+| `task-progress` | Choose a progress value, PATCH `LastTaskId`, then read it back. |
+| `promote-contact-task` | Link `LastContactGroupTaskId` to a prompted residential deal ID, replacing its sole contact link, then verify the result. |
+
+Run `advisers` to find an assignee's **adviser family ID**. This differs from `AdviserContactId`, which supplies the `UserId` header. Run `latest-deals` or `create-lead`, then `create-residential-task`; run `latest-contact-groups`, then `create-contact-group-task`. Use `get-task` to switch between them before edits. Creation calculates future due dates from the current time.
+
+The samples do not need to run consecutively: shared IDs persist between application runs. `get-task` can run independently with an existing task ID; `task-fields`, `patch-task` and `task-progress` can then run in any order. Promotion requires a task created by `create-contact-group-task` and is possible only once per task. See the [dependency table and minimal run sequences](../docs/tasks.md#dependencies-and-running-samples-independently) for details.
+
+All task samples require `AdviserContactId`. They check `api.tasks.create`, `api.tasks.read` or `api.tasks.update` as appropriate. PATCH samples also require read scope to display the result. These are live writes, including when using **Run all samples**.
+
+Task reads support sparse fields but reject `include`. Use the returned relationship IDs with the related resources' own endpoints if you need their attributes. Collection GET, DELETE and relationship-only writes are not supported.
 
 ---
 
