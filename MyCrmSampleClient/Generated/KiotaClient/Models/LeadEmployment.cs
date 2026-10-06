@@ -62,7 +62,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public string EmployerContactLastName { get; set; }
 #endif
         /// <summary>The employerContactTitle property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.Title? EmployerContactTitle { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employerContactTitle? EmployerContactTitle { get; set; }
         /// <summary>The employerName property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -80,9 +80,9 @@ namespace MyCrmSampleClient.Kiota.Models
         public string EmployerPhone { get; set; }
 #endif
         /// <summary>The employerType property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.EmployerType? EmployerType { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employerType? EmployerType { get; set; }
         /// <summary>The employmentBasis property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.EmploymentBasis? EmploymentBasis { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employmentBasis? EmploymentBasis { get; set; }
         /// <summary>The employmentRoleName property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -92,9 +92,9 @@ namespace MyCrmSampleClient.Kiota.Models
         public string EmploymentRoleName { get; set; }
 #endif
         /// <summary>The employmentStatus property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.EmploymentStatus? EmploymentStatus { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employmentStatus? EmploymentStatus { get; set; }
         /// <summary>The employmentType property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.EmploymentType? EmploymentType { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employmentType? EmploymentType { get; set; }
         /// <summary>The isProbation property</summary>
         public bool? IsProbation { get; set; }
         /// <summary>The lid property</summary>
@@ -132,14 +132,14 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "dateStartedAsString", n => { DateStartedAsString = n.GetDateValue(); } },
                 { "employerContactFirstName", n => { EmployerContactFirstName = n.GetStringValue(); } },
                 { "employerContactLastName", n => { EmployerContactLastName = n.GetStringValue(); } },
-                { "employerContactTitle", n => { EmployerContactTitle = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.Title>(); } },
+                { "employerContactTitle", n => { EmployerContactTitle = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employerContactTitle>(); } },
                 { "employerName", n => { EmployerName = n.GetStringValue(); } },
                 { "employerPhone", n => { EmployerPhone = n.GetStringValue(); } },
-                { "employerType", n => { EmployerType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.EmployerType>(); } },
-                { "employmentBasis", n => { EmploymentBasis = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.EmploymentBasis>(); } },
+                { "employerType", n => { EmployerType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employerType>(); } },
+                { "employmentBasis", n => { EmploymentBasis = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employmentBasis>(); } },
                 { "employmentRoleName", n => { EmploymentRoleName = n.GetStringValue(); } },
-                { "employmentStatus", n => { EmploymentStatus = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.EmploymentStatus>(); } },
-                { "employmentType", n => { EmploymentType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.EmploymentType>(); } },
+                { "employmentStatus", n => { EmploymentStatus = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employmentStatus>(); } },
+                { "employmentType", n => { EmploymentType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employmentType>(); } },
                 { "isProbation", n => { IsProbation = n.GetBoolValue(); } },
                 { "lid", n => { Lid = n.GetStringValue(); } },
             };
@@ -160,14 +160,14 @@ namespace MyCrmSampleClient.Kiota.Models
             writer.WriteDateValue("dateStartedAsString", DateStartedAsString);
             writer.WriteStringValue("employerContactFirstName", EmployerContactFirstName);
             writer.WriteStringValue("employerContactLastName", EmployerContactLastName);
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.Title>("employerContactTitle", EmployerContactTitle);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employerContactTitle>("employerContactTitle", EmployerContactTitle);
             writer.WriteStringValue("employerName", EmployerName);
             writer.WriteStringValue("employerPhone", EmployerPhone);
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.EmployerType>("employerType", EmployerType);
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.EmploymentBasis>("employmentBasis", EmploymentBasis);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employerType>("employerType", EmployerType);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employmentBasis>("employmentBasis", EmploymentBasis);
             writer.WriteStringValue("employmentRoleName", EmploymentRoleName);
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.EmploymentStatus>("employmentStatus", EmploymentStatus);
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.EmploymentType>("employmentType", EmploymentType);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employmentStatus>("employmentStatus", EmploymentStatus);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadEmployment_employmentType>("employmentType", EmploymentType);
             writer.WriteBoolValue("isProbation", IsProbation);
             writer.WriteStringValue("lid", Lid);
         }

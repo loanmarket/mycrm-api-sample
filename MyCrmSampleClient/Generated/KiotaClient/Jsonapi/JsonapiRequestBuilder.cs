@@ -5,9 +5,12 @@ using Microsoft.Kiota.Abstractions;
 using MyCrmSampleClient.Kiota.Jsonapi.AdviserDetails;
 using MyCrmSampleClient.Kiota.Jsonapi.Advisers;
 using MyCrmSampleClient.Kiota.Jsonapi.AssetCategories;
+using MyCrmSampleClient.Kiota.Jsonapi.AssetDeal;
+using MyCrmSampleClient.Kiota.Jsonapi.AssetReferral;
 using MyCrmSampleClient.Kiota.Jsonapi.AssetSubTypes;
 using MyCrmSampleClient.Kiota.Jsonapi.AssetTypes;
 using MyCrmSampleClient.Kiota.Jsonapi.Assets;
+using MyCrmSampleClient.Kiota.Jsonapi.CommercialDeal;
 using MyCrmSampleClient.Kiota.Jsonapi.ContactCategories;
 using MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences;
 using MyCrmSampleClient.Kiota.Jsonapi.ContactGroups;
@@ -26,6 +29,7 @@ using MyCrmSampleClient.Kiota.Jsonapi.ExpenseTypes;
 using MyCrmSampleClient.Kiota.Jsonapi.Expenses;
 using MyCrmSampleClient.Kiota.Jsonapi.IncomeCategories;
 using MyCrmSampleClient.Kiota.Jsonapi.IncomeTypes;
+using MyCrmSampleClient.Kiota.Jsonapi.IncomeVerificationTypes;
 using MyCrmSampleClient.Kiota.Jsonapi.Incomes;
 using MyCrmSampleClient.Kiota.Jsonapi.Integrations;
 using MyCrmSampleClient.Kiota.Jsonapi.Leads;
@@ -35,6 +39,7 @@ using MyCrmSampleClient.Kiota.Jsonapi.LiabilityTypes;
 using MyCrmSampleClient.Kiota.Jsonapi.Organisations;
 using MyCrmSampleClient.Kiota.Jsonapi.PropertyTypes;
 using MyCrmSampleClient.Kiota.Jsonapi.Referrers;
+using MyCrmSampleClient.Kiota.Jsonapi.RentalVerificationTypes;
 using MyCrmSampleClient.Kiota.Jsonapi.StructuredLeads;
 using MyCrmSampleClient.Kiota.Jsonapi.Tasks;
 using System.Collections.Generic;
@@ -64,6 +69,16 @@ namespace MyCrmSampleClient.Kiota.Jsonapi
         {
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.AssetCategories.AssetCategoriesRequestBuilder(PathParameters, RequestAdapter);
         }
+        /// <summary>The assetDeal property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.AssetDeal.AssetDealRequestBuilder AssetDeal
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.AssetDeal.AssetDealRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The assetReferral property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.AssetReferral.AssetReferralRequestBuilder AssetReferral
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.AssetReferral.AssetReferralRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>The assets property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.Assets.AssetsRequestBuilder Assets
         {
@@ -78,6 +93,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi
         public global::MyCrmSampleClient.Kiota.Jsonapi.AssetTypes.AssetTypesRequestBuilder AssetTypes
         {
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.AssetTypes.AssetTypesRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The commercialDeal property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.CommercialDeal.CommercialDealRequestBuilder CommercialDeal
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.CommercialDeal.CommercialDealRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The contactCategories property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.ContactCategories.ContactCategoriesRequestBuilder ContactCategories
@@ -174,6 +194,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi
         {
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.IncomeTypes.IncomeTypesRequestBuilder(PathParameters, RequestAdapter);
         }
+        /// <summary>The incomeVerificationTypes property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.IncomeVerificationTypes.IncomeVerificationTypesRequestBuilder IncomeVerificationTypes
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.IncomeVerificationTypes.IncomeVerificationTypesRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>The integrations property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.Integrations.IntegrationsRequestBuilder Integrations
         {
@@ -213,6 +238,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi
         public global::MyCrmSampleClient.Kiota.Jsonapi.Referrers.ReferrersRequestBuilder Referrers
         {
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.Referrers.ReferrersRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The rentalVerificationTypes property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.RentalVerificationTypes.RentalVerificationTypesRequestBuilder RentalVerificationTypes
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.RentalVerificationTypes.RentalVerificationTypesRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The structuredLeads property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.StructuredLeads.StructuredLeadsRequestBuilder StructuredLeads

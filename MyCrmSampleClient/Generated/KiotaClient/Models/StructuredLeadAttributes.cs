@@ -65,13 +65,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public string DealName { get; set; }
 #endif
         /// <summary>The dealStatus property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? DealStatus { get; private set; }
-#nullable restore
-#else
-        public string DealStatus { get; private set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.StructuredLeadAttributes_dealStatus? DealStatus { get; private set; }
         /// <summary>The employments property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -240,7 +234,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "contacts", n => { Contacts = n.GetCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadContact>(global::MyCrmSampleClient.Kiota.Models.LeadContact.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "customStatusName", n => { CustomStatusName = n.GetStringValue(); } },
                 { "dealName", n => { DealName = n.GetStringValue(); } },
-                { "dealStatus", n => { DealStatus = n.GetStringValue(); } },
+                { "dealStatus", n => { DealStatus = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.StructuredLeadAttributes_dealStatus>(); } },
                 { "employments", n => { Employments = n.GetCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadEmployment>(global::MyCrmSampleClient.Kiota.Models.LeadEmployment.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "expenses", n => { Expenses = n.GetCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadExpense>(global::MyCrmSampleClient.Kiota.Models.LeadExpense.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "externalIntegration", n => { ExternalIntegration = n.GetStringValue(); } },

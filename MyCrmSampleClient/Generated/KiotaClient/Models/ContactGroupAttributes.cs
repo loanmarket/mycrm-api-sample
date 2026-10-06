@@ -25,13 +25,7 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The categoriesAllowCreate property</summary>
         public bool? CategoriesAllowCreate { get; set; }
         /// <summary>The contactType property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? ContactType { get; set; }
-#nullable restore
-#else
-        public string ContactType { get; set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.ContactGroupAttributes_contactType? ContactType { get; set; }
         /// <summary>The created property</summary>
         public DateTimeOffset? Created { get; private set; }
         /// <summary>The enquirySource property</summary>
@@ -173,7 +167,7 @@ namespace MyCrmSampleClient.Kiota.Models
             {
                 { "categories", n => { Categories = n.GetCollectionOfPrimitiveValues<string>()?.AsList(); } },
                 { "categoriesAllowCreate", n => { CategoriesAllowCreate = n.GetBoolValue(); } },
-                { "contactType", n => { ContactType = n.GetStringValue(); } },
+                { "contactType", n => { ContactType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.ContactGroupAttributes_contactType>(); } },
                 { "created", n => { Created = n.GetDateTimeOffsetValue(); } },
                 { "enquirySource", n => { EnquirySource = n.GetStringValue(); } },
                 { "enquirySourceCategory", n => { EnquirySourceCategory = n.GetStringValue(); } },
@@ -203,7 +197,7 @@ namespace MyCrmSampleClient.Kiota.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteCollectionOfPrimitiveValues<string>("categories", Categories);
             writer.WriteBoolValue("categoriesAllowCreate", CategoriesAllowCreate);
-            writer.WriteStringValue("contactType", ContactType);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.ContactGroupAttributes_contactType>("contactType", ContactType);
             writer.WriteIntValue("enquirySourceCategoryId", EnquirySourceCategoryId);
             writer.WriteIntValue("enquirySourceId", EnquirySourceId);
             writer.WriteStringValue("enquirySourceReferrerId", EnquirySourceReferrerId);

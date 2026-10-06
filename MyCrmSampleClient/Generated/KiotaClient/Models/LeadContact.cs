@@ -58,7 +58,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public string FirstName { get; set; }
 #endif
         /// <summary>The gender property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.Gender? Gender { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.LeadContact_gender? Gender { get; set; }
         /// <summary>The hasMarketingConsent property</summary>
         public bool? HasMarketingConsent { get; set; }
         /// <summary>The homePhone property</summary>
@@ -92,7 +92,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public string Lid { get; set; }
 #endif
         /// <summary>The maritalStatus property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.MaritalStatus? MaritalStatus { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.LeadContact_maritalStatus? MaritalStatus { get; set; }
         /// <summary>The mobile property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -110,7 +110,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public string PreferredName { get; set; }
 #endif
         /// <summary>The title property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.Title? Title { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.LeadContact_title? Title { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -136,7 +136,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "email", n => { Email = n.GetStringValue(); } },
                 { "employments", n => { Employments = n.GetCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadEmploymentReference>(global::MyCrmSampleClient.Kiota.Models.LeadEmploymentReference.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "firstName", n => { FirstName = n.GetStringValue(); } },
-                { "gender", n => { Gender = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.Gender>(); } },
+                { "gender", n => { Gender = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadContact_gender>(); } },
                 { "hasMarketingConsent", n => { HasMarketingConsent = n.GetBoolValue(); } },
                 { "homePhone", n => { HomePhone = n.GetStringValue(); } },
                 { "isDependant", n => { IsDependant = n.GetBoolValue(); } },
@@ -144,10 +144,10 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "isPrimary", n => { IsPrimary = n.GetBoolValue(); } },
                 { "lastName", n => { LastName = n.GetStringValue(); } },
                 { "lid", n => { Lid = n.GetStringValue(); } },
-                { "maritalStatus", n => { MaritalStatus = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.MaritalStatus>(); } },
+                { "maritalStatus", n => { MaritalStatus = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadContact_maritalStatus>(); } },
                 { "mobile", n => { Mobile = n.GetStringValue(); } },
                 { "preferredName", n => { PreferredName = n.GetStringValue(); } },
-                { "title", n => { Title = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.Title>(); } },
+                { "title", n => { Title = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadContact_title>(); } },
             };
         }
         /// <summary>
@@ -164,7 +164,7 @@ namespace MyCrmSampleClient.Kiota.Models
             writer.WriteStringValue("email", Email);
             writer.WriteCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadEmploymentReference>("employments", Employments);
             writer.WriteStringValue("firstName", FirstName);
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.Gender>("gender", Gender);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadContact_gender>("gender", Gender);
             writer.WriteBoolValue("hasMarketingConsent", HasMarketingConsent);
             writer.WriteStringValue("homePhone", HomePhone);
             writer.WriteBoolValue("isDependant", IsDependant);
@@ -172,10 +172,10 @@ namespace MyCrmSampleClient.Kiota.Models
             writer.WriteBoolValue("isPrimary", IsPrimary);
             writer.WriteStringValue("lastName", LastName);
             writer.WriteStringValue("lid", Lid);
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.MaritalStatus>("maritalStatus", MaritalStatus);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadContact_maritalStatus>("maritalStatus", MaritalStatus);
             writer.WriteStringValue("mobile", Mobile);
             writer.WriteStringValue("preferredName", PreferredName);
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.Title>("title", Title);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadContact_title>("title", Title);
         }
     }
 }

@@ -46,6 +46,14 @@ namespace MyCrmSampleClient.Kiota.Models
 #else
         public global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument ContactGroups { get; set; }
 #endif
+        /// <summary>The creditLicense property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument? CreditLicense { get; set; }
+#nullable restore
+#else
+        public global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument CreditLicense { get; set; }
+#endif
         /// <summary>The familyFranchisees property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -91,6 +99,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "adviserDetails", n => { AdviserDetails = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument.CreateFromDiscriminatorValue); } },
                 { "agreementHolders", n => { AgreementHolders = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument.CreateFromDiscriminatorValue); } },
                 { "contactGroups", n => { ContactGroups = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument.CreateFromDiscriminatorValue); } },
+                { "creditLicense", n => { CreditLicense = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument.CreateFromDiscriminatorValue); } },
                 { "familyFranchisees", n => { FamilyFranchisees = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument.CreateFromDiscriminatorValue); } },
                 { "organisation", n => { Organisation = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument.CreateFromDiscriminatorValue); } },
             };
@@ -106,6 +115,7 @@ namespace MyCrmSampleClient.Kiota.Models
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument>("adviserDetails", AdviserDetails);
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>("agreementHolders", AgreementHolders);
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>("contactGroups", ContactGroups);
+            writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument>("creditLicense", CreditLicense);
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>("familyFranchisees", FamilyFranchisees);
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument>("organisation", Organisation);
             writer.WriteAdditionalData(AdditionalData);

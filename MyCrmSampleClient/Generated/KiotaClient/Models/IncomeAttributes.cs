@@ -32,6 +32,8 @@ namespace MyCrmSampleClient.Kiota.Models
 #else
         public string Frequency { get; private set; }
 #endif
+        /// <summary>The frequencyValue property</summary>
+        public global::MyCrmSampleClient.Kiota.Models.IncomeAttributes_frequencyValue? FrequencyValue { get; private set; }
         /// <summary>The incomeCategory property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -60,6 +62,16 @@ namespace MyCrmSampleClient.Kiota.Models
 #else
         public string IncomeVerification { get; private set; }
 #endif
+        /// <summary>An income-verification-types lookup ID.</summary>
+        public int? IncomeVerificationId { get; private set; }
+        /// <summary>The isEvidenceOfTenancy property</summary>
+        public bool? IsEvidenceOfTenancy { get; private set; }
+        /// <summary>New Zealand only. Indicates whether Salary / Wages income is gross (true) or net (false).</summary>
+        public bool? NzIsGross { get; private set; }
+        /// <summary>New Zealand only. Rental income subtype.</summary>
+        public global::MyCrmSampleClient.Kiota.Models.IncomeAttributes_nzRentalType? NzRentalType { get; private set; }
+        /// <summary>New Zealand only. Rental income verification type ID from the rental-verification-types lookup.</summary>
+        public int? NzRentalVerificationTypeId { get; private set; }
         /// <summary>The updated property</summary>
         public DateTimeOffset? Updated { get; private set; }
         /// <summary>The value property</summary>
@@ -92,11 +104,17 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "created", n => { Created = n.GetDateTimeOffsetValue(); } },
                 { "description", n => { Description = n.GetStringValue(); } },
                 { "frequency", n => { Frequency = n.GetStringValue(); } },
+                { "frequencyValue", n => { FrequencyValue = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.IncomeAttributes_frequencyValue>(); } },
                 { "incomeCategory", n => { IncomeCategory = n.GetStringValue(); } },
                 { "incomeCategoryId", n => { IncomeCategoryId = n.GetIntValue(); } },
                 { "incomeType", n => { IncomeType = n.GetStringValue(); } },
                 { "incomeTypeId", n => { IncomeTypeId = n.GetIntValue(); } },
                 { "incomeVerification", n => { IncomeVerification = n.GetStringValue(); } },
+                { "incomeVerificationId", n => { IncomeVerificationId = n.GetIntValue(); } },
+                { "isEvidenceOfTenancy", n => { IsEvidenceOfTenancy = n.GetBoolValue(); } },
+                { "nzIsGross", n => { NzIsGross = n.GetBoolValue(); } },
+                { "nzRentalType", n => { NzRentalType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.IncomeAttributes_nzRentalType>(); } },
+                { "nzRentalVerificationTypeId", n => { NzRentalVerificationTypeId = n.GetIntValue(); } },
                 { "updated", n => { Updated = n.GetDateTimeOffsetValue(); } },
                 { "value", n => { Value = n.GetDoubleValue(); } },
             };

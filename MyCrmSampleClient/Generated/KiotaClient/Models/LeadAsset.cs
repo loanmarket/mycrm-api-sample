@@ -81,7 +81,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public List<global::MyCrmSampleClient.Kiota.Models.LeadContactReference> Ownership { get; set; }
 #endif
         /// <summary>The propertyPrimaryPurpose property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.PropertyPrimaryPurpose? PropertyPrimaryPurpose { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.LeadAsset_propertyPrimaryPurpose? PropertyPrimaryPurpose { get; set; }
         /// <summary>The propertyTypeId property</summary>
         public int? PropertyTypeId { get; set; }
         /// <summary>The propertyZoningId property</summary>
@@ -89,7 +89,7 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The value property</summary>
         public double? Value { get; set; }
         /// <summary>The valueBasis property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.PropertyValueEstimatedBasis? ValueBasis { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.LeadAsset_valueBasis? ValueBasis { get; set; }
         /// <summary>The vehicleMake property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -128,11 +128,11 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "institution", n => { Institution = n.GetStringValue(); } },
                 { "lid", n => { Lid = n.GetStringValue(); } },
                 { "ownership", n => { Ownership = n.GetCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadContactReference>(global::MyCrmSampleClient.Kiota.Models.LeadContactReference.CreateFromDiscriminatorValue)?.AsList(); } },
-                { "propertyPrimaryPurpose", n => { PropertyPrimaryPurpose = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.PropertyPrimaryPurpose>(); } },
+                { "propertyPrimaryPurpose", n => { PropertyPrimaryPurpose = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAsset_propertyPrimaryPurpose>(); } },
                 { "propertyTypeId", n => { PropertyTypeId = n.GetIntValue(); } },
                 { "propertyZoningId", n => { PropertyZoningId = n.GetIntValue(); } },
                 { "value", n => { Value = n.GetDoubleValue(); } },
-                { "valueBasis", n => { ValueBasis = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.PropertyValueEstimatedBasis>(); } },
+                { "valueBasis", n => { ValueBasis = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAsset_valueBasis>(); } },
                 { "vehicleMake", n => { VehicleMake = n.GetStringValue(); } },
                 { "vehicleYear", n => { VehicleYear = n.GetIntValue(); } },
             };
@@ -154,11 +154,11 @@ namespace MyCrmSampleClient.Kiota.Models
             writer.WriteStringValue("institution", Institution);
             writer.WriteStringValue("lid", Lid);
             writer.WriteCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadContactReference>("ownership", Ownership);
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.PropertyPrimaryPurpose>("propertyPrimaryPurpose", PropertyPrimaryPurpose);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAsset_propertyPrimaryPurpose>("propertyPrimaryPurpose", PropertyPrimaryPurpose);
             writer.WriteIntValue("propertyTypeId", PropertyTypeId);
             writer.WriteIntValue("propertyZoningId", PropertyZoningId);
             writer.WriteDoubleValue("value", Value);
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.PropertyValueEstimatedBasis>("valueBasis", ValueBasis);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAsset_valueBasis>("valueBasis", ValueBasis);
             writer.WriteStringValue("vehicleMake", VehicleMake);
             writer.WriteIntValue("vehicleYear", VehicleYear);
         }

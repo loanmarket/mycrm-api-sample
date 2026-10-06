@@ -2,6 +2,7 @@
 #pragma warning disable CS0618
 using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions;
+using MyCrmSampleClient.Kiota.Jsonapi.Incomes.Item.Relationships.Employment;
 using MyCrmSampleClient.Kiota.Jsonapi.Incomes.Item.Relationships.LinkedAsset;
 using MyCrmSampleClient.Kiota.Jsonapi.Incomes.Item.Relationships.Ownership;
 using System.Collections.Generic;
@@ -16,6 +17,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Incomes.Item.Relationships
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class RelationshipsRequestBuilder : BaseRequestBuilder
     {
+        /// <summary>The employment property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.Incomes.Item.Relationships.Employment.EmploymentRequestBuilder Employment
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.Incomes.Item.Relationships.Employment.EmploymentRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>The linkedAsset property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.Incomes.Item.Relationships.LinkedAsset.LinkedAssetRequestBuilder LinkedAsset
         {

@@ -17,7 +17,7 @@ public partial class Samples
         if (!_console.RequireScope("api.deals.update", "patch-deal-name")) return;
         if (!_console.State.TryGetDealId("patch-deal-name", out var dealId)) return;
 
-        var name = AnsiConsole.Ask<string>($"New name for deal {dealId}:");
+        var name = MenuPrompt.Ask<string>($"New name for deal {dealId}:");
         await _console.Client.Jsonapi.Deals[dealId].PatchAsync(new DealPatchDocument
         {
             Data = new DealPatch
@@ -46,19 +46,19 @@ public partial class Samples
 
         switch (countryCode)
         {
-            case "AU":
-                attributes.AuRationale = new AuDealRationale
+            case AdviserAttributes_countryCode.AU:
+                attributes.AuRationale = new DealAttributes_auRationale
                 {
-                    Summary = AnsiConsole.Ask<string>($"AU BID summary for deal {dealId}:")
+                    Summary = MenuPrompt.Ask<string>($"AU BID summary for deal {dealId}:")
                 };
                 break;
-            case "NZ":
-                attributes.NzRationale = new NzDealRationale
+            case AdviserAttributes_countryCode.NZ:
+                attributes.NzRationale = new DealAttributes_nzRationale
                 {
-                    Summary = AnsiConsole.Ask<string>($"NZ BID summary for deal {dealId}:"),
-                    LenderPreferences = AnsiConsole.Ask<string>("Lender preferences:"),
-                    LoanStructure = AnsiConsole.Ask<string>("Loan structure rationale:"),
-                    ProductFeatures = AnsiConsole.Ask<string>("Product features rationale:")
+                    Summary = MenuPrompt.Ask<string>($"NZ BID summary for deal {dealId}:"),
+                    LenderPreferences = MenuPrompt.Ask<string>("Lender preferences:"),
+                    LoanStructure = MenuPrompt.Ask<string>("Loan structure rationale:"),
+                    ProductFeatures = MenuPrompt.Ask<string>("Product features rationale:")
                 };
                 break;
             default:
@@ -107,7 +107,7 @@ public partial class Samples
     {
         if (!_console.RequireScope("api.organisations.read", "organisation-custom-statuses")) return;
 
-        var organisationId = AnsiConsole.Ask<int>("Organisation ID:");
+        var organisationId = MenuPrompt.Ask<int>("Organisation ID:");
         var response = await _console.Client.Jsonapi.Organisations[organisationId].CustomStatuses
             .WithUrl(
                 $"{JsonApiFluentContext.BaseUrl}/jsonapi/organisations/{organisationId}/customStatuses?sort=sortOrder")
@@ -125,7 +125,7 @@ public partial class Samples
 
         AnsiConsole.WriteLine(
             "Use a custom status ID from the deal's organisation. The API checks whether the movement is allowed.");
-        var customStatusId = AnsiConsole.Ask<int>($"Target custom status ID for deal {dealId}:");
+        var customStatusId = MenuPrompt.Ask<int>($"Target custom status ID for deal {dealId}:");
 
         try
         {

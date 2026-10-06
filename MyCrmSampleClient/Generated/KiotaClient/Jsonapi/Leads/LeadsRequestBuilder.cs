@@ -48,7 +48,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Leads
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public LeadsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/leads", pathParameters)
+        public LeadsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/leads{?fields*,include}", pathParameters)
         {
         }
         /// <summary>
@@ -56,7 +56,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Leads
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public LeadsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/leads", rawUrl)
+        public LeadsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/leads{?fields*,include}", rawUrl)
         {
         }
         /// <summary>
@@ -69,11 +69,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Leads
         /// <exception cref="global::MyCrmSampleClient.Kiota.Models.ErrorDocument">When receiving a 4XX or 5XX status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<global::MyCrmSampleClient.Kiota.Models.LeadDocument?> PostAsync(global::MyCrmSampleClient.Kiota.Models.LeadDocument body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.LeadDocument?> PostAsync(global::MyCrmSampleClient.Kiota.Models.LeadDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.Leads.LeadsRequestBuilder.LeadsRequestBuilderPostQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<global::MyCrmSampleClient.Kiota.Models.LeadDocument> PostAsync(global::MyCrmSampleClient.Kiota.Models.LeadDocument body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.LeadDocument> PostAsync(global::MyCrmSampleClient.Kiota.Models.LeadDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.Leads.LeadsRequestBuilder.LeadsRequestBuilderPostQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             if(ReferenceEquals(body, null)) throw new ArgumentNullException(nameof(body));
@@ -92,11 +92,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Leads
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public RequestInformation ToPostRequestInformation(global::MyCrmSampleClient.Kiota.Models.LeadDocument body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToPostRequestInformation(global::MyCrmSampleClient.Kiota.Models.LeadDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.Leads.LeadsRequestBuilder.LeadsRequestBuilderPostQueryParameters>>? requestConfiguration = default)
         {
 #nullable restore
 #else
-        public RequestInformation ToPostRequestInformation(global::MyCrmSampleClient.Kiota.Models.LeadDocument body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default)
+        public RequestInformation ToPostRequestInformation(global::MyCrmSampleClient.Kiota.Models.LeadDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.Leads.LeadsRequestBuilder.LeadsRequestBuilderPostQueryParameters>> requestConfiguration = default)
         {
 #endif
             if(ReferenceEquals(body, null)) throw new ArgumentNullException(nameof(body));
@@ -116,11 +116,38 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Leads
             return new global::MyCrmSampleClient.Kiota.Jsonapi.Leads.LeadsRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
+        /// Creates a lead, including contact and deal attributes
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
+        public partial class LeadsRequestBuilderPostQueryParameters 
+        {
+            /// <summary>Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("fields")]
+            public string? Fields { get; set; }
+#nullable restore
+#else
+            [QueryParameter("fields")]
+            public string Fields { get; set; }
+#endif
+            /// <summary>Comma-separated relationship paths for the response representation. Use dots for nested relationships.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("include")]
+            public string[]? Include { get; set; }
+#nullable restore
+#else
+            [QueryParameter("include")]
+            public string[] Include { get; set; }
+#endif
+        }
+        /// <summary>
         /// Configuration for the request such as headers, query parameters, and middleware options.
         /// </summary>
         [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class LeadsRequestBuilderPostRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
+        public partial class LeadsRequestBuilderPostRequestConfiguration : RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.Leads.LeadsRequestBuilder.LeadsRequestBuilderPostQueryParameters>
         {
         }
     }

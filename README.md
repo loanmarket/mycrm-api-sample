@@ -55,7 +55,7 @@ The OAuth 2.0 token exchange is handled automatically by the `Pre-request Script
 
 ## Using the Sample Client
 
-The [MyCrmSampleClient](./MyCrmSampleClient) is an interactive .NET console application that demonstrates how to authenticate and call the MyCRM API from C# code. See the [Sample Client README](./MyCrmSampleClient/README.md) for a full description of each sample.
+The [MyCrmSampleClient](./MyCrmSampleClient) is an interactive .NET 10 console application that demonstrates how to authenticate and call the MyCRM API from C# code. Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10) before running it. See the [Sample Client README](./MyCrmSampleClient/README.md) for a full description of each sample.
 
 To run it, edit [appsettings.json](./MyCrmSampleClient/appsettings.json) to populate your credentials and then run `dotnet run`:
 

@@ -13,7 +13,7 @@ namespace MyCrmSampleClient.Kiota.Models
     #pragma warning restore CS1591
     {
         /// <summary>The addressType property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.ClientAddressType? AddressType { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.LeadAddress_addressType? AddressType { get; set; }
         /// <summary>The country property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -88,7 +88,7 @@ namespace MyCrmSampleClient.Kiota.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "addressType", n => { AddressType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.ClientAddressType>(); } },
+                { "addressType", n => { AddressType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAddress_addressType>(); } },
                 { "country", n => { Country = n.GetStringValue(); } },
                 { "formattedAddress", n => { FormattedAddress = n.GetStringValue(); } },
                 { "lid", n => { Lid = n.GetStringValue(); } },
@@ -105,7 +105,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.ClientAddressType>("addressType", AddressType);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadAddress_addressType>("addressType", AddressType);
             writer.WriteStringValue("country", Country);
             writer.WriteStringValue("formattedAddress", FormattedAddress);
             writer.WriteStringValue("lid", Lid);

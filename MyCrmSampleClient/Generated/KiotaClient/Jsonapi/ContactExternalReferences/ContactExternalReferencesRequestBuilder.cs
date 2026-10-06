@@ -48,7 +48,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ContactExternalReferencesRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-external-references{?filter*,include*,page*,sort}", pathParameters)
+        public ContactExternalReferencesRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-external-references{?fields*,filter*,include,page*,sort}", pathParameters)
         {
         }
         /// <summary>
@@ -56,7 +56,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ContactExternalReferencesRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-external-references{?filter*,include*,page*,sort}", rawUrl)
+        public ContactExternalReferencesRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-external-references{?fields*,filter*,include,page*,sort}", rawUrl)
         {
         }
         /// <summary>
@@ -91,11 +91,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences
         /// <exception cref="global::MyCrmSampleClient.Kiota.Models.ErrorDocument">When receiving a 4XX or 5XX status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<Stream?> HeadAsync(Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<Stream?> HeadAsync(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences.ContactExternalReferencesRequestBuilder.ContactExternalReferencesRequestBuilderHeadQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<Stream> HeadAsync(Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<Stream> HeadAsync(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences.ContactExternalReferencesRequestBuilder.ContactExternalReferencesRequestBuilderHeadQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             var requestInfo = ToHeadRequestInformation(requestConfiguration);
@@ -115,11 +115,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences
         /// <exception cref="global::MyCrmSampleClient.Kiota.Models.ErrorDocument">When receiving a 4XX or 5XX status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactExternalReferenceDocument?> PostAsync(global::MyCrmSampleClient.Kiota.Models.ContactExternalReferenceDocument body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactExternalReferenceDocument?> PostAsync(global::MyCrmSampleClient.Kiota.Models.ContactExternalReferenceDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences.ContactExternalReferencesRequestBuilder.ContactExternalReferencesRequestBuilderPostQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactExternalReferenceDocument> PostAsync(global::MyCrmSampleClient.Kiota.Models.ContactExternalReferenceDocument body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactExternalReferenceDocument> PostAsync(global::MyCrmSampleClient.Kiota.Models.ContactExternalReferenceDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences.ContactExternalReferencesRequestBuilder.ContactExternalReferencesRequestBuilderPostQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             if(ReferenceEquals(body, null)) throw new ArgumentNullException(nameof(body));
@@ -153,11 +153,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public RequestInformation ToHeadRequestInformation(Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToHeadRequestInformation(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences.ContactExternalReferencesRequestBuilder.ContactExternalReferencesRequestBuilderHeadQueryParameters>>? requestConfiguration = default)
         {
 #nullable restore
 #else
-        public RequestInformation ToHeadRequestInformation(Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default)
+        public RequestInformation ToHeadRequestInformation(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences.ContactExternalReferencesRequestBuilder.ContactExternalReferencesRequestBuilderHeadQueryParameters>> requestConfiguration = default)
         {
 #endif
             var requestInfo = new RequestInformation(Method.HEAD, UrlTemplate, PathParameters);
@@ -173,11 +173,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public RequestInformation ToPostRequestInformation(global::MyCrmSampleClient.Kiota.Models.ContactExternalReferenceDocument body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToPostRequestInformation(global::MyCrmSampleClient.Kiota.Models.ContactExternalReferenceDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences.ContactExternalReferencesRequestBuilder.ContactExternalReferencesRequestBuilderPostQueryParameters>>? requestConfiguration = default)
         {
 #nullable restore
 #else
-        public RequestInformation ToPostRequestInformation(global::MyCrmSampleClient.Kiota.Models.ContactExternalReferenceDocument body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default)
+        public RequestInformation ToPostRequestInformation(global::MyCrmSampleClient.Kiota.Models.ContactExternalReferenceDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences.ContactExternalReferencesRequestBuilder.ContactExternalReferencesRequestBuilderPostQueryParameters>> requestConfiguration = default)
         {
 #endif
             if(ReferenceEquals(body, null)) throw new ArgumentNullException(nameof(body));
@@ -202,6 +202,16 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class ContactExternalReferencesRequestBuilderGetQueryParameters 
         {
+            /// <summary>Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("fields")]
+            public string? Fields { get; set; }
+#nullable restore
+#else
+            [QueryParameter("fields")]
+            public string Fields { get; set; }
+#endif
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             [QueryParameter("filter")]
@@ -211,6 +221,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences
             [QueryParameter("filter")]
             public string[] Filter { get; set; }
 #endif
+            /// <summary>Comma-separated relationship paths for the response representation. Use dots for nested relationships.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             [QueryParameter("include")]
@@ -248,19 +259,73 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences
         {
         }
         /// <summary>
-        /// Configuration for the request such as headers, query parameters, and middleware options.
+        /// Retrieve headers related to the associated GET request
         /// </summary>
-        [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class ContactExternalReferencesRequestBuilderHeadRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
+        public partial class ContactExternalReferencesRequestBuilderHeadQueryParameters 
         {
+            /// <summary>Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("fields")]
+            public string? Fields { get; set; }
+#nullable restore
+#else
+            [QueryParameter("fields")]
+            public string Fields { get; set; }
+#endif
+            /// <summary>Comma-separated relationship paths for the response representation. Use dots for nested relationships.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("include")]
+            public string[]? Include { get; set; }
+#nullable restore
+#else
+            [QueryParameter("include")]
+            public string[] Include { get; set; }
+#endif
         }
         /// <summary>
         /// Configuration for the request such as headers, query parameters, and middleware options.
         /// </summary>
         [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class ContactExternalReferencesRequestBuilderPostRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
+        public partial class ContactExternalReferencesRequestBuilderHeadRequestConfiguration : RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences.ContactExternalReferencesRequestBuilder.ContactExternalReferencesRequestBuilderHeadQueryParameters>
+        {
+        }
+        /// <summary>
+        /// Creates a new contact external reference with attributes, relationships or both
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
+        public partial class ContactExternalReferencesRequestBuilderPostQueryParameters 
+        {
+            /// <summary>Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("fields")]
+            public string? Fields { get; set; }
+#nullable restore
+#else
+            [QueryParameter("fields")]
+            public string Fields { get; set; }
+#endif
+            /// <summary>Comma-separated relationship paths for the response representation. Use dots for nested relationships.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("include")]
+            public string[]? Include { get; set; }
+#nullable restore
+#else
+            [QueryParameter("include")]
+            public string[] Include { get; set; }
+#endif
+        }
+        /// <summary>
+        /// Configuration for the request such as headers, query parameters, and middleware options.
+        /// </summary>
+        [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
+        public partial class ContactExternalReferencesRequestBuilderPostRequestConfiguration : RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactExternalReferences.ContactExternalReferencesRequestBuilder.ContactExternalReferencesRequestBuilderPostQueryParameters>
         {
         }
     }
