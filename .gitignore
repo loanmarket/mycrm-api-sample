@@ -355,3 +355,6 @@ MigrationBackup/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Generated financial snapshot workbooks
+/MyCrmSampleClient/financials*.xlsx

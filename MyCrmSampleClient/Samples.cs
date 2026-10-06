@@ -167,7 +167,7 @@ public partial class Samples
                 _console.Cell(contact?.Id),
                 _console.Cell(fullName),
                 _console.Cell(contact?.Attributes?.Email),
-                _console.Cell(address?.Attributes?.AddressType),
+                _console.Cell(address?.Attributes?.AddressType?.ToString()),
                 _console.Cell(address?.Attributes?.FormattedAddress));
 
             found = true;
@@ -278,7 +278,7 @@ public partial class Samples
                 {
                     table.AddRow(
                         _console.Cell(group.Id),
-                        _console.Cell(group.Attributes?.ContactType),
+                        _console.Cell(group.Attributes?.ContactType?.ToString()),
                         _console.Cell(fullName));
                 }
                 
@@ -289,7 +289,7 @@ public partial class Samples
             {
                 table.AddRow(
                     _console.Cell(group.Id),
-                    _console.Cell(group.Attributes?.ContactType),
+                    _console.Cell(group.Attributes?.ContactType?.ToString()),
                     _console.Cell((string)null));
             }
         }
@@ -436,7 +436,7 @@ public partial class Samples
             table.AddRow(
                 _console.Cell(deal.Id),
                 _console.Cell(deal.Attributes?.Name),
-                _console.Cell(deal.Attributes?.DealStatus),
+                _console.Cell(deal.Attributes?.DealStatus?.ToString()),
                 _console.Cell(deal.Attributes?.LenderName),
                 _console.Cell(deal.Attributes?.TotalLoanAmount?.ToString("0.##")));
         }
@@ -458,13 +458,13 @@ public partial class Samples
                 Type = "leads",
                 Attributes = new LeadAttributes
                 {
-                    Title = "Mr",
+                    Title = LeadAttributes_title.Mr,
                     FirstName = "Fred",
                     LastName = "Flintstone",
                     Email = $"fred.{unique}@bedrock.example",
                     Mobile = "0412345678",
                     DateOfBirth = new Date(DateTime.Today.AddYears(-31)),
-                    Gender = "Male",
+                    Gender = LeadAttributes_gender.Male,
                     HasMarketingConsent = true,
                     IsGuarantor = false,
                     IsDependant = false,
@@ -474,7 +474,7 @@ public partial class Samples
                     State = "Queensland",
                     PostCode = "4000",
                     Country = "Australia",
-                    AddressType = "Current",
+                    AddressType = LeadAttributes_addressType.Current,
                     NoteTitle = "About the lead",
                     NoteDetails = "Created from MyCRM sample",
                     UtmSource = "facebook",
@@ -511,7 +511,7 @@ public partial class Samples
         var table = _console.CreateTable("Lead Id", "Status");
         table.AddRow(
             _console.Cell(createdLead?.Data?.Id),
-            _console.Cell(createdLead?.Data?.Attributes?.DealStatus));
+            _console.Cell(createdLead?.Data?.Attributes?.DealStatus?.ToString()));
 
         _console.WriteTable(table);
     }

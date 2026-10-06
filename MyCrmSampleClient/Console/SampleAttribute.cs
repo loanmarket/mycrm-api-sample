@@ -15,4 +15,5 @@ public sealed class SampleAttribute : Attribute
     }
     public string Name { get; }
     public string ApiMethod { get; }
+    public bool IncludeInRunAll { get; set; } = true;
 }
