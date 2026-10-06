@@ -14,7 +14,7 @@ using System;
 namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Relationships
 {
     /// <summary>
-    /// Builds and executes requests for operations under \jsonapi\contact-groups\{id}\relationships
+    /// Builds and executes requests for operations under \jsonapi\contact-groups\{contactGroup-id}\relationships
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class RelationshipsRequestBuilder : BaseRequestBuilder
@@ -49,7 +49,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Relationships
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public RelationshipsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{id}/relationships", pathParameters)
+        public RelationshipsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{contactGroup%2Did}/relationships", pathParameters)
         {
         }
         /// <summary>
@@ -57,7 +57,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Relationships
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public RelationshipsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{id}/relationships", rawUrl)
+        public RelationshipsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{contactGroup%2Did}/relationships", rawUrl)
         {
         }
     }

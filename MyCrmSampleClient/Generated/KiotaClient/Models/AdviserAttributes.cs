@@ -2,6 +2,7 @@
 #pragma warning disable CS0618
 using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions.Serialization;
+using Microsoft.Kiota.Abstractions;
 using System.Collections.Generic;
 using System.IO;
 using System;
@@ -22,6 +23,8 @@ namespace MyCrmSampleClient.Kiota.Models
 #else
         public string Bio { get; private set; }
 #endif
+        /// <summary>The brokerStartDate property</summary>
+        public Date? BrokerStartDate { get; private set; }
         /// <summary>The calendly property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -30,14 +33,24 @@ namespace MyCrmSampleClient.Kiota.Models
 #else
         public string Calendly { get; private set; }
 #endif
-        /// <summary>The countryCode property</summary>
+        /// <summary>The contactType property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public string? CountryCode { get; private set; }
+        public string? ContactType { get; private set; }
 #nullable restore
 #else
-        public string CountryCode { get; private set; }
+        public string ContactType { get; private set; }
 #endif
+        /// <summary>The contactTypeRoles property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public List<string>? ContactTypeRoles { get; private set; }
+#nullable restore
+#else
+        public List<string> ContactTypeRoles { get; private set; }
+#endif
+        /// <summary>The countryCode property</summary>
+        public global::MyCrmSampleClient.Kiota.Models.AdviserAttributes_countryCode? CountryCode { get; private set; }
         /// <summary>The created property</summary>
         public DateTimeOffset? Created { get; private set; }
         /// <summary>The email property</summary>
@@ -200,8 +213,11 @@ namespace MyCrmSampleClient.Kiota.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "bio", n => { Bio = n.GetStringValue(); } },
+                { "brokerStartDate", n => { BrokerStartDate = n.GetDateValue(); } },
                 { "calendly", n => { Calendly = n.GetStringValue(); } },
-                { "countryCode", n => { CountryCode = n.GetStringValue(); } },
+                { "contactType", n => { ContactType = n.GetStringValue(); } },
+                { "contactTypeRoles", n => { ContactTypeRoles = n.GetCollectionOfPrimitiveValues<string>()?.AsList(); } },
+                { "countryCode", n => { CountryCode = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.AdviserAttributes_countryCode>(); } },
                 { "created", n => { Created = n.GetDateTimeOffsetValue(); } },
                 { "email", n => { Email = n.GetStringValue(); } },
                 { "facebook", n => { Facebook = n.GetStringValue(); } },

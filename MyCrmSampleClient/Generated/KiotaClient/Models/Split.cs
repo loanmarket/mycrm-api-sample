@@ -32,7 +32,7 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The lmiPremium property</summary>
         public double? LmiPremium { get; set; }
         /// <summary>The loanStructureType property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.LoanStructureType? LoanStructureType { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.Split_loanStructureType? LoanStructureType { get; set; }
         /// <summary>The loanTermYears property</summary>
         public double? LoanTermYears { get; set; }
         /// <summary>The paymentAmount property</summary>
@@ -78,7 +78,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "interestOnlyStartDate", n => { InterestOnlyStartDate = n.GetDateValue(); } },
                 { "interestRate", n => { InterestRate = n.GetDoubleValue(); } },
                 { "lmiPremium", n => { LmiPremium = n.GetDoubleValue(); } },
-                { "loanStructureType", n => { LoanStructureType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LoanStructureType>(); } },
+                { "loanStructureType", n => { LoanStructureType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.Split_loanStructureType>(); } },
                 { "loanTermYears", n => { LoanTermYears = n.GetDoubleValue(); } },
                 { "paymentAmount", n => { PaymentAmount = n.GetDoubleValue(); } },
                 { "rateType", n => { RateType = n.GetStringValue(); } },
@@ -103,7 +103,7 @@ namespace MyCrmSampleClient.Kiota.Models
             writer.WriteDateValue("interestOnlyStartDate", InterestOnlyStartDate);
             writer.WriteDoubleValue("interestRate", InterestRate);
             writer.WriteDoubleValue("lmiPremium", LmiPremium);
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LoanStructureType>("loanStructureType", LoanStructureType);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.Split_loanStructureType>("loanStructureType", LoanStructureType);
             writer.WriteDoubleValue("loanTermYears", LoanTermYears);
             writer.WriteDoubleValue("paymentAmount", PaymentAmount);
             writer.WriteStringValue("rateType", RateType);

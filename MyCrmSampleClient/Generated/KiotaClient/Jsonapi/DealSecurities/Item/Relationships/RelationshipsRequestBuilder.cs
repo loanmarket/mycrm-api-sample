@@ -2,6 +2,7 @@
 #pragma warning disable CS0618
 using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions;
+using MyCrmSampleClient.Kiota.Jsonapi.DealSecurities.Item.Relationships.Address;
 using MyCrmSampleClient.Kiota.Jsonapi.DealSecurities.Item.Relationships.Asset;
 using MyCrmSampleClient.Kiota.Jsonapi.DealSecurities.Item.Relationships.Ownership;
 using MyCrmSampleClient.Kiota.Jsonapi.DealSecurities.Item.Relationships.TitleIdentifications;
@@ -17,6 +18,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.DealSecurities.Item.Relationships
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class RelationshipsRequestBuilder : BaseRequestBuilder
     {
+        /// <summary>The address property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.DealSecurities.Item.Relationships.Address.AddressRequestBuilder Address
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.DealSecurities.Item.Relationships.Address.AddressRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>The asset property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.DealSecurities.Item.Relationships.Asset.AssetRequestBuilder Asset
         {

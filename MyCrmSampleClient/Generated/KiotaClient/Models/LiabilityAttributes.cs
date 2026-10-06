@@ -2,6 +2,7 @@
 #pragma warning disable CS0618
 using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions.Serialization;
+using Microsoft.Kiota.Abstractions;
 using System.Collections.Generic;
 using System.IO;
 using System;
@@ -48,12 +49,14 @@ namespace MyCrmSampleClient.Kiota.Models
 #else
         public string CreditorName { get; private set; }
 #endif
-        /// <summary>The interestRate property</summary>
+        /// <summary>Interest rate as a percentage; for example, 6.25 represents 6.25%. Used for Commercial Bill, Hire Purchase, Lease, Line of Credit and Mortgage liabilities; in New Zealand, also used for other liability types except Buy Now Pay Later.</summary>
         public double? InterestRate { get; set; }
-        /// <summary>The interestTaxDeductible property</summary>
+        /// <summary>Whether interest is tax deductible. Used for Commercial Bill, Hire Purchase, Lease, Line of Credit and Mortgage liabilities.</summary>
         public bool? InterestTaxDeductible { get; set; }
         /// <summary>The isAccountDetailsKnown property</summary>
         public bool? IsAccountDetailsKnown { get; set; }
+        /// <summary>Buy Now Pay Later only. Whether the liability will be cleared from this loan.</summary>
+        public bool? IsClearingFromThisLoan { get; private set; }
         /// <summary>The liabilityCategory property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -64,7 +67,7 @@ namespace MyCrmSampleClient.Kiota.Models
 #endif
         /// <summary>The liabilityCategoryId property</summary>
         public int? LiabilityCategoryId { get; private set; }
-        /// <summary>The liabilitySubType property</summary>
+        /// <summary>Credit Card only. The display label for liabilitySubTypeId.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? LiabilitySubType { get; private set; }
@@ -72,7 +75,7 @@ namespace MyCrmSampleClient.Kiota.Models
 #else
         public string LiabilitySubType { get; private set; }
 #endif
-        /// <summary>The liabilitySubTypeId property</summary>
+        /// <summary>Credit Card only. The card type ID from the liability-sub-types lookup.</summary>
         public int? LiabilitySubTypeId { get; private set; }
         /// <summary>The liabilityType property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -86,24 +89,26 @@ namespace MyCrmSampleClient.Kiota.Models
         public int? LiabilityTypeId { get; private set; }
         /// <summary>The limit property</summary>
         public double? Limit { get; set; }
-        /// <summary>The loanRepaymentType property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? LoanRepaymentType { get; private set; }
-#nullable restore
-#else
-        public string LoanRepaymentType { get; private set; }
-#endif
-        /// <summary>The loanTerm property</summary>
+        /// <summary>Repayment type. Used for mortgages, and in New Zealand also for Home Loan, Line of Credit and Loan as Guarantor liabilities.</summary>
+        public global::MyCrmSampleClient.Kiota.Models.LiabilityAttributes_loanRepaymentType? LoanRepaymentType { get; private set; }
+        /// <summary>Mortgage only, outside New Zealand. Loan term in years. New Zealand loans use nzDocumentedLoanTermMonths.</summary>
         public int? LoanTerm { get; set; }
-        /// <summary>The mortgagePriority property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? MortgagePriority { get; private set; }
-#nullable restore
-#else
-        public string MortgagePriority { get; private set; }
-#endif
+        /// <summary>Mortgage only. The priority of the mortgage.</summary>
+        public global::MyCrmSampleClient.Kiota.Models.LiabilityAttributes_mortgagePriority? MortgagePriority { get; private set; }
+        /// <summary>Total documented loan term in months; for example, 306 represents 25 years and 6 months. Used in New Zealand for Personal Loan, Home Loan, Business Loan, Mortgage, Car Loan, Line of Credit and Loan as Guarantor liabilities.</summary>
+        public int? NzDocumentedLoanTermMonths { get; private set; }
+        /// <summary>End date of the interest-only period. Used in New Zealand for Personal Loan, Home Loan, Business Loan, Mortgage, Car Loan, Line of Credit and Loan as Guarantor liabilities.</summary>
+        public Date? NzInterestOnlyEndDate { get; private set; }
+        /// <summary>Start date of the interest-only period. Used in New Zealand for Personal Loan, Home Loan, Business Loan, Mortgage, Car Loan, Line of Credit and Loan as Guarantor liabilities.</summary>
+        public Date? NzInterestOnlyStartDate { get; private set; }
+        /// <summary>Total interest-only period in months; for example, 30 represents 2 years and 6 months. Used in New Zealand for Personal Loan, Home Loan, Business Loan, Mortgage, Car Loan, Line of Credit and Loan as Guarantor liabilities.</summary>
+        public int? NzInterestOnlyTermMonths { get; private set; }
+        /// <summary>New Zealand only. Whether payments are in arrears. Used for all liability types except Buy Now Pay Later.</summary>
+        public bool? NzIsInArrears { get; private set; }
+        /// <summary>Loan start date. Used in New Zealand for Personal Loan, Home Loan, Business Loan, Mortgage, Car Loan, Line of Credit and Loan as Guarantor liabilities.</summary>
+        public Date? NzLoanStartDate { get; private set; }
+        /// <summary>Whether revolving credit or redraw is available. Used in New Zealand for Personal Loan, Home Loan, Business Loan, Mortgage, Car Loan, Line of Credit and Loan as Guarantor liabilities.</summary>
+        public bool? NzRevolvingCreditRedraw { get; private set; }
         /// <summary>The repayment property</summary>
         public double? Repayment { get; set; }
         /// <summary>The repaymentFrequency property</summary>
@@ -114,6 +119,8 @@ namespace MyCrmSampleClient.Kiota.Models
 #else
         public string RepaymentFrequency { get; private set; }
 #endif
+        /// <summary>The repaymentFrequencyValue property</summary>
+        public global::MyCrmSampleClient.Kiota.Models.LiabilityAttributes_repaymentFrequencyValue? RepaymentFrequencyValue { get; private set; }
         /// <summary>The updated property</summary>
         public DateTimeOffset? Updated { get; private set; }
         /// <summary>The value property</summary>
@@ -151,6 +158,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "interestRate", n => { InterestRate = n.GetDoubleValue(); } },
                 { "interestTaxDeductible", n => { InterestTaxDeductible = n.GetBoolValue(); } },
                 { "isAccountDetailsKnown", n => { IsAccountDetailsKnown = n.GetBoolValue(); } },
+                { "isClearingFromThisLoan", n => { IsClearingFromThisLoan = n.GetBoolValue(); } },
                 { "liabilityCategory", n => { LiabilityCategory = n.GetStringValue(); } },
                 { "liabilityCategoryId", n => { LiabilityCategoryId = n.GetIntValue(); } },
                 { "liabilitySubType", n => { LiabilitySubType = n.GetStringValue(); } },
@@ -158,11 +166,19 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "liabilityType", n => { LiabilityType = n.GetStringValue(); } },
                 { "liabilityTypeId", n => { LiabilityTypeId = n.GetIntValue(); } },
                 { "limit", n => { Limit = n.GetDoubleValue(); } },
-                { "loanRepaymentType", n => { LoanRepaymentType = n.GetStringValue(); } },
+                { "loanRepaymentType", n => { LoanRepaymentType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LiabilityAttributes_loanRepaymentType>(); } },
                 { "loanTerm", n => { LoanTerm = n.GetIntValue(); } },
-                { "mortgagePriority", n => { MortgagePriority = n.GetStringValue(); } },
+                { "mortgagePriority", n => { MortgagePriority = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LiabilityAttributes_mortgagePriority>(); } },
+                { "nzDocumentedLoanTermMonths", n => { NzDocumentedLoanTermMonths = n.GetIntValue(); } },
+                { "nzInterestOnlyEndDate", n => { NzInterestOnlyEndDate = n.GetDateValue(); } },
+                { "nzInterestOnlyStartDate", n => { NzInterestOnlyStartDate = n.GetDateValue(); } },
+                { "nzInterestOnlyTermMonths", n => { NzInterestOnlyTermMonths = n.GetIntValue(); } },
+                { "nzIsInArrears", n => { NzIsInArrears = n.GetBoolValue(); } },
+                { "nzLoanStartDate", n => { NzLoanStartDate = n.GetDateValue(); } },
+                { "nzRevolvingCreditRedraw", n => { NzRevolvingCreditRedraw = n.GetBoolValue(); } },
                 { "repayment", n => { Repayment = n.GetDoubleValue(); } },
                 { "repaymentFrequency", n => { RepaymentFrequency = n.GetStringValue(); } },
+                { "repaymentFrequencyValue", n => { RepaymentFrequencyValue = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LiabilityAttributes_repaymentFrequencyValue>(); } },
                 { "updated", n => { Updated = n.GetDateTimeOffsetValue(); } },
                 { "value", n => { Value = n.GetDoubleValue(); } },
             };

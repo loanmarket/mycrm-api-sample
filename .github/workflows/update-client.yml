@@ -39,11 +39,15 @@ jobs:
           set -euo pipefail
           dotnet tool restore
 
-      - name: Build client
+      - name: Generate client
         working-directory: ./mycrm-api-sample/MyCrmSampleClient
         run: |
           set -euo pipefail
           dotnet tool run kiota update --output ./Generated/KiotaClient --clean-output
+
+      - name: Build and test sample
+        working-directory: ./mycrm-api-sample/MyCrmSampleClient
+        run: dotnet test MyCrmSampleClient.sln --configuration Release
 
       - name: Remove loanmarket/mycrm-api local files
         uses: JesseTG/rm@v1.0.3

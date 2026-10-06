@@ -43,7 +43,13 @@ public class Program
                 return;
             }
 
-            var requestAdapter = new HttpClientRequestAdapter(new MyCrmKiotaAuthProvider(token.Token, mycrmConfig.AdviserContactId))
+            using var authentication = new MyCrmKiotaAuthProvider(token, mycrmConfig.AdviserContactId,
+                cancellationToken => authClient.GetAuthorizationToken(authConfig, cancellationToken));
+
+            var handlers = KiotaClientFactory.CreateDefaultHandlers();
+            handlers.Insert(0, new ApiRequestDiagnosticsHandler(Log.Logger));
+            using var httpClient = KiotaClientFactory.Create(handlers);
+            using var requestAdapter = new HttpClientRequestAdapter(authentication, httpClient: httpClient)
             {
                 BaseUrl = mycrmConfig.Url.ToString().TrimEnd('/')
             };
