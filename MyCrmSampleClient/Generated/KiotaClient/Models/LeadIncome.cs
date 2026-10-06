@@ -41,7 +41,7 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The incomeTypeId property</summary>
         public int? IncomeTypeId { get; set; }
         /// <summary>The incomeVerification property</summary>
-        public global::MyCrmSampleClient.Kiota.Models.IncomeVerificationEnum? IncomeVerification { get; set; }
+        public global::MyCrmSampleClient.Kiota.Models.LeadIncome_incomeVerification? IncomeVerification { get; set; }
         /// <summary>The lid property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -83,7 +83,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "employment", n => { Employment = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.LeadEmploymentReference>(global::MyCrmSampleClient.Kiota.Models.LeadEmploymentReference.CreateFromDiscriminatorValue); } },
                 { "frequency", n => { Frequency = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.Frequency>(); } },
                 { "incomeTypeId", n => { IncomeTypeId = n.GetIntValue(); } },
-                { "incomeVerification", n => { IncomeVerification = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.IncomeVerificationEnum>(); } },
+                { "incomeVerification", n => { IncomeVerification = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadIncome_incomeVerification>(); } },
                 { "lid", n => { Lid = n.GetStringValue(); } },
                 { "ownership", n => { Ownership = n.GetCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadContactReference>(global::MyCrmSampleClient.Kiota.Models.LeadContactReference.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "value", n => { Value = n.GetDoubleValue(); } },
@@ -101,7 +101,7 @@ namespace MyCrmSampleClient.Kiota.Models
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.LeadEmploymentReference>("employment", Employment);
             writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.Frequency>("frequency", Frequency);
             writer.WriteIntValue("incomeTypeId", IncomeTypeId);
-            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.IncomeVerificationEnum>("incomeVerification", IncomeVerification);
+            writer.WriteEnumValue<global::MyCrmSampleClient.Kiota.Models.LeadIncome_incomeVerification>("incomeVerification", IncomeVerification);
             writer.WriteStringValue("lid", Lid);
             writer.WriteCollectionOfObjectValues<global::MyCrmSampleClient.Kiota.Models.LeadContactReference>("ownership", Ownership);
             writer.WriteDoubleValue("value", Value);

@@ -35,7 +35,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.EnquirySources
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public EnquirySourcesRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/enquiry-sources{?filter*,include*,page*,sort}", pathParameters)
+        public EnquirySourcesRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/enquiry-sources{?fields*,filter*,include,page*,sort}", pathParameters)
         {
         }
         /// <summary>
@@ -43,7 +43,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.EnquirySources
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public EnquirySourcesRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/enquiry-sources{?filter*,include*,page*,sort}", rawUrl)
+        public EnquirySourcesRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/enquiry-sources{?fields*,filter*,include,page*,sort}", rawUrl)
         {
         }
         /// <summary>
@@ -78,11 +78,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.EnquirySources
         /// <exception cref="global::MyCrmSampleClient.Kiota.Models.ErrorDocument">When receiving a 4XX or 5XX status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<Stream?> HeadAsync(Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<Stream?> HeadAsync(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.EnquirySources.EnquirySourcesRequestBuilder.EnquirySourcesRequestBuilderHeadQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<Stream> HeadAsync(Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<Stream> HeadAsync(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.EnquirySources.EnquirySourcesRequestBuilder.EnquirySourcesRequestBuilderHeadQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             var requestInfo = ToHeadRequestInformation(requestConfiguration);
@@ -115,11 +115,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.EnquirySources
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public RequestInformation ToHeadRequestInformation(Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToHeadRequestInformation(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.EnquirySources.EnquirySourcesRequestBuilder.EnquirySourcesRequestBuilderHeadQueryParameters>>? requestConfiguration = default)
         {
 #nullable restore
 #else
-        public RequestInformation ToHeadRequestInformation(Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default)
+        public RequestInformation ToHeadRequestInformation(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.EnquirySources.EnquirySourcesRequestBuilder.EnquirySourcesRequestBuilderHeadQueryParameters>> requestConfiguration = default)
         {
 #endif
             var requestInfo = new RequestInformation(Method.HEAD, UrlTemplate, PathParameters);
@@ -142,6 +142,16 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.EnquirySources
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class EnquirySourcesRequestBuilderGetQueryParameters 
         {
+            /// <summary>Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("fields")]
+            public string? Fields { get; set; }
+#nullable restore
+#else
+            [QueryParameter("fields")]
+            public string Fields { get; set; }
+#endif
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             [QueryParameter("filter")]
@@ -151,6 +161,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.EnquirySources
             [QueryParameter("filter")]
             public string[] Filter { get; set; }
 #endif
+            /// <summary>Comma-separated relationship paths for the response representation. Use dots for nested relationships.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             [QueryParameter("include")]
@@ -188,11 +199,38 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.EnquirySources
         {
         }
         /// <summary>
+        /// Retrieve headers related to the associated GET request
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
+        public partial class EnquirySourcesRequestBuilderHeadQueryParameters 
+        {
+            /// <summary>Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("fields")]
+            public string? Fields { get; set; }
+#nullable restore
+#else
+            [QueryParameter("fields")]
+            public string Fields { get; set; }
+#endif
+            /// <summary>Comma-separated relationship paths for the response representation. Use dots for nested relationships.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("include")]
+            public string[]? Include { get; set; }
+#nullable restore
+#else
+            [QueryParameter("include")]
+            public string[] Include { get; set; }
+#endif
+        }
+        /// <summary>
         /// Configuration for the request such as headers, query parameters, and middleware options.
         /// </summary>
         [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class EnquirySourcesRequestBuilderHeadRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
+        public partial class EnquirySourcesRequestBuilderHeadRequestConfiguration : RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.EnquirySources.EnquirySourcesRequestBuilder.EnquirySourcesRequestBuilderHeadQueryParameters>
         {
         }
     }

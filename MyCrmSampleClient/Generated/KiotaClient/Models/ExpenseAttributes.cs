@@ -52,6 +52,8 @@ namespace MyCrmSampleClient.Kiota.Models
 #else
         public string Frequency { get; private set; }
 #endif
+        /// <summary>The frequencyValue property</summary>
+        public global::MyCrmSampleClient.Kiota.Models.ExpenseAttributes_frequencyValue? FrequencyValue { get; private set; }
         /// <summary>The updated property</summary>
         public DateTimeOffset? Updated { get; private set; }
         /// <summary>The value property</summary>
@@ -88,6 +90,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "expenseType", n => { ExpenseType = n.GetStringValue(); } },
                 { "expenseTypeId", n => { ExpenseTypeId = n.GetIntValue(); } },
                 { "frequency", n => { Frequency = n.GetStringValue(); } },
+                { "frequencyValue", n => { FrequencyValue = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.ExpenseAttributes_frequencyValue>(); } },
                 { "updated", n => { Updated = n.GetDateTimeOffsetValue(); } },
                 { "value", n => { Value = n.GetDoubleValue(); } },
             };
