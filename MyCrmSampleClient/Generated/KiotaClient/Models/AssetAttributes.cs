@@ -78,14 +78,6 @@ namespace MyCrmSampleClient.Kiota.Models
 #endif
         /// <summary>The created property</summary>
         public DateTimeOffset? Created { get; private set; }
-        /// <summary>The currencyCode property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? CurrencyCode { get; private set; }
-#nullable restore
-#else
-        public string CurrencyCode { get; private set; }
-#endif
         /// <summary>The description property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -108,6 +100,8 @@ namespace MyCrmSampleClient.Kiota.Models
         public bool? IsExistingMortgages { get; private set; }
         /// <summary>The isRentalIncome property</summary>
         public bool? IsRentalIncome { get; private set; }
+        /// <summary>The propertyPrimaryPurpose property</summary>
+        public global::MyCrmSampleClient.Kiota.Models.AssetAttributes_propertyPrimaryPurpose? PropertyPrimaryPurpose { get; private set; }
         /// <summary>The propertyType property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -116,6 +110,10 @@ namespace MyCrmSampleClient.Kiota.Models
 #else
         public string PropertyType { get; private set; }
 #endif
+        /// <summary>The propertyTypeId property</summary>
+        public int? PropertyTypeId { get; private set; }
+        /// <summary>The propertyZoningId property</summary>
+        public int? PropertyZoningId { get; private set; }
         /// <summary>The propertyZoningType property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -136,6 +134,8 @@ namespace MyCrmSampleClient.Kiota.Models
 #endif
         /// <summary>The value property</summary>
         public double? Value { get; private set; }
+        /// <summary>The valueBasis property</summary>
+        public global::MyCrmSampleClient.Kiota.Models.AssetAttributes_valueBasis? ValueBasis { get; private set; }
         /// <summary>The vehicleMake property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -182,17 +182,20 @@ namespace MyCrmSampleClient.Kiota.Models
                 { "assetTypeId", n => { AssetTypeId = n.GetIntValue(); } },
                 { "bsb", n => { Bsb = n.GetStringValue(); } },
                 { "created", n => { Created = n.GetDateTimeOffsetValue(); } },
-                { "currencyCode", n => { CurrencyCode = n.GetStringValue(); } },
                 { "description", n => { Description = n.GetStringValue(); } },
                 { "institution", n => { Institution = n.GetStringValue(); } },
                 { "isAccountDetailsKnown", n => { IsAccountDetailsKnown = n.GetBoolValue(); } },
                 { "isExistingMortgages", n => { IsExistingMortgages = n.GetBoolValue(); } },
                 { "isRentalIncome", n => { IsRentalIncome = n.GetBoolValue(); } },
+                { "propertyPrimaryPurpose", n => { PropertyPrimaryPurpose = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.AssetAttributes_propertyPrimaryPurpose>(); } },
                 { "propertyType", n => { PropertyType = n.GetStringValue(); } },
+                { "propertyTypeId", n => { PropertyTypeId = n.GetIntValue(); } },
+                { "propertyZoningId", n => { PropertyZoningId = n.GetIntValue(); } },
                 { "propertyZoningType", n => { PropertyZoningType = n.GetStringValue(); } },
                 { "updated", n => { Updated = n.GetDateTimeOffsetValue(); } },
                 { "valuationBasis", n => { ValuationBasis = n.GetStringValue(); } },
                 { "value", n => { Value = n.GetDoubleValue(); } },
+                { "valueBasis", n => { ValueBasis = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.AssetAttributes_valueBasis>(); } },
                 { "vehicleMake", n => { VehicleMake = n.GetStringValue(); } },
                 { "vehicleYear", n => { VehicleYear = n.GetIntValue(); } },
             };

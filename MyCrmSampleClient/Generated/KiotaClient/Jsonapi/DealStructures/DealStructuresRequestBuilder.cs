@@ -48,7 +48,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.DealStructures
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public DealStructuresRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/deal-structures", pathParameters)
+        public DealStructuresRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/deal-structures{?fields*,include}", pathParameters)
         {
         }
         /// <summary>
@@ -56,24 +56,24 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.DealStructures
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public DealStructuresRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/deal-structures", rawUrl)
+        public DealStructuresRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/deal-structures{?fields*,include}", rawUrl)
         {
         }
         /// <summary>
         /// Creates a new deal structure with attributes, relationships or both
         /// </summary>
-        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Models.DealStructureCreateDocument"/></returns>
+        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Models.DealStructureDocument"/></returns>
         /// <param name="body">The request body</param>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
         /// <exception cref="global::MyCrmSampleClient.Kiota.Models.ErrorDocument">When receiving a 4XX or 5XX status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<global::MyCrmSampleClient.Kiota.Models.DealStructureCreateDocument?> PostAsync(global::MyCrmSampleClient.Kiota.Models.DealStructureCreateDocument body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.DealStructureDocument?> PostAsync(global::MyCrmSampleClient.Kiota.Models.DealStructureCreateDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.DealStructures.DealStructuresRequestBuilder.DealStructuresRequestBuilderPostQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<global::MyCrmSampleClient.Kiota.Models.DealStructureCreateDocument> PostAsync(global::MyCrmSampleClient.Kiota.Models.DealStructureCreateDocument body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.DealStructureDocument> PostAsync(global::MyCrmSampleClient.Kiota.Models.DealStructureCreateDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.DealStructures.DealStructuresRequestBuilder.DealStructuresRequestBuilderPostQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             if(ReferenceEquals(body, null)) throw new ArgumentNullException(nameof(body));
@@ -82,7 +82,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.DealStructures
             {
                 { "XXX", global::MyCrmSampleClient.Kiota.Models.ErrorDocument.CreateFromDiscriminatorValue },
             };
-            return await RequestAdapter.SendAsync<global::MyCrmSampleClient.Kiota.Models.DealStructureCreateDocument>(requestInfo, global::MyCrmSampleClient.Kiota.Models.DealStructureCreateDocument.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
+            return await RequestAdapter.SendAsync<global::MyCrmSampleClient.Kiota.Models.DealStructureDocument>(requestInfo, global::MyCrmSampleClient.Kiota.Models.DealStructureDocument.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// Creates a new deal structure with attributes, relationships or both
@@ -92,11 +92,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.DealStructures
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public RequestInformation ToPostRequestInformation(global::MyCrmSampleClient.Kiota.Models.DealStructureCreateDocument body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToPostRequestInformation(global::MyCrmSampleClient.Kiota.Models.DealStructureCreateDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.DealStructures.DealStructuresRequestBuilder.DealStructuresRequestBuilderPostQueryParameters>>? requestConfiguration = default)
         {
 #nullable restore
 #else
-        public RequestInformation ToPostRequestInformation(global::MyCrmSampleClient.Kiota.Models.DealStructureCreateDocument body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default)
+        public RequestInformation ToPostRequestInformation(global::MyCrmSampleClient.Kiota.Models.DealStructureCreateDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.DealStructures.DealStructuresRequestBuilder.DealStructuresRequestBuilderPostQueryParameters>> requestConfiguration = default)
         {
 #endif
             if(ReferenceEquals(body, null)) throw new ArgumentNullException(nameof(body));
@@ -116,11 +116,38 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.DealStructures
             return new global::MyCrmSampleClient.Kiota.Jsonapi.DealStructures.DealStructuresRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
+        /// Creates a new deal structure with attributes, relationships or both
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
+        public partial class DealStructuresRequestBuilderPostQueryParameters 
+        {
+            /// <summary>Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("fields")]
+            public string? Fields { get; set; }
+#nullable restore
+#else
+            [QueryParameter("fields")]
+            public string Fields { get; set; }
+#endif
+            /// <summary>Comma-separated relationship paths for the response representation. Use dots for nested relationships.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("include")]
+            public string[]? Include { get; set; }
+#nullable restore
+#else
+            [QueryParameter("include")]
+            public string[] Include { get; set; }
+#endif
+        }
+        /// <summary>
         /// Configuration for the request such as headers, query parameters, and middleware options.
         /// </summary>
         [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class DealStructuresRequestBuilderPostRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
+        public partial class DealStructuresRequestBuilderPostRequestConfiguration : RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.DealStructures.DealStructuresRequestBuilder.DealStructuresRequestBuilderPostQueryParameters>
         {
         }
     }

@@ -5,6 +5,7 @@ using Microsoft.Kiota.Abstractions;
 using MyCrmSampleClient.Kiota.Jsonapi.Contacts.Item.Relationships.ContactAddress;
 using MyCrmSampleClient.Kiota.Jsonapi.Contacts.Item.Relationships.ContactGroup;
 using MyCrmSampleClient.Kiota.Jsonapi.Contacts.Item.Relationships.Deals;
+using MyCrmSampleClient.Kiota.Jsonapi.Contacts.Item.Relationships.Employments;
 using MyCrmSampleClient.Kiota.Jsonapi.Contacts.Item.Relationships.ExternalReferences;
 using MyCrmSampleClient.Kiota.Jsonapi.Contacts.Item.Relationships.Ownership;
 using System.Collections.Generic;
@@ -33,6 +34,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Contacts.Item.Relationships
         public global::MyCrmSampleClient.Kiota.Jsonapi.Contacts.Item.Relationships.Deals.DealsRequestBuilder Deals
         {
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.Contacts.Item.Relationships.Deals.DealsRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The employments property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.Contacts.Item.Relationships.Employments.EmploymentsRequestBuilder Employments
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.Contacts.Item.Relationships.Employments.EmploymentsRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The externalReferences property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.Contacts.Item.Relationships.ExternalReferences.ExternalReferencesRequestBuilder ExternalReferences

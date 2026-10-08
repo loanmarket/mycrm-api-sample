@@ -18,13 +18,7 @@ namespace MyCrmSampleClient.Kiota.Models
         /// <summary>The date property</summary>
         public Date? Date { get; private set; }
         /// <summary>The dateType property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? DateType { get; private set; }
-#nullable restore
-#else
-        public string DateType { get; private set; }
-#endif
+        public global::MyCrmSampleClient.Kiota.Models.DealImportantDateAttributes_dateType? DateType { get; private set; }
         /// <summary>
         /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Models.DealImportantDateAttributes"/> and sets the default values.
         /// </summary>
@@ -51,7 +45,7 @@ namespace MyCrmSampleClient.Kiota.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "date", n => { Date = n.GetDateValue(); } },
-                { "dateType", n => { DateType = n.GetStringValue(); } },
+                { "dateType", n => { DateType = n.GetEnumValue<global::MyCrmSampleClient.Kiota.Models.DealImportantDateAttributes_dateType>(); } },
             };
         }
         /// <summary>
