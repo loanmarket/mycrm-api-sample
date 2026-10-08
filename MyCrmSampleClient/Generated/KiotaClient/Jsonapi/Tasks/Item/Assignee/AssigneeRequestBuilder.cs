@@ -22,7 +22,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Tasks.Item.Assignee
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public AssigneeRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/tasks/{id}/assignee{?fields*}", pathParameters)
+        public AssigneeRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/tasks/{id}/assignee{?fields*,include}", pathParameters)
         {
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Tasks.Item.Assignee
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public AssigneeRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/tasks/{id}/assignee{?fields*}", rawUrl)
+        public AssigneeRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/tasks/{id}/assignee{?fields*,include}", rawUrl)
         {
         }
         /// <summary>
@@ -139,6 +139,16 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Tasks.Item.Assignee
             [QueryParameter("fields")]
             public string Fields { get; set; }
 #endif
+            /// <summary>Comma-separated relationship paths for the response representation. Use dots for nested relationships.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("include")]
+            public string[]? Include { get; set; }
+#nullable restore
+#else
+            [QueryParameter("include")]
+            public string[] Include { get; set; }
+#endif
         }
         /// <summary>
         /// Configuration for the request such as headers, query parameters, and middleware options.
@@ -163,6 +173,16 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Tasks.Item.Assignee
 #else
             [QueryParameter("fields")]
             public string Fields { get; set; }
+#endif
+            /// <summary>Comma-separated relationship paths for the response representation. Use dots for nested relationships.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("include")]
+            public string[]? Include { get; set; }
+#nullable restore
+#else
+            [QueryParameter("include")]
+            public string[] Include { get; set; }
 #endif
         }
         /// <summary>

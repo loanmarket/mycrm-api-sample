@@ -58,7 +58,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Tasks.Item
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public TasksItemRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/tasks/{id}{?fields*}", pathParameters)
+        public TasksItemRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/tasks/{id}{?fields*,include}", pathParameters)
         {
         }
         /// <summary>
@@ -66,7 +66,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Tasks.Item
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public TasksItemRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/tasks/{id}{?fields*}", rawUrl)
+        public TasksItemRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/tasks/{id}{?fields*,include}", rawUrl)
         {
         }
         /// <summary>
@@ -183,6 +183,16 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Tasks.Item
             [QueryParameter("fields")]
             public string Fields { get; set; }
 #endif
+            /// <summary>Comma-separated relationship paths for the response representation. Use dots for nested relationships.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("include")]
+            public string[]? Include { get; set; }
+#nullable restore
+#else
+            [QueryParameter("include")]
+            public string[] Include { get; set; }
+#endif
         }
         /// <summary>
         /// Configuration for the request such as headers, query parameters, and middleware options.
@@ -207,6 +217,16 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Tasks.Item
 #else
             [QueryParameter("fields")]
             public string Fields { get; set; }
+#endif
+            /// <summary>Comma-separated relationship paths for the response representation. Use dots for nested relationships.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("include")]
+            public string[]? Include { get; set; }
+#nullable restore
+#else
+            [QueryParameter("include")]
+            public string[] Include { get; set; }
 #endif
         }
         /// <summary>
