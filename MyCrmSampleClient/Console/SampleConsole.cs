@@ -209,7 +209,7 @@ public class SampleConsole
     {
         var options = BuildMenuOptions();
         var prompt = new SelectionPrompt<MenuOption>()
-            .Title($"Choose an action ([grey]state: contact={FormatNullableInt(_state.LastContactId)}, group={FormatNullableInt(_state.LastContactGroupId)}, deal={FormatNullableInt(_state.LastDealId)}[/])")
+            .Title($"Choose an action ([grey]state: contact={FormatNullableInt(_state.LastContactId)}, group={FormatNullableInt(_state.LastContactGroupId)}, deal={FormatNullableInt(_state.LastDealId)}, task={FormatNullableInt(_state.LastTaskId)}[/])")
             .UseConverter(x => x.Label)
             .PageSize(options.Count)
             .AddChoices(options);
@@ -287,6 +287,9 @@ public class SampleConsole
         table.AddRow("LastContactId", FormatNullableInt(_state.LastContactId));
         table.AddRow("LastContactGroupId", FormatNullableInt(_state.LastContactGroupId));
         table.AddRow("LastDealId", FormatNullableInt(_state.LastDealId));
+        table.AddRow("LastTaskId", FormatNullableInt(_state.LastTaskId));
+        table.AddRow("LastResidentialTaskId", FormatNullableInt(_state.LastResidentialTaskId));
+        table.AddRow("LastContactGroupTaskId", FormatNullableInt(_state.LastContactGroupTaskId));
 
         AnsiConsole.Write(table);
     }
