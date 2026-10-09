@@ -17201,6 +17201,19 @@
             }
           },
           {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "fields",
             "in": "query",
             "description": "Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.",
@@ -17255,6 +17268,19 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
@@ -17593,6 +17619,19 @@
             }
           },
           {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "fields",
             "in": "query",
             "description": "Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.",
@@ -17650,6 +17689,19 @@
             }
           },
           {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "fields",
             "in": "query",
             "description": "Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.",
@@ -17699,6 +17751,19 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
@@ -17756,6 +17821,19 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
@@ -18096,6 +18174,19 @@
             }
           },
           {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "fields",
             "in": "query",
             "description": "Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.",
@@ -18153,6 +18244,19 @@
             }
           },
           {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "fields",
             "in": "query",
             "description": "Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.",
@@ -18202,6 +18306,19 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
@@ -18259,6 +18376,19 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
@@ -18465,6 +18595,19 @@
             }
           },
           {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "fields",
             "in": "query",
             "description": "Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.",
@@ -18519,6 +18662,19 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
@@ -18582,6 +18738,19 @@
         "summary": "Creates a new task",
         "operationId": "Task_Post",
         "parameters": [
+          {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
           {
             "name": "fields",
             "in": "query",
