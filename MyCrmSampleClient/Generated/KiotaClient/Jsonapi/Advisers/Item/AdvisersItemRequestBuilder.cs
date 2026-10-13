@@ -7,6 +7,7 @@ using MyCrmSampleClient.Kiota.Jsonapi.Advisers.Item.Addresses;
 using MyCrmSampleClient.Kiota.Jsonapi.Advisers.Item.AdviserDetails;
 using MyCrmSampleClient.Kiota.Jsonapi.Advisers.Item.AgreementHolders;
 using MyCrmSampleClient.Kiota.Jsonapi.Advisers.Item.ContactGroups;
+using MyCrmSampleClient.Kiota.Jsonapi.Advisers.Item.CreditLicense;
 using MyCrmSampleClient.Kiota.Jsonapi.Advisers.Item.Organisation;
 using MyCrmSampleClient.Kiota.Jsonapi.Advisers.Item.Relationships;
 using MyCrmSampleClient.Kiota.Models;
@@ -42,6 +43,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Advisers.Item
         public global::MyCrmSampleClient.Kiota.Jsonapi.Advisers.Item.ContactGroups.ContactGroupsRequestBuilder ContactGroups
         {
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.Advisers.Item.ContactGroups.ContactGroupsRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The creditLicense property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.Advisers.Item.CreditLicense.CreditLicenseRequestBuilder CreditLicense
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.Advisers.Item.CreditLicense.CreditLicenseRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The organisation property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.Advisers.Item.Organisation.OrganisationRequestBuilder Organisation

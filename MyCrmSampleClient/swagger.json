@@ -8706,14 +8706,14 @@
         }
       }
     },
-    "/jsonapi/deal-securities/{id}/asset": {
+    "/jsonapi/deal-securities/{id}/address": {
       "get": {
         "tags": [
           "DealSecurities"
         ],
-        "summary": "Gets asset via a single related securities for a deal",
+        "summary": "Gets address via a single related securities for a deal",
         "description": "Where `id` is the identifier of the securities for a deal",
-        "operationId": "DealSecurityRelated_Get_Assets",
+        "operationId": "DealSecurityRelated_Get_Addresses",
         "parameters": [
           {
             "name": "id",
@@ -8757,7 +8757,7 @@
             "content": {
               "application/vnd.api+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AssetDocument"
+                  "$ref": "#/components/schemas/AddressDocument"
                 }
               }
             }
@@ -8783,7 +8783,7 @@
         ],
         "summary": "Retrieve headers related to the associated GET request",
         "description": "",
-        "operationId": "DealSecurityRelated_Head_Assets",
+        "operationId": "DealSecurityRelated_Head_Addresses",
         "parameters": [
           {
             "name": "id",
@@ -9126,14 +9126,14 @@
         }
       }
     },
-    "/jsonapi/deal-securities/{id}/relationships/asset": {
+    "/jsonapi/deal-securities/{id}/relationships/address": {
       "get": {
         "tags": [
           "DealSecurities"
         ],
-        "summary": "Gets a asset related to a single securities for a deal",
+        "summary": "Gets a address related to a single securities for a deal",
         "description": "Where `id` is the identifier of the securities for a deal",
-        "operationId": "DealSecurityRelationship_Get_Assets",
+        "operationId": "DealSecurityRelationship_Get_Addresses",
         "parameters": [
           {
             "name": "id",
@@ -9177,7 +9177,7 @@
         ],
         "summary": "Retrieve headers related to the associated GET request",
         "description": "",
-        "operationId": "DealSecurityRelationship_Get_Head_Assets",
+        "operationId": "DealSecurityRelationship_Get_Head_Addresses",
         "parameters": [
           {
             "name": "id",
@@ -19567,6 +19567,141 @@
         }
       }
     },
+    "/jsonapi/advisers/{id}/creditLicense": {
+      "get": {
+        "tags": [
+          "Adviser"
+        ],
+        "summary": "Gets creditLicense via a single related adviser",
+        "description": "Where `id` is the identifier of the adviser",
+        "operationId": "AdviserRelated_Get_CreditLicenses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreditLicenseDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Adviser"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "AdviserRelated_Head_CreditLicenses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/advisers/{id}/relationships/adviserDetails": {
       "get": {
         "tags": [
@@ -19868,6 +20003,89 @@
         "summary": "Retrieve headers related to the associated GET request",
         "description": "",
         "operationId": "AdviserRelationship_Get_Head_AdviserAddresses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/advisers/{id}/relationships/creditLicense": {
+      "get": {
+        "tags": [
+          "Adviser"
+        ],
+        "summary": "Gets a creditLicense related to a single adviser",
+        "description": "Where `id` is the identifier of the adviser",
+        "operationId": "AdviserRelationship_Get_CreditLicenses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Adviser"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "AdviserRelationship_Get_Head_CreditLicenses",
         "parameters": [
           {
             "name": "id",
@@ -23501,6 +23719,141 @@
         }
       }
     },
+    "/jsonapi/deal-securities/{id}/asset": {
+      "get": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Gets asset via a single related securities for a deal",
+        "description": "Where `id` is the identifier of the securities for a deal",
+        "operationId": "DealSecurityRelated_Get_Assets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealSecurityRelated_Head_Assets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jsonapi/deal-securities/{id}/titleIdentifications": {
       "get": {
         "tags": [
@@ -23748,6 +24101,89 @@
               "additionalProperties": {
                 "type": "string"
               }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jsonapi/deal-securities/{id}/relationships/asset": {
+      "get": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Gets a asset related to a single securities for a deal",
+        "description": "Where `id` is the identifier of the securities for a deal",
+        "operationId": "DealSecurityRelationship_Get_Assets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelationshipsSingleDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "DealSecurities"
+        ],
+        "summary": "Retrieve headers related to the associated GET request",
+        "description": "",
+        "operationId": "DealSecurityRelationship_Get_Head_Assets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
@@ -25150,12 +25586,45 @@
           "id"
         ],
         "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
         "properties": {
+          "type": {
+            "$ref": "#/components/schemas/AddressesEntityType"
+          },
           "id": {
             "pattern": "^[1-9]\\d*$",
             "type": "string",
             "readOnly": true
           },
+          "attributes": {
+            "$ref": "#/components/schemas/AddressAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/AddressRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddressAttributes": {
+        "type": "object",
+        "properties": {
           "postCode": {
             "maxLength": 500,
             "minLength": 0,
@@ -25191,13 +25660,6 @@
             "nullable": true,
             "readOnly": true
           },
-          "addressDetails": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ContactAddress"
-            },
-            "nullable": true
-          },
           "state": {
             "maxLength": 100,
             "minLength": 0,
@@ -25205,8 +25667,56 @@
             "nullable": true,
             "readOnly": true
           }
-        },
-        "additionalProperties": false
+        }
+      },
+      "AddressDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "AddressRelationships": {
+        "type": "object",
+        "properties": {
+          "addressDetails": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          }
+        }
       },
       "AddressType": {
         "enum": [
@@ -25221,6 +25731,56 @@
           "name": "AddressType",
           "modelAsString": true
         }
+      },
+      "AddressesDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Address"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "AddressesEntityType": {
+        "enum": [
+          "addresses"
+        ],
+        "type": "string"
       },
       "Adviser": {
         "required": [
@@ -25576,6 +26136,25 @@
               "name": "CountryCode",
               "modelAsString": true
             }
+          },
+          "brokerStartDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "readOnly": true
+          },
+          "contactType": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "contactTypeRoles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
           },
           "youtubeChannel": {
             "type": "string",
@@ -26253,6 +26832,9 @@
             ],
             "writeOnly": true
           },
+          "creditLicense": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          },
           "contactGroups": {
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           }
@@ -26511,27 +27093,6 @@
         },
         "additionalProperties": false
       },
-      "ApiFamilyFranchisee": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          },
-          "franchiseeDetails": {
-            "$ref": "#/components/schemas/AgreementHolder"
-          },
-          "family": {
-            "$ref": "#/components/schemas/Adviser"
-          }
-        },
-        "additionalProperties": false
-      },
       "ApiFamilySocialMedia": {
         "required": [
           "type",
@@ -26578,28 +27139,6 @@
             "type": "string",
             "nullable": true,
             "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiLoanSecurity": {
-        "required": [
-          "type",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[1-9]\\d*$",
-            "type": "string",
-            "readOnly": true
-          },
-          "loanSecurityInfo": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DealSecurity"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -27060,11 +27599,225 @@
       "AssetCreateRelationships": {
         "type": "object"
       },
+      "AssetDeal": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/AssetDealEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/AssetDealAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/AssetDealRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssetDealAttributes": {
+        "type": "object",
+        "properties": {
+          "loanReference": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "readOnly": true
+          },
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "status": {
+            "enum": [
+              "New",
+              "Review",
+              "Submitted",
+              "Approved",
+              "Committed",
+              "Settled",
+              "ClosedLost",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "x-ms-enum": {
+              "name": "PublicAssetStatus",
+              "modelAsString": true
+            }
+          },
+          "statusLabel": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "submittedDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "readOnly": true
+          },
+          "decisionDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "readOnly": true
+          },
+          "settlementDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "readOnly": true
+          },
+          "lenderName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "AssetDealDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/AssetDeal"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
       "AssetDealEntityType": {
         "enum": [
           "asset-deal"
         ],
         "type": "string"
+      },
+      "AssetDealRelationships": {
+        "type": "object",
+        "properties": {
+          "applicants": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
+          "applicantBusinesses": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
+          "adviser": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          }
+        }
+      },
+      "AssetDealsDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssetDeal"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
       },
       "AssetDocument": {
         "required": [
@@ -27801,11 +28554,225 @@
           "modelAsString": true
         }
       },
+      "CommercialDeal": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/CommercialDealEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/CommercialDealAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/CommercialDealRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommercialDealAttributes": {
+        "type": "object",
+        "properties": {
+          "loanReference": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "readOnly": true
+          },
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "status": {
+            "enum": [
+              "NewApplication",
+              "Review",
+              "Submitted",
+              "Approved",
+              "Deferred",
+              "Settled",
+              "ClosedLost",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "x-ms-enum": {
+              "name": "PublicCommercialStatus",
+              "modelAsString": true
+            }
+          },
+          "statusLabel": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "submittedDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "readOnly": true
+          },
+          "decisionDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "readOnly": true
+          },
+          "settlementDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "readOnly": true
+          },
+          "lenderName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "CommercialDealDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/CommercialDeal"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
       "CommercialDealEntityType": {
         "enum": [
           "commercial-deal"
         ],
         "type": "string"
+      },
+      "CommercialDealRelationships": {
+        "type": "object",
+        "properties": {
+          "applicants": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
+          "applicantBusinesses": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          },
+          "adviser": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          }
+        }
+      },
+      "CommercialDealsDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommercialDeal"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
       },
       "Contact": {
         "required": [
@@ -29643,6 +30610,188 @@
         "x-ms-enum": {
           "name": "CountryCode",
           "modelAsString": true
+        }
+      },
+      "CreditLicense": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/CreditLicenseEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/CreditLicenseAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/CreditLicenseRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreditLicenseAttributes": {
+        "type": "object",
+        "properties": {
+          "creditLicenseName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "creditLicenseNumber": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "aclMonitoringProgram": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "professionalSchemeName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "professionalSchemeMembershipNumber": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "professionalSchemeRenewalDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "readOnly": true
+          },
+          "asicId": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "appointmentType": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "CreditLicenseDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/CreditLicense"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "CreditLicenseEntityType": {
+        "enum": [
+          "credit-license"
+        ],
+        "type": "string"
+      },
+      "CreditLicenseRelationships": {
+        "type": "object"
+      },
+      "CreditLicensesDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreditLicense"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
         }
       },
       "CustomStatus": {
@@ -33313,7 +34462,7 @@
         ],
         "properties": {
           "type": {
-            "$ref": "#/components/schemas/EnquirySourceEntityType"
+            "$ref": "#/components/schemas/EnquirySourcesEntityType"
           },
           "id": {
             "type": "string",
@@ -33407,12 +34556,6 @@
           }
         }
       },
-      "EnquirySourceEntityType": {
-        "enum": [
-          "enquiry-source"
-        ],
-        "type": "string"
-      },
       "EnquirySourceRelationships": {
         "type": "object"
       },
@@ -33459,6 +34602,12 @@
             "readOnly": true
           }
         }
+      },
+      "EnquirySourcesEntityType": {
+        "enum": [
+          "enquiry-sources"
+        ],
+        "type": "string"
       },
       "Envelope": {
         "type": "object",
@@ -35002,6 +36151,153 @@
         ],
         "type": "string"
       },
+      "Franchisee": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/FranchiseesEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/FranchiseeAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/FranchiseeRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FranchiseeAttributes": {
+        "type": "object"
+      },
+      "FranchiseeDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/Franchisee"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "FranchiseeRelationships": {
+        "type": "object",
+        "properties": {
+          "franchiseeDetails": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          },
+          "family": {
+            "$ref": "#/components/schemas/RelationshipsSingleDocument"
+          }
+        }
+      },
+      "FranchiseesDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Franchisee"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "FranchiseesEntityType": {
+        "enum": [
+          "franchisees"
+        ],
+        "type": "string"
+      },
       "Frequency": {
         "enum": [
           "Yearly",
@@ -35466,11 +36762,14 @@
             "owners": "#/components/schemas/Owner",
             "liabilities": "#/components/schemas/Liability",
             "deal-important-dates": "#/components/schemas/DealImportantDate",
+            "loan-securities": "#/components/schemas/LoanSecurity",
             "integrations": "#/components/schemas/Integration",
             "deal-external-references": "#/components/schemas/DealExternalReference",
             "adviser-details": "#/components/schemas/AdviserDetail",
             "agreement-holders": "#/components/schemas/AgreementHolder",
+            "franchisees": "#/components/schemas/Franchisee",
             "adviser-address": "#/components/schemas/AdviserAddress",
+            "credit-license": "#/components/schemas/CreditLicense",
             "advisers": "#/components/schemas/Adviser",
             "deal-notes": "#/components/schemas/DealNote",
             "deals": "#/components/schemas/Deal",
@@ -35478,11 +36777,13 @@
             "deal-scenario": "#/components/schemas/DealScenario",
             "financial-address": "#/components/schemas/FinancialAddress",
             "financials": "#/components/schemas/Financial",
+            "property-zoning-types": "#/components/schemas/PropertyZoningType",
             "property-types": "#/components/schemas/PropertyType",
             "assets": "#/components/schemas/Asset",
             "deal-security-title-identity": "#/components/schemas/DealSecurityTitleIdentity",
             "deal-securities": "#/components/schemas/DealSecurity",
             "organisation-addresses": "#/components/schemas/OrganisationAddress",
+            "addresses": "#/components/schemas/Address",
             "organisations": "#/components/schemas/Organisation",
             "custom-statuses": "#/components/schemas/CustomStatus",
             "referrer-members": "#/components/schemas/ReferrerMember",
@@ -35493,8 +36794,10 @@
             "contact-marketing": "#/components/schemas/ContactMarketing",
             "leads": "#/components/schemas/Lead",
             "structured-leads": "#/components/schemas/StructuredLead",
+            "asset-deal": "#/components/schemas/AssetDeal",
+            "commercial-deal": "#/components/schemas/CommercialDeal",
             "tasks": "#/components/schemas/Task",
-            "enquiry-source": "#/components/schemas/EnquirySource",
+            "enquiry-sources": "#/components/schemas/EnquirySource",
             "referrers": "#/components/schemas/Referrer",
             "rental-verification-types": "#/components/schemas/RentalVerificationType"
           }
@@ -39695,6 +40998,150 @@
         ],
         "type": "string"
       },
+      "LoanSecuritiesDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LoanSecurity"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "LoanSecuritiesEntityType": {
+        "enum": [
+          "loan-securities"
+        ],
+        "type": "string"
+      },
+      "LoanSecurity": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/LoanSecuritiesEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/LoanSecurityAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/LoanSecurityRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoanSecurityAttributes": {
+        "type": "object"
+      },
+      "LoanSecurityDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/LoanSecurity"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "LoanSecurityRelationships": {
+        "type": "object",
+        "properties": {
+          "loanSecurityInfo": {
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
+          }
+        }
+      },
       "LoanStructureImportantDateTypes": {
         "enum": [
           "InterestOnly",
@@ -41042,11 +42489,176 @@
           "modelAsString": true
         }
       },
+      "PropertyZoningType": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/PropertyZoningTypesEntityType"
+          },
+          "id": {
+            "pattern": "^[1-9]\\d*$",
+            "type": "string",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/PropertyZoningTypeAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/PropertyZoningTypeRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PropertyZoningTypeAttributes": {
+        "type": "object"
+      },
+      "PropertyZoningTypeDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/PropertyZoningType"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "PropertyZoningTypeRelationships": {
+        "type": "object"
+      },
+      "PropertyZoningTypesDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PropertyZoningType"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
       "PropertyZoningTypesEntityType": {
         "enum": [
           "property-zoning-types"
         ],
         "type": "string"
+      },
+      "PublicAssetStatus": {
+        "enum": [
+          "New",
+          "Review",
+          "Submitted",
+          "Approved",
+          "Committed",
+          "Settled",
+          "ClosedLost"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "PublicAssetStatus",
+          "modelAsString": true
+        }
+      },
+      "PublicCommercialStatus": {
+        "enum": [
+          "NewApplication",
+          "Review",
+          "Submitted",
+          "Approved",
+          "Deferred",
+          "Settled",
+          "ClosedLost"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "PublicCommercialStatus",
+          "modelAsString": true
+        }
       },
       "Referrer": {
         "required": [
