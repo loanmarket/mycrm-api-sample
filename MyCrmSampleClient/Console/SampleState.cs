@@ -7,6 +7,9 @@ public sealed record SampleState
     public int? LastContactId { get; init; }
     public int? LastContactGroupId { get; init; }
     public int? LastDealId { get; init; }
+    public int? LastAssetDealId { get; init; }
+    public int? LastCommercialDealId { get; init; }
+    public int? LastAssetReferralId { get; init; }
     public int? LastTaskId { get; init; }
     public int? LastResidentialTaskId { get; init; }
     public int? LastContactGroupTaskId { get; init; }

@@ -3,6 +3,8 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Kiota.Http.HttpClientLibrary;
+using Microsoft.Kiota.Abstractions;
+using MyCrmSampleClient.Kiota.Models;
 using MyCrmSampleClient.Auth;
 using MyCrmSampleClient.Console;
 using MyCrmSampleClient.Kiota;
@@ -56,9 +58,35 @@ public class Program
             
             await console.Run();
         }
+        catch (ErrorDocument ex)
+        {
+            Log.Error("API request failed with HTTP {StatusCode}", ex.ResponseStatusCode);
+            if (ex.Errors is { Count: > 0 })
+            {
+                foreach (var error in ex.Errors)
+                {
+                    Log.Error(
+                        "JSON:API error: status={Status}, code={Code}, title={Title}, detail={Detail}, parameter={Parameter}, pointer={Pointer}",
+                        error.Status, error.Code, error.Title, error.Detail,
+                        error.Source?.Parameter, error.Source?.Pointer);
+                }
+            }
+            else
+            {
+                Log.Error("The API returned no JSON:API error details.");
+            }
+            Environment.ExitCode = 1;
+        }
+        catch (ApiException ex)
+        {
+            Log.Error("API request failed with HTTP {StatusCode}: {Message}",
+                ex.ResponseStatusCode, ex.Message);
+            Environment.ExitCode = 1;
+        }
         catch (Exception ex)
         {
             Log.Fatal(ex, "Unexpected error");
+            Environment.ExitCode = 1;
         }
     }
     

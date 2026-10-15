@@ -45,13 +45,13 @@ public partial class Samples
                 Attributes = new DealStructureAttributes
                 {
                     Amount = amount,
-                    LoanStructureType = "PrincipalInterest",
+                    LoanStructureType = DealStructureAttributes_loanStructureType.PrincipalInterest,
                     LoanTermYears = 30,
                     InterestOnlyTermYears = 0,
                     RateType = "Variable",
                     InterestRate = interestRate,
                     PaymentAmount = paymentAmount,
-                    RepaymentFrequency = "Monthly"
+                    RepaymentFrequency = DealStructureAttributes_repaymentFrequency.Monthly
                 },
                 Relationships = new DealStructureCreateRelationships
                 {
@@ -100,7 +100,7 @@ public partial class Samples
             _console.Cell(structure.Attributes?.Amount?.ToString()),
             _console.Cell(structure.Attributes?.InterestRate?.ToString()),
             _console.Cell(structure.Attributes?.PaymentAmount?.ToString()),
-            _console.Cell(structure.Attributes?.RepaymentFrequency));
+            _console.Cell(structure.Attributes?.RepaymentFrequency?.ToString()));
         _console.WriteTable(table);
     }
 }
