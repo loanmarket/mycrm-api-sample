@@ -5,12 +5,12 @@ namespace MyCrmSampleClient.Kiota.Models
 {
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     #pragma warning disable CS1591
-    public enum EnquirySourceEntityType
+    public enum PropertyZoningTypesEntityType
     #pragma warning restore CS1591
     {
-        [EnumMember(Value = "enquiry-source")]
+        [EnumMember(Value = "property-zoning-types")]
         #pragma warning disable CS1591
-        EnquirySource,
+        PropertyZoningTypes,
         #pragma warning restore CS1591
     }
 }
