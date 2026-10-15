@@ -3,6 +3,7 @@
 using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Kiota.Abstractions;
+using MyCrmSampleClient.Kiota.Jsonapi.Expenses.Item.Liability;
 using MyCrmSampleClient.Kiota.Jsonapi.Expenses.Item.Ownership;
 using MyCrmSampleClient.Kiota.Jsonapi.Expenses.Item.Relationships;
 using MyCrmSampleClient.Kiota.Models;
@@ -19,6 +20,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Expenses.Item
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class ExpensesItemRequestBuilder : BaseRequestBuilder
     {
+        /// <summary>The liability property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.Expenses.Item.Liability.LiabilityRequestBuilder Liability
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.Expenses.Item.Liability.LiabilityRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>The ownership property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.Expenses.Item.Ownership.OwnershipRequestBuilder Ownership
         {
