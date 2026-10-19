@@ -98,17 +98,22 @@ public sealed class SnapshotExampleTests
         }
     }
 
-    private static void CheckRules(SnapshotWorkbook book, string country, int adultCount)
+    private static void CheckRules(SnapshotWorkbook book, string country, int adultCount, bool sized = false)
     {
         var attributes = book.Attributes;
-        var property = Assert.Single(attributes.Assets, asset => asset.AssetTypeId == 1);
-        Assert.Null(property.Description);
-        Assert.Equal(FinancialSnapshotAsset_valueBasis.ApplicantEstimate, property.ValueBasis);
-        Assert.NotNull(property.PropertyTypeId);
-        Assert.Equal(FinancialSnapshotAsset_propertyPrimaryPurpose.PurchaseInvestment, property.PropertyPrimaryPurpose);
-        var address = Assert.Single(attributes.Addresses, address => address.Lid == property.Address?.Lid);
-        Assert.Equal(country == "NZ" ? "New Zealand" : "Australia", address.Country);
-        Assert.Matches("^[0-9]{4}$", address.PostCode);
+        var properties = attributes.Assets.Where(asset => asset.AssetTypeId == 1).ToArray();
+        if (!sized) Assert.Single(properties);
+
+        foreach (var property in properties)
+        {
+            Assert.Null(property.Description);
+            Assert.Equal(FinancialSnapshotAsset_valueBasis.ApplicantEstimate, property.ValueBasis);
+            Assert.NotNull(property.PropertyTypeId);
+            Assert.Equal(FinancialSnapshotAsset_propertyPrimaryPurpose.PurchaseInvestment, property.PropertyPrimaryPurpose);
+            var address = Assert.Single(attributes.Addresses, address => address.Lid == property.Address?.Lid);
+            Assert.Equal(country == "NZ" ? "New Zealand" : "Australia", address.Country);
+            Assert.Matches("^[0-9]{4}$", address.PostCode);
+        }
 
         foreach (var asset in attributes.Assets)
         {
@@ -150,8 +155,8 @@ public sealed class SnapshotExampleTests
             if (country == "AU") Assert.True(asset.AssetTypeId < 32);
         }
 
-        Assert.Equal(adultCount + 1, attributes.Addresses.Count);
-        Assert.Equal(adultCount, attributes.Employments.Count);
+        Assert.Equal(attributes.Employments.Count + properties.Length, attributes.Addresses.Count);
+        if (!sized) Assert.Equal(adultCount, attributes.Employments.Count);
         foreach (var job in attributes.Employments)
         {
             Assert.False(string.IsNullOrWhiteSpace(job.EmployerName));
@@ -159,7 +164,7 @@ public sealed class SnapshotExampleTests
             Assert.Matches(country == "NZ" ? @"^\+64[34679][0-9]{7}$" : @"^\+61[2378][0-9]{8}$", job.EmployerPhone);
 
             var employerAddress = Assert.Single(attributes.Addresses, address => address.Lid == job.Address?.Lid);
-            Assert.NotEqual(property.Address.Lid, employerAddress.Lid);
+            Assert.DoesNotContain(properties, property => property.Address.Lid == employerAddress.Lid);
             Assert.Single(attributes.Employments, employment => employment.Address?.Lid == employerAddress.Lid);
             Assert.Equal(country == "NZ" ? "New Zealand" : "Australia", employerAddress.Country);
             Assert.False(string.IsNullOrWhiteSpace(employerAddress.StreetAddress));
@@ -182,7 +187,7 @@ public sealed class SnapshotExampleTests
 
             if (income.IncomeTypeId == 23)
             {
-                Assert.Equal(property.Lid, income.LinkedAsset?.Lid);
+                Assert.Contains(properties, property => property.Lid == income.LinkedAsset?.Lid);
                 Assert.Equal(country == "NZ" ? FinancialSnapshotIncome_nzRentalType.RentalIncome : null, income.NzRentalType);
                 Assert.Null(income.Employment);
                 if (country == "NZ")
@@ -228,7 +233,7 @@ public sealed class SnapshotExampleTests
 
             if (liability.LiabilityTypeId == 21)
             {
-                Assert.Equal(property.Lid, liability.LinkedAsset?.Lid);
+                var property = Assert.Single(properties, property => property.Lid == liability.LinkedAsset?.Lid);
                 Assert.True(liability.Value < property.Value);
                 Assert.InRange(liability.InterestRate!.Value, 0, 100);
                 Assert.Equal(FinancialSnapshotLiability_loanRepaymentType.PrincipalInterest, liability.LoanRepaymentType);
@@ -290,6 +295,45 @@ public sealed class SnapshotExampleTests
     }
 
     [Theory]
+    [InlineData("AU", 1)]
+    [InlineData("AU", 2)]
+    [InlineData("NZ", 1)]
+    [InlineData("NZ", 2)]
+    public async Task ExplicitCountsKeepExactTotalsValidLinksAndRepeatableData(string country, int adultCount)
+    {
+        using var adapter = new HttpClientRequestAdapter(new AnonymousAuthenticationProvider());
+        _ = new MyCrmApiClient(adapter);
+        var controls = SnapshotExampleData.FullControls();
+        var seen = new HashSet<string>();
+
+        foreach (var count in new[] { 1, 2, 3, 10, 25, 100, SnapshotExamples.MaximumItemCount })
+        {
+            var book = SnapshotExamples.Create(5001, Contacts(adultCount), controls, country, seed: 731, itemCount: count);
+            Assert.Equal(count, SnapshotWorkbook.Collections.Sum(sheet => book.Rows(sheet).Count));
+            CheckRules(book, country, adultCount, sized: true);
+            Assert.Equal(book.Attributes.Expenses.Count, book.Attributes.Expenses.Select(expense => expense.ExpenseTypeId).Distinct().Count());
+            Assert.All(book.Attributes.Employments.GroupBy(job => job.ContactId), jobs =>
+                Assert.Single(jobs, job => job.EmploymentStatus == FinancialSnapshotEmployment_employmentStatus.PrimaryEmployment));
+            Assert.All(SnapshotWorkbook.Collections, sheet => Assert.Equal("Merge", book.Mode(sheet)));
+            seen.UnionWith(SnapshotWorkbook.Collections.Where(sheet => book.Rows(sheet).Count > 0));
+
+            var repeated = SnapshotExamples.Create(5001, Contacts(adultCount), controls, country, seed: 731, itemCount: count);
+            Assert.Equal(await KiotaJsonSerializer.SerializeAsStringAsync(book.ToDocument()),
+                await KiotaJsonSerializer.SerializeAsStringAsync(repeated.ToDocument()));
+        }
+
+        Assert.Equal(SnapshotWorkbook.Collections.Order(), seen.Order());
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-1)]
+    [InlineData(1001)]
+    public void ExplicitCountMustBeInTheSupportedRange(int count) =>
+        Assert.Throws<ArgumentOutOfRangeException>(() => SnapshotExamples.Create(5001, Contacts(2),
+            SnapshotExampleData.FullControls(), "AU", itemCount: count));
+
+    [Theory]
     [InlineData("AU")]
     [InlineData("NZ")]
     public async Task SeedsRepeatDataAndChangeTypesAcrossAllFinancialCollections(string country)
@@ -313,13 +357,15 @@ public sealed class SnapshotExampleTests
     }
 
     [Theory]
-    [InlineData("AU")]
-    [InlineData("NZ")]
-    public async Task RandomWorkbookRoundTripsWithLookupValidation(string country)
+    [InlineData("AU", null)]
+    [InlineData("NZ", null)]
+    [InlineData("AU", 100)]
+    [InlineData("NZ", 100)]
+    public async Task RandomWorkbookRoundTripsWithLookupValidation(string country, int? count)
     {
         using var adapter = new HttpClientRequestAdapter(new AnonymousAuthenticationProvider());
         _ = new MyCrmApiClient(adapter);
-        var source = SnapshotExamples.Create(5001, Contacts(2), SnapshotExampleData.FullControls(), country, seed: 99);
+        var source = SnapshotExamples.Create(5001, Contacts(2), SnapshotExampleData.FullControls(), country, seed: 99, itemCount: count);
         var path = Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".xlsx");
 
         try

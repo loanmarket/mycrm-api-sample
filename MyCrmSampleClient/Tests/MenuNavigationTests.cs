@@ -375,6 +375,118 @@ public sealed class MenuNavigationTests : IDisposable
         _terminal.Input.PushKey(ConsoleKey.Enter);
     }
 
+    [Theory]
+    [InlineData(429)]
+    [InlineData(401)]
+    [InlineData(422)]
+    [InlineData(503)]
+    [InlineData(504)]
+    public async Task ImportRetriesOnly429AndKeepsTheSubmittedBody(int firstStatus)
+    {
+        Directory.CreateDirectory(_directory);
+        var book = new SnapshotWorkbook { ContactGroupId = 5001 };
+        book.Attributes.Assets.Add(new() { Lid = "asset", AssetTypeId = 99999, Value = -7, Ownership = [new() { Id = 1001 }] });
+        var path = Path.Combine(_directory, "import.xlsx");
+        book.Save(path);
+
+        var bodies = new List<string>();
+        using var handler = new ResponseHandler(request =>
+        {
+            Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.Equal("https://example.test/jsonapi/contact-groups/5001/financial-snapshot", request.RequestUri!.AbsoluteUri);
+            bodies.Add(request.Content!.ReadAsStringAsync().GetAwaiter().GetResult());
+            if (bodies.Count == 1) return new HttpResponseMessage((HttpStatusCode)firstStatus);
+
+            return new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("""{"data":{"type":"financial-snapshots","attributes":{"operations":{"created":[],"updated":[],"deleted":[]}}}}""",
+                    System.Text.Encoding.UTF8, "application/vnd.api+json")
+            };
+        });
+        using var http = KiotaClientFactory.Create(KiotaClientFactory.CreateDefaultHandlers(), handler);
+        using var adapter = new HttpClientRequestAdapter(new AnonymousAuthenticationProvider(), httpClient: http) { BaseUrl = "https://example.test" };
+        var console = new SampleConsole(new MyCrmApiClient(adapter), new MyCrmConfig { AdviserContactId = 123 },
+            Path.Combine(_directory, "state.json"), "api.contactgroups.financialsnapshot");
+        var expected = await KiotaJsonSerializer.SerializeAsStringAsync(SnapshotWorkbook.Load(path).ToDocument());
+
+        _terminal.Input.PushKey(ConsoleKey.Enter);
+        _terminal.Input.PushTextWithEnter(path);
+        _terminal.Input.PushKey(ConsoleKey.Enter); // Workbook group.
+        _terminal.Input.PushKey(ConsoleKey.Enter); // Workbook modes.
+        _terminal.Input.PushTextWithEnter("n"); // Request preview.
+        _terminal.Input.PushTextWithEnter("y"); // Submit.
+        _terminal.Input.PushKey(ConsoleKey.Escape);
+
+        await Assert.ThrowsAsync<MenuBackException>(() => new Samples(console).RunFinancialSnapshotsSample().WaitAsync(TimeSpan.FromSeconds(15)));
+
+        Assert.Equal(firstStatus == 429 ? 2 : 1, bodies.Count);
+        Assert.All(bodies, body => Assert.Equal(expected, body));
+        if (firstStatus == 429)
+        {
+            // Spectre wraps long request URLs to the terminal width.
+            var output = string.Concat(_terminal.Output.Where(character => !char.IsWhiteSpace(character)));
+            Assert.Contains("HTTP429:POSThttps://example.test/jsonapi/contact-groups/5001/financial-snapshot", output);
+            Assert.Contains("retry1/8", output);
+            Assert.Contains("Export the current financials", _terminal.Output);
+        }
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData(50)]
+    public async Task GenerateMenuSupportsTheDefaultAndAnExplicitItemCount(int? count)
+    {
+        Directory.CreateDirectory(_directory);
+        var controls = SnapshotExampleData.FullControls();
+        using var handler = new SnapshotTests.RecordingHandler(request =>
+        {
+            Assert.Equal(HttpMethod.Get, request.Method);
+            if (request.RequestUri!.AbsolutePath.StartsWith("/jsonapi/contact-groups/", StringComparison.Ordinal))
+                return SnapshotExportTests.Respond(request);
+
+            var resource = request.RequestUri.AbsolutePath.Split('/').Last();
+            return JsonSerializer.Serialize(new
+            {
+                data = controls.Where(item => item.Resource == resource).Select(item => new
+                {
+                    type = resource, id = item.Id.ToString(), attributes = new { name = item.Name, description = item.Name }
+                })
+            });
+        });
+        using var http = new HttpClient(handler);
+        using var adapter = new HttpClientRequestAdapter(new AnonymousAuthenticationProvider(), httpClient: http) { BaseUrl = "https://example.test" };
+        var client = new MyCrmApiClient(adapter);
+        var console = new SampleConsole(client, new MyCrmConfig { AdviserContactId = 123 },
+            Path.Combine(_directory, "state.json"), "api");
+        var path = Path.Combine(_directory, "generated.xlsx");
+        var api = new SnapshotApi(client, adapter.BaseUrl);
+        var expected = SnapshotExamples.Create(5001, await api.ContactsAsync(5001), await api.LookupsAsync(), "AU", seed: 42, itemCount: count);
+
+        _terminal.Input.PushKey(ConsoleKey.DownArrow);
+        _terminal.Input.PushKey(ConsoleKey.DownArrow);
+        _terminal.Input.PushKey(ConsoleKey.Enter);
+        _terminal.Input.PushTextWithEnter("5001");
+        _terminal.Input.PushTextWithEnter("42");
+        if (count.HasValue) _terminal.Input.PushTextWithEnter(count.Value.ToString());
+        else _terminal.Input.PushKey(ConsoleKey.Enter);
+        _terminal.Input.PushTextWithEnter(path);
+        _terminal.Input.PushKey(ConsoleKey.Escape);
+
+        await Assert.ThrowsAsync<MenuBackException>(() => new Samples(console).RunFinancialSnapshotsSample().WaitAsync(TimeSpan.FromSeconds(15)));
+
+        var loaded = SnapshotWorkbook.Load(path);
+        var actual = SnapshotWorkbook.Collections.Sum(sheet => loaded.Rows(sheet).Count);
+        Assert.Equal(count ?? SnapshotWorkbook.Collections.Sum(sheet => expected.Rows(sheet).Count), actual);
+        Assert.Equal(await KiotaJsonSerializer.SerializeAsStringAsync(expected.ToDocument()),
+            await KiotaJsonSerializer.SerializeAsStringAsync(loaded.ToDocument()));
+        Assert.Contains($"Generated {actual} financial items", _terminal.Output);
+    }
+
+    private sealed class ResponseHandler(Func<HttpRequestMessage, HttpResponseMessage> respond) : HttpMessageHandler
+    {
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) => Task.FromResult(respond(request));
+    }
+
     private void QueueExit()
     {
         _terminal.Input.PushKey(ConsoleKey.Escape);

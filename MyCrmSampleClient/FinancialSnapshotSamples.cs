@@ -78,6 +78,7 @@ public partial class Samples
         403 => "Access was denied. Check the configured scopes, permitted adviser UserId and group access.",
         423 => "Beta access must be enabled for the resolved adviser before retrying.",
         409 => "Another update conflicted with this snapshot. Read the current group profile before retrying.",
+        429 => "The API rate limit is still being exceeded. Wait before trying again. Imports retry 429 responses up to eight times with progressive backoff.",
         0 or >= 500 => "If submitting a snapshot, the write outcome may be uncertain. Export/read the current profile before deciding whether to retry.",
         _ => "Correct the reported fields or references before submitting again."
     };
@@ -125,9 +126,14 @@ public partial class Samples
 
         if (!MenuPrompt.Confirm($"Apply this financial snapshot to contact group {groupId}?", false)) return;
 
-        // A POST timeout/5xx can follow a committed write. Do not transparently replay this operation.
-        var response = await _console.Client.Jsonapi.ContactGroups[groupId].FinancialSnapshot.PostAsync(document,
-            request => request.Options.Add(new RetryHandlerOption { MaxRetry = 0 }));
+        var backoff = new RateLimitBackoff(retry => AnsiConsole.WriteLine(
+            $"HTTP 429: {retry.Request}. Waiting {retry.Delay.TotalSeconds:F1}s before retry {retry.Retry}/{retry.MaximumRetries}."));
+        var url = new Uri(new Uri(JsonApiFluentContext.BaseUrl.TrimEnd('/') + "/"), $"jsonapi/contact-groups/{groupId}/financial-snapshot").AbsoluteUri;
+
+        // Disable Kiota's general retries: only a confirmed 429 may replay this POST.
+        // A timeout or server failure can follow a committed write.
+        var response = await backoff.ExecuteAsync(() => _console.Client.Jsonapi.ContactGroups[groupId].FinancialSnapshot.PostAsync(document,
+            request => request.Options.Add(new RetryHandlerOption { MaxRetry = 0 })), "POST " + url);
 
         var operations = response?.Data?.Attributes?.Operations ?? throw new InvalidOperationException("No operation result was returned. Read back the profile before retrying.");
         var results = _console.CreateTable("Operation", "Resource", "ID", "Local IDs");
@@ -168,6 +174,13 @@ public partial class Samples
 
         var seed = MenuPrompt.Show(new TextPrompt<int>("Random seed (reuse to repeat an example):").DefaultValue(Random.Shared.Next(1, int.MaxValue)));
         var book = SnapshotExamples.Create(groupId, contacts, lookups, country, seed);
+        var defaultCount = SnapshotWorkbook.Collections.Sum(sheet => book.Rows(sheet).Count);
+        var itemCount = MenuPrompt.Show(new TextPrompt<int>("Number of financial items (excludes addresses and lookups):").DefaultValue(defaultCount)
+            .Validate(count => count is >= 1 and <= SnapshotExamples.MaximumItemCount
+                ? ValidationResult.Success() : ValidationResult.Error($"Enter 1–{SnapshotExamples.MaximumItemCount} items.")));
+        if (itemCount != defaultCount) book = SnapshotExamples.Create(groupId, contacts, lookups, country, seed, itemCount);
+
+        AnsiConsole.WriteLine($"Generated {SnapshotWorkbook.Collections.Sum(sheet => book.Rows(sheet).Count)} financial items and {book.Attributes.Addresses.Count} supporting addresses.");
         SaveFinancialWorkbook(book, $"financials-example-{groupId}.xlsx");
     }
 

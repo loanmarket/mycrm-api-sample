@@ -7,14 +7,22 @@ using MyCrmSampleClient.Kiota.Models;
 
 namespace MyCrmSampleClient.FinancialSnapshots;
 
-public static class SnapshotExamples
+public static partial class SnapshotExamples
 {
+    public const int MaximumItemCount = 1000;
+
     public static SnapshotWorkbook Create(int groupId, IEnumerable<Contact> contacts,
-        IReadOnlyCollection<SnapshotLookup> lookups, string country, int? seed = null)
+        IReadOnlyCollection<SnapshotLookup> lookups, string country, int? seed = null, int? itemCount = null)
     {
         if (country is not ("AU" or "NZ")) throw new ArgumentException("Examples support AU and NZ groups.");
+        if (itemCount is < 1 or > MaximumItemCount)
+            throw new ArgumentOutOfRangeException(nameof(itemCount), $"Use 1–{MaximumItemCount} financial items, or omit the count for the usual example.");
 
-        return new Generator(groupId, contacts, lookups, country, seed ?? Random.Shared.Next(1, int.MaxValue)).Create();
+        var chosenSeed = seed ?? Random.Shared.Next(1, int.MaxValue);
+
+        return itemCount.HasValue
+            ? CreateSized(groupId, contacts, lookups, country, chosenSeed, itemCount.Value)
+            : new Generator(groupId, contacts, lookups, country, chosenSeed).Create();
     }
 
     private sealed class Generator
