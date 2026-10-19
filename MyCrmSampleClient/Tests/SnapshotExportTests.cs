@@ -1,5 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Validation;
 using Microsoft.Kiota.Abstractions.Authentication;
 using Microsoft.Kiota.Http.HttpClientLibrary;
 using MyCrmSampleClient.FinancialSnapshots;
@@ -11,6 +14,53 @@ namespace MyCrmSampleClient.Tests;
 
 public sealed class SnapshotExportTests
 {
+    [Theory]
+    [InlineData("AU")]
+    [InlineData("NZ")]
+    public async Task ExportUsesAdviserCountryToOmitNzColumnsAndProducesAnImportableWorkbook(string country)
+    {
+        using var handler = new SnapshotTests.RecordingHandler(request => Respond(request).Replace("\"countryCode\":\"AU\"", $"\"countryCode\":\"{country}\""));
+        using var http = new HttpClient(handler);
+        using var adapter = new HttpClientRequestAdapter(new AnonymousAuthenticationProvider(), httpClient: http) { BaseUrl = "https://example.test" };
+        var book = await new SnapshotApi(new MyCrmApiClient(adapter), adapter.BaseUrl).ExportAsync(5001);
+        book.Lookups.AddRange(SnapshotExampleData.FullControls());
+        var directory = Directory.CreateTempSubdirectory("mycrm-country-export-");
+
+        try
+        {
+            var path = Path.Combine(directory.FullName, "export.xlsx");
+            book.Save(path);
+
+            using (var excel = new XLWorkbook(path))
+            {
+                foreach (var sheet in SnapshotWorkbook.DataSheets)
+                {
+                    var ws = excel.Worksheet(sheet);
+                    var headers = ws.Row(1).CellsUsed().Select(cell => cell.GetString()).ToArray();
+                    foreach (var column in SnapshotWorkbook.Columns(sheet).Where(column => column.Header.StartsWith("nz", StringComparison.Ordinal)))
+                        Assert.Equal(country == "NZ", headers.Contains(column.Header));
+
+                    Assert.All(ws.DataValidations.SelectMany(validation => validation.Ranges), range =>
+                        Assert.True(range.RangeAddress.LastAddress.ColumnNumber <= headers.Length));
+                }
+            }
+
+            var loaded = SnapshotWorkbook.Load(path);
+            Assert.Equal(country, loaded.Country);
+            Assert.Equal("1", SnapshotWorkbook.FormatVersion);
+            Assert.False(SnapshotComparison.Compare(loaded, book, country).HasDifferences);
+            Assert.Equal(country == "AU" ? null : 306, loaded.Attributes.Liabilities[0].NzDocumentedLoanTermMonths);
+            Assert.Equal(country == "AU" ? null : false, loaded.Attributes.Incomes[0].NzIsGross);
+
+            using var document = SpreadsheetDocument.Open(path, false);
+            Assert.Empty(new OpenXmlValidator().Validate(document));
+        }
+        finally
+        {
+            directory.Delete(true);
+        }
+    }
+
     [Fact]
     public void DisplayOnlyFrequencyCannotBeSilentlyDropped()
     {
@@ -76,12 +126,14 @@ public sealed class SnapshotExportTests
     [Fact]
     public async Task EmptyGroupNeverRunsAnUnfilteredFinancialSearch()
     {
-        using var handler = new SnapshotTests.RecordingHandler(_ => "{\"data\":[]}");
+        using var handler = new SnapshotTests.RecordingHandler(request => request.RequestUri.AbsolutePath.EndsWith("/adviser")
+            ? Respond(request) : "{\"data\":[]}");
         using var http = new HttpClient(handler);
         using var adapter = new HttpClientRequestAdapter(new AnonymousAuthenticationProvider(), httpClient: http) { BaseUrl = "https://example.test" };
         var book = await new SnapshotApi(new MyCrmApiClient(adapter), adapter.BaseUrl).ExportAsync(5001);
         Assert.Empty(book.Attributes.Assets);
-        Assert.Single(handler.Requests);
+        Assert.Equal(2, handler.Requests.Count);
+        Assert.All(handler.Requests, url => Assert.Contains("/contact-groups/5001/", url));
     }
 
     [Fact]
@@ -235,6 +287,8 @@ public sealed class SnapshotExportTests
         var second = Uri.UnescapeDataString(uri.Query).Contains("page[number]=2");
         switch (uri.AbsolutePath)
         {
+            case "/jsonapi/contact-groups/5001/adviser":
+                return """{"data":{"type":"advisers","id":"42","attributes":{"countryCode":"AU"}}}""";
             case "/jsonapi/contact-groups/5001/contacts":
                 return second
                     ? """{"data":[{"type":"contacts","id":"1002","attributes":{"role":"Adult","firstName":"Sam"}}]}"""

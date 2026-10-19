@@ -53,7 +53,7 @@ public sealed class SnapshotControlDataTests : IDisposable
             Assert.Equal(XLWorksheetVisibility.VeryHidden, excel.Worksheet("Dropdown lists").Visibility);
             foreach (var sheet in SnapshotWorkbook.DataSheets)
             {
-                foreach (var column in SnapshotWorkbook.Columns(sheet).Where(c => SnapshotControlData.Columns.ContainsKey(c.Header)))
+                foreach (var column in SnapshotWorkbook.Columns(sheet, snapshot.Country).Where(c => SnapshotControlData.Columns.ContainsKey(c.Header)))
                 {
                     var cell = Cell(excel, sheet, column.Header);
                     var validation = cell.GetDataValidation();
@@ -85,7 +85,7 @@ public sealed class SnapshotControlDataTests : IDisposable
         var validations = zip.Entries.Where(e => e.FullName.StartsWith("xl/worksheets/sheet") && e.FullName.EndsWith(".xml"))
             .SelectMany(e => { using var stream = e.Open(); return XDocument.Load(stream).Descendants(ns + "dataValidation").ToArray(); })
             .Where(v => v.Element(ns + "formula1")?.Value.Contains("control_") == true).ToArray();
-        Assert.Equal(9, validations.Length);
+        Assert.Equal(8, validations.Length); // AU has no NZ rental-verification column.
         Assert.All(validations, v => { Assert.Equal("warning", (string)v.Attribute("errorStyle")); Assert.Equal("1", (string)v.Attribute("showErrorMessage")); });
     }
 

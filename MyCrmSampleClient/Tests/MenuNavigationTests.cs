@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Net;
 using System.Text.Json;
+using ClosedXML.Excel;
 using Microsoft.Kiota.Abstractions.Authentication;
 using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Kiota.Http.HttpClientLibrary;
@@ -230,14 +231,18 @@ public sealed class MenuNavigationTests : IDisposable
     }
 
     [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public async Task ComparisonReadsEveryApiPageUsesWorkbookGroupAndLeavesTheFileUnchanged(bool changed)
+    [InlineData(false, false)]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    public async Task ComparisonReadsEveryApiPageUsesSelectedGroupAndLeavesTheFileUnchanged(bool changed, bool overrideGroup)
     {
         Directory.CreateDirectory(_directory);
         using var handler = new SnapshotTests.RecordingHandler(request =>
         {
             Assert.Equal(HttpMethod.Get, request.Method);
+
+            if (request.RequestUri.AbsolutePath == "/jsonapi/contact-groups/5001/adviser")
+                return """{"data":{"type":"advisers","id":"42","attributes":{"countryCode":"AU"}}}""";
 
             return SnapshotExportTests.Respond(request);
         });
@@ -245,9 +250,24 @@ public sealed class MenuNavigationTests : IDisposable
         using var adapter = new HttpClientRequestAdapter(new AnonymousAuthenticationProvider(), httpClient: http) { BaseUrl = "https://example.test" };
         var client = new MyCrmApiClient(adapter);
         var book = await new SnapshotApi(client, adapter.BaseUrl).ExportAsync(5001);
+        if (overrideGroup)
+        {
+            book.ContactGroupId = 5002;
+            book.Country = "NZ"; // Comparison must use the selected group's country, not workbook metadata.
+        }
+        book.Attributes.Liabilities[0].NzDocumentedLoanTermMonths = null;
+        book.Attributes.Liabilities[0].NzLoanStartDate = null;
+        book.Attributes.Incomes[0].NzIsGross = null;
         if (changed) book.Attributes.Expenses[0].Value = 999;
         var path = Path.Combine(_directory, "comparison.xlsx");
         book.Save(path);
+        using (var excel = new XLWorkbook(path))
+        {
+            excel.DefinedNames.DeleteAll();
+            excel.Worksheet("Expenses").Row(1).CellsUsed().Single(cell => cell.GetString() == "description").WorksheetColumn().Delete();
+            excel.Save();
+        }
+
         var original = File.ReadAllBytes(path);
         handler.Requests.Clear();
 
@@ -259,12 +279,14 @@ public sealed class MenuNavigationTests : IDisposable
         for (var i = 0; i < 3; i++) _terminal.Input.PushKey(ConsoleKey.DownArrow);
         _terminal.Input.PushKey(ConsoleKey.Enter);
         _terminal.Input.PushTextWithEnter(path);
-        _terminal.Input.PushKey(ConsoleKey.Enter); // Default to workbook's group, not saved state.
+        if (overrideGroup) _terminal.Input.PushTextWithEnter("5001");
+        else _terminal.Input.PushKey(ConsoleKey.Enter); // Default to workbook's group, not saved state.
         _terminal.Input.PushKey(ConsoleKey.Escape);
 
         await Assert.ThrowsAsync<MenuBackException>(() => new Samples(console).RunFinancialSnapshotsSample().WaitAsync(TimeSpan.FromSeconds(10)));
 
-        Assert.Equal(9, handler.Requests.Count);
+        Assert.Equal(10, handler.Requests.Count);
+        Assert.Contains("https://example.test/jsonapi/contact-groups/5001/adviser", handler.Requests);
         var searches = handler.Requests.Where(url => new[] { "/assets?", "/liabilities?", "/incomes?", "/expenses?" }.Any(url.Contains)).ToArray();
         Assert.Equal(5, searches.Length);
         Assert.All(searches, url => Assert.Contains("has(ownership,any(contact.id,'1001','1002'))", url));
@@ -273,6 +295,8 @@ public sealed class MenuNavigationTests : IDisposable
         Assert.False(_terminal.Input.IsKeyAvailable());
         Assert.DoesNotContain("Request failed", _terminal.Output);
         Assert.DoesNotContain("Apply this financial snapshot", _terminal.Output);
+        Assert.Contains("Only columns present in the spreadsheet are compared", _terminal.Output);
+        Assert.Contains("NZ-only fields", _terminal.Output);
 
         if (changed)
         {

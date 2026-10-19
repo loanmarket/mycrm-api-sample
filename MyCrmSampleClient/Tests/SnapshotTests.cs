@@ -110,6 +110,7 @@ public sealed class SnapshotTests : IDisposable
         var path = Path.Combine(_directory, "example.xlsx");
         source.Save(path);
         var loaded = SnapshotWorkbook.Load(path);
+        Assert.Equal(country, loaded.Country);
         Assert.Equal(await KiotaJsonSerializer.SerializeAsStringAsync(source.ToDocument()), await KiotaJsonSerializer.SerializeAsStringAsync(loaded.ToDocument()));
         Assert.Null(loaded.Attributes.Assets[0].Description);
         Assert.False(string.IsNullOrWhiteSpace(loaded.Attributes.Assets[1].Description));
@@ -118,6 +119,9 @@ public sealed class SnapshotTests : IDisposable
         else Assert.Null(loaded.Attributes.Assets[1].Bsb);
         using var excel = new XLWorkbook(path);
         Assert.True(Cell(excel, "Assets", "description").IsEmpty());
+        foreach (var sheet in new[] { "Incomes", "Liabilities" })
+            Assert.Equal(country == "NZ", excel.Worksheet(sheet).Row(1).CellsUsed().Any(cell => cell.GetString().StartsWith("nz", StringComparison.Ordinal)));
+
         var accountColumn = SnapshotWorkbook.Columns("Assets").Select((c, i) => (c, i)).Single(x => x.c.Header == "accountNumber").i + 1;
         Assert.Equal(XLDataType.Text, excel.Worksheet("Assets").Cell(3, accountColumn).DataType);
         Assert.All(excel.Worksheets, sheet => Assert.DoesNotContain(sheet.CellsUsed(), c => c.HasFormula));
@@ -158,6 +162,24 @@ public sealed class SnapshotTests : IDisposable
         Assert.Equal(2, loaded.Attributes.Assets.Count);
         Assert.All(loaded.Attributes.Assets, asset => Assert.Equal(12, asset.AssetId));
         Assert.Equal(loaded.Attributes.Assets[0].Lid, loaded.Attributes.Assets[1].Lid);
+    }
+
+    [Fact]
+    public void AustralianTemplateStillImportsExplicitlyAddedNzColumnsWithoutChangingValues()
+    {
+        var path = SaveExample();
+        Edit(path, book =>
+        {
+            var sheet = book.Worksheet("Incomes");
+            var column = sheet.LastColumnUsed().ColumnNumber() + 1;
+            sheet.Cell(1, column).Value = "nzIsGross";
+            sheet.Cell(2, column).Value = false;
+        });
+
+        var loaded = SnapshotWorkbook.Load(path);
+
+        Assert.Equal("AU", loaded.Country);
+        Assert.False(loaded.Attributes.Incomes[0].NzIsGross);
     }
 
     [Fact]

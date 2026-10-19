@@ -93,7 +93,7 @@ public static class SnapshotControlData
         foreach (var sheet in SnapshotWorkbook.DataSheets)
         {
             var ws = excel.Worksheet(sheet);
-            var columns = SnapshotWorkbook.Columns(sheet);
+            var columns = SnapshotWorkbook.Columns(sheet, snapshot.Country);
 
             for (var c = 0; c < columns.Count; c++)
             {

@@ -32,7 +32,7 @@ public static class SnapshotExamples
             _country = country;
             _seed = seed;
             _fake = new Faker("en_AU") { Random = new Randomizer(seed) };
-            _book = new SnapshotWorkbook { ContactGroupId = groupId, Source = $"Fabricated example (seed {seed})" };
+            _book = new SnapshotWorkbook { ContactGroupId = groupId, Country = country, Source = $"Fabricated example (seed {seed})" };
             _book.Lookups.AddRange(lookups);
             SnapshotApi.AddContacts(_book, contacts);
 

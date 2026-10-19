@@ -49,7 +49,7 @@ public sealed class SnapshotLayoutTests : IDisposable
                 // Inspect persisted rows: library round trips alone can hide unused-cell bloat.
                 Assert.All(rows, row => Assert.InRange(row.RowIndex!.Value, 1u, (uint)lastRow));
                 Assert.All(part.Worksheet.GetFirstChild<Spreadsheet.Columns>()!.Elements<Spreadsheet.Column>(),
-                    column => Assert.True(column.Max!.Value <= SnapshotWorkbook.Columns(sheet.Name!).Count));
+                    column => Assert.True(column.Max!.Value <= SnapshotWorkbook.Columns(sheet.Name!, snapshot.Country).Count));
             }
 
             Assert.Empty(new OpenXmlValidator().Validate(document));
@@ -59,7 +59,7 @@ public sealed class SnapshotLayoutTests : IDisposable
         foreach (var sheet in SnapshotWorkbook.DataSheets)
         {
             var ws = excel.Worksheet(sheet);
-            foreach (var (column, index) in SnapshotWorkbook.Columns(sheet).Select((column, index) => (column, index)))
+            foreach (var (column, index) in SnapshotWorkbook.Columns(sheet, snapshot.Country).Select((column, index) => (column, index)))
             {
                 var expectedFormat = column.Type == typeof(string) || column.Property.Name == "Ownership" ? "@"
                     : column.Type == typeof(double) ? "#,##0.00"
@@ -121,7 +121,7 @@ public sealed class SnapshotLayoutTests : IDisposable
         {
             foreach (var sheet in SnapshotWorkbook.DataSheets)
             {
-                foreach (var column in SnapshotWorkbook.Columns(sheet).Where(c => c.Type.IsEnum))
+                foreach (var column in SnapshotWorkbook.Columns(sheet, snapshot.Country).Where(c => c.Type.IsEnum))
                 {
                     var cell = Cell(excel, sheet, column.Header);
                     var validation = cell.GetDataValidation();
@@ -183,7 +183,7 @@ public sealed class SnapshotLayoutTests : IDisposable
         {
             ["Assets"] = ["lid", "assetId", "assetTypeId", "assetSubTypeId", "address.lid", "owner1ContactId", "owner2ContactId", "propertyTypeId"],
             ["Expenses"] = ["lid", "expenseId", "expenseTypeId", "owner1ContactId", "owner2ContactId"],
-            ["Incomes"] = ["lid", "incomeId", "incomeTypeId", "employment.id", "employment.lid", "incomeVerificationId", "linkedAsset.id", "linkedAsset.lid", "nzRentalVerificationTypeId", "owner1ContactId", "owner2ContactId"],
+            ["Incomes"] = ["lid", "incomeId", "incomeTypeId", "employment.id", "employment.lid", "incomeVerificationId", "linkedAsset.id", "linkedAsset.lid", "owner1ContactId", "owner2ContactId"],
             ["Liabilities"] = ["lid", "liabilityId", "liabilityTypeId", "liabilitySubTypeId", "linkedAsset.id", "linkedAsset.lid", "owner1ContactId", "owner2ContactId"],
             ["Employments"] = ["lid", "employmentId", "address.lid", "contactId"],
             ["Addresses"] = ["lid"]
@@ -297,7 +297,7 @@ public sealed class SnapshotLayoutTests : IDisposable
             foreach (var sheet in SnapshotWorkbook.DataSheets)
             {
                 var ws = reordered.AddWorksheet(sheet);
-                var columns = SnapshotWorkbook.Columns(sheet).Reverse().ToArray();
+                var columns = SnapshotWorkbook.Columns(sheet, snapshot.Country).Reverse().ToArray();
 
                 for (var c = 0; c < columns.Length; c++)
                 {

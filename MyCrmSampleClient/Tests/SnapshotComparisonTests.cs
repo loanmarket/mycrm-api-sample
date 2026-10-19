@@ -1,3 +1,5 @@
+using ClosedXML.Excel;
+using System.Text.Json;
 using Microsoft.Kiota.Abstractions.Authentication;
 using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Kiota.Http.HttpClientLibrary;
@@ -8,12 +10,58 @@ using Xunit;
 
 namespace MyCrmSampleClient.Tests;
 
-public sealed class SnapshotComparisonTests
+public sealed class SnapshotComparisonTests : IDisposable
 {
+    private readonly string _directory = Path.Combine(Path.GetTempPath(), "mycrm-comparison-" + Guid.NewGuid().ToString("N"));
+
+    public void Dispose()
+    {
+        if (Directory.Exists(_directory)) Directory.Delete(_directory, true);
+    }
+
+    private SnapshotWorkbook LoadWithoutColumns(SnapshotWorkbook book, params (string Sheet, string[] Headers)[] omitted)
+    {
+        Directory.CreateDirectory(_directory);
+        var path = Path.Combine(_directory, Guid.NewGuid().ToString("N") + ".xlsx");
+        book.Save(path);
+        using (var excel = new XLWorkbook(path))
+        {
+            // Removing columns in ClosedXML attempts to rewrite structured defined names;
+            // these read-only comparison fixtures do not need dropdown definitions.
+            excel.DefinedNames.DeleteAll();
+            foreach (var worksheet in excel.Worksheets) worksheet.Clear(XLClearOptions.DataValidation);
+
+            foreach (var (sheet, headers) in omitted)
+            {
+                var ws = excel.Worksheet(sheet);
+                foreach (var number in ws.Row(1).CellsUsed().Where(cell => headers.Contains(cell.GetString()))
+                    .Select(cell => cell.Address.ColumnNumber).OrderByDescending(number => number).ToArray())
+                    ws.Column(number).Delete();
+            }
+
+            excel.Save();
+        }
+
+        var original = File.ReadAllBytes(path);
+        var loaded = SnapshotWorkbook.Load(path, allowMissingColumns: true);
+
+        Assert.Equal(original, File.ReadAllBytes(path));
+        Assert.Throws<FormatException>(() => SnapshotWorkbook.Load(path)); // Import still requires the full template.
+
+        return loaded;
+    }
+
     private static SnapshotWorkbook Example(string country = "AU") => SnapshotExamples.Create(5001,
         [new() { Id = "1001", Attributes = new() { Role = ContactAttributes_role.Adult } },
          new() { Id = "1002", Attributes = new() { Role = ContactAttributes_role.Adult } }],
         SnapshotExampleData.FullControls(), country, seed: 731);
+
+    private static void AssertEquivalent(SnapshotWorkbook left, SnapshotWorkbook right, string country = "AU")
+    {
+        var comparison = SnapshotComparison.Compare(left, right, country);
+
+        Assert.False(comparison.HasDifferences, JsonSerializer.Serialize(comparison.Rows.Where(row => row.Status != SnapshotComparisonStatus.Equal)));
+    }
 
     private static void AssignApiIds(SnapshotWorkbook book)
     {
@@ -82,7 +130,7 @@ public sealed class SnapshotComparisonTests
 
         var beforeSpreadsheet = await KiotaJsonSerializer.SerializeAsStringAsync(spreadsheet.ToDocument());
         var beforeApi = await KiotaJsonSerializer.SerializeAsStringAsync(api.ToDocument());
-        var comparison = SnapshotComparison.Compare(spreadsheet, api);
+        var comparison = SnapshotComparison.Compare(spreadsheet, api, country);
 
         Assert.False(comparison.HasDifferences, string.Join("\n", comparison.Rows.Where(row => row.Status != SnapshotComparisonStatus.Equal)));
         Assert.Equal(SnapshotWorkbook.Collections.Sum(sheet => spreadsheet.Rows(sheet).Count), comparison.Rows.Count);
@@ -243,5 +291,162 @@ public sealed class SnapshotComparisonTests
 
         Assert.False(comparison.HasDifferences);
         Assert.Empty(comparison.Rows);
+    }
+
+    [Theory]
+    [InlineData("AU", 0)]
+    [InlineData("NZ", 9)]
+    [InlineData(null, 9)]
+    public void NzOnlyValuesAreIgnoredOnlyForAustralianGroups(string country, int expectedDifferences)
+    {
+        var left = new SnapshotWorkbook();
+        var right = new SnapshotWorkbook();
+        left.Attributes.Liabilities.Add(new() { LiabilityId = 10 });
+        right.Attributes.Liabilities.Add(new()
+        {
+            LiabilityId = 10, NzDocumentedLoanTermMonths = 0, NzInterestOnlyTermMonths = 0,
+            NzIsInArrears = false, NzRevolvingCreditRedraw = false,
+            NzLoanStartDate = new(2020, 1, 1), NzInterestOnlyStartDate = new(2021, 1, 1)
+        });
+        left.Attributes.Incomes.Add(new() { IncomeId = 20 });
+        right.Attributes.Incomes.Add(new()
+        {
+            IncomeId = 20, NzIsGross = true, NzRentalType = FinancialSnapshotIncome_nzRentalType.RentalIncome,
+            NzRentalVerificationTypeId = 1
+        });
+
+        var comparison = SnapshotComparison.Compare(left, right, country);
+
+        Assert.Equal(expectedDifferences, comparison.Rows.Sum(row => row.Differences.Count));
+        Assert.Equal(expectedDifferences > 0, comparison.HasDifferences);
+    }
+
+    [Theory]
+    [InlineData("AU", true)]
+    [InlineData("NZ", false)]
+    [InlineData(null, true)]
+    public void AustralianLoanTermIsIgnoredOnlyForNewZealandGroups(string country, bool differs)
+    {
+        var left = new SnapshotWorkbook();
+        var right = new SnapshotWorkbook();
+        left.Attributes.Liabilities.Add(new() { LiabilityId = 10 });
+        right.Attributes.Liabilities.Add(new() { LiabilityId = 10, LoanTerm = 0 });
+
+        Assert.Equal(differs, SnapshotComparison.Compare(left, right, country).HasDifferences);
+    }
+
+    [Fact]
+    public void ApplicableEmptyValuesStillDifferFromZeroAndFalse()
+    {
+        var left = new SnapshotWorkbook();
+        var right = new SnapshotWorkbook();
+        left.Attributes.Liabilities.Add(new() { LiabilityId = 10 });
+        right.Attributes.Liabilities.Add(new() { LiabilityId = 10, Value = 0, InterestTaxDeductible = false });
+
+        var differences = Assert.Single(SnapshotComparison.Compare(left, right, "AU").Rows).Differences;
+
+        Assert.Equal(new[] { "interestTaxDeductible", "value" }, differences.Select(difference => difference.Field));
+    }
+
+    [Theory]
+    [InlineData(10, false)]
+    [InlineData(11, true)]
+    public void DateOnlyValuesIgnoreHiddenTimeButStillCompareCalendarDates(int day, bool differs)
+    {
+        var left = new SnapshotWorkbook();
+        var right = new SnapshotWorkbook();
+        left.Attributes.Employments.Add(new() { EmploymentId = 10, DateStarted = new(2024, 2, 10) });
+        right.Attributes.Employments.Add(new() { EmploymentId = 10, DateStarted = new(new DateTime(2024, 2, day, 14, 30, 0)) });
+
+        Assert.Equal(differs, SnapshotComparison.Compare(left, right).HasDifferences);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MissingColumnsAreIgnoredAcrossCollectionsAndAddresses(bool explicitIds)
+    {
+        var left = Example();
+        var right = Example();
+        if (explicitIds) AssignApiIds(left);
+        AssignApiIds(right);
+        left = LoadWithoutColumns(left,
+            ("Assets", ["description", "value"]), ("Expenses", ["value"]),
+            ("Incomes", ["incomeVerificationId"]), ("Liabilities", ["repayment"]),
+            ("Employments", ["employerPhone"]), ("Addresses", ["postCode"]));
+
+        AssertEquivalent(left, right);
+
+        right.Attributes.Assets[0].AccountName = "Changed account name";
+        var differences = SnapshotComparison.Compare(left, right, "AU").Rows.SelectMany(row => row.Differences);
+
+        Assert.Equal("accountName", Assert.Single(differences).Field);
+    }
+
+    [Fact]
+    public void MissingRelationshipAndOwnerColumnsDoNotCompareApiLinksOrReportUnusedAddresses()
+    {
+        var left = Example();
+        var right = Example();
+        AssignApiIds(left);
+        AssignApiIds(right);
+        left = LoadWithoutColumns(left,
+            ("Assets", ["owner1ContactId", "owner2ContactId", "address.lid"]),
+            ("Employments", ["address.lid"]),
+            ("Incomes", ["linkedAsset.id", "linkedAsset.lid", "employment.id", "employment.lid"]),
+            ("Liabilities", ["linkedAsset.id", "linkedAsset.lid"]));
+
+        AssertEquivalent(left, right);
+    }
+
+    [Theory]
+    [InlineData("owner1ContactId", 1, 2, false)]
+    [InlineData("owner1ContactId", 3, 2, false)]
+    [InlineData("owner1ContactId", 3, 1, true)]
+    [InlineData("owner2ContactId", 2, 1, false)]
+    [InlineData("owner2ContactId", 3, 2, true)]
+    public void RemainingOwnerColumnIsComparedWithoutDependingOnItsPosition(string omitted, int first, int second, bool differs)
+    {
+        var left = new SnapshotWorkbook();
+        var right = new SnapshotWorkbook();
+        left.Attributes.Assets.Add(new() { AssetId = 10, Ownership = [new() { Id = 1 }, new() { Id = 2 }] });
+        right.Attributes.Assets.Add(new() { AssetId = 10, Ownership = [new() { Id = first }, new() { Id = second }] });
+        left = LoadWithoutColumns(left, ("Assets", [omitted]));
+
+        Assert.Equal(differs, SnapshotComparison.Compare(left, right).HasDifferences);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void RemainingLinkAlternativeResolvesToApiId(bool explicitIds)
+    {
+        var left = Example();
+        var right = Example();
+        if (explicitIds) AssignApiIds(left);
+        AssignApiIds(right);
+        var omitted = explicitIds ? "lid" : "id";
+        left = LoadWithoutColumns(left,
+            ("Incomes", ["linkedAsset." + omitted, "employment." + omitted]),
+            ("Liabilities", ["linkedAsset." + omitted]));
+
+        AssertEquivalent(left, right);
+
+        right.Attributes.Incomes[0].Employment.Id = 9999;
+        var differences = SnapshotComparison.Compare(left, right).Rows.SelectMany(row => row.Differences);
+        Assert.Equal("employment", Assert.Single(differences).Field);
+    }
+
+    [Fact]
+    public void OmittedOwnerColumnsCannotBeUsedToGuessBetweenCandidates()
+    {
+        var left = new SnapshotWorkbook();
+        var right = new SnapshotWorkbook();
+        left.Attributes.Assets.Add(new() { AssetTypeId = 4, Description = "Cash", Ownership = [new() { Id = 1 }] });
+        right.Attributes.Assets.Add(new() { AssetId = 10, AssetTypeId = 4, Description = "Cash", Ownership = [new() { Id = 1 }] });
+        right.Attributes.Assets.Add(new() { AssetId = 11, AssetTypeId = 4, Description = "Cash", Ownership = [new() { Id = 2 }] });
+        left = LoadWithoutColumns(left, ("Assets", ["owner1ContactId", "owner2ContactId"]));
+
+        Assert.Equal(SnapshotComparisonStatus.Ambiguous, Assert.Single(SnapshotComparison.Compare(left, right).Rows).Status);
     }
 }

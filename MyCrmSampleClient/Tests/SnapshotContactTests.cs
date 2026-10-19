@@ -80,6 +80,7 @@ public sealed class SnapshotContactTests : IDisposable
     {
         using var handler = new SnapshotTests.RecordingHandler(request => request.RequestUri!.AbsolutePath switch
         {
+            "/jsonapi/contact-groups/5001/adviser" => SnapshotExportTests.Respond(request),
             "/jsonapi/contact-groups/5001/contacts" => """
                 {"data":[
                   {"type":"contacts","id":"1001","attributes":{

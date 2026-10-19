@@ -32,6 +32,14 @@ public sealed class SnapshotApi(MyCrmApiClient client, string baseUrl)
     public Task<List<Contact>> ContactsAsync(int groupId) => ReadCollection<Contact>(Url($"contact-groups/{groupId}/contacts"),
         async url => await client.Jsonapi.ContactGroups[groupId].Contacts.WithUrl(url).GetAsync());
 
+    public async Task<string> CountryAsync(int groupId)
+    {
+        var adviser = await client.Jsonapi.ContactGroups[groupId].Adviser.GetAsync();
+
+        return adviser?.Data?.Attributes?.CountryCode?.ToString()
+            ?? throw new InvalidOperationException("Cannot determine the group adviser's country.");
+    }
+
     // Pagination is shared; this collector retains resources for snapshot relationship resolution.
     private Task<List<T>> ReadCollection<T>(string url, Func<string, Task<object>> fetch) where T : IncludedResource =>
         JsonApiPagination.ReadPagesAsync<T>(_origin.AbsoluteUri, url, (pageUrl, _) => fetch(pageUrl),
@@ -42,7 +50,7 @@ public sealed class SnapshotApi(MyCrmApiClient client, string baseUrl)
         // Never satisfy a missing relationship using data from an earlier export.
         _included.Clear();
         var contacts = await ContactsAsync(groupId);
-        var book = new SnapshotWorkbook { ContactGroupId = groupId, Source = "Export" };
+        var book = new SnapshotWorkbook { ContactGroupId = groupId, Source = "Export", Country = await CountryAsync(groupId) };
         AddContacts(book, contacts);
         if (contacts.Count == 0) return book; // Never send an unfiltered financial search.
 

@@ -15,8 +15,10 @@ namespace MyCrmSampleClient.FinancialSnapshots;
 public sealed class SnapshotWorkbook
 {
     public const string FormatVersion = "1";
+    private readonly Dictionary<string, HashSet<string>> _inputColumns = new(StringComparer.Ordinal);
 
     public int ContactGroupId { get; set; }
+    public string Country { get; set; }
     public string Source { get; set; } = "Manual";
     public FinancialSnapshotAttributes Attributes { get; } = new()
     {
@@ -37,6 +39,10 @@ public sealed class SnapshotWorkbook
     }
 
     public IList Rows(string sheet) => (IList)typeof(FinancialSnapshotAttributes).GetProperty(sheet)!.GetValue(Attributes)!;
+
+    // In-memory examples and API exports contain the full schema; loaded files retain their actual headers.
+    internal bool HasColumn(string sheet, string header) =>
+        !_inputColumns.TryGetValue(sheet, out var headers) || headers.Contains(header);
 
     internal int LastInputRow(string sheet) => Math.Max(1000, Rows(sheet).Count + 1);
 
@@ -98,8 +104,9 @@ public sealed class SnapshotWorkbook
 
     private static string Camel(string name) => char.ToLowerInvariant(name[0]) + name[1..];
 
-    public static IReadOnlyList<Column> Columns(string sheet) => RowType(sheet).GetProperties()
+    public static IReadOnlyList<Column> Columns(string sheet, string country = null) => RowType(sheet).GetProperties()
         .Where(p => p.Name != "AdditionalData")
+        .Where(p => country != "AU" || !p.Name.StartsWith("Nz", StringComparison.Ordinal))
         .SelectMany(p => p.Name == "Ownership"
             ? new[] { new Column("owner1ContactId", p, OwnerIndex: 0), new Column("owner2ContactId", p, OwnerIndex: 1) }
             : p.Name is "Address" or "LinkedAsset" or "Employment"
@@ -129,13 +136,14 @@ public sealed class SnapshotWorkbook
 
         WriteTable(book, "Snapshot", ["setting", "value"],
             new[] { new[] { "formatVersion", FormatVersion }, new[] { "contactGroupId", ContactGroupId.ToString(CultureInfo.InvariantCulture) }, new[] { "source", Source } }
-                .Concat(Collections.Select(s => new[] { Camel(s) + "Mode", Mode(s) })));
+                .Concat(Collections.Select(s => new[] { Camel(s) + "Mode", Mode(s) }))
+                .Concat(Country == null ? [] : new[] { new[] { "country", Country } }));
         book.Worksheet("Snapshot").Range("B5:B9").CreateDataValidation().List("\"Merge,Replace\"", true);
 
         foreach (var sheet in DataSheets)
         {
             var ws = book.AddWorksheet(sheet);
-            var columns = Columns(sheet);
+            var columns = Columns(sheet, Country);
 
             for (var c = 0; c < columns.Count; c++)
             {
@@ -182,7 +190,7 @@ public sealed class SnapshotWorkbook
         WriteTable(book, "Excluded records", ["resource", "id", "type", "value", "frequency", "description"], Excluded);
         WriteTable(book, "Read me", ["topic", "guidance"], new[]
         {
-            new[] { "Format", "Keep every data sheet and column header. Blank cells mean omitted optional values; matched records can clear those values. No formulas in imported cells." },
+            new[] { "Format", "Keep every data sheet and supplied column header for import. AU workbooks omit NZ-only columns. Columns may be removed for comparison. Blank cells mean omitted optional values; matched records can clear those values. No formulas in imported cells." },
             new[] { "Modes", "Set each collection to Merge or Replace on Snapshot. Replace with an empty sheet removes all eligible records in that collection for the whole group." },
             new[] { "IDs", "assetId/expenseId/incomeId/liabilityId/employmentId select existing records. Leave blank for automatic matching. Keep account numbers, BSBs and postcodes as text." },
             new[] { "Owners", "Choose up to two distinct adults in owner1ContactId and owner2ContactId. One column may be blank for a single owner. Dropdowns show contact ID and name; import uses the IDs and divides shares equally." },
@@ -317,7 +325,7 @@ public sealed class SnapshotWorkbook
         ws.SheetView.FreezeColumns(1);
     }
 
-    public static SnapshotWorkbook Load(string path)
+    public static SnapshotWorkbook Load(string path, bool allowMissingColumns = false)
     {
         using var book = new XLWorkbook(path);
         var result = new SnapshotWorkbook();
@@ -336,10 +344,11 @@ public sealed class SnapshotWorkbook
         if (!int.TryParse(settings.GetValueOrDefault("contactGroupId"), out var groupId)) throw new FormatException("Snapshot: contactGroupId must be an integer.");
 
         result.ContactGroupId = groupId;
+        result.Country = settings.GetValueOrDefault("country");
         result.Source = settings.GetValueOrDefault("source") ?? "Manual";
         foreach (var sheet in Collections) result.SetMode(sheet, settings.GetValueOrDefault(Camel(sheet) + "Mode") ?? "Merge");
 
-        var allowedSettings = new[] { "formatVersion", "contactGroupId", "source" }.Concat(Collections.Select(s => Camel(s) + "Mode"));
+        var allowedSettings = new[] { "formatVersion", "contactGroupId", "source", "country" }.Concat(Collections.Select(s => Camel(s) + "Mode"));
         if (settings.Keys.Except(allowedSettings).Any()) throw new FormatException("Snapshot: unrecognised setting (check mode spelling).");
 
         // Reference sheets support editing, but are not part of the import request.
@@ -348,12 +357,14 @@ public sealed class SnapshotWorkbook
             var ws = RequireSheet(book, sheet);
             var columns = Columns(sheet).ToDictionary(c => c.Header, StringComparer.Ordinal);
             var headers = ws.Row(1).CellsUsed().Select(c => (Name: Text(c), Number: c.Address.ColumnNumber)).ToList();
-            var missing = columns.Keys.Except(headers.Select(h => h.Name)).ToArray();
+            var missing = Columns(sheet, result.Country).Select(column => column.Header).Except(headers.Select(h => h.Name)).ToArray();
             var unexpected = headers.Select(h => h.Name).Except(columns.Keys).ToArray();
             var duplicates = headers.GroupBy(h => h.Name).Where(g => g.Count() > 1).Select(g => g.Key).ToArray();
-            if (missing.Length > 0 || unexpected.Length > 0 || duplicates.Length > 0)
-                throw new FormatException($"{sheet}: headers must match the generated template exactly (columns may be reordered). " +
+            if ((!allowMissingColumns && missing.Length > 0) || unexpected.Length > 0 || duplicates.Length > 0)
+                throw new FormatException($"{sheet}: headers must match the generated template (columns may be reordered{(allowMissingColumns ? " or omitted for comparison" : "")}). " +
                     $"Missing: {string.Join(", ", missing)}. Unexpected: {string.Join(", ", unexpected)}. Duplicate: {string.Join(", ", duplicates)}. Generate or export a current workbook.");
+
+            result._inputColumns[sheet] = headers.Select(header => header.Name).ToHashSet(StringComparer.Ordinal);
 
             foreach (var row in ws.RowsUsed().Skip(1))
             {

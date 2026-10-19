@@ -163,8 +163,7 @@ public partial class Samples
 
         var groupId = PromptFinancialGroup();
         var contacts = await api.ContactsAsync(groupId);
-        var adviser = await _console.Client.Jsonapi.ContactGroups[groupId].Adviser.GetAsync();
-        var country = adviser?.Data?.Attributes?.CountryCode?.ToString() ?? throw new InvalidOperationException("Cannot determine the group adviser's country.");
+        var country = await api.CountryAsync(groupId);
         var lookups = await api.LookupsAsync();
 
         var seed = MenuPrompt.Show(new TextPrompt<int>("Random seed (reuse to repeat an example):").DefaultValue(Random.Shared.Next(1, int.MaxValue)));
@@ -177,7 +176,7 @@ public partial class Samples
         if (!FinancialScopes("api.contact-groups.read", "api.contacts.read", "api.assets.search", "api.incomes.search", "api.expenses.search", "api.liabilities.search")) return;
 
         var path = MenuPrompt.Ask<string>("Spreadsheet path (.xlsx):").Trim().Trim('"');
-        var spreadsheet = SnapshotWorkbook.Load(path);
+        var spreadsheet = SnapshotWorkbook.Load(path, allowMissingColumns: true);
         AnsiConsole.WriteLine($"Workbook nominates contact group {spreadsheet.ContactGroupId} ({spreadsheet.Source}).");
 
         var groupId = PromptFinancialGroup(spreadsheet.ContactGroupId);
@@ -186,9 +185,13 @@ public partial class Samples
             AnsiConsole.WriteLine($"The selected group differs from the workbook's group {spreadsheet.ContactGroupId}.");
 
         var current = await api.ExportAsync(groupId);
-        var comparison = SnapshotComparison.Compare(spreadsheet, current);
+        var country = current.Country;
+        var comparison = SnapshotComparison.Compare(spreadsheet, current, country);
 
         AnsiConsole.WriteLine("Comparison is read-only. Collection modes and reference sheets are not compared; this is not an import preview.");
+        AnsiConsole.WriteLine($"Only columns present in the spreadsheet are compared. The group's adviser country is {country}.");
+        if (country == "AU") AnsiConsole.WriteLine("NZ-only fields (nz columns) are excluded for Australian groups.");
+        if (country == "NZ") AnsiConsole.WriteLine("Liability loanTerm is excluded for New Zealand groups; nzDocumentedLoanTermMonths is compared instead.");
         AnsiConsole.WriteLine("Records match by explicit ID or unique identifying fields. Addresses are compared through their asset or employment. Owner order and local-ID spelling are ignored.");
         AnsiConsole.WriteLine("Only spreadsheet/API means no counterpart was matched. Review means the match or address could not be resolved; use explicit record IDs to disambiguate.");
         AnsiConsole.WriteLine("API reads are not a transactional snapshot. Managed repayment expenses and unsupported incomes are excluded as on export.");

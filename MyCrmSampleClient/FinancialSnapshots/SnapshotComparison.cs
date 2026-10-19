@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json;
+using Microsoft.Kiota.Abstractions;
 using MyCrmSampleClient.Kiota.Models;
 
 namespace MyCrmSampleClient.FinancialSnapshots;
@@ -19,21 +20,23 @@ public sealed class SnapshotComparison
 {
     private readonly SnapshotWorkbook _spreadsheet;
     private readonly SnapshotWorkbook _api;
+    private readonly string _country;
     private readonly Dictionary<object, object> _matches = new();
     private readonly List<SnapshotRowComparison> _rows = [];
 
     public IReadOnlyList<SnapshotRowComparison> Rows => _rows;
     public bool HasDifferences => _rows.Any(row => row.Status != SnapshotComparisonStatus.Equal);
 
-    private SnapshotComparison(SnapshotWorkbook spreadsheet, SnapshotWorkbook api)
+    private SnapshotComparison(SnapshotWorkbook spreadsheet, SnapshotWorkbook api, string country)
     {
         _spreadsheet = spreadsheet;
         _api = api;
+        _country = country;
     }
 
-    public static SnapshotComparison Compare(SnapshotWorkbook spreadsheet, SnapshotWorkbook api)
+    public static SnapshotComparison Compare(SnapshotWorkbook spreadsheet, SnapshotWorkbook api, string country = null)
     {
-        var comparison = new SnapshotComparison(spreadsheet, api);
+        var comparison = new SnapshotComparison(spreadsheet, api, country);
 
         // Resolve assets and employments before comparing their dependants' local-ID links.
         foreach (var sheet in new[] { "Assets", "Employments", "Liabilities", "Incomes", "Expenses" })
@@ -43,6 +46,10 @@ public sealed class SnapshotComparison
 
         return comparison;
     }
+
+    private bool Includes(string sheet, string header) => _spreadsheet.HasColumn(sheet, header)
+        && !(_country == "AU" && header.StartsWith("nz", StringComparison.Ordinal))
+        && !(_country == "NZ" && sheet == "Liabilities" && header == "loanTerm");
 
     private void MatchCollection(string sheet)
     {
@@ -86,12 +93,11 @@ public sealed class SnapshotComparison
             // Resolve only one-to-one choices; never choose the first of several candidates.
             if (sources.Count > 1 || targets.Count > 1)
             {
-                foreach (var context in sources.GroupBy(row => Context(sheet, row, _spreadsheet)).ToArray())
+                foreach (var source in sources.ToArray())
                 {
-                    var candidates = targets.Where(row => Context(sheet, row, _api) == context.Key).ToArray();
-                    if (context.Count() != 1 || candidates.Length != 1) continue;
+                    var candidates = targets.Where(target => ContextMatches(sheet, source, target)).ToArray();
+                    if (candidates.Length != 1 || sources.Count(row => ContextMatches(sheet, row, candidates[0])) != 1) continue;
 
-                    var source = context.Single();
                     Match(source, candidates[0]);
                     sources.Remove(source);
                     targets.Remove(candidates[0]);
@@ -133,20 +139,20 @@ public sealed class SnapshotComparison
 
         void Compare(string field, object expected, object actual)
         {
-            if (!Equals(EmptyToNull(expected), EmptyToNull(actual)))
+            if (!Equals(ComparisonValue(expected), ComparisonValue(actual)))
                 differences.Add(new(field, Display(expected), Display(actual)));
         }
 
         foreach (var column in SnapshotWorkbook.Columns(sheet).Where(column => column.Header != "lid"
-            && column.Header != IdHeader(sheet) && column.Child == null && !column.OwnerIndex.HasValue))
+            && column.Header != IdHeader(sheet) && column.Child == null && !column.OwnerIndex.HasValue && Includes(sheet, column.Header)))
             Compare(column.Header, column.Get(source), column.Get(target));
 
-        if (source.GetType().GetProperty("Ownership") != null)
-            Compare("ownership", Owners(source), Owners(target));
+        if (!OwnersMatch(sheet, source, target))
+            differences.Add(new("ownership", Owners(source), Owners(target)));
 
         foreach (var (field, relatedSheet) in new[] { ("LinkedAsset", "Assets"), ("Employment", "Employments") })
         {
-            if (source.GetType().GetProperty(field) == null) continue;
+            if (!IncludesReference(sheet, source, field)) continue;
 
             var expected = Reference(source, field, relatedSheet, _spreadsheet);
             var actual = Reference(target, field, relatedSheet, _api);
@@ -154,7 +160,7 @@ public sealed class SnapshotComparison
                 differences.Add(new(char.ToLowerInvariant(field[0]) + field[1..], expected.Display, actual.Display));
         }
 
-        if (source.GetType().GetProperty("Address") != null)
+        if (source.GetType().GetProperty("Address") != null && Includes(sheet, "address.lid"))
         {
             var expected = Address(source, _spreadsheet);
             var actual = Address(target, _api);
@@ -163,7 +169,7 @@ public sealed class SnapshotComparison
             else if ((expected.Row == null) != (actual.Row == null))
                 differences.Add(new("address", expected.Display, actual.Display));
             else if (expected.Row != null)
-                foreach (var column in SnapshotWorkbook.Columns("Addresses").Where(column => column.Header != "lid"))
+                foreach (var column in SnapshotWorkbook.Columns("Addresses").Where(column => column.Header != "lid" && Includes("Addresses", column.Header)))
                     Compare("address." + column.Header, column.Get(expected.Row), column.Get(actual.Row));
         }
 
@@ -172,7 +178,8 @@ public sealed class SnapshotComparison
 
     private string Identity(string sheet, object row, SnapshotWorkbook book)
     {
-        object Get(string name) => row.GetType().GetProperty(name)?.GetValue(row);
+        object Get(string name) => Includes(sheet, char.ToLowerInvariant(name[0]) + name[1..])
+            ? row.GetType().GetProperty(name)?.GetValue(row) : null;
         string Key(params object[] parts) => JsonSerializer.Serialize(parts.Select(part => Normalise(Display(part))));
 
         if (sheet == "Employments")
@@ -182,7 +189,7 @@ public sealed class SnapshotComparison
             if (type is "Unemployed" or "Retired" or "HomeDuties" or "Student")
                 return Key(Get("ContactId"), type, Get("DateStarted"));
 
-            return string.IsNullOrWhiteSpace(Get("EmployerName") as string) ? null
+            return Includes(sheet, "employerName") && string.IsNullOrWhiteSpace(Get("EmployerName") as string) ? null
                 : Key(Get("ContactId"), Get("EmployerName"), Get("DateStarted"));
         }
 
@@ -193,13 +200,22 @@ public sealed class SnapshotComparison
         {
             if ((int)typeId == 1)
             {
+                if (!Includes(sheet, "address.lid")) return Key(typeId);
+
                 var address = Address(row, book);
                 if (address.Unresolved || address.Row == null) return null;
                 var a = address.Row;
+                var street = Includes("Addresses", "streetAddress") ? a.StreetAddress : null;
+                var suburb = Includes("Addresses", "suburb") ? a.Suburb : null;
+                var postCode = Includes("Addresses", "postCode") ? a.PostCode : null;
+                var structured = new[] { ("streetAddress", street), ("suburb", suburb), ("postCode", postCode) }
+                    .Where(part => Includes("Addresses", part.Item1)).ToArray();
 
-                return !string.IsNullOrWhiteSpace(a.StreetAddress) && !string.IsNullOrWhiteSpace(a.Suburb) && !string.IsNullOrWhiteSpace(a.PostCode)
-                    ? Key(typeId, a.StreetAddress, a.Suburb, a.PostCode)
-                    : string.IsNullOrWhiteSpace(a.FormattedAddress) ? null : Key(typeId, a.FormattedAddress);
+                if (structured.Length > 0 && structured.All(part => !string.IsNullOrWhiteSpace(part.Item2)))
+                    return Key(typeId, street, suburb, postCode);
+
+                return !Includes("Addresses", "formattedAddress") || string.IsNullOrWhiteSpace(a.FormattedAddress)
+                    ? null : Key(typeId, a.FormattedAddress);
             }
 
             if ((int)typeId is 5 or 7 or 15 or 20 or 21 or 24 or 28 or 31)
@@ -215,13 +231,52 @@ public sealed class SnapshotComparison
         return Key(typeId, Get("Description"));
     }
 
-    private string Context(string sheet, object row, SnapshotWorkbook book) => JsonSerializer.Serialize(new[]
+    private bool ContextMatches(string sheet, object source, object target)
     {
-        Owners(row), Reference(row, "LinkedAsset", "Assets", book).Display,
-        Reference(row, "Employment", "Employments", book).Display,
-        sheet == "Expenses" ? Normalise(row.GetType().GetProperty("Description")?.GetValue(row) as string) : null,
-        sheet == "Employments" ? row.GetType().GetProperty("EmploymentStatus")?.GetValue(row)?.ToString() : null
-    });
+        if (!OwnersMatch(sheet, source, target)) return false;
+
+        foreach (var (field, relatedSheet) in new[] { ("LinkedAsset", "Assets"), ("Employment", "Employments") })
+            if (IncludesReference(sheet, source, field)
+                && Reference(source, field, relatedSheet, _spreadsheet).Display != Reference(target, field, relatedSheet, _api).Display)
+                return false;
+
+        if (sheet == "Expenses" && Includes(sheet, "description"))
+            return Normalise(((FinancialSnapshotExpense)source).Description) == Normalise(((FinancialSnapshotExpense)target).Description);
+        if (sheet == "Employments" && Includes(sheet, "employmentStatus"))
+            return ((FinancialSnapshotEmployment)source).EmploymentStatus == ((FinancialSnapshotEmployment)target).EmploymentStatus;
+
+        return true;
+    }
+
+    private bool IncludesReference(string sheet, object source, string property)
+    {
+        var field = source.GetType().GetProperty(property);
+        if (field == null) return false;
+
+        var header = char.ToLowerInvariant(property[0]) + property[1..];
+        var hasId = Includes(sheet, header + ".id");
+        var hasLid = Includes(sheet, header + ".lid");
+
+        // id and lid are alternative ways to express the same link. A missing alternative
+        // leaves a blank reference unspecified, but a supplied reference can still be resolved.
+        return (hasId && hasLid) || ((hasId || hasLid) && field.GetValue(source) != null);
+    }
+
+    private bool OwnersMatch(string sheet, object source, object target)
+    {
+        if (source.GetType().GetProperty("Ownership") == null) return true;
+
+        var missing = new[] { "owner1ContactId", "owner2ContactId" }.Count(header => !Includes(sheet, header));
+        if (missing == 2) return true;
+        if (missing == 0) return Owners(source) == Owners(target);
+
+        // Owner order has no meaning. Each omitted owner column permits one unspecified owner.
+        var remaining = OwnerIds(target).ToList();
+        foreach (var owner in OwnerIds(source))
+            if (!remaining.Remove(owner)) return false;
+
+        return remaining.Count <= missing;
+    }
 
     private (int? Id, string Display, bool Unresolved) Reference(object row, string property, string sheet, SnapshotWorkbook book)
     {
@@ -260,6 +315,9 @@ public sealed class SnapshotComparison
 
     private void ReportUnusedAddresses()
     {
+        // An omitted parent-link column may have referenced these addresses; do not call them unused.
+        if (!Includes("Assets", "address.lid") || !Includes("Employments", "address.lid")) return;
+
         foreach (var book in new[] { _spreadsheet, _api })
         {
             var referenced = book.Attributes.Assets.Select(asset => asset.Address?.Lid)
@@ -272,9 +330,12 @@ public sealed class SnapshotComparison
         }
     }
 
-    private static string Owners(object row) => string.Join(", ",
+    private static IEnumerable<int?> OwnerIds(object row) =>
         ((IEnumerable<FinancialSnapshotContactReference>)row.GetType().GetProperty("Ownership")?.GetValue(row) ?? [])
-        .Select(owner => owner?.Id).OrderBy(id => id).Select(id => id?.ToString(CultureInfo.InvariantCulture) ?? "(empty)"));
+        .Select(owner => owner?.Id);
+
+    private static string Owners(object row) => string.Join(", ",
+        OwnerIds(row).OrderBy(id => id).Select(id => id?.ToString(CultureInfo.InvariantCulture) ?? "(empty)"));
 
     private static string IdHeader(string sheet)
     {
@@ -299,6 +360,9 @@ public sealed class SnapshotComparison
     }
 
     private static object EmptyToNull(object value) => value is string { Length: 0 } ? null : value;
+
+    // Kiota Date can retain a time component internally, but the API and workbook use calendar dates.
+    private static object ComparisonValue(object value) => value is Date date ? (DateOnly)date : EmptyToNull(value);
 
     private static string Display(object value) => EmptyToNull(value) switch
     {

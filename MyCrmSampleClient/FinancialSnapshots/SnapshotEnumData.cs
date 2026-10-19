@@ -16,7 +16,7 @@ public static class SnapshotEnumData
         foreach (var sheet in SnapshotWorkbook.DataSheets)
         {
             var ws = excel.Worksheet(sheet);
-            var columns = SnapshotWorkbook.Columns(sheet);
+            var columns = SnapshotWorkbook.Columns(sheet, snapshot.Country);
             var lastRow = snapshot.LastInputRow(sheet);
 
             for (var c = 0; c < columns.Count; c++)
