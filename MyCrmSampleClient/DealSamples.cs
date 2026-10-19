@@ -85,11 +85,11 @@ public partial class Samples
     {
         if (!_console.RequireScope("api.custom-statuses.search", "custom-statuses")) return;
 
-        var response =
-            await _console.Client.Jsonapi.CustomStatuses.GetAsync(request => request.QueryParameters.Sort =
-                ["sortOrder"]);
+        var statuses = await JsonApiPagination.ReadPagesAsync<CustomStatus>(JsonApiFluentContext.BaseUrl,
+            "jsonapi/custom-statuses?sort=sortOrder,id&page[size]=100",
+            async (url, token) => await _console.Client.Jsonapi.CustomStatuses.WithUrl(url).GetAsync(cancellationToken: token));
 
-        WriteCustomStatuses(response?.Data);
+        WriteCustomStatuses(statuses);
     }
 
     [Sample("deal-custom-status", "GET /jsonapi/deals/{id}/customStatus")]
@@ -108,12 +108,11 @@ public partial class Samples
         if (!_console.RequireScope("api.organisations.read", "organisation-custom-statuses")) return;
 
         var organisationId = MenuPrompt.Ask<int>("Organisation ID:");
-        var response = await _console.Client.Jsonapi.Organisations[organisationId].CustomStatuses
-            .WithUrl(
-                $"{JsonApiFluentContext.BaseUrl}/jsonapi/organisations/{organisationId}/customStatuses?sort=sortOrder")
-            .GetAsync();
+        var statuses = await JsonApiPagination.ReadPagesAsync<CustomStatus>(JsonApiFluentContext.BaseUrl,
+            $"jsonapi/organisations/{organisationId}/customStatuses?sort=sortOrder,id&page[size]=100",
+            async (url, token) => await _console.Client.Jsonapi.Organisations[organisationId].CustomStatuses.WithUrl(url).GetAsync(cancellationToken: token));
 
-        WriteCustomStatuses(response?.Data);
+        WriteCustomStatuses(statuses);
     }
 
     [Sample("change-deal-status", "PUT /jsonapi/deals/{id}/status")]

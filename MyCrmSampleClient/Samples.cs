@@ -307,8 +307,10 @@ public partial class Samples
             return;
         }
 
-        var groupContacts = await _console.Client.Jsonapi.ContactGroups[contactGroupId].Contacts.GetAsync();
-        var contacts = groupContacts?.Data?.ToList() ?? [];
+        var contacts = await _console.Client.Jsonapi.ContactGroups[contactGroupId].Contacts
+            .Page(1, 100)
+            .Sort("id")
+            .GetAllAsync<Contact>();
 
         Log.Information(
             "GET /jsonapi/contact-groups/{ContactGroupId}/contacts returned {Count} contacts",
@@ -340,11 +342,13 @@ public partial class Samples
         }
 
         var groupContactEmails = await _console.Client.Jsonapi.ContactGroups[contactGroupId].Contacts
+            .Page(1, 100)
+            .Sort("id")
             .Fields("contacts", "email")
-            .GetAsync();
+            .GetAllAsync<Contact>();
 
         var table = _console.CreateTable("Contact Id", "Email");
-        foreach (var contact in groupContactEmails?.Data?.ToList() ?? [])
+        foreach (var contact in groupContactEmails)
         {
             if (!string.IsNullOrWhiteSpace(contact.Attributes?.Email))
             {

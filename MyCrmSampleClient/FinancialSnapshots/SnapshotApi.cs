@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCrmSampleClient.Kiota;
 using MyCrmSampleClient.Kiota.Models;
+using MyCrmSampleClient.KiotaExtensions;
 using ApiAddress = MyCrmSampleClient.Kiota.Models.Address;
 
 namespace MyCrmSampleClient.FinancialSnapshots;
@@ -28,44 +29,13 @@ public sealed class SnapshotApi(MyCrmApiClient client, string baseUrl)
         (include == null ? "" : "&include=" + Uri.EscapeDataString(include)) +
         (filter == null ? "" : "&filter=" + Uri.EscapeDataString(filter));
 
-    public Task<List<Contact>> ContactsAsync(int groupId) => ReadPages<Contact>(Url($"contact-groups/{groupId}/contacts"),
+    public Task<List<Contact>> ContactsAsync(int groupId) => ReadCollection<Contact>(Url($"contact-groups/{groupId}/contacts"),
         async url => await client.Jsonapi.ContactGroups[groupId].Contacts.WithUrl(url).GetAsync());
 
-    // Follow the server's links.next even when a page is shorter than the requested size.
-    // Only the original API origin may receive the authenticated request.
-    private async Task<List<T>> ReadPages<T>(string url, Func<string, Task<object>> fetch) where T : IncludedResource
-    {
-        var records = new Dictionary<(string Type, string Id), T>();
-        var visited = new HashSet<string>(StringComparer.Ordinal);
-
-        while (url != null)
-        {
-            var uri = new Uri(_origin, url);
-            if (uri.Scheme != _origin.Scheme || uri.Authority != _origin.Authority || !uri.AbsolutePath.StartsWith(_origin.AbsolutePath, StringComparison.Ordinal))
-                throw new InvalidOperationException("The API returned a pagination link outside the configured API host.");
-            if (!visited.Add(uri.AbsoluteUri)) throw new InvalidOperationException("The API returned a repeated pagination link.");
-
-            var doc = await fetch(uri.AbsoluteUri) ?? throw new InvalidOperationException("The API returned an empty document.");
-
-            // Collection documents have the same shape, but Kiota does not give them a common interface.
-            var docType = doc.GetType();
-            var data = (IEnumerable<T>)docType.GetProperty("Data")!.GetValue(doc) ?? throw new InvalidOperationException("The API response has no data array.");
-
-            foreach (var item in data)
-            {
-                if (string.IsNullOrEmpty(item.Type) || string.IsNullOrEmpty(item.Id)) throw new InvalidOperationException("A read resource has no type or ID.");
-                records[(item.Type, item.Id)] = item;
-                _included[(item.Type, item.Id)] = item;
-            }
-
-            foreach (var item in (IEnumerable<IncludedResource>)docType.GetProperty("Included")!.GetValue(doc) ?? []) _included[(item.Type, item.Id)] = item;
-
-            var next = ((TopLevelLinks)docType.GetProperty("Links")!.GetValue(doc))?.Next;
-            url = string.IsNullOrWhiteSpace(next) ? null : new Uri(uri, next).AbsoluteUri;
-        }
-
-        return records.Values.ToList();
-    }
+    // Pagination is shared; this collector retains resources for snapshot relationship resolution.
+    private Task<List<T>> ReadCollection<T>(string url, Func<string, Task<object>> fetch) where T : IncludedResource =>
+        JsonApiPagination.ReadPagesAsync<T>(_origin.AbsoluteUri, url, (pageUrl, _) => fetch(pageUrl),
+            resource => _included[(resource.Type, resource.Id)] = resource);
 
     public async Task<SnapshotWorkbook> ExportAsync(int groupId)
     {
@@ -77,16 +47,16 @@ public sealed class SnapshotApi(MyCrmApiClient client, string baseUrl)
         if (contacts.Count == 0) return book; // Never send an unfiltered financial search.
 
         var filter = OwnershipFilter(contacts.Select(c => SnapshotWorkbook.PositiveId(c.Id)));
-        var assets = await ReadPages<Asset>(Url("assets", "ownership.contact,addresses", filter), async u => await client.Jsonapi.Assets.WithUrl(u).GetAsync());
-        var liabilities = await ReadPages<Liability>(Url("liabilities", "ownership.contact,linkedAsset", filter), async u => await client.Jsonapi.Liabilities.WithUrl(u).GetAsync());
-        var incomes = await ReadPages<Income>(Url("incomes", "ownership.contact,linkedAsset,employment", filter), async u => await client.Jsonapi.Incomes.WithUrl(u).GetAsync());
-        var expenses = await ReadPages<Expense>(Url("expenses", "ownership.contact,liability", filter), async u => await client.Jsonapi.Expenses.WithUrl(u).GetAsync());
+        var assets = await ReadCollection<Asset>(Url("assets", "ownership.contact,addresses", filter), async u => await client.Jsonapi.Assets.WithUrl(u).GetAsync());
+        var liabilities = await ReadCollection<Liability>(Url("liabilities", "ownership.contact,linkedAsset", filter), async u => await client.Jsonapi.Liabilities.WithUrl(u).GetAsync());
+        var incomes = await ReadCollection<Income>(Url("incomes", "ownership.contact,linkedAsset,employment", filter), async u => await client.Jsonapi.Incomes.WithUrl(u).GetAsync());
+        var expenses = await ReadCollection<Expense>(Url("expenses", "ownership.contact,liability", filter), async u => await client.Jsonapi.Expenses.WithUrl(u).GetAsync());
 
         var jobs = new Dictionary<string, Employment>(StringComparer.Ordinal);
         foreach (var contact in contacts)
         {
             var id = SnapshotWorkbook.PositiveId(contact.Id);
-            foreach (var job in await ReadPages<Employment>(Url($"contacts/{id}/employments", "address,contact"), async u => await client.Jsonapi.Contacts[id].Employments.WithUrl(u).GetAsync()))
+            foreach (var job in await ReadCollection<Employment>(Url($"contacts/{id}/employments", "address,contact"), async u => await client.Jsonapi.Contacts[id].Employments.WithUrl(u).GetAsync()))
                 jobs[job.Id] = job;
         }
 
@@ -291,17 +261,17 @@ public sealed class SnapshotApi(MyCrmApiClient client, string baseUrl)
             }
         }
 
-        Add("asset-categories", await ReadPages<AssetCategory>(Url("asset-categories"), async u => await client.Jsonapi.AssetCategories.WithUrl(u).GetAsync()));
-        Add("liability-categories", await ReadPages<LiabilityCategory>(Url("liability-categories"), async u => await client.Jsonapi.LiabilityCategories.WithUrl(u).GetAsync()));
-        Add("income-categories", await ReadPages<IncomeCategory>(Url("income-categories"), async u => await client.Jsonapi.IncomeCategories.WithUrl(u).GetAsync()));
-        Add("expense-categories", await ReadPages<ExpenseCategory>(Url("expense-categories"), async u => await client.Jsonapi.ExpenseCategories.WithUrl(u).GetAsync()));
+        Add("asset-categories", await ReadCollection<AssetCategory>(Url("asset-categories"), async u => await client.Jsonapi.AssetCategories.WithUrl(u).GetAsync()));
+        Add("liability-categories", await ReadCollection<LiabilityCategory>(Url("liability-categories"), async u => await client.Jsonapi.LiabilityCategories.WithUrl(u).GetAsync()));
+        Add("income-categories", await ReadCollection<IncomeCategory>(Url("income-categories"), async u => await client.Jsonapi.IncomeCategories.WithUrl(u).GetAsync()));
+        Add("expense-categories", await ReadCollection<ExpenseCategory>(Url("expense-categories"), async u => await client.Jsonapi.ExpenseCategories.WithUrl(u).GetAsync()));
 
-        Add("asset-types", await ReadPages<AssetType>(Url("asset-types"), async u => await client.Jsonapi.AssetTypes.WithUrl(u).GetAsync()));
-        Add("asset-sub-types", await ReadPages<AssetSubType>(Url("asset-sub-types"), async u => await client.Jsonapi.AssetSubTypes.WithUrl(u).GetAsync()));
-        Add("expense-types", await ReadPages<ExpenseType>(Url("expense-types", "expenseCategory"), async u => await client.Jsonapi.ExpenseTypes.WithUrl(u).GetAsync()), t => t.Relationships?.ExpenseCategory?.Data);
-        Add("income-types", await ReadPages<IncomeType>(Url("income-types", "incomeCategory"), async u => await client.Jsonapi.IncomeTypes.WithUrl(u).GetAsync()), t => t.Relationships?.IncomeCategory?.Data);
+        Add("asset-types", await ReadCollection<AssetType>(Url("asset-types"), async u => await client.Jsonapi.AssetTypes.WithUrl(u).GetAsync()));
+        Add("asset-sub-types", await ReadCollection<AssetSubType>(Url("asset-sub-types"), async u => await client.Jsonapi.AssetSubTypes.WithUrl(u).GetAsync()));
+        Add("expense-types", await ReadCollection<ExpenseType>(Url("expense-types", "expenseCategory"), async u => await client.Jsonapi.ExpenseTypes.WithUrl(u).GetAsync()), t => t.Relationships?.ExpenseCategory?.Data);
+        Add("income-types", await ReadCollection<IncomeType>(Url("income-types", "incomeCategory"), async u => await client.Jsonapi.IncomeTypes.WithUrl(u).GetAsync()), t => t.Relationships?.IncomeCategory?.Data);
 
-        var liabilities = await ReadPages<LiabilityType>(Url("liability-types", "liabilityCategory,liabilitySubTypes"), async u => await client.Jsonapi.LiabilityTypes.WithUrl(u).GetAsync());
+        var liabilities = await ReadCollection<LiabilityType>(Url("liability-types", "liabilityCategory,liabilitySubTypes"), async u => await client.Jsonapi.LiabilityTypes.WithUrl(u).GetAsync());
         Add("liability-types", liabilities, t => t.Relationships?.LiabilityCategory?.Data);
 
         // Liability subtypes have no standalone collection route. Their parent type is
@@ -310,9 +280,9 @@ public sealed class SnapshotApi(MyCrmApiClient client, string baseUrl)
             foreach (var reference in type.Relationships?.LiabilitySubTypes?.Data ?? [])
                 Add("liability-sub-types", new[] { Resolve<LiabilitySubType>(reference) }, _ => new ResourceIdentifier { Type = "liability-types", Id = type.Id });
 
-        Add("property-types", await ReadPages<PropertyType>(Url("property-types"), async u => await client.Jsonapi.PropertyTypes.WithUrl(u).GetAsync()));
-        Add("income-verification-types", await ReadPages<IncomeVerificationType>(Url("income-verification-types"), async u => await client.Jsonapi.IncomeVerificationTypes.WithUrl(u).GetAsync()));
-        Add("rental-verification-types", await ReadPages<RentalVerificationType>(Url("rental-verification-types"), async u => await client.Jsonapi.RentalVerificationTypes.WithUrl(u).GetAsync()));
+        Add("property-types", await ReadCollection<PropertyType>(Url("property-types"), async u => await client.Jsonapi.PropertyTypes.WithUrl(u).GetAsync()));
+        Add("income-verification-types", await ReadCollection<IncomeVerificationType>(Url("income-verification-types"), async u => await client.Jsonapi.IncomeVerificationTypes.WithUrl(u).GetAsync()));
+        Add("rental-verification-types", await ReadCollection<RentalVerificationType>(Url("rental-verification-types"), async u => await client.Jsonapi.RentalVerificationTypes.WithUrl(u).GetAsync()));
 
         if (result.Count == 0) throw new InvalidOperationException("No control data was returned; cannot validate financial reference IDs.");
 

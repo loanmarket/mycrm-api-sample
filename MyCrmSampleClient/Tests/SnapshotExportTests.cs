@@ -229,7 +229,7 @@ public sealed class SnapshotExportTests
         {"type":"owners","id":"1","attributes":{"ownershipPercentage":60},"relationships":{"contact":{"data":{"type":"contacts","id":"1001"}}}},
         {"type":"owners","id":"2","attributes":{"ownershipPercentage":40},"relationships":{"contact":{"data":{"type":"contacts","id":"1002"}}}}
         """;
-    private static string Respond(HttpRequestMessage request)
+    internal static string Respond(HttpRequestMessage request)
     {
         var uri = request.RequestUri!;
         var second = Uri.UnescapeDataString(uri.Query).Contains("page[number]=2");

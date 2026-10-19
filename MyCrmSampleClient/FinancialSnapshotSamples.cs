@@ -18,12 +18,13 @@ namespace MyCrmSampleClient;
 
 public partial class Samples
 {
-    [Sample("financial-snapshots", "Import, export or generate a financial snapshot spreadsheet", IncludeInRunAll = false)]
+    [Sample("financial-snapshots", "Import, export, generate or compare a financial snapshot spreadsheet", IncludeInRunAll = false)]
     public async Task RunFinancialSnapshotsSample()
     {
         while (true)
         {
-            var action = MenuPrompt.Show(new SelectionPrompt<string>().Title("Financial snapshots [grey](Esc: back)[/]").AddChoices("Import spreadsheet", "Export current financials", "Generate fabricated spreadsheet", "Back"));
+            var action = MenuPrompt.Show(new SelectionPrompt<string>().Title("Financial snapshots [grey](Esc: back)[/]")
+                .AddChoices("Import spreadsheet", "Export current financials", "Generate fabricated spreadsheet", "Compare spreadsheet with current financials", "Back"));
             if (action == "Back") return;
 
             try
@@ -31,6 +32,7 @@ public partial class Samples
                 var api = new SnapshotApi(_console.Client, JsonApiFluentContext.BaseUrl);
                 if (action == "Import spreadsheet") await ImportFinancialSnapshot();
                 else if (action == "Export current financials") await ExportFinancialSnapshot(api);
+                else if (action == "Compare spreadsheet with current financials") await CompareFinancialSnapshot(api);
                 else await GenerateFinancialSnapshot(api);
             }
             catch (MenuBackException)
@@ -168,6 +170,58 @@ public partial class Samples
         var seed = MenuPrompt.Show(new TextPrompt<int>("Random seed (reuse to repeat an example):").DefaultValue(Random.Shared.Next(1, int.MaxValue)));
         var book = SnapshotExamples.Create(groupId, contacts, lookups, country, seed);
         SaveFinancialWorkbook(book, $"financials-example-{groupId}.xlsx");
+    }
+
+    private async Task CompareFinancialSnapshot(SnapshotApi api)
+    {
+        if (!FinancialScopes("api.contact-groups.read", "api.contacts.read", "api.assets.search", "api.incomes.search", "api.expenses.search", "api.liabilities.search")) return;
+
+        var path = MenuPrompt.Ask<string>("Spreadsheet path (.xlsx):").Trim().Trim('"');
+        var spreadsheet = SnapshotWorkbook.Load(path);
+        AnsiConsole.WriteLine($"Workbook nominates contact group {spreadsheet.ContactGroupId} ({spreadsheet.Source}).");
+
+        var groupId = PromptFinancialGroup(spreadsheet.ContactGroupId);
+        AnsiConsole.WriteLine($"Comparing {Path.GetFullPath(path)} with current API data for contact group {groupId}.");
+        if (groupId != spreadsheet.ContactGroupId)
+            AnsiConsole.WriteLine($"The selected group differs from the workbook's group {spreadsheet.ContactGroupId}.");
+
+        var current = await api.ExportAsync(groupId);
+        var comparison = SnapshotComparison.Compare(spreadsheet, current);
+
+        AnsiConsole.WriteLine("Comparison is read-only. Collection modes and reference sheets are not compared; this is not an import preview.");
+        AnsiConsole.WriteLine("Records match by explicit ID or unique identifying fields. Addresses are compared through their asset or employment. Owner order and local-ID spelling are ignored.");
+        AnsiConsole.WriteLine("Only spreadsheet/API means no counterpart was matched. Review means the match or address could not be resolved; use explicit record IDs to disambiguate.");
+        AnsiConsole.WriteLine("API reads are not a transactional snapshot. Managed repayment expenses and unsupported incomes are excluded as on export.");
+
+        var summary = _console.CreateTable("Collection", "Equal", "Changed", "Only spreadsheet", "Only API", "Review");
+        foreach (var sheet in SnapshotWorkbook.DataSheets)
+        {
+            var rows = comparison.Rows.Where(row => row.Collection == sheet).ToArray();
+            if (sheet == "Addresses" && rows.Length == 0) continue;
+
+            string Count(SnapshotComparisonStatus status) => rows.Count(row => row.Status == status).ToString();
+            summary.AddRow(sheet, Count(SnapshotComparisonStatus.Equal), Count(SnapshotComparisonStatus.Changed),
+                Count(SnapshotComparisonStatus.SpreadsheetOnly), Count(SnapshotComparisonStatus.ApiOnly), Count(SnapshotComparisonStatus.Ambiguous));
+        }
+
+        _console.WriteTable(summary);
+
+        foreach (var row in comparison.Rows.Where(row => row.Status != SnapshotComparisonStatus.Equal))
+        {
+            AnsiConsole.WriteLine($"{row.Collection}: {row.Status}");
+            if (row.SpreadsheetRecord.Length > 0) AnsiConsole.WriteLine("  Spreadsheet: " + row.SpreadsheetRecord);
+            if (row.ApiRecord.Length > 0) AnsiConsole.WriteLine("  API: " + row.ApiRecord);
+            if (row.Differences.Count == 0) continue;
+
+            var details = _console.CreateTable("Field", "Spreadsheet", "API");
+            foreach (var difference in row.Differences)
+                details.AddRow(_console.Cell(difference.Field), _console.Cell(difference.Spreadsheet), _console.Cell(difference.Api));
+
+            _console.WriteTable(details);
+        }
+
+        if (!comparison.HasDifferences) AnsiConsole.WriteLine("No differences in the compared snapshot fields.");
+        foreach (var note in current.Notes) AnsiConsole.WriteLine(note);
     }
 
     private static void SaveFinancialWorkbook(SnapshotWorkbook book, string defaultName)

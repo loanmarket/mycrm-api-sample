@@ -51,6 +51,20 @@ var result = await client.Jsonapi.Contacts
 
 Each method returns the same builder, so calls can be chained. `GetAsync()` builds the final URL and executes the request. This pattern mirrors how you would construct queries in your own application.
 
+For a complete collection, use `GetAllAsync<TResource>()` instead:
+
+```csharp
+var contacts = await client.Jsonapi.ContactGroups[groupId].Contacts
+    .Page(1, 100)
+    .Sort("id")
+    .Fields("contacts", "email")
+    .GetAllAsync<Contact>(cancellationToken: cancellationToken);
+```
+
+The shared `KiotaExtensions/JsonApiPagination.cs` helper follows `links.next`, including after short or empty pages, and deduplicates records by type and ID. It resolves relative links against the current page, rejects repeated links and links outside the configured API host/base path, and passes cancellation to the request. An optional `onResource` callback receives primary and included resources from every page; the snapshot reader uses it to resolve relationships. Request builders without a fluent wrapper can call `JsonApiPagination.ReadPagesAsync<TResource>()` directly with their `WithUrl(...).GetAsync(...)` delegate, as shown by the custom-status samples.
+
+Financial snapshot reads, contact-group contacts/emails, custom statuses and organisation custom statuses read every page. The latest-adviser, latest-contact, filtered-latest-contact, latest-contact-group and latest-deal samples deliberately retain single-page reads. Single-resource reads also continue to use `GetAsync()`.
+
 ### Shared state
 
 Some samples depend on an ID returned by a previous sample. For example, the `contact-with-address` sample needs a contact ID to look up. Rather than hardcoding values, the client saves certain IDs to a local state file after each run:
@@ -285,6 +299,13 @@ Select **`financial-snapshots`** in the main menu to open its own section. **Run
 | **Import spreadsheet** | Reads an `.xlsx` into the request, previews collection counts and modes, optionally displays the complete request, then asks before submitting it to the nominated group for server validation and application. |
 | **Export current financials** | Reads the group's contacts, assets, liabilities, incomes, expenses, employments and linked addresses into the same workbook format. |
 | **Generate fabricated spreadsheet** | Uses Bogus to randomise financial details and a selection of asset, income, expense and liability types for up to two adults. Real contact and lookup IDs are retained. It only writes a local file. |
+| **Compare spreadsheet with current financials** | Reads an existing workbook and the nominated group's current API data, then displays collection counts and field differences, unmatched records and ambiguous matches. It changes neither the spreadsheet nor the API data. |
+
+Comparison prompts for the spreadsheet path and defaults the group ID to the workbook's nominated group. It uses the same paginated reads and `has(ownership,any(contact.id,'<value>','<value>',...))` filter as export, without fetching control data. The report shows spreadsheet and API values side by side for each changed field. Records found only on one side are listed separately; ambiguous matches are marked for review.
+
+Explicit record IDs take priority. Without IDs, comparison uses unique identifying fields (such as property address, deposit account details, employment contact/employer/start date, income type/description or expense type), then ownership and linked-record context to distinguish candidates. It resolves local asset/employment IDs to matched API IDs, compares addresses through their parent asset/employment and ignores owner-column order. Unreferenced addresses are flagged for review. Matching is conservative: if identifying details have changed or several candidates remain, add explicit IDs to make the comparison conclusive.
+
+This compares stored values, not the predicted effect of an import. It ignores workbook metadata, Merge/Replace modes, local-ID spelling and reference sheets; it does not consolidate expenses or apply server defaults. Blank strings and nulls compare equally, but other scalar values (including formatting differences) are reported as returned. Managed repayment expenses and unsupported incomes are excluded as on export, with the export notes displayed. API reads are not a transactional snapshot.
 
 Example generation uses [Bogus](https://github.com/bchavez/Bogus) with a local random seed. Press Enter at the seed prompt for a fresh example, or reuse a seed to repeat it with the same contacts, controls and generator/library versions. The workbook records the seed in `Snapshot` and `Read me`. Employer names, job titles, addresses, accounts, balances and repayments vary; contact names and IDs remain the real group contacts. Addresses use fabricated streets with matching AU/NZ suburb, state and postcode combinations.
 
@@ -307,7 +328,7 @@ The write endpoint is `POST /jsonapi/contact-groups/{contactGroupId}/financial-s
 
 Import requires `api.contactgroups.financialsnapshot` (or `api.contactgroups`, `api.financialsnapshot` or `api`). It reads the workbook, constructs the request and posts it to the nominated group without fetching contacts or control data. Ordinary contact-group update or individual financial write scopes do not authorize the snapshot action. The snapshot scope spelling has **no hyphen** in `contactgroups`.
 
-Export uses `api.contact-groups.read`, `api.contacts.read` and search scopes for `assets`, `liabilities`, `incomes` and `expenses`. Example generation reads the group's contacts and adviser to determine AU/NZ country. Export and generation also search the control-data endpoints: asset/liability/income/expense categories and types, asset subtypes, property types, income verification types and rental verification types. Liability subtypes are included through `liability-types`. Approved broader read/search scopes can satisfy these checks. Import does not fetch control data; the snapshot service validates submitted control IDs.
+Export and comparison use `api.contact-groups.read`, `api.contacts.read` and search scopes for `assets`, `liabilities`, `incomes` and `expenses`. Example generation reads the group's contacts and adviser to determine AU/NZ country. Export and generation also search the control-data endpoints: asset/liability/income/expense categories and types, asset subtypes, property types, income verification types and rental verification types. Liability subtypes are included through `liability-types`. Approved broader read/search scopes can satisfy these checks. Comparison needs no write or control-data scopes. Import does not fetch control data; the snapshot service validates submitted control IDs.
 
 1. Run `latest-contact-groups` to find a group, or enter a known group ID when prompted.
 2. Export the current financials to edit existing records, or generate a fabricated example for a test group.

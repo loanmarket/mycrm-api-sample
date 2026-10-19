@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Net;
+using System.Text.Json;
 using Microsoft.Kiota.Abstractions.Authentication;
 using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Kiota.Http.HttpClientLibrary;
@@ -135,6 +136,7 @@ public sealed class MenuNavigationTests : IDisposable
     [InlineData(0)]
     [InlineData(1)]
     [InlineData(2)]
+    [InlineData(3)]
     public async Task EscapeFromFinancialActionReturnsToItsMenuBeforeMain(int action)
     {
         SelectSample("financial-snapshots");
@@ -225,6 +227,114 @@ public sealed class MenuNavigationTests : IDisposable
         Assert.Single(handler.Requests);
         Assert.False(_terminal.Input.IsKeyAvailable());
         Assert.Contains(rejectedByServer ? "Correct the reported fields" : "Export the current financials", _terminal.Output);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task ComparisonReadsEveryApiPageUsesWorkbookGroupAndLeavesTheFileUnchanged(bool changed)
+    {
+        Directory.CreateDirectory(_directory);
+        using var handler = new SnapshotTests.RecordingHandler(request =>
+        {
+            Assert.Equal(HttpMethod.Get, request.Method);
+
+            return SnapshotExportTests.Respond(request);
+        });
+        using var http = new HttpClient(handler);
+        using var adapter = new HttpClientRequestAdapter(new AnonymousAuthenticationProvider(), httpClient: http) { BaseUrl = "https://example.test" };
+        var client = new MyCrmApiClient(adapter);
+        var book = await new SnapshotApi(client, adapter.BaseUrl).ExportAsync(5001);
+        if (changed) book.Attributes.Expenses[0].Value = 999;
+        var path = Path.Combine(_directory, "comparison.xlsx");
+        book.Save(path);
+        var original = File.ReadAllBytes(path);
+        handler.Requests.Clear();
+
+        // No financial-snapshot write or control-data scopes are needed.
+        var console = new SampleConsole(client, new MyCrmConfig(), Path.Combine(_directory, "state.json"),
+            "api.contact-groups.read api.contacts.read api.assets.search api.incomes.search api.expenses.search api.liabilities.search");
+        console.UpdateState(new SampleState { LastContactGroupId = 5999 });
+
+        for (var i = 0; i < 3; i++) _terminal.Input.PushKey(ConsoleKey.DownArrow);
+        _terminal.Input.PushKey(ConsoleKey.Enter);
+        _terminal.Input.PushTextWithEnter(path);
+        _terminal.Input.PushKey(ConsoleKey.Enter); // Default to workbook's group, not saved state.
+        _terminal.Input.PushKey(ConsoleKey.Escape);
+
+        await Assert.ThrowsAsync<MenuBackException>(() => new Samples(console).RunFinancialSnapshotsSample().WaitAsync(TimeSpan.FromSeconds(10)));
+
+        Assert.Equal(9, handler.Requests.Count);
+        var searches = handler.Requests.Where(url => new[] { "/assets?", "/liabilities?", "/incomes?", "/expenses?" }.Any(url.Contains)).ToArray();
+        Assert.Equal(5, searches.Length);
+        Assert.All(searches, url => Assert.Contains("has(ownership,any(contact.id,'1001','1002'))", url));
+        Assert.Contains(handler.Requests, url => url.Contains("page[number]=2"));
+        Assert.Equal(original, File.ReadAllBytes(path));
+        Assert.False(_terminal.Input.IsKeyAvailable());
+        Assert.DoesNotContain("Request failed", _terminal.Output);
+        Assert.DoesNotContain("Apply this financial snapshot", _terminal.Output);
+
+        if (changed)
+        {
+            Assert.Contains("Expenses: Changed", _terminal.Output);
+            Assert.Contains("999", _terminal.Output);
+            Assert.Contains("280", _terminal.Output);
+            Assert.DoesNotContain("No differences", _terminal.Output);
+        }
+        else Assert.Contains("No differences in the compared snapshot fields.", _terminal.Output);
+    }
+
+    [Theory]
+    [InlineData("contact-group-contacts")]
+    [InlineData("contact-group-emails")]
+    [InlineData("custom-statuses")]
+    [InlineData("organisation-custom-statuses")]
+    public async Task CompleteListSamplesDisplayRecordsFromLaterPages(string sample)
+    {
+        Directory.CreateDirectory(_directory);
+        var contactSample = sample.StartsWith("contact-group", StringComparison.Ordinal);
+        var path = contactSample ? "/jsonapi/contact-groups/5001/contacts"
+            : sample == "custom-statuses" ? "/jsonapi/custom-statuses" : "/jsonapi/organisations/123/customStatuses";
+        using var handler = new SnapshotTests.RecordingHandler(request =>
+        {
+            Assert.Equal(HttpMethod.Get, request.Method);
+            Assert.Equal(path, request.RequestUri!.AbsolutePath);
+            var second = Uri.UnescapeDataString(request.RequestUri.Query).Contains("page[number]=2");
+            var type = contactSample ? "contacts" : "custom-statuses";
+            var id = second ? "2" : "1";
+            var label = second ? "LaterPage" : "FirstPage";
+
+            if (!second)
+            {
+                var query = Uri.UnescapeDataString(request.RequestUri.Query);
+                Assert.Contains(contactSample ? "sort=id" : "sort=sortOrder,id", query);
+                if (sample == "contact-group-emails") Assert.Contains("fields[contacts]=email", query);
+            }
+
+            return JsonSerializer.Serialize(new
+            {
+                data = new[] { new { type, id, attributes = new { firstName = label, email = label + "@example.test", name = label, sortOrder = second ? 2 : 1 } } },
+                links = new { next = second ? null : "?page[number]=2" }
+            });
+        });
+        using var http = new HttpClient(handler);
+        using var adapter = new HttpClientRequestAdapter(new AnonymousAuthenticationProvider(), httpClient: http) { BaseUrl = "https://example.test" };
+        var console = new SampleConsole(new MyCrmApiClient(adapter), new MyCrmConfig(), Path.Combine(_directory, "state.json"), "api");
+        console.UpdateState(new SampleState { LastContactGroupId = 5001 });
+        var samples = new Samples(console);
+
+        if (sample == "contact-group-contacts") await samples.RunContactGroupContactsSample();
+        else if (sample == "contact-group-emails") await samples.RunContactGroupEmailsSample();
+        else if (sample == "custom-statuses") await samples.RunCustomStatusesSample();
+        else
+        {
+            _terminal.Input.PushTextWithEnter("123");
+            await samples.RunOrganisationCustomStatusesSample();
+        }
+
+        Assert.Equal(2, handler.Requests.Count);
+        Assert.Contains("FirstPage", _terminal.Output);
+        Assert.Contains("LaterPage", _terminal.Output);
     }
 
     private void SelectSample(string name)
