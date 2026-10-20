@@ -87,7 +87,20 @@ public sealed class JsonApiSearchBuilder<TDocument>
             }
         }
 
-        var rawUrl = requestInfo.URI.ToString();
+        // OpenAPI's generic "page" and "fields" parameters do not expand bracketed
+        // JSON:API keys in Kiota's URI template. Preserve them explicitly.
+        var uri = new UriBuilder(requestInfo.URI);
+        var parts = uri.Query.TrimStart('?').Split('&', StringSplitOptions.RemoveEmptyEntries).ToList();
+        var existingKeys = parts.Select(part => Uri.UnescapeDataString(part.Split('=', 2)[0]))
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var pair in requestInfo.QueryParameters.Where(pair => pair.Key.Contains('[')))
+        {
+            if (!existingKeys.Contains(pair.Key))
+                parts.Add(Uri.EscapeDataString(pair.Key) + "=" +
+                    Uri.EscapeDataString(Convert.ToString(pair.Value, CultureInfo.InvariantCulture) ?? ""));
+        }
+        uri.Query = string.Join("&", parts);
+        var rawUrl = uri.Uri.AbsoluteUri;
         return await _executeGet(rawUrl, cancellationToken).ConfigureAwait(false);
     }
 }

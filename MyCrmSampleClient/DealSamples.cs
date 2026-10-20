@@ -46,14 +46,14 @@ public partial class Samples
 
         switch (countryCode)
         {
-            case "AU":
-                attributes.AuRationale = new AuDealRationale
+            case AdviserAttributes_countryCode.AU:
+                attributes.AuRationale = new DealAttributes_auRationale
                 {
                     Summary = AnsiConsole.Ask<string>($"AU BID summary for deal {dealId}:")
                 };
                 break;
-            case "NZ":
-                attributes.NzRationale = new NzDealRationale
+            case AdviserAttributes_countryCode.NZ:
+                attributes.NzRationale = new DealAttributes_nzRationale
                 {
                     Summary = AnsiConsole.Ask<string>($"NZ BID summary for deal {dealId}:"),
                     LenderPreferences = AnsiConsole.Ask<string>("Lender preferences:"),

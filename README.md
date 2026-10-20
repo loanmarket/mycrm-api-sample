@@ -21,6 +21,7 @@ To use the MyCRM API you will need credentials and details supplied by LMG.
   - [Field Selection](#field-selection)
 - [Creating and updating resources](#creating-and-updating-resources)
 - [Editing deals, structures and statuses](#editing-deals-structures-and-statuses)
+- [Reading diversified deals](#reading-diversified-deals)
 - [Creating, reading and updating tasks](#creating-reading-and-updating-tasks)
 - [Real-time Updates via Webhooks](#real-time-updates-via-webhooks)
 - [Rate Limiting](#rate-limiting)
@@ -456,6 +457,30 @@ A successful update returns `200 OK` with the updated resource, or `204 No Conte
 ## Editing deals, structures and statuses
 
 See the [deal guide](docs/deals.md) for editing names and BID notes, creating and editing deal structures, and reading or changing custom statuses, with [runnable C# examples](MyCrmSampleClient/README.md#deal-edits-and-custom-statuses).
+
+## Reading diversified deals
+
+See the [diversified guide](docs/diversified-deals.md) and [runnable samples](MyCrmSampleClient/README.md#diversified-deals)
+for 17 read-only Asset Finance, Commercial and Asset Referral samples, scopes, separate saved IDs, filtering, pagination, includes and sparse fields.
+
+| Resource | Collection endpoint | Latest-page sample | Member sample |
+|----------|---------------------|--------------------|---------------|
+| Asset Finance | `/jsonapi/asset-deal` | `latest-asset-deals` | `get-asset-deal` |
+| Commercial | `/jsonapi/commercial-deal` | `latest-commercial-deals` | `get-commercial-deal` |
+| Asset Referral | `/jsonapi/asset-referral` | `latest-asset-referrals` | `get-asset-referral` |
+
+For Asset Referral, run `latest-asset-referrals` to retrieve the first page of up to 10 records and save the first result's ID as `LastAssetReferralId`.
+Then run `get-asset-referral`, `asset-referral-includes` or `asset-referral-fields` to read that referral, include its adviser and applicants,
+or select sparse fields. Collection requests require `api.diversifiedassetreferrals.search`; member requests require `api.diversifiedassetreferrals.read`.
+Applicable broader scopes also work. Referral IDs are stored separately from Asset Finance and Commercial deal IDs.
+
+The filtered samples select Asset Finance deals with status `Settled`, Commercial deals with status `NewApplication`,
+or Asset Referrals created within the last 365 days (UTC). Run `filtered-asset-referrals` for the date-filtered referral example;
+it does not restrict status. The two deal status filters have no creation-date restriction.
+
+Run `paged-asset-deals` or `paged-commercial-deals` to request page 2 with 3 records per page and verify non-default bracketed pagination.
+The Asset Referral latest and filtered samples request page 1 with 10 records per page; there is currently no separate `paged-asset-referrals` sample.
+The [sample instructions](MyCrmSampleClient/README.md#filtering-and-pagination) explain how to compare results and inspect the outgoing URL in Rider.
 
 ## Creating, reading and updating tasks
 
