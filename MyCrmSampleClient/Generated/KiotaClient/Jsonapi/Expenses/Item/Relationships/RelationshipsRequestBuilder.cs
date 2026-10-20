@@ -2,6 +2,7 @@
 #pragma warning disable CS0618
 using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions;
+using MyCrmSampleClient.Kiota.Jsonapi.Expenses.Item.Relationships.Liability;
 using MyCrmSampleClient.Kiota.Jsonapi.Expenses.Item.Relationships.Ownership;
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +16,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.Expenses.Item.Relationships
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class RelationshipsRequestBuilder : BaseRequestBuilder
     {
+        /// <summary>The liability property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.Expenses.Item.Relationships.Liability.LiabilityRequestBuilder Liability
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.Expenses.Item.Relationships.Liability.LiabilityRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>The ownership property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.Expenses.Item.Relationships.Ownership.OwnershipRequestBuilder Ownership
         {

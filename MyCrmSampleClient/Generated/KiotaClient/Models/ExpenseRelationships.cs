@@ -14,6 +14,14 @@ namespace MyCrmSampleClient.Kiota.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
+        /// <summary>The liability property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument? Liability { get; set; }
+#nullable restore
+#else
+        public global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument Liability { get; set; }
+#endif
         /// <summary>The ownership property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -47,6 +55,7 @@ namespace MyCrmSampleClient.Kiota.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
+                { "liability", n => { Liability = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument.CreateFromDiscriminatorValue); } },
                 { "ownership", n => { Ownership = n.GetObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>(global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument.CreateFromDiscriminatorValue); } },
             };
         }
@@ -57,6 +66,7 @@ namespace MyCrmSampleClient.Kiota.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
+            writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsSingleDocument>("liability", Liability);
             writer.WriteObjectValue<global::MyCrmSampleClient.Kiota.Models.RelationshipsMultipleDocument>("ownership", Ownership);
             writer.WriteAdditionalData(AdditionalData);
         }
