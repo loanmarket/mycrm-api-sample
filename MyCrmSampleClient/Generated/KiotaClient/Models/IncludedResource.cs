@@ -46,6 +46,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 "agreement-holders" => new global::MyCrmSampleClient.Kiota.Models.AgreementHolder(),
                 "asset-categories" => new global::MyCrmSampleClient.Kiota.Models.AssetCategory(),
                 "asset-deal" => new global::MyCrmSampleClient.Kiota.Models.AssetDeal(),
+                "asset-referral" => new global::MyCrmSampleClient.Kiota.Models.AssetReferral(),
                 "asset-sub-types" => new global::MyCrmSampleClient.Kiota.Models.AssetSubType(),
                 "asset-types" => new global::MyCrmSampleClient.Kiota.Models.AssetType(),
                 "assets" => new global::MyCrmSampleClient.Kiota.Models.Asset(),
