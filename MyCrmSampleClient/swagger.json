@@ -4525,6 +4525,85 @@
         }
       }
     },
+    "/jsonapi/contact-groups/{contactGroupId}/financial-snapshot": {
+      "post": {
+        "tags": [
+          "ContactGroupFinancialSnapshots"
+        ],
+        "summary": "[Beta] Reconciles financial records for an existing contact group",
+        "description": "Requires the feature to be enabled for the resolved user. A disabled feature or unresolved user returns 423 Locked with error code feature_not_enabled. Normal authorization and resource access rules still apply. Enable the feature before retrying this error.\n\nUpdates an existing contact group's financial position from a single snapshot of its assets, liabilities, incomes, expenses and employments.",
+        "operationId": "FinancialSnapshot_Post",
+        "parameters": [
+          {
+            "name": "contactGroupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FinancialSnapshotDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FinancialSnapshotDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          },
+          "423": {
+            "description": "Feature locked: the feature is disabled for the resolved user, or no user can be resolved (feature_not_enabled).",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        },
+        "x-beta": true
+      }
+    },
     "/jsonapi/contact-groups/{id}": {
       "patch": {
         "tags": [
@@ -37913,6 +37992,1008 @@
           }
         }
       },
+      "FinancialSnapshot": {
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IncludedResource"
+          }
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/FinancialSnapshotsEntityType"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/FinancialSnapshotAttributes"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/FinancialSnapshotRelationships"
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResourceLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": { },
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinancialSnapshotAddress": {
+        "required": [
+          "lid"
+        ],
+        "type": "object",
+        "properties": {
+          "lid": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "formattedAddress": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "streetAddress": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "suburb": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "state": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "postCode": {
+            "maxLength": 4,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinancialSnapshotAddressReference": {
+        "required": [
+          "lid"
+        ],
+        "type": "object",
+        "properties": {
+          "lid": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinancialSnapshotAsset": {
+        "type": "object",
+        "properties": {
+          "lid": {
+            "type": "string",
+            "nullable": true
+          },
+          "assetId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "assetTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "assetSubTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "institution": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "accountName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "bsb": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "accountNumber": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "vehicleMake": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "vehicleYear": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "propertyTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "propertyPrimaryPurpose": {
+            "enum": [
+              "PurchaseOwnerOccupied",
+              "PurchaseInvestment",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "x-ms-enum": {
+              "name": "PropertyPrimaryPurpose",
+              "modelAsString": true
+            }
+          },
+          "valueBasis": {
+            "enum": [
+              "ApplicantEstimate",
+              "CertifiedValuation",
+              "ActualValue",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "x-ms-enum": {
+              "name": "PropertyValueEstimatedBasis",
+              "modelAsString": true
+            }
+          },
+          "address": {
+            "$ref": "#/components/schemas/FinancialSnapshotAddressReference"
+          },
+          "ownership": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialSnapshotContactReference"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinancialSnapshotAssetReference": {
+        "type": "object",
+        "properties": {
+          "lid": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinancialSnapshotAttributes": {
+        "type": "object",
+        "properties": {
+          "assetsMode": {
+            "enum": [
+              "Merge",
+              "Replace",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true,
+            "x-ms-enum": {
+              "name": "FinancialSnapshotCollectionMode",
+              "modelAsString": true
+            }
+          },
+          "assets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialSnapshotAsset"
+            },
+            "nullable": true,
+            "writeOnly": true
+          },
+          "expensesMode": {
+            "enum": [
+              "Merge",
+              "Replace",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true,
+            "x-ms-enum": {
+              "name": "FinancialSnapshotCollectionMode",
+              "modelAsString": true
+            }
+          },
+          "expenses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialSnapshotExpense"
+            },
+            "nullable": true,
+            "writeOnly": true
+          },
+          "incomesMode": {
+            "enum": [
+              "Merge",
+              "Replace",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true,
+            "x-ms-enum": {
+              "name": "FinancialSnapshotCollectionMode",
+              "modelAsString": true
+            }
+          },
+          "incomes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialSnapshotIncome"
+            },
+            "nullable": true,
+            "writeOnly": true
+          },
+          "liabilitiesMode": {
+            "enum": [
+              "Merge",
+              "Replace",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true,
+            "x-ms-enum": {
+              "name": "FinancialSnapshotCollectionMode",
+              "modelAsString": true
+            }
+          },
+          "liabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialSnapshotLiability"
+            },
+            "nullable": true,
+            "writeOnly": true
+          },
+          "employmentsMode": {
+            "enum": [
+              "Merge",
+              "Replace",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true,
+            "x-ms-enum": {
+              "name": "FinancialSnapshotCollectionMode",
+              "modelAsString": true
+            }
+          },
+          "employments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialSnapshotEmployment"
+            },
+            "nullable": true,
+            "writeOnly": true
+          },
+          "addresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialSnapshotAddress"
+            },
+            "nullable": true,
+            "writeOnly": true
+          },
+          "operations": {
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FinancialSnapshotOperations"
+              }
+            ],
+            "readOnly": true
+          }
+        }
+      },
+      "FinancialSnapshotCollectionMode": {
+        "enum": [
+          "Merge",
+          "Replace"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "FinancialSnapshotCollectionMode",
+          "modelAsString": true
+        }
+      },
+      "FinancialSnapshotContactReference": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinancialSnapshotDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/FinancialSnapshot"
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "FinancialSnapshotEmployment": {
+        "type": "object",
+        "properties": {
+          "lid": {
+            "type": "string",
+            "nullable": true
+          },
+          "employmentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "contactId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "employmentStatus": {
+            "enum": [
+              "PrimaryEmployment",
+              "SecondaryEmployment",
+              "PreviousEmployment",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "x-ms-enum": {
+              "name": "EmploymentStatus",
+              "modelAsString": true
+            }
+          },
+          "employmentType": {
+            "enum": [
+              "PAYG",
+              "SelfEmployed",
+              "Unemployed",
+              "Retired",
+              "HomeDuties",
+              "Student",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "x-ms-enum": {
+              "name": "EmploymentType",
+              "modelAsString": true
+            }
+          },
+          "dateStarted": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "dateEnded": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "employmentRoleName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "employmentBasis": {
+            "enum": [
+              "FullTime",
+              "PartTime",
+              "Contract",
+              "Temporary",
+              "Casual",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "x-ms-enum": {
+              "name": "EmploymentBasis",
+              "modelAsString": true
+            }
+          },
+          "isProbation": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "businessNumber": {
+            "maxLength": 80,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "companyNumber": {
+            "maxLength": 80,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "employerName": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "employerContactTitle": {
+            "enum": [
+              "Mr",
+              "Mrs",
+              "Ms",
+              "Miss",
+              "Master",
+              "Dr",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "x-ms-enum": {
+              "name": "Title",
+              "modelAsString": true
+            }
+          },
+          "employerContactFirstName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "employerContactLastName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "employerType": {
+            "enum": [
+              "Private",
+              "Public",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "x-ms-enum": {
+              "name": "EmployerType",
+              "modelAsString": true
+            }
+          },
+          "employerPhone": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "$ref": "#/components/schemas/FinancialSnapshotAddressReference"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinancialSnapshotEmploymentReference": {
+        "type": "object",
+        "properties": {
+          "lid": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinancialSnapshotExpense": {
+        "type": "object",
+        "properties": {
+          "lid": {
+            "type": "string",
+            "nullable": true
+          },
+          "expenseId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "expenseTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "frequency": {
+            "$ref": "#/components/schemas/Frequency"
+          },
+          "ownership": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialSnapshotContactReference"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinancialSnapshotIncome": {
+        "type": "object",
+        "properties": {
+          "lid": {
+            "type": "string",
+            "nullable": true
+          },
+          "incomeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "incomeTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "frequency": {
+            "$ref": "#/components/schemas/Frequency"
+          },
+          "nzIsGross": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "nzRentalType": {
+            "enum": [
+              "RentalIncome",
+              "BoarderIncome",
+              "FlatmateIncome",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "x-ms-enum": {
+              "name": "IncomeSubType",
+              "modelAsString": true
+            }
+          },
+          "isEvidenceOfTenancy": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "nzRentalVerificationTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "incomeVerificationId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "ownership": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialSnapshotContactReference"
+            },
+            "nullable": true
+          },
+          "linkedAsset": {
+            "$ref": "#/components/schemas/FinancialSnapshotAssetReference"
+          },
+          "employment": {
+            "$ref": "#/components/schemas/FinancialSnapshotEmploymentReference"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinancialSnapshotLiability": {
+        "type": "object",
+        "properties": {
+          "lid": {
+            "type": "string",
+            "nullable": true
+          },
+          "liabilityId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "liabilityTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "liabilitySubTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "accountName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "bsb": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "accountNumber": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "limit": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "repayment": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "repaymentFrequency": {
+            "enum": [
+              "Yearly",
+              "HalfYearly",
+              "Quarterly",
+              "Monthly",
+              "Fortnightly",
+              "Weekly",
+              "HalfMonthly",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "x-ms-enum": {
+              "name": "Frequency",
+              "modelAsString": true
+            }
+          },
+          "interestRate": {
+            "type": "number",
+            "description": "Interest rate as a percentage; for example, 6.25 represents 6.25%.",
+            "format": "double",
+            "nullable": true
+          },
+          "interestTaxDeductible": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "creditorName": {
+            "maxLength": 250,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "loanTerm": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "loanRepaymentType": {
+            "enum": [
+              "InterestOnly",
+              "PrincipalInterest",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "x-ms-enum": {
+              "name": "LiabilityRepaymentType",
+              "modelAsString": true
+            }
+          },
+          "mortgagePriority": {
+            "enum": [
+              "First",
+              "Second",
+              "Third",
+              null
+            ],
+            "type": "string",
+            "nullable": true,
+            "x-ms-enum": {
+              "name": "MortgagePriority",
+              "modelAsString": true
+            }
+          },
+          "nzIsInArrears": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "nzLoanStartDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "nzDocumentedLoanTermMonths": {
+            "type": "integer",
+            "description": "New Zealand only. Total documented loan term in months; for example, 306 represents 25 years and 6 months.",
+            "format": "int32",
+            "nullable": true
+          },
+          "nzInterestOnlyStartDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "nzInterestOnlyTermMonths": {
+            "type": "integer",
+            "description": "New Zealand only. Total interest-only period in months; for example, 30 represents 2 years and 6 months.",
+            "format": "int32",
+            "nullable": true
+          },
+          "nzRevolvingCreditRedraw": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isClearingFromThisLoan": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "linkedAsset": {
+            "$ref": "#/components/schemas/FinancialSnapshotAssetReference"
+          },
+          "ownership": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialSnapshotContactReference"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinancialSnapshotOperation": {
+        "required": [
+          "id",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/FinancialSnapshotOperationMeta"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinancialSnapshotOperationMeta": {
+        "required": [
+          "lids"
+        ],
+        "type": "object",
+        "properties": {
+          "lids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinancialSnapshotOperations": {
+        "type": "object",
+        "properties": {
+          "created": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialSnapshotOperation"
+            },
+            "nullable": true
+          },
+          "updated": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialSnapshotOperation"
+            },
+            "nullable": true
+          },
+          "deleted": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialSnapshotOperation"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinancialSnapshotRelationships": {
+        "type": "object"
+      },
+      "FinancialSnapshotsDocument": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "jsonApi": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "readOnly": true
+          },
+          "links": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TopLevelLinks"
+              }
+            ],
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialSnapshot"
+            }
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "FinancialSnapshotsEntityType": {
+        "enum": [
+          "financial-snapshots"
+        ],
+        "type": "string"
+      },
       "FinancialsDocument": {
         "required": [
           "data"
@@ -38603,6 +39684,7 @@
             "contact-groups": "#/components/schemas/ContactGroup",
             "contacts": "#/components/schemas/Contact",
             "contact-external-references": "#/components/schemas/ContactExternalReference",
+            "financial-snapshots": "#/components/schemas/FinancialSnapshot",
             "contact-marketing": "#/components/schemas/ContactMarketing",
             "leads": "#/components/schemas/Lead",
             "structured-leads": "#/components/schemas/StructuredLead",

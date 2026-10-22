@@ -20,27 +20,27 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups
     {
         /// <summary>Gets an item from the MyCrmSampleClient.Kiota.jsonapi.contactGroups.item collection</summary>
         /// <param name="position">Unique identifier of the item</param>
-        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder"/></returns>
-        public global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder this[int position]
+        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder"/></returns>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder this[int position]
         {
             get
             {
                 var urlTplParams = new Dictionary<string, object>(PathParameters);
-                urlTplParams.Add("id", position);
-                return new global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder(urlTplParams, RequestAdapter);
+                urlTplParams.Add("contactGroup%2Did", position);
+                return new global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder(urlTplParams, RequestAdapter);
             }
         }
         /// <summary>Gets an item from the MyCrmSampleClient.Kiota.jsonapi.contactGroups.item collection</summary>
         /// <param name="position">Unique identifier of the item</param>
-        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder"/></returns>
+        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder"/></returns>
         [Obsolete("This indexer is deprecated and will be removed in the next major version. Use the one with the typed parameter instead.")]
-        public global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder this[string position]
+        public global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder this[string position]
         {
             get
             {
                 var urlTplParams = new Dictionary<string, object>(PathParameters);
-                if (!string.IsNullOrWhiteSpace(position)) urlTplParams.Add("id", position);
-                return new global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder(urlTplParams, RequestAdapter);
+                if (!string.IsNullOrWhiteSpace(position)) urlTplParams.Add("contactGroup%2Did", position);
+                return new global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder(urlTplParams, RequestAdapter);
             }
         }
         /// <summary>

@@ -12,7 +12,7 @@ using System;
 namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ReferrerOrganisation
 {
     /// <summary>
-    /// Builds and executes requests for operations under \jsonapi\contact-groups\{id}\referrerOrganisation
+    /// Builds and executes requests for operations under \jsonapi\contact-groups\{contactGroup-id}\referrerOrganisation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class ReferrerOrganisationRequestBuilder : BaseRequestBuilder
@@ -22,7 +22,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ReferrerOrganisatio
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ReferrerOrganisationRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{id}/referrerOrganisation{?fields*,include}", pathParameters)
+        public ReferrerOrganisationRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{contactGroup%2Did}/referrerOrganisation{?fields*,include}", pathParameters)
         {
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ReferrerOrganisatio
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ReferrerOrganisationRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{id}/referrerOrganisation{?fields*,include}", rawUrl)
+        public ReferrerOrganisationRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{contactGroup%2Did}/referrerOrganisation{?fields*,include}", rawUrl)
         {
         }
         /// <summary>
