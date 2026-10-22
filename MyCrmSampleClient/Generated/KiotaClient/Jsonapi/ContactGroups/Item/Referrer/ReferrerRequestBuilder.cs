@@ -12,7 +12,7 @@ using System;
 namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Referrer
 {
     /// <summary>
-    /// Builds and executes requests for operations under \jsonapi\contact-groups\{id}\referrer
+    /// Builds and executes requests for operations under \jsonapi\contact-groups\{contactGroup-id}\referrer
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class ReferrerRequestBuilder : BaseRequestBuilder
@@ -22,7 +22,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Referrer
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ReferrerRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{id}/referrer{?fields*,include}", pathParameters)
+        public ReferrerRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{contactGroup%2Did}/referrer{?fields*,include}", pathParameters)
         {
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Referrer
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ReferrerRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{id}/referrer{?fields*,include}", rawUrl)
+        public ReferrerRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{contactGroup%2Did}/referrer{?fields*,include}", rawUrl)
         {
         }
         /// <summary>

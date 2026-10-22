@@ -6,6 +6,7 @@ using Microsoft.Kiota.Abstractions;
 using MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Adviser;
 using MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Businesses;
 using MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Contacts;
+using MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.FinancialSnapshot;
 using MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Referrer;
 using MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ReferrerOrganisation;
 using MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Relationships;
@@ -18,10 +19,10 @@ using System;
 namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item
 {
     /// <summary>
-    /// Builds and executes requests for operations under \jsonapi\contact-groups\{id}
+    /// Builds and executes requests for operations under \jsonapi\contact-groups\{contactGroup-id}
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    public partial class ContactGroupsItemRequestBuilder : BaseRequestBuilder
+    public partial class ContactGroupItemRequestBuilder : BaseRequestBuilder
     {
         /// <summary>The adviser property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Adviser.AdviserRequestBuilder Adviser
@@ -37,6 +38,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item
         public global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Contacts.ContactsRequestBuilder Contacts
         {
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Contacts.ContactsRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The financialSnapshot property</summary>
+        public global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.FinancialSnapshot.FinancialSnapshotRequestBuilder FinancialSnapshot
+        {
+            get => new global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.FinancialSnapshot.FinancialSnapshotRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The referrer property</summary>
         public global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Referrer.ReferrerRequestBuilder Referrer
@@ -54,19 +60,19 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item
             get => new global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Relationships.RelationshipsRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>
-        /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ContactGroupsItemRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{id}{?fields*,include}", pathParameters)
+        public ContactGroupItemRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{contactGroup%2Did}{?fields*,include}", pathParameters)
         {
         }
         /// <summary>
-        /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ContactGroupsItemRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{id}{?fields*,include}", rawUrl)
+        public ContactGroupItemRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{contactGroup%2Did}{?fields*,include}", rawUrl)
         {
         }
         /// <summary>
@@ -100,11 +106,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item
         /// <exception cref="global::MyCrmSampleClient.Kiota.Models.ErrorDocument">When receiving a 4XX or 5XX status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactGroupDocument?> GetAsync(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderGetQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactGroupDocument?> GetAsync(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderGetQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactGroupDocument> GetAsync(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderGetQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactGroupDocument> GetAsync(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderGetQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             var requestInfo = ToGetRequestInformation(requestConfiguration);
@@ -123,11 +129,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item
         /// <exception cref="global::MyCrmSampleClient.Kiota.Models.ErrorDocument">When receiving a 4XX or 5XX status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<Stream?> HeadAsync(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderHeadQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<Stream?> HeadAsync(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderHeadQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<Stream> HeadAsync(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderHeadQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<Stream> HeadAsync(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderHeadQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             var requestInfo = ToHeadRequestInformation(requestConfiguration);
@@ -147,11 +153,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item
         /// <exception cref="global::MyCrmSampleClient.Kiota.Models.ErrorDocument">When receiving a 4XX or 5XX status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactGroupDocument?> PatchAsync(global::MyCrmSampleClient.Kiota.Models.ContactGroupPatchDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderPatchQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactGroupDocument?> PatchAsync(global::MyCrmSampleClient.Kiota.Models.ContactGroupPatchDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderPatchQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactGroupDocument> PatchAsync(global::MyCrmSampleClient.Kiota.Models.ContactGroupPatchDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderPatchQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::MyCrmSampleClient.Kiota.Models.ContactGroupDocument> PatchAsync(global::MyCrmSampleClient.Kiota.Models.ContactGroupPatchDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderPatchQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             if(ReferenceEquals(body, null)) throw new ArgumentNullException(nameof(body));
@@ -188,11 +194,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderGetQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderGetQueryParameters>>? requestConfiguration = default)
         {
 #nullable restore
 #else
-        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderGetQueryParameters>> requestConfiguration = default)
+        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderGetQueryParameters>> requestConfiguration = default)
         {
 #endif
             var requestInfo = new RequestInformation(Method.GET, UrlTemplate, PathParameters);
@@ -204,11 +210,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public RequestInformation ToHeadRequestInformation(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderHeadQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToHeadRequestInformation(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderHeadQueryParameters>>? requestConfiguration = default)
         {
 #nullable restore
 #else
-        public RequestInformation ToHeadRequestInformation(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderHeadQueryParameters>> requestConfiguration = default)
+        public RequestInformation ToHeadRequestInformation(Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderHeadQueryParameters>> requestConfiguration = default)
         {
 #endif
             var requestInfo = new RequestInformation(Method.HEAD, UrlTemplate, PathParameters);
@@ -224,11 +230,11 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public RequestInformation ToPatchRequestInformation(global::MyCrmSampleClient.Kiota.Models.ContactGroupPatchDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderPatchQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToPatchRequestInformation(global::MyCrmSampleClient.Kiota.Models.ContactGroupPatchDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderPatchQueryParameters>>? requestConfiguration = default)
         {
 #nullable restore
 #else
-        public RequestInformation ToPatchRequestInformation(global::MyCrmSampleClient.Kiota.Models.ContactGroupPatchDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderPatchQueryParameters>> requestConfiguration = default)
+        public RequestInformation ToPatchRequestInformation(global::MyCrmSampleClient.Kiota.Models.ContactGroupPatchDocument body, Action<RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderPatchQueryParameters>> requestConfiguration = default)
         {
 #endif
             if(ReferenceEquals(body, null)) throw new ArgumentNullException(nameof(body));
@@ -241,25 +247,25 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item
         /// <summary>
         /// Returns a request builder with the provided arbitrary URL. Using this method means any other path or query parameters are ignored.
         /// </summary>
-        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder"/></returns>
+        /// <returns>A <see cref="global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder"/></returns>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
-        public global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder WithUrl(string rawUrl)
+        public global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder WithUrl(string rawUrl)
         {
-            return new global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder(rawUrl, RequestAdapter);
+            return new global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
         /// Configuration for the request such as headers, query parameters, and middleware options.
         /// </summary>
         [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class ContactGroupsItemRequestBuilderDeleteRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
+        public partial class ContactGroupItemRequestBuilderDeleteRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
         {
         }
         /// <summary>
         /// Where `id` is the identifier of the contact group
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class ContactGroupsItemRequestBuilderGetQueryParameters 
+        public partial class ContactGroupItemRequestBuilderGetQueryParameters 
         {
             /// <summary>Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -287,14 +293,14 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item
         /// </summary>
         [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class ContactGroupsItemRequestBuilderGetRequestConfiguration : RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderGetQueryParameters>
+        public partial class ContactGroupItemRequestBuilderGetRequestConfiguration : RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderGetQueryParameters>
         {
         }
         /// <summary>
         /// Retrieve headers related to the associated GET request
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class ContactGroupsItemRequestBuilderHeadQueryParameters 
+        public partial class ContactGroupItemRequestBuilderHeadQueryParameters 
         {
             /// <summary>Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -322,14 +328,14 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item
         /// </summary>
         [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class ContactGroupsItemRequestBuilderHeadRequestConfiguration : RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderHeadQueryParameters>
+        public partial class ContactGroupItemRequestBuilderHeadRequestConfiguration : RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderHeadQueryParameters>
         {
         }
         /// <summary>
         /// Where `id` is the identifier of the contact group
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class ContactGroupsItemRequestBuilderPatchQueryParameters 
+        public partial class ContactGroupItemRequestBuilderPatchQueryParameters 
         {
             /// <summary>Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -357,7 +363,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item
         /// </summary>
         [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class ContactGroupsItemRequestBuilderPatchRequestConfiguration : RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupsItemRequestBuilder.ContactGroupsItemRequestBuilderPatchQueryParameters>
+        public partial class ContactGroupItemRequestBuilderPatchRequestConfiguration : RequestConfiguration<global::MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.ContactGroupItemRequestBuilder.ContactGroupItemRequestBuilderPatchQueryParameters>
         {
         }
     }

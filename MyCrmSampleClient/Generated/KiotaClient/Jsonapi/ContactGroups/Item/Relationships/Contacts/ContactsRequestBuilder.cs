@@ -12,7 +12,7 @@ using System;
 namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Relationships.Contacts
 {
     /// <summary>
-    /// Builds and executes requests for operations under \jsonapi\contact-groups\{id}\relationships\contacts
+    /// Builds and executes requests for operations under \jsonapi\contact-groups\{contactGroup-id}\relationships\contacts
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class ContactsRequestBuilder : BaseRequestBuilder
@@ -22,7 +22,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Relationships.Conta
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ContactsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{id}/relationships/contacts", pathParameters)
+        public ContactsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{contactGroup%2Did}/relationships/contacts", pathParameters)
         {
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace MyCrmSampleClient.Kiota.Jsonapi.ContactGroups.Item.Relationships.Conta
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ContactsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{id}/relationships/contacts", rawUrl)
+        public ContactsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/jsonapi/contact-groups/{contactGroup%2Did}/relationships/contacts", rawUrl)
         {
         }
         /// <summary>

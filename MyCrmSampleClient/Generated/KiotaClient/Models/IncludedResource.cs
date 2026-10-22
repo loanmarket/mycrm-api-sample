@@ -77,6 +77,7 @@ namespace MyCrmSampleClient.Kiota.Models
                 "expense-types" => new global::MyCrmSampleClient.Kiota.Models.ExpenseType(),
                 "expenses" => new global::MyCrmSampleClient.Kiota.Models.Expense(),
                 "financial-address" => new global::MyCrmSampleClient.Kiota.Models.FinancialAddress(),
+                "financial-snapshots" => new global::MyCrmSampleClient.Kiota.Models.FinancialSnapshot(),
                 "financials" => new global::MyCrmSampleClient.Kiota.Models.Financial(),
                 "franchisees" => new global::MyCrmSampleClient.Kiota.Models.Franchisee(),
                 "high-level-summary" => new global::MyCrmSampleClient.Kiota.Models.HighLevelSummary(),
