@@ -296,6 +296,28 @@ Task reads support sparse fields but reject `include`. Use the returned relation
 
 ---
 
+## Diversified deals
+
+[The diversified guide](../docs/diversified-deals.md) covers 17 read-only samples implemented in [DiversifiedSamples.cs](DiversifiedSamples.cs): latest pages, non-default pagination, filtered pages, member reads, related records and sparse fields for Asset Finance, Commercial and Asset Referral.
+
+Run `latest-asset-deals`, `latest-commercial-deals` or `latest-asset-referrals`, then the corresponding member sample. IDs are saved separately as `LastAssetDealId`, `LastCommercialDealId` and `LastAssetReferralId`; they never replace `LastDealId`. Member samples prompt when their saved ID is missing. Each sample checks its diversified search/read scope before making a request.
+
+### Filtering and pagination
+
+| Sample | Selection |
+|---|---|
+| `filtered-asset-deals` | Status `Settled`, with no creation-date restriction |
+| `filtered-commercial-deals` | Status `NewApplication`, with no creation-date restriction |
+| `filtered-asset-referrals` | Created on or after the UTC date 365 days ago, with no status restriction |
+| `paged-asset-deals` | Page 2, 3 records per page |
+| `paged-commercial-deals` | Page 2, 3 records per page |
+
+Latest and filtered samples request page 1 with 10 records. All collection samples sort by `createdDate` descending. Empty results are possible when no accessible records match.
+
+To verify non-default pagination in Rider, rebuild the client, then run a resource's `latest-*` sample followed by its `paged-*` sample. The paged sample should return rows 4–6 from the latest result when data is unchanged and creation timestamps are distinct. It uses `.Page(2, 3)` through `JsonApiSearchBuilder`.
+
+Inspect `rawUrl` in `JsonApiSearchBuilder.GetAsync` before the request is sent. Confirm it contains `page%5Bnumber%5D=2` and `page%5Bsize%5D=3` (decoded: `page[number]=2&page[size]=3`). This checks the bracketed parameters in the outgoing URL; the menu description alone does not verify them.
+
 ## Adding your own samples
 
 Each sample is a method on the `Samples` class decorated with a `[Sample]` attribute:

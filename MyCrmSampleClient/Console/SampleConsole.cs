@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -287,6 +285,9 @@ public class SampleConsole
         table.AddRow("LastContactId", FormatNullableInt(_state.LastContactId));
         table.AddRow("LastContactGroupId", FormatNullableInt(_state.LastContactGroupId));
         table.AddRow("LastDealId", FormatNullableInt(_state.LastDealId));
+        table.AddRow("LastAssetDealId", FormatNullableInt(_state.LastAssetDealId));
+        table.AddRow("LastCommercialDealId", FormatNullableInt(_state.LastCommercialDealId));
+        table.AddRow("LastAssetReferralId", FormatNullableInt(_state.LastAssetReferralId));
         table.AddRow("LastTaskId", FormatNullableInt(_state.LastTaskId));
         table.AddRow("LastResidentialTaskId", FormatNullableInt(_state.LastResidentialTaskId));
         table.AddRow("LastContactGroupTaskId", FormatNullableInt(_state.LastContactGroupTaskId));
