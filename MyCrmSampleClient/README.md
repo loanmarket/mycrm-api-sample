@@ -439,11 +439,11 @@ These are sequential live reads, not a transactionally consistent historical sna
 
 Workbook parsing errors identify the sheet/cell or row where possible. The importer checks only that it can read the workbook and construct the typed request. The snapshot service validates contact-group access, ownership, duplicate IDs/local identifiers, required values, ranges, dates, link references, orphan addresses, control data and other domain rules. Its errors are displayed without changing or automatically retrying the submitted data.
 
-API errors display their codes, details and source pointers. `423` requires beta/user-context enablement; `401`/`403` requires scope/access checks. A `409` signals a concurrent update. Automatic retries are disabled on the snapshot POST: after a timeout or server error, read the profile before retrying because the write may already have committed.
+API errors display their codes, details and source pointers. `423` requires beta/user-context enablement; `401`/`403` requires scope/access checks. A `409` signals a concurrent update. Snapshot POSTs retry only explicit `429` responses, up to eight times, with progressive backoff and respect for `Retry-After`. Other failures are not automatically retried: after a timeout or server error, read the profile before retrying because the write may already have committed.
 
 #### Regeneration and verification
 
-`swagger.json` is the approved specification from [mycrm-api PR #40047](https://github.com/loanmarket/mycrm-api/pull/40047), pinned to commit `7f1c6701e4727b9da4dfc0c1fb81973b65ec1d18`. Its source is `MyCRMAPI.WebHost.Tests/ApiSpecTests.ApiSpecIsApproved.jsonapi.approved.json`. The entire generated client is refreshed from that specification, including other endpoint changes present in the PR branch. Kiota remains pinned to the version in `dotnet-tools.json`.
+`swagger.json` and the generated client use the specification maintained on this repository's `main` branch, including the financial snapshot endpoint and both `addresses` and `financial-address` included-resource types. The [client update workflow](../.github/workflows/update-client.yml) copies `MyCRMAPI.WebHost.Tests/ApiSpecTests.ApiSpecIsApproved.jsonapi.approved.json` from `mycrm-api`, normalises its title and schema names, and regenerates the entire client. Kiota remains pinned to the version in `dotnet-tools.json`.
 
 ```bash
 dotnet tool restore

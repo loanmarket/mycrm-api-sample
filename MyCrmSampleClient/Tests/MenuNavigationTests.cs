@@ -169,6 +169,58 @@ public sealed class MenuNavigationTests : IDisposable
     }
 
     [Theory]
+    [InlineData("create-residential-task", "Assignee adviser ID:", false)]
+    [InlineData("create-contact-group-task", "Assignee adviser ID:", false)]
+    [InlineData("get-task", "Task ID:", false)]
+    [InlineData("patch-task", "New title for task 7001:", false)]
+    [InlineData("patch-task", "New task detail:", true)]
+    [InlineData("task-progress", "New progress for task 7001:", false)]
+    public async Task EscapeFromTaskPromptsReturnsToMainWithoutAnApiRequest(string sample, string prompt, bool enterTitle)
+    {
+        SelectSample(sample);
+        if (enterTitle) _terminal.Input.PushTextWithEnter("Unsubmitted title");
+        _terminal.Input.PushKey(ConsoleKey.Escape);
+        QueueExit();
+
+        await RunMenu(new SampleState { LastDealId = 6001, LastContactGroupId = 5001, LastTaskId = 7001 });
+
+        Assert.Contains(prompt, _terminal.Output);
+        Assert.Equal(1, CountExitPrompts());
+        Assert.DoesNotContain($"Completed {sample}", _terminal.Output);
+        Assert.DoesNotContain("Press any key", _terminal.Output);
+    }
+
+    [Fact]
+    public async Task EscapeFromTaskPromotionReadsTheExistingTaskButDoesNotWrite()
+    {
+        using var handler = new SnapshotTests.RecordingHandler(request =>
+        {
+            Assert.Equal(HttpMethod.Get, request.Method);
+            Assert.Equal("https://example.test/jsonapi/tasks/7001", request.RequestUri!.AbsoluteUri);
+
+            return """{"data":{"type":"tasks","id":"7001","relationships":{"contactGroups":{"data":[{"type":"contact-groups","id":"5001"}]}}}}""";
+        });
+        using var http = new HttpClient(handler);
+        using var adapter = new HttpClientRequestAdapter(new AnonymousAuthenticationProvider(), httpClient: http) { BaseUrl = "https://example.test" };
+        var console = new SampleConsole(new MyCrmApiClient(adapter), new MyCrmConfig { AdviserContactId = 123 },
+            Path.Combine(_directory, "state.json"), "api");
+        console.UpdateState(new SampleState { LastContactGroupTaskId = 7001 });
+
+        SelectSample("promote-contact-task");
+        _terminal.Input.PushKey(ConsoleKey.Escape);
+        QueueExit();
+
+        await console.Run().WaitAsync(TimeSpan.FromSeconds(10));
+
+        Assert.Single(handler.Requests);
+        Assert.False(_terminal.Input.IsKeyAvailable());
+        Assert.Contains("Residential deal ID to link:", _terminal.Output);
+        Assert.Equal(1, CountExitPrompts());
+        Assert.DoesNotContain("Completed", _terminal.Output);
+        Assert.DoesNotContain("Press any key", _terminal.Output);
+    }
+
+    [Theory]
     [InlineData(false, false)]
     [InlineData(true, false)]
     [InlineData(false, true)]
@@ -495,12 +547,13 @@ public sealed class MenuNavigationTests : IDisposable
 
     private int CountExitPrompts() => _terminal.Output.Split("Exit the sample application?").Length - 1;
 
-    private async Task RunMenu()
+    private async Task RunMenu(SampleState state = null)
     {
         using var handler = new SnapshotTests.RecordingHandler(_ => throw new InvalidOperationException("Navigation must not make an API request."));
         using var http = new HttpClient(handler);
         using var adapter = new HttpClientRequestAdapter(new AnonymousAuthenticationProvider(), httpClient: http) { BaseUrl = "https://example.test" };
         var console = new SampleConsole(new MyCrmApiClient(adapter), new MyCrmConfig { AdviserContactId = 123 }, Path.Combine(_directory, "state.json"), "api");
+        if (state != null) console.UpdateState(state);
 
         await console.Run().WaitAsync(TimeSpan.FromSeconds(10));
 
