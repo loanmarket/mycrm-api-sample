@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Kiota.Abstractions;
+using MyCrmSampleClient.Kiota.Models;
 
 namespace MyCrmSampleClient.KiotaExtensions;
 
@@ -75,8 +76,27 @@ public sealed class JsonApiSearchBuilder<TDocument>
 
     public async Task<TDocument> GetAsync(CancellationToken cancellationToken = default)
     {
+        var requestInfo = CreateRequestInformation();
+
+        return await _executeGet(CreateRequestUrl(requestInfo), cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>Reads every page of a collection; GetAsync still reads a single page or item.</summary>
+    public Task<List<TResource>> GetAllAsync<TResource>(Action<IncludedResource> onResource = null,
+        CancellationToken cancellationToken = default) where TResource : IncludedResource
+    {
+        var requestInfo = CreateRequestInformation();
+        var baseUrl = requestInfo.PathParameters.TryGetValue("baseurl", out var value) ? value?.ToString() : null;
+        if (string.IsNullOrWhiteSpace(baseUrl))
+            throw new InvalidOperationException("Configure the API base URL before reading all pages.");
+
+        return JsonApiPagination.ReadPagesAsync<TResource>(baseUrl, CreateRequestUrl(requestInfo),
+            async (url, token) => await _executeGet(url, token).ConfigureAwait(false), onResource, cancellationToken);
+    }
+
+    private RequestInformation CreateRequestInformation()
+    {
         var requestInfo = _createRequestInformation();
-        JsonApiQueryBuilderHelpers.ApplyCommonQueryParameters(requestInfo.QueryParameters, _filters, _sort, _include, _pageNumber, _pageSize, _fields);
 
         if (!requestInfo.PathParameters.ContainsKey("baseurl"))
         {
@@ -87,15 +107,17 @@ public sealed class JsonApiSearchBuilder<TDocument>
             }
         }
 
-        var rawUrl = requestInfo.URI.ToString();
-        return await _executeGet(rawUrl, cancellationToken).ConfigureAwait(false);
+        return requestInfo;
     }
+
+    private string CreateRequestUrl(RequestInformation requestInfo) =>
+        JsonApiQueryBuilderHelpers.ApplyCommonQueryParameters(requestInfo.URI, _filters, _sort, _include, _pageNumber, _pageSize, _fields);
 }
 
 internal static class JsonApiQueryBuilderHelpers
 {
-    internal static void ApplyCommonQueryParameters(
-        IDictionary<string, object> queryParameters,
+    internal static string ApplyCommonQueryParameters(
+        Uri uri,
         List<string> filters,
         List<string> sort,
         List<string> include,
@@ -103,35 +125,32 @@ internal static class JsonApiQueryBuilderHelpers
         int? pageSize,
         Dictionary<string, string> fields)
     {
-        if (filters.Count > 0)
-        {
-            queryParameters["filter"] = filters.ToArray();
-        }
+        // Generated templates may omit sort/page entirely, or expose fields/page as
+        // maps. Build the raw query so bracketed JSON:API keys are never discarded.
+        var parameters = new List<KeyValuePair<string, string>>();
+        foreach (var filter in filters) parameters.Add(new("filter", filter));
 
         if (sort.Count > 0)
-        {
-            queryParameters["sort"] = sort.ToArray();
-        }
+            parameters.Add(new("sort", string.Join(",", sort)));
 
         if (include.Count > 0)
-        {
-            queryParameters["include"] = include.ToArray();
-        }
+            parameters.Add(new("include", string.Join(",", include)));
 
         if (pageNumber.HasValue)
-        {
-            queryParameters["page[number]"] = pageNumber.Value.ToString(CultureInfo.InvariantCulture);
-        }
+            parameters.Add(new("page[number]", pageNumber.Value.ToString(CultureInfo.InvariantCulture)));
 
         if (pageSize.HasValue)
-        {
-            queryParameters["page[size]"] = pageSize.Value.ToString(CultureInfo.InvariantCulture);
-        }
+            parameters.Add(new("page[size]", pageSize.Value.ToString(CultureInfo.InvariantCulture)));
 
         foreach (var pair in fields)
-        {
-            queryParameters[$"fields[{pair.Key}]"] = pair.Value;
-        }
+            parameters.Add(new($"fields[{pair.Key}]", pair.Value));
+
+        var replacedKeys = parameters.Select(parameter => parameter.Key).ToHashSet(StringComparer.Ordinal);
+        var existing = uri.Query.TrimStart('?').Split('&', StringSplitOptions.RemoveEmptyEntries)
+            .Where(parameter => !replacedKeys.Contains(Uri.UnescapeDataString(parameter.Split('=')[0])));
+        var added = parameters.Select(parameter => Uri.EscapeDataString(parameter.Key) + "=" + Uri.EscapeDataString(parameter.Value));
+
+        return new UriBuilder(uri) { Query = string.Join("&", existing.Concat(added)) }.Uri.AbsoluteUri;
     }
 
     internal static void AddValues(List<string> target, params string[] values)

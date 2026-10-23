@@ -105,7 +105,7 @@ public partial class Samples
             prompt.DefaultValue(_console.State.LastTaskId.Value);
         }
 
-        var taskId = AnsiConsole.Prompt(prompt);
+        var taskId = MenuPrompt.Show(prompt);
         var response = await _console.Client.Jsonapi.Tasks[taskId].GetAsync();
         if (!TryRememberTask(response, out _)) return;
         WriteTask(response.Data);
@@ -147,8 +147,8 @@ public partial class Samples
         if (!_console.RequireScope("api.tasks.read", "patch-task")) return;
         if (!_console.State.TryGetTaskId("patch-task", out var taskId)) return;
 
-        var title = AnsiConsole.Ask<string>($"New title for task {taskId}:");
-        var detail = AnsiConsole.Ask<string>("New task detail:");
+        var title = MenuPrompt.Ask<string>($"New title for task {taskId}:");
+        var detail = MenuPrompt.Ask<string>("New task detail:");
         await _console.Client.Jsonapi.Tasks[taskId].PatchAsync(new TaskDocument
         {
             Data = new TaskObject
@@ -171,7 +171,7 @@ public partial class Samples
         if (!_console.RequireScope("api.tasks.read", "task-progress")) return;
         if (!_console.State.TryGetTaskId("task-progress", out var taskId)) return;
 
-        var progress = AnsiConsole.Prompt(new SelectionPrompt<string>()
+        var progress = MenuPrompt.Show(new SelectionPrompt<string>()
             .Title($"New progress for task {taskId}:")
             .AddChoices("InProgress", "NotStarted", "OnHold", "Completed", "NotRequired"));
         await _console.Client.Jsonapi.Tasks[taskId].PatchAsync(new TaskDocument
@@ -218,7 +218,7 @@ public partial class Samples
         AnsiConsole.WriteLine(
             $"Task {taskId} is linked to contact group {relationships.ContactGroups.Data[0].Id}. " +
             "Promotion replaces that contact link with one residential deal and can only happen once.");
-        var dealId = AnsiConsole.Prompt(new TextPrompt<int>("Residential deal ID to link:")
+        var dealId = MenuPrompt.Show(new TextPrompt<int>("Residential deal ID to link:")
             .Validate(id => id > 0
                 ? ValidationResult.Success()
                 : ValidationResult.Error("Enter a positive deal ID.")));
@@ -255,7 +255,7 @@ public partial class Samples
         AnsiConsole.WriteLine(
             "Use the Id from the advisers sample (adviser family ID). " +
             "This is separate from AdviserContactId, which is sent in the UserId header.");
-        return AnsiConsole.Prompt(new TextPrompt<int>("Assignee adviser ID:")
+        return MenuPrompt.Show(new TextPrompt<int>("Assignee adviser ID:")
             .Validate(id => id > 0
                 ? ValidationResult.Success()
                 : ValidationResult.Error("Enter a positive adviser ID.")));

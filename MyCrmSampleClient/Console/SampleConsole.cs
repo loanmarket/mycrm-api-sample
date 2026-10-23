@@ -20,14 +20,14 @@ public class SampleConsole
     {
         WriteIndented = true
     };
-
-    public MyCrmApiClient Client { get; }
     private readonly MyCrmConfig _myCrmConfig;
     private readonly SampleScopes _scopes;
     private readonly string _stateFilePath;
     private readonly IReadOnlyList<SampleDefinition> _sampleDefinitions;
     private SampleState _state;
     private readonly Samples _samples;
+
+    public MyCrmApiClient Client { get; }
     
     public SampleState State => _state;
     
@@ -39,6 +39,7 @@ public class SampleConsole
     private sealed record SampleDefinition(
         string Name,
         string ApiMethod,
+        bool IncludeInRunAll,
         Func<Task> RunAsync);
 
     private enum MenuAction
@@ -151,6 +152,7 @@ public class SampleConsole
             .Select(x => new SampleDefinition(
                 x.Attribute.Name,
                 x.Attribute.ApiMethod,
+                x.Attribute.IncludeInRunAll,
                 (Func<Task>)x.Method.CreateDelegate(typeof(Func<Task>), _samples)))
             .ToList();
     }
@@ -178,30 +180,40 @@ public class SampleConsole
             AnsiConsole.Clear();
 
             var selectedOption = PromptMenuOption();
-            
-            switch (selectedOption.Action)
-            {
-                case MenuAction.RunSample:
-                    if (selectedOption.Sample != null)
-                    {
-                        await RunSample(selectedOption.Sample);
-                    }
-                    break;
-                case MenuAction.RunAll:
-                    await RunSampleGroup(_sampleDefinitions);
-                    break;
-                case MenuAction.ShowState:
-                    ShowCurrentState();
-                    break;
-                case MenuAction.ClearState:
-                    ClearState();
-                    break;
-                case MenuAction.Exit:
-                    AnsiConsole.MarkupLine("[grey]Exiting sample menu[/]");
-                    return;
-            }
 
-            PauseConsole();
+            try
+            {
+                switch (selectedOption.Action)
+                {
+                    case MenuAction.RunSample:
+                        if (selectedOption.Sample != null)
+                        {
+                            await RunSample(selectedOption.Sample);
+                        }
+                        break;
+                    case MenuAction.RunAll:
+                        await RunSampleGroup(_sampleDefinitions.Where(sample => sample.IncludeInRunAll));
+                        break;
+                    case MenuAction.ShowState:
+                        ShowCurrentState();
+                        break;
+                    case MenuAction.ClearState:
+                        ClearState();
+                        break;
+                    case MenuAction.Exit:
+                        if (!MenuPrompt.Confirm("Exit the sample application?", true)) continue;
+
+                        AnsiConsole.MarkupLine("[grey]Exiting sample menu[/]");
+                        return;
+                }
+
+                PauseConsole();
+            }
+            catch (MenuBackException)
+            {
+                // A sample form or exit confirmation was dismissed. Redraw the main menu.
+                continue;
+            }
         }
     }
 
@@ -209,16 +221,16 @@ public class SampleConsole
     {
         var options = BuildMenuOptions();
         var prompt = new SelectionPrompt<MenuOption>()
-            .Title($"Choose an action ([grey]state: contact={FormatNullableInt(_state.LastContactId)}, group={FormatNullableInt(_state.LastContactGroupId)}, deal={FormatNullableInt(_state.LastDealId)}, task={FormatNullableInt(_state.LastTaskId)}[/])")
+            .Title($"Choose an action ([grey]state: contact={FormatNullableInt(_state.LastContactId)}, group={FormatNullableInt(_state.LastContactGroupId)}, deal={FormatNullableInt(_state.LastDealId)}, task={FormatNullableInt(_state.LastTaskId)}[/])\n[grey]Esc: exit[/]")
             .UseConverter(x => x.Label)
             .PageSize(options.Count)
             .AddChoices(options);
 
         try
         {
-            return AnsiConsole.Prompt(prompt);
+            return MenuPrompt.Show(prompt);
         }
-        catch (Exception ex) when (IsPromptAbort(ex))
+        catch (Exception ex) when (ex is MenuBackException || IsPromptAbort(ex))
         {
             return new MenuOption("[red]Exit[/]", MenuAction.Exit);
         }
@@ -261,11 +273,18 @@ public class SampleConsole
         var start = DateTime.Now;
         
         Log.Information("Calling {ApiMethod} ...", sample.ApiMethod);
-        await sample.RunAsync();
+
+        try
+        {
+            await sample.RunAsync();
+        }
+        finally
+        {
+            // Earlier steps may have completed before the user returned to the menu.
+            SaveSampleState(_stateFilePath, _state);
+        }
 
         AnsiConsole.MarkupLine($"[Grey]Completed[/] [Aqua]{escapedSampleName}[/] in [Grey]{(DateTime.Now - start).TotalSeconds:0.00}s[/]");
-        
-        SaveSampleState(_stateFilePath, _state);
     }
 
     private async Task RunSampleGroup(IEnumerable<SampleDefinition> sampleNames)
@@ -296,7 +315,7 @@ public class SampleConsole
 
     private void ClearState()
     {
-        if (!AnsiConsole.Confirm("Clear shared sample state?"))
+        if (!MenuPrompt.Confirm("Clear shared sample state?"))
         {
             AnsiConsole.MarkupLine("[Grey]State unchanged[/]");
             return;
@@ -313,7 +332,7 @@ public class SampleConsole
         AnsiConsole.MarkupLine("[Grey]Press any key to continue...[/]");
         if (!System.Console.IsInputRedirected)
         {
-            System.Console.ReadKey(intercept: true);
+            AnsiConsole.Console.Input.ReadKey(intercept: true);
         }
         else
         {
