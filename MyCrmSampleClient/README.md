@@ -1,449 +1,229 @@
 # MyCRM Sample Client
 
-This is an interactive .NET console application that lets you run live API calls against MyCRM. Its purpose is to help developers understand how to authenticate, query, filter and write data through the MyCRM API from a real C# application.
+An interactive .NET console application for running the C# examples in this repository against MyCRM.
 
-> **Before running**: you will need credentials and configuration values from Loan Market Group. See the [top-level README](../README.md) for how to obtain access, understand scopes, and configure `appsettings.json`.
-
-## Prerequisites
-
-- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10)
+> **[MyCRM API documentation](https://api-docs.mycrm.io/)** covers authentication, scopes, JSON:API, request costs and endpoint behaviour. This README covers running and extending the sample application.
 
 ## Running the application
 
+Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10) and obtain the values described in [Get access to the API](https://api-docs.mycrm.io/guides/get-started/access/).
+
+From the repository root:
+
 ```bash
 cd MyCrmSampleClient
+```
+
+Populate [appsettings.json](appsettings.json) with your environment's values:
+
+```json
+{
+  "Auth": {
+    "Url": "",
+    "ClientID": "",
+    "ClientSecret": "",
+    "Scopes": ""
+  },
+  "MyCRM": {
+    "Url": "",
+    "AdviserContactId": 0
+  }
+}
+```
+
+Use the API host URL for `MyCRM:Url`, without `/jsonapi`; the generated client adds that path. `Auth:Scopes` is a space-separated list of approved scopes. The application also loads .NET user secrets and command-line configuration, which override `appsettings.json`.
+
+Then start the application:
+
+```bash
 dotnet run
 ```
 
-You will be presented with an interactive menu. Use the arrow keys to select a sample and press Enter to run it. Each sample calls the MyCRM API and prints a formatted table of results.
+Use the arrow keys to select a sample and **Enter** to run it. **Esc** returns one menu level or abandons an unfinished form; at the main menu it asks for confirmation before exiting. Completed API actions are not undone.
 
-Press **Esc** to return one menu level. Within a form, Esc abandons the unfinished action and returns to its menu. At the main menu, Esc (or selecting **Exit**) asks for confirmation: **Yes** or Enter exits; **No** or Esc keeps the application open. Completed API actions are not undone when returning to a menu.
+**Write samples change live records**, including when selected through **Run all samples**. Check the configured environment and **Show shared state** before running them. Samples check their required scopes and display missing prerequisites.
 
-The deal edit samples prompt for values to send and apply them to the deal in shared state. These are live writes. `MyCRM:Url` should be the API host URL, without `/jsonapi`; the generated client adds that path.
+## Samples and shared state
 
-Authentication is renewed before a request when the token is within one minute of expiry, including after waiting at an import confirmation prompt. Failed API calls report the HTTP method, exact URL and status without logging authentication tokens or financial request bodies. An HTTP 401 means authentication was rejected; it does not mean a snapshot was applied. Snapshot submissions are never automatically replayed after a failure.
+IDs returned by samples are saved between runs in `MyCrmSampleClient/sample-state.json` under the platform's local application data directory. Use **Show shared state** or **Clear shared state** in the menu to inspect or reset them.
 
-## How it works
+| Saved value              | Set by                                                          | Used by                                                                                          |
+| ------------------------ | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `LastContactId`          | `latest-contacts`, `filtered-latest-contacts`                   | Contact/address reads and marketing updates.                                                     |
+| `LastContactGroupId`     | `latest-contact-groups`                                         | Group contact/email reads, contact-group tasks and financial snapshot group prompts.             |
+| `LastDealId`             | `latest-deals`, `create-lead`                                   | Deal notes, name/BID edits, deal status reads/changes, structure creation and residential tasks. |
+| `LastTaskId`             | Either task-creation sample, `get-task`, `promote-contact-task` | Task field selection and updates; default ID for `get-task`.                                     |
+| `LastResidentialTaskId`  | `create-residential-task`                                       | Remembering the original residential task when switching tasks.                                  |
+| `LastContactGroupTaskId` | `create-contact-group-task`                                     | `promote-contact-task`, even if another task has been selected.                                  |
 
-### The Kiota-generated client
+Start with `latest-contacts`, `latest-contact-groups` and `latest-deals` to populate the shared IDs.
 
-The `Generated/` folder contains a strongly-typed C# API client that was generated from the MyCRM OpenAPI specification (`swagger.json`) using [Microsoft Kiota](https://github.com/microsoft/kiota). You do not need to write any HTTP code — every endpoint is available as a method on the `MyCrmApiClient` class.
+### Contacts, groups and leads
 
-For example, to fetch contacts the generated client exposes:
+These examples are implemented in [Samples.cs](Samples.cs). See the documentation site's [query guide](https://api-docs.mycrm.io/guides/json-api/querying/) and [writing guide](https://api-docs.mycrm.io/guides/json-api/writing/) for request syntax and behaviour.
+
+| Sample                     | What it does                                                                  |
+| -------------------------- | ----------------------------------------------------------------------------- |
+| `advisers`                 | Lists advisers and their IDs.                                                 |
+| `adviser-details`          | Lists adviser profiles, including the contact ID used for `AdviserContactId`. |
+| `latest-contacts`          | Lists recent contacts and saves `LastContactId`.                              |
+| `contact-with-address`     | Reads the saved contact with included addresses.                              |
+| `filtered-latest-contacts` | Filters and sorts contacts, then saves `LastContactId`.                       |
+| `latest-contact-groups`    | Lists groups with their contacts and saves `LastContactGroupId`.              |
+| `contact-group-contacts`   | Reads all contacts in the saved group.                                        |
+| `contact-group-emails`     | Reads the saved group's contacts with only their email fields.                |
+| `patch-contact-marketing`  | Updates the saved contact's marketing consent.                                |
+| `latest-deals`             | Lists recent deals and saves `LastDealId`.                                    |
+| `create-lead`              | Creates a lead and saves the returned deal ID.                                |
+| `create-update-deal-note`  | Creates and updates a note on the saved deal.                                 |
+
+### Deal edits and custom statuses
+
+Implementations are in [DealSamples.cs](DealSamples.cs) and [DealStructureSamples.cs](DealStructureSamples.cs). The [deal guide](https://api-docs.mycrm.io/guides/data/deals/) covers write permissions, country-specific BID fields, structures and status transitions.
+
+Run `latest-deals` or `create-lead` first and check `LastDealId`. Structure reads/updates and organisation status reads prompt for their own IDs.
+
+| Sample                         | What it does                                                    |
+| ------------------------------ | --------------------------------------------------------------- |
+| `patch-deal-name`              | Prompts for a new name for the saved deal.                      |
+| `patch-deal-rationale`         | Reads the adviser's country and prompts for AU or NZ BID notes. |
+| `custom-statuses`              | Lists accessible statuses in pipeline order.                    |
+| `deal-custom-status`           | Reads the saved deal's current custom status.                   |
+| `organisation-custom-statuses` | Prompts for an organisation and lists its statuses.             |
+| `get-deal-structure`           | Prompts for a structure ID and displays it.                     |
+| `create-deal-structure`        | Creates a structure on the saved deal and reads it back.        |
+| `patch-deal-structure`         | Updates a structure's repayment amount and reads it back.       |
+| `change-deal-status`           | Prompts for a target custom status for the saved deal.          |
+
+### Tasks
+
+Implementations are in [TaskSamples.cs](TaskSamples.cs). See the [task guide](https://api-docs.mycrm.io/guides/data/tasks/) for API scopes, request bodies and relationship rules.
+
+| Sample                      | What it does                                                              | Prerequisite                                                                                                |
+| --------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `create-residential-task`   | Creates a task and saves its ID.                                          | `LastDealId` from `latest-deals` or `create-lead`.                                                          |
+| `create-contact-group-task` | Creates a contact-group task and saves its ID.                            | `LastContactGroupId` from `latest-contact-groups`.                                                          |
+| `get-task`                  | Reads a prompted task ID and selects it as `LastTaskId`.                  | Any accessible task ID; no earlier sample required.                                                         |
+| `task-fields`               | Reads selected fields from the saved task.                                | `LastTaskId`.                                                                                               |
+| `patch-task`                | Prompts for title/detail, updates the saved task and reads it back.       | `LastTaskId`.                                                                                               |
+| `task-progress`             | Prompts for progress, updates the saved task and reads it back.           | `LastTaskId`.                                                                                               |
+| `promote-contact-task`      | Prompts for a residential deal and promotes the saved contact-group task. | `LastContactGroupTaskId` from `create-contact-group-task`; the sample checks that it can still be promoted. |
+
+Creation prompts for an assignee ID from `advisers`; this is separate from the configured `AdviserContactId`. All task samples require `AdviserContactId`, and update samples also need read scope to display the result.
+
+For an existing task, run `get-task`, then any of `task-fields`, `patch-task` or `task-progress`. For promotion, run `latest-contact-groups` → `create-contact-group-task` → `promote-contact-task`. Shared IDs persist, so samples do not need to run consecutively.
+
+### Financial snapshots — Excel import, export and fabricated examples
+
+Select **financial-snapshots** in the main menu. **Run all samples** skips this section. The implementation starts in [FinancialSnapshotSamples.cs](FinancialSnapshotSamples.cs), with workbook helpers in [FinancialSnapshots/](FinancialSnapshots/).
+
+Read the [financial snapshot guide](https://api-docs.mycrm.io/guides/data/financials/#what-the-financial-snapshot-endpoint-does) for access requirements, Merge/Replace modes, matching, ownership and validation before submitting a workbook.
+
+| Option                                          | What it does                                                                                                                                    |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Import spreadsheet**                          | Reads an `.xlsx`, previews counts and modes, optionally shows the request, then asks for confirmation before submitting to the nominated group. |
+| **Export current financials**                   | Reads the group's financial profile into an editable workbook.                                                                                  |
+| **Generate fabricated spreadsheet**             | Writes a local example with fabricated financial details and real contact/control IDs.                                                          |
+| **Compare spreadsheet with current financials** | Compares workbook values with live data without changing either.                                                                                |
+
+#### First run
+
+1. Run `latest-contact-groups` or enter a known group ID when prompted.
+2. Export current financials to retain existing record IDs, or generate a fabricated example for a test group.
+3. Edit and save the workbook, then select **Import spreadsheet**. The group prompt defaults to the workbook's nominated group.
+4. Keep the workbook's collection modes or select Merge/Replace for all collections, review the request and confirm the write.
+5. Export again to capture saved IDs for later updates.
+
+Import uses `api.contactgroups.financialsnapshot` and the configured `AdviserContactId`. It does not fetch contacts or control data. Export and comparison read the group, contacts, adviser and financial records; export and generation also read the control data used in dropdowns. The menu reports missing scopes.
+
+Files must use the `.xlsx` extension. Saving over an existing file asks for confirmation. No Excel installation is needed to generate or read files; the client uses ClosedXML.
+
+#### Workbook format (version 1)
+
+Start with a fresh export or generated workbook. All data sheets and the supplied country-specific headers are required for import, even when empty. Columns may be reordered, but names are case-sensitive. Blank rows are ignored; formulas and error cells are rejected, so paste values. Older workbooks using `valuationBasis` must use the current `valueBasis` header.
+
+| Sheet                                                         | Contents                                                                                      |
+| ------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `Snapshot`                                                    | Format version, group ID, source, collection modes and optional country/example metadata.     |
+| `Assets`, `Expenses`, `Incomes`, `Liabilities`, `Employments` | Editable rows with existing record IDs, local IDs and fields from the generated input models. |
+| `Addresses`                                                   | Address rows referenced by asset/employment `address.lid` cells.                              |
+| `Contact Lookups`, `Lookups`                                  | Reference data for contacts and control IDs; editing these sheets does not submit changes.    |
+| `Dropdown lists`                                              | Hidden named ranges for Excel validation.                                                     |
+| `Excluded records`, `Read me`                                 | Export exclusions and workbook-specific notes.                                                |
+
+The selected group's adviser determines the country for export and generation. AU templates omit `nz` columns; NZ templates retain them. Import preserves explicitly supplied values and leaves domain validation to the API.
+
+- Owner columns show `contactId — Name`; import uses the numeric IDs. Export stops if more than two owners would be needed.
+- Existing record IDs are populated by export. Local links use `address.lid`, `linkedAsset.lid` and `employment.lid`; existing links use `linkedAsset.id` or `employment.id`. See the [API linking rules](https://api-docs.mycrm.io/guides/data/financials/#link-new-and-existing-records) when editing them.
+- Keep account numbers, BSBs, postcodes and business/company numbers as text to preserve leading zeroes. Enter dates as Excel dates or `YYYY-MM-DD`, booleans as `TRUE`/`FALSE`, and enum values using the dropdowns.
+- Control dropdowns show readable ID/name labels, and import extracts the ID. Numeric IDs outside the lists can be entered for server validation. Refresh choices by exporting or generating a new workbook.
+- Local-link dropdowns follow the Excel tables. Add rows inside the target table and set their `lid` before linking them. Renaming a `lid` does not rewrite existing links. Reselect a liability subtype after changing its type.
+- Dropdowns cover rows 2–1000 and extend for larger initial exports. The importer checks workbook structure and cell types, then submits the entered data unchanged.
+
+Exports follow all pages and deduplicate records. Unrepresentable ownership, multiple asset addresses or missing required relationship data stop export with an explanation. Managed repayment expenses and unsupported incomes appear in the export notes/exclusions; edit repayments on the Liabilities sheet. A standalone `NULL` string is written as a blank cell. Exported reads are sequential live calls.
+
+#### Generated examples
+
+Generation uses [Bogus](https://github.com/bchavez/Bogus) with a random seed. Keep the suggested seed for a fresh example, or reuse it with the same contacts, controls and generator version to reproduce one.
+
+Accept the suggested size or enter 1–1000 financial items. The count combines assets, liabilities, incomes, expenses and employments; addresses and lookup rows are additional. The seed and any explicit size are recorded in the workbook. Contact names and IDs remain real; financial values are fabricated. Generation writes only a local file.
+
+#### Comparing a workbook
+
+Comparison defaults to the workbook's group and reports changed fields, unmatched records and ambiguous matches. Explicit record IDs take priority; without them, the client uses identifying fields, ownership and linked records. Add explicit IDs where a match is ambiguous.
+
+Unlike import, comparison allows removed columns and checks only those present. Blank cells in present columns are compared as empty values; owner order is ignored, and missing owner columns leave that many owners unspecified. Existing-ID and local-ID link columns are alternatives; a blank link with its alternative column missing is unspecified.
+
+The group's actual adviser country controls which AU/NZ fields are compared. Comparison ignores workbook metadata, collection modes, local-ID spelling and reference sheets. It compares stored values, not the predicted result of an import, and does not require write or control-data scopes.
+
+#### Errors and retries
+
+Workbook errors identify the sheet/cell or row where possible. API errors display codes, details and source pointers. Import retries explicit HTTP 429 responses up to eight times with progressive delays and respects a longer `Retry-After`. Other write failures are not automatically retried. See [snapshot results and retries](https://api-docs.mycrm.io/guides/data/financials/#read-the-result-and-handle-retries) and [rate limits](https://api-docs.mycrm.io/guides/integrate/rate-limits/) for API guidance.
+
+## Extending the client
+
+The [generated client](Generated/KiotaClient/) comes from [swagger.json](swagger.json) using Microsoft Kiota. [KiotaExtensions/](KiotaExtensions/) provides fluent query helpers:
 
 ```csharp
-var result = await client.Jsonapi.Contacts.GetAsync();
-```
-
-### The fluent query builder
-
-Because the Kiota-generated search methods accept raw query strings, a thin fluent wrapper in `KiotaExtensions/` makes common JSON:API query parameters easier to compose in C#:
-
-```csharp
-var result = await client.Jsonapi.Contacts
+var contacts = await client.Jsonapi.Contacts
     .Sort("updated", SortOrder.Descending)
-    .Filter("and(equals(hasMarketingConsent,'true'),greaterThan(updated,'2024-01-01'))")
+    .Filter("greaterThan(updated,'2024-01-01')")
     .Page(1, 10)
-    .Include("contactAddress")
     .Fields("contacts", "firstName", "lastName", "email")
     .GetAsync();
 ```
 
-Each method returns the same builder, so calls can be chained. `GetAsync()` builds the final URL and executes the request. This pattern mirrors how you would construct queries in your own application.
+Use `GetAllAsync<TResource>()` for a complete collection. [JsonApiPagination.cs](KiotaExtensions/JsonApiPagination.cs) follows `links.next`, deduplicates records and supports cancellation. Builders without fluent wrappers can call `JsonApiPagination.ReadPagesAsync<TResource>()`; see the custom-status samples.
 
-For a complete collection, use `GetAllAsync<TResource>()` instead:
+### Adding your own samples
+
+Add a method to the partial `Samples` class with a `[Sample]` attribute:
 
 ```csharp
-var contacts = await client.Jsonapi.ContactGroups[groupId].Contacts
-    .Page(1, 100)
-    .Sort("id")
-    .Fields("contacts", "email")
-    .GetAllAsync<Contact>(cancellationToken: cancellationToken);
+[Sample("my-sample", "GET /jsonapi/my-resource")]
+public async Task RunMySample()
+{
+    if (!_console.RequireScope("api.my-resource.search", "my-sample")) return;
+    // Use _console.Client to make API calls.
+}
 ```
 
-The shared `KiotaExtensions/JsonApiPagination.cs` helper follows `links.next`, including after short or empty pages, and deduplicates records by type and ID. It resolves relative links against the current page, rejects repeated links and links outside the configured API host/base path, and passes cancellation to the request. An optional `onResource` callback receives primary and included resources from every page; the snapshot reader uses it to resolve relationships. Request builders without a fluent wrapper can call `JsonApiPagination.ReadPagesAsync<TResource>()` directly with their `WithUrl(...).GetAsync(...)` delegate, as shown by the custom-status samples.
+The attribute registers the method with the menu. Use a unique sample name, declare the required scopes and check any saved IDs before making a request.
 
-Financial snapshot reads, contact-group contacts/emails, custom statuses and organisation custom statuses read every page. The latest-adviser, latest-contact, filtered-latest-contact, latest-contact-group and latest-deal samples deliberately retain single-page reads. Single-resource reads also continue to use `GetAsync()`.
+### Build and test
 
-### Shared state
+Run from `MyCrmSampleClient`:
 
-Some samples depend on an ID returned by a previous sample. For example, the `contact-with-address` sample needs a contact ID to look up. Rather than hardcoding values, the client saves certain IDs to a local state file after each run:
-
-| State value          | Set by                                        | Used by                                           |
-|----------------------|-----------------------------------------------|---------------------------------------------------|
-| `LastContactId`      | `latest-contacts`, `filtered-latest-contacts` | `contact-with-address`, `patch-contact-marketing` |
-| `LastContactGroupId` | `latest-contact-groups`                       | `contact-group-contacts`, `contact-group-emails`  |
-| `LastDealId`         | `latest-deals`, `create-lead`                 | `create-update-deal-note`, `patch-deal-name`, `patch-deal-rationale`, `deal-custom-status`, `change-deal-status`, `create-deal-structure` |
-
-Task samples also save these IDs:
-
-| State value | Set by | Used by |
-|---|---|---|
-| `LastTaskId` | `create-residential-task`, `create-contact-group-task`, `get-task`, `promote-contact-task` | Default for `get-task`; target for `task-fields`, `patch-task`, `task-progress` |
-| `LastResidentialTaskId` | `create-residential-task` | Reference when selecting the original task in `get-task` |
-| `LastContactGroupTaskId` | `create-contact-group-task` | `promote-contact-task` |
-
-Task creation uses `LastDealId` or `LastContactGroupId`. Check **Show shared state** before running a write sample.
-
-The state file is stored in your local app data directory (e.g. `~/.local/share/MyCrmSampleClient/sample-state.json` on Linux/macOS). You can view or clear the state from the menu.
-
-**Recommended order when running samples for the first time:** run `latest-contacts`, `latest-contact-groups`, and `latest-deals` first to populate the state, then run the samples that depend on them.
-
----
-
-## The samples
-
-### `advisers` — Listing advisers with sorting and pagination
-
-**API call:** `GET /jsonapi/advisers?page[size]=10&sort=-id`
-
-Fetches the 10 most recently created advisers and prints their email address and job title.
-
-**What this demonstrates:**
-
-- How to sort results in descending order (`sort=-id` means newest first)
-- How to control page size to limit the number of records returned
-- The basic structure of a JSON:API collection response: a `data` array of typed resource objects, each with `id`, `type`, and `attributes`
-
----
-
-### `adviser-details` — Listing adviser profile details
-
-**API call:** `GET /jsonapi/adviser-details?page[size]=10&sort=-id`
-
-Fetches the 10 most recently updated adviser detail records, showing names, email and mobile.
-
-**What this demonstrates:**
-
-- That some entities have a separate "details" resource (e.g. `adviser-details` vs `advisers`). This separation
-- means you only fetch the richer data when you need it.
-- How to identify the correct `AdviserContactId` to use in write operations — run this sample and note the `Id` column value for the adviser you want to act as.
-
----
-
-### `latest-contacts` — Listing contacts
-
-**API call:** `GET /jsonapi/contacts?page[size]=10&sort=-id`
-
-Fetches the 10 most recently created contacts and stores the most recent contact ID in shared state for use by later samples.
-
-**What this demonstrates:**
-
-- The fundamental pattern for reading a list of resources
-- How the sample state system works — running this first unlocks the `contact-with-address` and `patch-contact-marketing` samples
-
----
-
-### `contact-with-address` — Fetching a related resource using includes
-
-**API call:** `GET /jsonapi/contacts/{id}?include=contactAddress`
-
-Fetches a single contact and, in the same request, includes their address records.
-
-**What this demonstrates:**
-
-- The JSON:API `include` feature: instead of making two separate API calls (one for the contact, one for addresses), you ask the API to return related resources in a single response
-- How the response is structured when includes are used: the primary resource (`contact`) appears in `data`, while the related resources (`contactAddress`) appear in the `included` array, linked by ID references in the `relationships` section
-- How to resolve those references in C# by matching on `Id` and `Type`
-
-This is one of the most important patterns to understand. Includes let you reduce round-trips, but they also increase the cost of the request — see the [rate limiting guidance](../README.md#rate-limiting).
-
----
-
-### `filtered-latest-contacts` — Filtering a search
-
-**API call:** `GET /jsonapi/contacts?sort=-updated&filter=and(equals(hasMarketingConsent,'true'),greaterThan(updated,'<today-30d>'))`
-
-Fetches contacts that have marketing consent and were updated in the last 30 days, sorted by most recently updated.
-
-**What this demonstrates:**
-
-- How to build compound filters using `and(...)` with multiple criteria
-- Combining `equals(field,'value')` with `greaterThan(field,'date')` to narrow results
-- Sorting by a field other than `id` (note: this incurs a higher rate limiting cost, see [rate limiting](../README.md#rate-limiting))
-- A realistic use case: finding contacts that are eligible for a marketing campaign
-
----
-
-### `latest-contact-groups` — Includes on a collection search
-
-**API call:** `GET /jsonapi/contact-groups?sort=-id&include=contacts`
-
-Fetches recent contact groups and includes the contacts in each group in the same response.
-
-**What this demonstrates:**
-
-- That includes can be used on collection (`search`) responses, not just single-resource (`read`) responses
-- How to iterate over a group's `relationships.contacts.data` array and resolve each contact from the `included` section — the same approach used in any JSON:API many-to-many relationship
-- A contact group represents a household or borrower group in MyCRM; contacts within the group can be primary or secondary applicants
-
----
-
-### `contact-group-contacts` — Fetching related resources via a sub-path
-
-**API call:** `GET /jsonapi/contact-groups/{id}/contacts`
-
-Fetches the contacts belonging to a specific contact group using a relationship sub-path.
-
-**What this demonstrates:**
-
-- An alternative to includes: instead of fetching the group and including contacts in one call, you navigate directly to the related resource endpoint
-- When to prefer this over includes: use this approach when you only need the related resources and do not need the parent resource's attributes, or when the parent is already cached
-- The difference in rate limiting cost between `Fetch Related` and `Fetch Relationships` — see [rate limiting](../README.md#rate-limiting)
-
----
-
-### `contact-group-emails` — Restricting fields returned
-
-**API call:** `GET /jsonapi/contact-groups/{id}/contacts?fields[contacts]=email`
-
-Fetches the contacts in a group but only returns the `email` field for each contact.
-
-**What this demonstrates:**
-
-- The JSON:API sparse fieldsets (field selection) feature: `fields[<type>]=<comma-separated-fields>` limits which attributes are returned
-- Why you would use this: when you only need one or two fields from a large resource, sending and parsing a full response is wasteful. For bulk operations over many records this can significantly improve performance.
-- The syntax difference between the resource type (`contacts`) used in the `fields` parameter and the relationship name (`contacts`) used in the URL path — they happen to match here but may differ for other relationships
-
----
-
-### `patch-contact-marketing` — Updating a resource with PATCH
-
-**API call:** `PATCH /jsonapi/contact-marketing/{id}`
-
-Updates the marketing consent flag for a contact to `false`.
-
-**What this demonstrates:**
-
-- How to perform a partial update (PATCH) in JSON:API: you send only the `type`, `id`, and the `attributes` you want to change — other attributes are left untouched
-- The `contact-marketing` resource type, which is a focused write endpoint for updating marketing preferences without touching other contact data
-- The `AdviserContactId` requirement for write operations: the nominated adviser will be recorded as the last modifier of the record
-- How a 403 Forbidden response is handled — this typically means the `AdviserContactId` does not have permission to modify the record, and the sample explains how to resolve it
-
----
-
-### `latest-deals` — Listing deals
-
-**API call:** `GET /jsonapi/deals?sort=-id`
-
-Fetches the most recently created deals and stores the latest deal ID in shared state.
-
-**What this demonstrates:**
-
-- Querying the `deals` resource, which is one of the more complex (and rate-limit-expensive) resource types
-- The basic attributes of a deal: name, status, lender name, and total loan amount
-- Populating the shared state for deal notes, deal edits and status samples
-
----
-
-### Deal edits and custom statuses
-
-See the [deal guide](../docs/deals.md) for payloads and movement rules; implementations are in [DealSamples.cs](DealSamples.cs) and [DealStructureSamples.cs](DealStructureSamples.cs).
-
-Run `latest-deals` or `create-lead` first, then check `LastDealId` in the menu. Deal edits and structure creation use that deal. BID notes and structure writes require pre-submission; name-only edits are allowed at any status. Structure PATCH prompts for its own structure ID.
-
-| Sample | Action |
-|---|---|
-| `patch-deal-name` | PATCH a new name. |
-| `patch-deal-rationale` | Discover the adviser's country and PATCH AU or NZ BID notes. |
-| `custom-statuses` | List accessible statuses sorted by `sortOrder`. |
-| `deal-custom-status` | Read the deal's current status. |
-| `organisation-custom-statuses` | Prompt for an organisation ID and list its statuses in pipeline order. |
-| `create-deal-structure` | Create a structure on the selected deal, then read it back. |
-| `patch-deal-structure` | Update a structure's repayment amount, then read it back. |
-| `change-deal-status` | PUT a target custom status ID and display the result or error details. |
-
-BID notes are write-only. Status IDs must belong to the deal's organisation. `Run all samples` includes these prompts.
-
-Structure samples require `api.deal-structures.read` plus `api.deal-structures.create` or `api.deal-structures.update` (or broader applicable scopes). The deal's adviser and custom status are read directly through their related-resource endpoints.
-
----
-
-### `create-lead` — Creating a new record with POST
-
-**API call:** `POST /jsonapi/leads`
-
-Creates a new lead with a full set of attributes including address, UTM tracking fields, and an external reference ID.
-
-**What this demonstrates:**
-
-- How to construct a JSON:API `POST` request body: a `data` object with `type` and `attributes`
-- A lead is a lightweight entry point for creating a new client record in MyCRM; internally it creates a deal and associated contacts
-- UTM fields (`utmSource`, `utmMedium`, `utmCampaign`) for tracking the marketing source of the lead
-- The `externalReference` and `externalIntegration` fields for linking MyCRM records back to records in an external system — useful for reconciliation and avoiding duplicate creation
-- The `AdviserContactId` determines which adviser the lead is allocated to
-
----
-
-### `create-update-deal-note` — Creating then updating a record
-
-**API call:** `POST then PATCH /jsonapi/deal-notes`
-
-Creates a note on an existing deal, then immediately updates its title and body.
-
-**What this demonstrates:**
-
-- How to create a resource that has a **relationship** to another resource: the `deal-notes` POST body includes a `relationships.deal` section pointing to the parent deal by `type` and `id`
-- The full create-then-update lifecycle: POST returns the newly created resource with its server-assigned ID, which is then used immediately in a PATCH
-- How to structure a PATCH body: include `type`, `id`, and only the attributes to change
-- A practical pattern for integrations that create a record and then want to annotate or correct it without fetching it again
-
----
-
-### Financial snapshots — Excel import, export and fabricated examples
-
-Select **`financial-snapshots`** in the main menu to open its own section. **Run all samples** skips this section; select it directly to use these options:
-
-| Option | What it does |
-|---|---|
-| **Import spreadsheet** | Reads an `.xlsx` into the request, previews collection counts and modes, optionally displays the complete request, then asks before submitting it to the nominated group for server validation and application. |
-| **Export current financials** | Reads the group's contacts, assets, liabilities, incomes, expenses, employments and linked addresses into the same workbook format. |
-| **Generate fabricated spreadsheet** | Uses Bogus to randomise financial details and a selection of asset, income, expense and liability types for up to two adults. Real contact and lookup IDs are retained. It only writes a local file. |
-| **Compare spreadsheet with current financials** | Reads an existing workbook and the nominated group's current API data, then displays collection counts and field differences, unmatched records and ambiguous matches. It changes neither the spreadsheet nor the API data. |
-
-Comparison prompts for the spreadsheet path and defaults the group ID to the workbook's nominated group. It uses the same paginated reads and `has(ownership,any(contact.id,'<value>','<value>',...))` filter as export, without fetching control data. The report shows spreadsheet and API values side by side for each changed field. Records found only on one side are listed separately; ambiguous matches are marked for review.
-
-Explicit record IDs take priority. Without IDs, comparison uses the available identifying fields (such as property address, deposit account details, employment contact/employer/start date, income type/description or expense type), then ownership and linked-record context to distinguish candidates. It resolves local asset/employment IDs to matched API IDs, compares addresses through their parent asset/employment and ignores owner-column order. Unreferenced addresses are flagged for review when both parent address-link columns are present. Matching is conservative: if identifying details are missing or have changed, or several candidates remain, add explicit IDs to make the comparison conclusive.
-
-Comparison only checks columns present in each worksheet. You can remove unwanted columns for comparison; a blank cell in a present column still counts as an empty value. The remaining owner columns must match API owners in any order, with each missing owner column allowing one unspecified owner. Linked-record `id` and `lid` columns are alternative representations of the same relationship: either supplied value is resolved and compared, but a blank link with a missing alternative is unspecified. Import continues to require the supplied country-specific template columns.
-
-The selected group's adviser determines the country, using `GET /jsonapi/contact-groups/{contactGroupId}/adviser`. For AU groups, comparison excludes all `nz` columns on incomes and liabilities, including API defaults of zero and false. For NZ groups, it compares the `nz` columns and excludes the Australian liability `loanTerm` field.
-
-AU exports and generated examples omit all `nz` columns entirely; NZ workbooks retain them. The optional `country` setting on `Snapshot` records which template was written, while formatVersion remains `1`. The importer accepts these country-specific files and still sends any explicitly supplied columns unchanged. Comparison uses the selected group's actual adviser country, even if the workbook's country differs. Dropdowns and formatting follow the columns actually written.
-
-This compares stored values, not the predicted effect of an import. It ignores workbook metadata, Merge/Replace modes, local-ID spelling and reference sheets; it does not consolidate expenses or apply server defaults. Blank strings and nulls compare equally, but other scalar values (including formatting differences) are reported as returned. Managed repayment expenses and unsupported incomes are excluded as on export, with the export notes displayed. API reads are not a transactional snapshot.
-
-Example generation uses [Bogus](https://github.com/bchavez/Bogus) with a local random seed. Press Enter at the seed prompt for a fresh example, or reuse a seed to repeat it with the same contacts, controls and generator/library versions. The next prompt shows the item count calculated from that seed; press Enter to keep that example, or enter a different count from 1–1000. The count is the combined total of assets, liabilities, incomes, expenses and employments; supporting addresses and lookup rows are additional. The workbook records the seed and any explicit size in `Snapshot` and `Read me`. Employer names, job titles, addresses, accounts, balances and repayments vary; contact names and IDs remain the real group contacts. Addresses use fabricated streets with matching AU/NZ suburb, state and postcode combinations.
-
-The default example includes a linked investment property, savings account, employment/salary for each adult, rental income, mortgage and groceries. Available lookup data then supplies a random selection of 2–4 additional assets, 1–3 incomes, 1–3 liabilities and 3–6 expenses (fewer if compatible types are unavailable):
-
-- Assets include deposits, boats, vehicles, bonds, cash, contents, funds, shares and superannuation, plus KiwiSaver, art and jewellery for NZ.
-- Income includes dividends, interest, other gross income, bonuses, allowances, commission, overtime and non-recurring income, plus foreign and other net income for NZ.
-- Liabilities include credit cards, student loans, overdrafts, personal/car loans and buy now pay later.
-- Expenses include ordinary household, transport, insurance, health, recreation and utility costs. Repayments are generated on liabilities.
-
-Generation selects supported types by their API IDs from the loaded control data. It stops with an explanation if a core type or required verification choice is unavailable. Real estate has a blank description and a property purpose, property type, `valueBasis` and address; deposit assets have descriptions and account details. Vehicles require a known compatible subtype, make and year. Credit cards use a compatible subtype when available and omit it otherwise. Employment income belongs solely to the linked employment's contact; rental income and the mortgage link to the investment property. NZ student loans have one owner. AU examples use BSB and loan term in years and omit all `nz` fields; NZ examples use the NZ loan date and documented term in months. Unknown types and incompatible subtypes are omitted from random selection.
-
-An explicit size uses the same supported types and field rules, selecting records together with their linked assets, employments and addresses. Small examples may omit some collections. Larger examples have distinct local IDs and identifying descriptions, and additional jobs for an adult are secondary employments. Ordinary expense types appear only once to avoid consolidation on import. Repeat the seed and size with the same controls and contacts to recreate the example.
-
-Each employment includes a private employer type, its own fabricated address and an AU/NZ landline number. Every income linked to an employment (including salary, commission, bonuses and allowances) includes a country-appropriate verification choice from the loaded control data. NZ rental income also includes a rental verification choice. These generation rules do not add validation or change values during import; export dropdowns are unchanged.
-
-The implementation starts in [FinancialSnapshotSamples.cs](FinancialSnapshotSamples.cs); the workbook contract, reads, validation and example factory are in [FinancialSnapshots/](FinancialSnapshots/).
-
-#### Access and first run
-
-The write endpoint is `POST /jsonapi/contact-groups/{contactGroupId}/financial-snapshot`. It is a beta feature that must be enabled for the resolved adviser. Configure `MyCRM:AdviserContactId` so the existing authentication provider sends `UserId`.
-
-Import requires `api.contactgroups.financialsnapshot` (or `api.contactgroups`, `api.financialsnapshot` or `api`). It reads the workbook, constructs the request and posts it to the nominated group without fetching contacts or control data. Ordinary contact-group update or individual financial write scopes do not authorize the snapshot action. The snapshot scope spelling has **no hyphen** in `contactgroups`.
-
-Imports automatically retry explicit HTTP 429 responses up to eight times, sending the same request body. Waits grow from approximately 2, 4, 8, 16 and 32 seconds to 60 seconds; a longer `Retry-After` value (seconds or HTTP date) takes precedence. Each retry displays the exact POST URL, wait and attempt number. Other errors, including timeouts and server failures, are not automatically retried because a write may already have committed. If the rate limit persists after eight retries, the import reports the error and returns to the menu. Normal reads retain Kiota's existing retry handling.
-
-Export and comparison use `api.contact-groups.read`, `api.contacts.read` and search scopes for `assets`, `liabilities`, `incomes` and `expenses`. Export, example generation and comparison read the group's adviser to determine AU/NZ country. Export and generation also search the control-data endpoints: asset/liability/income/expense categories and types, asset subtypes, property types, income verification types and rental verification types. Liability subtypes are included through `liability-types`. Approved broader read/search scopes can satisfy these checks. Comparison needs no write or control-data scopes. Import does not fetch control data; the snapshot service validates submitted control IDs.
-
-1. Run `latest-contact-groups` to find a group, or enter a known group ID when prompted.
-2. Export the current financials to edit existing records, or generate a fabricated example for a test group.
-3. Edit the workbook in Excel, save it, then select **Import spreadsheet**. The contact group prompt defaults to the workbook's group; press Enter to use it. You may explicitly enter a different group, but the API still requires all submitted contact IDs to belong to that target group.
-4. Choose the modes, review the counts and request, and confirm the live write. The result lists created, updated and deactivated resources with their IDs and any correlated `lids`.
-5. Export again to capture the saved IDs for later deliberate updates. The snapshot response does not contain complete saved resources or a retrievable historical snapshot.
-
-Output paths must end in `.xlsx`. For both exports and generated examples, saving to an existing file asks whether to overwrite it; press Enter for Yes, or choose No to keep the existing file. The replacement workbook is fully written before the existing file is replaced. No Excel installation is required; the application uses ClosedXML.
-
-#### Workbook format (version 1)
-
-The current workbook format remains version 1 and includes all features described below. Only the current template is supported; compatibility with older layouts will be added when requested. The Assets column is now `valueBasis`, matching the current snapshot API; older workbooks using `valuationBasis` must be refreshed or have that header renamed before import. Header errors list missing, unexpected and duplicate columns.
-
-All data sheets are required, even when empty. Row 1 contains exact, case-sensitive column names; columns may be reordered. Keep the complete set of headers so a misspelt or removed column cannot silently clear data. Blank rows are ignored, and formulas/error cells are rejected in input sheets: paste values instead.
-
-Import only checks workbook structure and whether cell values can be represented by the generated request models: integers, finite numbers, booleans, dates and known enum values. It preserves entered text (including whitespace), numeric values, duplicate rows/IDs/owners and unresolved references. It does not enforce required fields, ownership eligibility, value ranges, unique IDs or local-link integrity. The snapshot service validates the submitted request and returns any errors. The explicitly nominated group determines the request URL; the workbook's group ID is displayed as a reference.
-
-New workbooks put `lid` first, then the record ID, type ID and subtype ID where present. Other IDs and links follow alphabetically, then the remaining fields alphabetically. For example, Assets starts with `lid`, `assetId`, `assetTypeId`, `assetSubTypeId`, `address.lid`, `owner1ContactId`, `owner2ContactId`, `propertyTypeId`, then `accountName`, `accountNumber`, and the other fields.
-
-| Sheet | Contents |
-|---|---|
-| `Snapshot` | `setting`/`value` rows for `formatVersion` (`1`), `contactGroupId`, `source`, and `assetsMode`, `expensesMode`, `incomesMode`, `liabilitiesMode`, `employmentsMode`. |
-| `Assets` | All supported asset input fields, including `assetId`, `assetTypeId`, property, account and vehicle fields. |
-| `Expenses` | Ordinary expenses, with `expenseId`, `expenseTypeId`, amount and frequency. |
-| `Incomes` | Income fields, `incomeId`, gross/net and verification fields, plus asset/employment links. |
-| `Liabilities` | Liability fields, `liabilityId`, balance, limit, repayment, frequency, interest rate and AU/NZ loan fields. |
-| `Employments` | `employmentId`, `contactId`, employer details, employment enums, dates and address links. |
-| `Addresses` | `lid`, street, suburb, state, postcode, country and optional formatted address. Every address must be referenced. |
-| `Contact Lookups` | Reference-only `contactId`, `Name`, `Gender` and `isPrimary` values for adults. Names combine the contact's first, middle and last names. This sheet is not submitted on import. |
-| `Lookups` | Reference control data loaded for examples and exports: `resource`, `id`, `name`, `parentResource` and `parentId`. Categories supply type descriptions and parents link liability subtypes to their types. This sheet is not submitted. |
-| `Dropdown lists` (hidden) | Named ranges used by Excel data validation, including one subtype list per liability type. |
-| `Excluded records`, `Read me` | Reference-only exclusions and usage/export notes. |
-
-`Contact Lookups` includes only contacts with the `Adult` role, using contacts already returned by the group's contacts endpoint. Empty fields remain blank. Editing this reference sheet does not update contact details or change which contacts the API permits for ownership and employment.
-
-Columns follow the generated **snapshot input** models, with these flattening rules:
-
-- `owner1ContactId` and `owner2ContactId` each select one active Adult contact in the nominated group. Choose one or two distinct contacts; either column may be blank for a single owner. Dropdowns show `contactId — Name`, and import converts the selected IDs into the snapshot's `ownership` array. Names are display hints, while IDs identify the records. Numeric contact IDs may also be entered. Export stops if a record has more than two owners rather than dropping ownership.
-- `assetId`, `expenseId`, `incomeId`, `liabilityId` and `employmentId` explicitly select existing records. Export fills them in. Leave them blank to use server matching; `lid` alone does not identify a previously saved record.
-- `linkedAsset.id` or `linkedAsset.lid` links an income/liability to an existing or submitted asset. Supply exactly one. `employment.id`/`employment.lid` works the same way for income. A link by existing ID does not itself update that target.
-- `address.lid` links an asset/employment to a row in `Addresses`. Local identifiers are case-sensitive and unique within their collection. Example links use names such as `investment-property`, `job-1` and `investment-address`.
-- Store account numbers, BSBs, postcodes and business/company numbers as **text** to preserve leading zeroes. Amounts are numbers, flags are `TRUE`/`FALSE`, and dates are Excel dates or `YYYY-MM-DD`. Use enum dropdown values such as `Monthly` and `PAYG`.
-- Amounts use the group's local currency. `interestRate = 6.25` means **6.25%**. `loanTerm` uses years; NZ documented and interest-only term fields use months. Keep frequency and gross/net meaning with each amount.
-
-#### Control-data dropdowns and validation
-
-Every enum column has a dropdown populated from its generated snapshot model, including frequencies, valuation basis, property purpose, rental type, mortgage priority, loan repayment type, and employment fields. All dropdowns (control data, contacts, record links, enums and booleans) cover rows 2–1000, including empty sheets, and extend further if the initial export contains more rows. Excel rejects unlisted enum values with a **Stop** message; optional fields may remain blank. Import also rejects invalid enum values pasted into the workbook. Input formats use column defaults so blank input rows do not inflate the workbook's used range.
-
-`address.lid`, `linkedAsset.lid` and `employment.lid` offer dropdowns from the matching sheet's `lid` column. These lists follow the Excel tables: add or insert rows within the target table to extend them. Set the target row's `lid` before selecting it in another sheet. Changing a target's `lid` updates the choices but does not rewrite existing links; update those links too. Import passes the entered references through unchanged; the snapshot service validates missing or misspelt links.
-
-`linkedAsset.id` and `employment.id` offer existing IDs from the corresponding workbook tables. Excel shows a warning, which you may accept, when typing an ID outside that list; Merge can link an existing API record that is absent from the workbook. Replace still requires retaining the linked target in the submitted collection. Employment `contactId` and both owner columns offer the same Adult contact choices with readable names. Import extracts the entered contact IDs and leaves ownership and group-access validation to the snapshot service.
-
-Generation and export load `/jsonapi/liability-categories` and the other financial control endpoints, following pagination. Type/category relationships are requested with `include=liabilityCategory,liabilitySubTypes`, `include=incomeCategory` and `include=expenseCategory`. Category labels are read from `description`; other control labels use `name`.
-
-These input columns offer readable choices such as `21 — Secured / Mortgage` (illustrative IDs): `assetTypeId`, `assetSubTypeId`, `expenseTypeId`, `incomeTypeId`, `liabilityTypeId`, `liabilitySubTypeId`, `propertyTypeId`, `incomeVerificationId` and `nzRentalVerificationTypeId`. Import converts the selection back to a numeric ID. The snapshot has no category-ID input columns, so categories label the applicable type choices instead of adding fields to the request. Asset type/category and asset subtype/type associations are not exposed by this Swagger; their domain compatibility remains a server check.
-
-The liability subtype dropdown depends on the selected liability type. A type with no available subtypes offers an empty list. If you change a type, clear or reselect its subtype; the snapshot service validates type/subtype compatibility. Optional controls can remain blank. Known liability repayment expenses and unsupported addback/retired income types are excluded from dropdown suggestions; explicitly entered numeric IDs are still submitted for server validation.
-
-The lists use named worksheet ranges, so commas and long lists do not run into Excel's 255-character inline-list limit. Control dropdowns cover every data row, including new rows added below the initial example. Excel displays a **Warning** for values outside a control list, which you can accept to enter a numeric ID. Import extracts the numeric prefix from dropdown labels and passes integer IDs through unchanged, even when invalid or absent from the lookup list. Reference sheets are not read during import. It does not reload controls or check their membership, availability or type/subtype compatibility locally. The snapshot service validates these values and returns any errors. Regenerate or export a fresh workbook to refresh the dropdown choices.
-
-#### Merge and Replace behaviour
-
-Each collection has an independent mode on `Snapshot`; omitted mode settings default to Merge. The import menu can retain those modes or set every collection to Merge or Replace.
-
-**Merge preserves omitted records, not omitted fields on submitted records.** Matched rows are complete updates: blank optional cells can clear existing values and links. Ownership is replaced and divided equally among submitted contacts. Export ignores `ownershipPercentage` and treats all referenced owners as sharing equally.
-
-**Replace applies to the entire contact group.** An empty sheet in Replace mode deactivates all eligible records in that collection. Asset removal can also deactivate linked incomes and liabilities and affect deal securities. An existing ID link is valid if its target survives the update, including when a submitted target is matched automatically. The API validates the final state after matching; the sample does not require an explicit ID on the submitted target solely because the collection uses Replace.
-
-Standard expenses of one type can consolidate, and duplicate existing expenses of that type can be deactivated even in Merge mode. Enter liability repayments using `repayment` and `repaymentFrequency` on `Liabilities`, not as direct expense rows. Export puts expenses with a `liability` relationship, as well as known managed repayment types, on `Excluded records`; their repayment amounts come from liabilities. Managed repayments may use ordinary expense types, so type names and descriptions alone do not identify them. Unsupported addback/retired income types are also excluded and noted. The server remains authoritative for type availability, country rules, matching, access, currency and complete-state validation.
-
-The snapshot does not migrate legacy V1 expenses. If a group has active ordinary V1 expenses, the API rejects any expense rows or `expensesMode: Replace` before applying financial changes. Resolve those expenses first, or leave the Expenses sheet empty and its mode set to Merge to update other financials. This also applies to fabricated examples submitted to an existing group.
-
-A zero repayment is allowed but still requires `repaymentFrequency`. Clearing or setting a repayment to zero unlinks its managed expense; in Merge mode that expense can remain as an ordinary expense, while an accompanying expense Replace removes it. Review the exported profile after these changes.
-
-#### How export reads the profile
-
-Export fetches **all contacts in the nominated group**, then applies this filter to each financial collection:
-
-```text
-has(ownership,any(contact.id,'1001','1002'))
+```bash
+dotnet build MyCrmSampleClient.sln
+dotnet test MyCrmSampleClient.sln
 ```
 
-```http
-GET /jsonapi/assets?filter=has(ownership,any(contact.id,'1001','1002'))&include=ownership.contact,addresses
-GET /jsonapi/liabilities?filter=has(ownership,any(contact.id,'1001','1002'))&include=ownership.contact,linkedAsset
-GET /jsonapi/incomes?filter=has(ownership,any(contact.id,'1001','1002'))&include=ownership.contact,linkedAsset,employment
-GET /jsonapi/expenses?filter=has(ownership,any(contact.id,'1001','1002'))&include=ownership.contact,liability
-GET /jsonapi/contacts/1001/employments?include=address,contact
-```
+The [tests](Tests/) use fake HTTP handlers and cover authentication, navigation, pagination, rate-limit retries and financial workbook import/export/comparison without changing live MyCRM data.
 
-The sample URL-encodes filters, follows `links.next` for every collection/related read, and deduplicates records by `(type, id)` so joint ownership does not duplicate a record. An empty group never triggers an unfiltered financial search. Related resources are resolved by `(type, id)`, and missing required relationships stop export instead of silently losing them. Each export starts with fresh relationship data. Ordinary expense reads must include the `liability` relationship (with `data: null` when unlinked); an older API that omits it cannot safely distinguish living costs from managed repayments and stops export with an explanation. Assets with multiple addresses cannot be represented by the snapshot's single-address input and stop export with an explanation.
+### Regenerating the API client
 
-Export treats a standalone `NULL` string in financial record fields as an absent value and writes a blank cell. Text containing other words is preserved. Contact, control-data, enum and record-link selections use single-line cells that shrink to fit, so wrapped labels do not hide the ID or name.
-
-These are sequential live reads, not a transactionally consistent historical snapshot. Review the current state before importing. Read-only fields outside the snapshot contract are not editable columns.
-
-#### Errors and retries
-
-Workbook parsing errors identify the sheet/cell or row where possible. The importer checks only that it can read the workbook and construct the typed request. The snapshot service validates contact-group access, ownership, duplicate IDs/local identifiers, required values, ranges, dates, link references, orphan addresses, control data and other domain rules. Its errors are displayed without changing or automatically retrying the submitted data.
-
-API errors display their codes, details and source pointers. `423` requires beta/user-context enablement; `401`/`403` requires scope/access checks. A `409` signals a concurrent update. Snapshot POSTs retry only explicit `429` responses, up to eight times, with progressive backoff and respect for `Retry-After`. Other failures are not automatically retried: after a timeout or server error, read the profile before retrying because the write may already have committed.
-
-#### Regeneration and verification
-
-`swagger.json` and the generated client use the specification maintained on this repository's `main` branch, including the financial snapshot endpoint and both `addresses` and `financial-address` included-resource types. The [client update workflow](../.github/workflows/update-client.yml) copies `MyCRMAPI.WebHost.Tests/ApiSpecTests.ApiSpecIsApproved.jsonapi.approved.json` from `mycrm-api`, normalises its title and schema names, and regenerates the entire client. Kiota remains pinned to the version in `dotnet-tools.json`.
+The [client update workflow](../.github/workflows/update-client.yml) copies the approved specification from `mycrm-api`, normalises it and regenerates the client. To regenerate locally from the bundled `swagger.json`, run:
 
 ```bash
 dotnet tool restore
@@ -452,46 +232,4 @@ dotnet build MyCrmSampleClient.sln
 dotnet test MyCrmSampleClient.sln
 ```
 
-The tests exercise AU/NZ workbook round trips, existing IDs, leading zeroes, cell parsing, preservation of unresolved links and duplicate IDs, snapshot scopes, JSON:API request/response serialization (including `valueBasis`), multi-page exports and linked-resource mapping. Export regressions cover liability-linked expenses with ordinary types, missing liability relationships and repeated exports with missing included owners. Control-data tests verify saved Excel validation rules and named ranges, readable selections converting to IDs, category pagination, dependent subtype lists and the current version 1 template. Import tests verify that the entered data is submitted unchanged to the nominated group without contact/control reads, and that API validation errors are surfaced. They use a fake HTTP handler and do not change live MyCRM data. Keep the workbook version at 1 until versioning and older-format support are explicitly requested.
-
----
-
-## Tasks
-
-The [task guide](../docs/tasks.md) contains request bodies, scope requirements and a walkthrough. Implementations are in [TaskSamples.cs](TaskSamples.cs).
-
-| Sample | Action |
-|---|---|
-| `create-residential-task` | Create a task linked to `LastDealId` and save its ID. |
-| `create-contact-group-task` | Create a task linked to `LastContactGroupId`, with no engagement, and save its ID. |
-| `get-task` | Prompt for a task ID, display attributes and relationship IDs, and select it as `LastTaskId`. |
-| `task-fields` | Read only title, progress and due date for `LastTaskId`. |
-| `patch-task` | Prompt for title and detail, PATCH `LastTaskId`, then read it back. |
-| `task-progress` | Choose a progress value, PATCH `LastTaskId`, then read it back. |
-| `promote-contact-task` | Link `LastContactGroupTaskId` to a prompted residential deal ID, replacing its sole contact link, then verify the result. |
-
-Run `advisers` to find an assignee's **adviser family ID**. This differs from `AdviserContactId`, which supplies the `UserId` header. Run `latest-deals` or `create-lead`, then `create-residential-task`; run `latest-contact-groups`, then `create-contact-group-task`. Use `get-task` to switch between them before edits. Creation calculates future due dates from the current time.
-
-The samples do not need to run consecutively: shared IDs persist between application runs. `get-task` can run independently with an existing task ID; `task-fields`, `patch-task` and `task-progress` can then run in any order. Promotion requires a task created by `create-contact-group-task` and is possible only once per task. See the [dependency table and minimal run sequences](../docs/tasks.md#dependencies-and-running-samples-independently) for details.
-
-All task samples require `AdviserContactId`. They check `api.tasks.create`, `api.tasks.read` or `api.tasks.update` as appropriate. PATCH samples also require read scope to display the result. These are live writes, including when using **Run all samples**.
-
-Task reads support sparse fields but reject `include`. Use the returned relationship IDs with the related resources' own endpoints if you need their attributes. Collection GET, DELETE and relationship-only writes are not supported.
-
----
-
-## Adding your own samples
-
-Each sample is a method on the `Samples` class decorated with a `[Sample]` attribute:
-
-```csharp
-[Sample("my-sample", "GET /jsonapi/my-resource")]
-public async Task RunMySample()
-{
-    // use _console.Client to make API calls
-}
-```
-
-The `[Sample("name", "description")]` attribute registers the method with the interactive menu automatically — no other wiring is required. The `name` is shown in the menu and must be unique. The description is logged when the sample runs to help correlate log output with the API call.
-
-Use `_console.RequireScope("api.my-resource.search", "my-sample")` at the start of your method to skip gracefully if the required OAuth scope is not present in the configured credentials.
+The Kiota version is pinned in [dotnet-tools.json](dotnet-tools.json).
