@@ -47,14 +47,17 @@ Use the arrow keys to select a sample and **Enter** to run it. **Esc** returns o
 
 IDs returned by samples are saved between runs in `MyCrmSampleClient/sample-state.json` under the platform's local application data directory. Use **Show shared state** or **Clear shared state** in the menu to inspect or reset them.
 
-| Saved value              | Set by                                                          | Used by                                                                                          |
-| ------------------------ | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `LastContactId`          | `latest-contacts`, `filtered-latest-contacts`                   | Contact/address reads and marketing updates.                                                     |
-| `LastContactGroupId`     | `latest-contact-groups`                                         | Group contact/email reads, contact-group tasks and financial snapshot group prompts.             |
-| `LastDealId`             | `latest-deals`, `create-lead`                                   | Deal notes, name/BID edits, deal status reads/changes, structure creation and residential tasks. |
-| `LastTaskId`             | Either task-creation sample, `get-task`, `promote-contact-task` | Task field selection and updates; default ID for `get-task`.                                     |
-| `LastResidentialTaskId`  | `create-residential-task`                                       | Remembering the original residential task when switching tasks.                                  |
-| `LastContactGroupTaskId` | `create-contact-group-task`                                     | `promote-contact-task`, even if another task has been selected.                                  |
+| Saved value              | Set by                                                                                                                                                        | Used by                                                                                          |
+|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| `LastContactId`          | `latest-contacts`, `filtered-latest-contacts`                                                                                                                 | Contact/address reads and marketing updates.                                                     |
+| `LastContactGroupId`     | `latest-contact-groups`                                                                                                                                       | Group contact/email reads, contact-group tasks and financial snapshot group prompts.             |
+| `LastDealId`             | `latest-deals`, `create-lead`                                                                                                                                 | Deal notes, name/BID edits, deal status reads/changes, structure creation and residential tasks. |
+| `LastTaskId`             | Either task-creation sample, `get-task`, `promote-contact-task`                                                                                               | Task field selection and updates; default ID for `get-task`.                                     |
+| `LastResidentialTaskId`  | `create-residential-task`                                                                                                                                     | Remembering the original residential task when switching tasks.                                  |
+| `LastContactGroupTaskId` | `create-contact-group-task`                                                                                                                                   | `promote-contact-task`, even if another task has been selected.                                  |
+| `LastAssetDealId`        | `latest-asset-deals`, `filtered-asset-deals`, `paged-asset-deals`, `get-asset-deal`, `asset-deal-includes`, `asset-deal-fields`                               | Asset finance deal reads, related adviser/applicant reads and field selection.                   |
+| `LastCommercialDealId`   | `latest-commercial-deals`, `filtered-commercial-deals`, `paged-commercial-deals`, `get-commercial-deal`, `commercial-deal-includes`, `commercial-deal-fields` | Commercial deal reads, related adviser/applicant reads and field selection.                      |
+| `LastAssetReferralId`    | `latest-asset-referrals`, `filtered-asset-referrals`, `get-asset-referral`, `asset-referral-includes`, `asset-referral-fields`                                | Asset referral reads, related adviser/applicant reads and field selection.                       |
 
 Start with `latest-contacts`, `latest-contact-groups` and `latest-deals` to populate the shared IDs.
 
@@ -94,6 +97,40 @@ Run `latest-deals` or `create-lead` first and check `LastDealId`. Structure read
 | `create-deal-structure`        | Creates a structure on the saved deal and reads it back.        |
 | `patch-deal-structure`         | Updates a structure's repayment amount and reads it back.       |
 | `change-deal-status`           | Prompts for a target custom status for the saved deal.          |
+
+### Diversified deals
+
+Implementations are in [DiversifiedSamples.cs](DiversifiedSamples.cs). These 17 samples make read-only requests for Asset Finance, Commercial and Asset Referral summaries. See the [Asset Finance](https://api-docs.mycrm.io/guides/data/asset-deals/), [Commercial](https://api-docs.mycrm.io/guides/data/commercial-deals/) and [Asset Referral](https://api-docs.mycrm.io/guides/data/asset-referrals/) guides for API fields, access rules and supported queries.
+
+| Sample                      | What it does                                                                               |
+|-----------------------------|--------------------------------------------------------------------------------------------|
+| `latest-asset-deals`        | Lists recent asset finance deals and saves the first ID as `LastAssetDealId`.              |
+| `filtered-asset-deals`      | Lists asset finance deals with status `Settled`, without a creation-date restriction.      |
+| `paged-asset-deals`         | Lists page 2 of asset finance deals with 3 records per page.                               |
+| `get-asset-deal`            | Reads the saved asset finance deal, or prompts for an ID when none is saved.               |
+| `asset-deal-includes`       | Reads an asset finance deal with its adviser and person/business applicants.               |
+| `asset-deal-fields`         | Reads selected asset finance fields and related record IDs.                                |
+| `latest-commercial-deals`   | Lists recent commercial deals and saves the first ID as `LastCommercialDealId`.            |
+| `filtered-commercial-deals` | Lists commercial deals with status `NewApplication`, without a creation-date restriction.  |
+| `paged-commercial-deals`    | Lists page 2 of commercial deals with 3 records per page.                                  |
+| `get-commercial-deal`       | Reads the saved commercial deal, or prompts for an ID when none is saved.                  |
+| `commercial-deal-includes`  | Reads a commercial deal with its adviser and person/business applicants.                   |
+| `commercial-deal-fields`    | Reads selected commercial fields and related record IDs.                                   |
+| `latest-asset-referrals`    | Lists recent asset referrals and saves the first ID as `LastAssetReferralId`.              |
+| `filtered-asset-referrals`  | Lists asset referrals created on or after the UTC date 365 days ago, regardless of status. |
+| `get-asset-referral`        | Reads the saved asset referral, or prompts for an ID when none is saved.                   |
+| `asset-referral-includes`   | Reads an asset referral with its adviser and person/business applicants.                   |
+| `asset-referral-fields`     | Reads selected asset referral fields and related record IDs.                               |
+
+Collection samples require the resource's diversified `.search` scope; member, includes and fields samples require `.read`. Scope prefixes are `api.diversifiedassetdeals`, `api.diversifiedcommercialdeals` and `api.diversifiedassetreferrals`. Applicable broader scopes also work; `api.deals` does not grant diversified access. The sample checks its scope before sending a request.
+
+Start with `latest-asset-deals` → `asset-deal-includes`, `latest-commercial-deals` → `commercial-deal-fields`, or `latest-asset-referrals` → `get-asset-referral`. Collections save the first returned ID in the corresponding shared-state value. Member samples use that saved ID or prompt for a positive Engagement V1 ID when none is saved; successful reads save the returned ID. They can therefore run independently. Empty results preserve saved IDs, and diversified samples do not replace `LastDealId`. Use **Clear shared state** before a member sample if you need to enter another ID.
+
+The Asset Finance filter selects `Settled` records; the Commercial filter selects `NewApplication` records. Neither restricts creation date. The Asset Referral filter selects records created on or after the UTC date 365 days ago without restricting status. Empty results can mean no accessible records match the selected filter.
+
+Latest and filtered samples request page 1 with 10 records. The two paged samples request page 2 with 3 records. All sort by creation date descending and display one page rather than traversing the whole collection. Run a resource's `latest-*` sample followed by its `paged-*` sample to compare results: the latter should show rows 4–6 when the data is unchanged and creation timestamps are distinct.
+
+To check the bracketed pagination parameters in Rider, inspect the outgoing URL in `JsonApiSearchBuilder.GetAsync` for `page[number]=2&page[size]=3` (URL-encoded brackets appear as `%5B` and `%5D`). The menu description alone does not confirm which parameters were sent.
 
 ### Tasks
 
