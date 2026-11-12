@@ -8553,6 +8553,83 @@
       }
     },
     "/jsonapi/deals": {
+      "post": {
+        "tags": [
+          "Deals"
+        ],
+        "summary": "Creates a new residential deal with existing contacts as borrowers or guarantors",
+        "operationId": "Deal_Post",
+        "parameters": [
+          {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated relationship paths for the response representation. Use dots for nested relationships.",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Select response attributes and relationships by resource type, including included resources. Each value is a comma-separated list of public field names, for example fields[articles]=title,body. Does not affect which request fields are written.",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DealCreateDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "headers": {
+              "Location": {
+                "description": "Location of newly created resource",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DealDocument"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "default": {
+            "description": "Errors - common HTTP status codes will include 400, 403, 404 etc.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDocument"
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
         "tags": [
           "Deals"
@@ -32917,6 +32994,14 @@
             "type": "string",
             "nullable": true
           },
+          "applicants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DealParticipantInput"
+            },
+            "nullable": true,
+            "writeOnly": true
+          },
           "dealStatus": {
             "enum": [
               "NewLeads",
@@ -32976,6 +33061,7 @@
             ],
             "type": "string",
             "nullable": true,
+            "readOnly": true,
             "x-ms-enum": {
               "name": "DealType",
               "modelAsString": true
@@ -33991,6 +34077,22 @@
           }
         }
       },
+      "DealParticipantInput": {
+        "required": [
+          "role"
+        ],
+        "type": "object",
+        "properties": {
+          "contactId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "role": {
+            "$ref": "#/components/schemas/DealParticipantRole"
+          }
+        },
+        "additionalProperties": false
+      },
       "DealParticipantPatch": {
         "required": [
           "type",
@@ -34086,6 +34188,17 @@
           "deal": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
           }
+        }
+      },
+      "DealParticipantRole": {
+        "enum": [
+          "Borrower",
+          "Guarantor"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "DealParticipantRole",
+          "modelAsString": true
         }
       },
       "DealParticipantsDocument": {
@@ -34246,12 +34359,7 @@
             "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           },
           "contacts": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/RelationshipsMultipleDocument"
-              }
-            ],
-            "writeOnly": true
+            "$ref": "#/components/schemas/RelationshipsMultipleDocument"
           },
           "adviser": {
             "$ref": "#/components/schemas/RelationshipsSingleDocument"
